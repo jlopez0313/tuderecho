@@ -1,0 +1,29 @@
+.abogado {
+    width: 100%;
+    overflow: hidden;
+}
+
+.side-menu-abogado {
+    z-index: 999;
+    position: absolute;
+    right: 25px;
+    top: 70px;
+    width: 300px;
+    height: auto;
+    background-color: #343a40;
+    ul {
+        list-style: none;
+        margin-bottom: 0;
+
+        li {
+            a {
+                text-decoration: none;
+                color: #c2c7d0;
+
+                svg {
+                    margin-right: 30px;
+                }
+            }
+        }
+    }
+}

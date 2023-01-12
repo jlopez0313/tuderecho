@@ -1,0 +1,15 @@
+.header {
+    .ciudad {
+        background: url('./src/assets/images/home/header/marker.png');
+    }
+
+    .tags {
+        background: url('./src/assets/images/home/header/tags.png');
+    }
+
+    .ciudad, .tags  {
+        padding-left: 40px;
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+    }
+}
