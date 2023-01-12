@@ -1,30 +1,10 @@
-.side-menu {
-    width: 300px;
-    height: 100%;
-    background-color: #343a40;
-    ul {
-        list-style: none;
-        padding: 10px 20px;
-
-        li {
-            margin-bottom: 15px;
-            a {
-                text-decoration: none;
-                color: #c2c7d0;
-
-                svg {
-                    margin-right: 30px;
-                }
-            }
-        }
-    }
-}
+@import './src/assets/styles/variables.scss';
 
 .fab {
-    font-size: 30px;
+    font-size: 35px;
     width: 50px;
     height: 50px;
-    background-color: #468bff;
+    background-color: var(--bg-red);
     border-radius: 50%;
     position: absolute;
     text-align: center;

@@ -2,11 +2,14 @@ import React from 'react'
 import { Header } from '@/components/Home/Header/Header'
 import { Form } from '@/components/Home/Form/Form'
 import { Abogados } from '@/components/Home/Abogados/Abogados'
+import { Slider } from '@/components/Home/Slider/Slider'
 
 export const Home = () => {
   return (
-    <div>
+    <>
       <Header />
+      <Slider />
+      {/*
       <div className="row my-3">
         {
           [1,1,1,1,1,1].map( (_, index) => {
@@ -18,7 +21,9 @@ export const Home = () => {
           })
         }
       </div>
+
       <Form />
-    </div>
+    */}
+    </>
   )
 }

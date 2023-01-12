@@ -1,0 +1,41 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+#root {
+    --bg-red: #E4132F;
+    --bg-red-hover: #991023;
+
+    --bs-link-color: #E4132F;
+}
+
+$new-position-values: (
+  1: 1%,
+  2: 2%,
+  5: 5%,
+  10: 10%
+);
+
+$position-values: map-merge($position-values, $new-position-values);
+
+$utilities: (
+    "cursor": (
+      property: cursor,
+      class: cursor,
+      responsive: true,
+      values: auto pointer grab,
+    ),
+    "end": (
+        property: right,
+        class: end,
+        values: $position-values
+    ),
+    "top": (
+        property: top,
+        values: $position-values
+    ),
+);
+
+@import "bootstrap/scss/utilities/api";

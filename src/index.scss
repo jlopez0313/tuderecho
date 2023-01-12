@@ -1,0 +1,66 @@
+@import './assets/styles/variables.scss';
+
+@font-face {
+    font-family: "poppins";
+    src: local("poppins"),
+      url("./assets/fonts/Poppins/Poppins-Regular.ttf") format("woff");
+}
+
+@font-face {
+    font-family: "poppins-bold";
+    src: local("poppins-bold"),
+      url("./assets/fonts/Poppins/Poppins-Bold.ttf") format("woff");
+}
+
+html, body {
+    height: 100%;
+    font-family: poppins;
+}
+
+body {
+    padding: 0;
+}
+
+#root {
+    height: 100%;
+}
+
+a {
+    &:hover {
+        text-decoration: none;
+        color: var(--bg-red-hover);
+    }
+    text-decoration: none;
+}
+
+.pt-7 {
+    padding-top: 7rem!important;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--bg-red);
+    --bs-btn-hover-bg: var(--bg-red-hover);
+    --bs-btn-active-bg: var(--bg-red-hover);
+    --bs-btn-border-color: none;
+    --bs-btn-focus-shadow-rgb: 251,56,75;
+}
+
+.form-floating{
+    label {
+        left: auto;
+    }
+}
+
+.form-check-input{
+    &:checked {
+        background-color: var(--bg-red);
+        border-color: var(--bg-red-hover);
+    }
+}
+
+.form-switch {
+     .form-check-input {
+        width: 4em;
+        height: 2em;
+     }
+}

@@ -1,0 +1,16 @@
+.slider {
+  background: url('../src/assets/images/home/slider/background.png');
+  background-size: cover;
+  width: 100%;
+  height: calc(100% - 160px);
+
+  .title {
+    font-size: 60px;
+    font-family: poppins-bold;
+  }
+
+  .subtitle {
+    color: #777776;
+    font-size: 20px;
+  }
+}
