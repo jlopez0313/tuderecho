@@ -2,14 +2,15 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
 import { registerAuth } from '@/store/user/thunks';
-import { UseForm } from '@/hoogs/UseForm';
+import { useForm } from '@/hooks/useForm';
+import { notify } from '@/global/global';
 
 export const Registro = () => {
     const { type }= useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
-    const {name, email, password, onInputChange, formState} = UseForm({
+    const {name, email, password, onInputChange} = useForm({
         name: '',
         email: '',
         password: ''
@@ -21,7 +22,7 @@ export const Registro = () => {
         data.then( () => {
             navigate('/abogados/perfil');
         }).catch( (error: any) => {
-            console.log('error', error)
+            notify(error?.response?.data?.msg, 'error');
         })
     }
     

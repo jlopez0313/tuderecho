@@ -3,13 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
+        usuarios: [],
         user: {}
     },
     reducers: {
-        register: ( state, payload ) => {
-            state.user = payload;
+        setLista:  ( state, data ) => {
+            state.usuarios = data.payload;
+        },
+        register: ( state, data ) => {
+            state.user = data.payload;
         }
     }
 })
 
-export const { register } = userSlice.actions
+export const { setLista, register } = userSlice.actions

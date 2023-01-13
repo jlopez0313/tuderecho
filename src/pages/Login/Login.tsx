@@ -1,7 +1,30 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
+import { useDispatch } from 'react-redux';
+import { loginAuth } from '@/store/user/thunks';
+import { useForm } from '@/hooks/useForm';
+import { notify } from '@/global/global';
 
 export const Login = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    const { email, password, onInputChange} = useForm({
+        name: '',
+        email: '',
+        password: ''
+    });
+
+
+    const onDoLogin = () => {
+        const data = dispatch( loginAuth( email, password ) )
+        data.then( () => {
+            navigate('/abogados/perfil');
+        }).catch( (error: any) => {
+            notify(error?.response?.data?.msg, 'error');
+        })
+    }
     
     return (
         <div className='container w-25 mt-5'>
@@ -14,19 +37,17 @@ export const Login = () => {
             
             <div className="form">
                 <div className="form-floating mb-3">
-                    <input type="email" className="form-control" id="floatingInputEmail" placeholder="name@example.com" />
+                    <input name="email" onChange={onInputChange} type="email" className="form-control" id="floatingInputEmail" placeholder="name@example.com" />
                     <label htmlFor="floatingInputEmail">Correo electrónico</label>
                 </div>
                 
                 <div className="form-floating mb-3">
-                    <input type="password" className="form-control" id="floatingInputPassword" placeholder="name@example.com" />
+                    <input name="password" onChange={onInputChange} type="password" className="form-control" id="floatingInputPassword" placeholder="name@example.com" />
                     <label htmlFor="floatingInputPassword">Contraseña</label>
                 </div>
                 
-                <Link to="/abogados/perfil">
-                    <button className="btn btn-primary mx-auto d-block mt-4">Ingresar</button>
-                </Link>
-
+                <button onClick={onDoLogin} className="btn btn-primary mx-auto d-block mt-4">Ingresar</button>
+                
                 <Link to="/pre-registro">
                     <span className='d-block mx-auto text-center mt-4'> Olvidé mi Contraseña </span>
                 </Link>

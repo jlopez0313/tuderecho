@@ -4,10 +4,13 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.scss'
 import { Routing } from './routes/Routing'
 import { store } from './store/store'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <BrowserRouter>
+      <ToastContainer />
       <Routing />
     </BrowserRouter>
   </Provider>

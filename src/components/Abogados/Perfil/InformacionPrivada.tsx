@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const InformacionPrivada = () => {
+export const InformacionPrivada = ({ user }) => {
   return (
         <div className="card p-3">
             
