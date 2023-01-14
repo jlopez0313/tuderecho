@@ -17,7 +17,9 @@ export const Login = () => {
     });
 
 
-    const onDoLogin = () => {
+    const onDoLogin = ( evt: any ) => {
+        evt.preventDefault();
+
         const data = dispatch( loginAuth( email, password ) )
         data.then( () => {
             navigate('/abogados/perfil');
@@ -36,18 +38,21 @@ export const Login = () => {
             <h2 className='mb-4 text-danger fw-bold text-center'> Inicia Sesión </h2>
             
             <div className="form">
-                <div className="form-floating mb-3">
-                    <input name="email" onChange={onInputChange} type="email" className="form-control" id="floatingInputEmail" placeholder="name@example.com" />
-                    <label htmlFor="floatingInputEmail">Correo electrónico</label>
-                </div>
-                
-                <div className="form-floating mb-3">
-                    <input name="password" onChange={onInputChange} type="password" className="form-control" id="floatingInputPassword" placeholder="name@example.com" />
-                    <label htmlFor="floatingInputPassword">Contraseña</label>
-                </div>
-                
-                <button onClick={onDoLogin} className="btn btn-primary mx-auto d-block mt-4">Ingresar</button>
-                
+                <form onSubmit={onDoLogin}>
+
+                    <div className="form-floating mb-3">
+                        <input required name="email" onChange={onInputChange} type="email" className="form-control" id="floatingInputEmail" placeholder="name@example.com" />
+                        <label htmlFor="floatingInputEmail">Correo electrónico</label>
+                    </div>
+                    
+                    <div className="form-floating mb-3">
+                        <input required name="password" onChange={onInputChange} type="password" className="form-control" id="floatingInputPassword" placeholder="name@example.com" minLength={6} />
+                        <label htmlFor="floatingInputPassword">Contraseña</label>
+                    </div>
+                    
+                    <button type='submit' className="btn btn-primary mx-auto d-block mt-4">Ingresar</button>
+                </form>
+                    
                 <Link to="/pre-registro">
                     <span className='d-block mx-auto text-center mt-4'> Olvidé mi Contraseña </span>
                 </Link>
@@ -58,6 +63,7 @@ export const Login = () => {
                         Regístrate
                     </Link>
                 </div>
+                    
             </div>
         </div>
     )

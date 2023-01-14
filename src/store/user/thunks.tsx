@@ -1,9 +1,9 @@
 import { backendApi } from "@/api/backendApi"
 import { register, setLista } from "./UserSlice"
 
-export const registerAuth = (name: string, email: string, password: string) => {
+export const registerAuth = (rol: string, name: string, email: string, password: string) => {
     return async( dispatch: any ) => {
-        const body = {name, email, password}
+        const body = {rol, name, email, password, estado: rol == 'Cliente' ? 'A': 'P'}
         const response = await backendApi.post('auth/register', body)
         if ( response ) {
             dispatch( register( body ) )
@@ -38,6 +38,56 @@ export const list = () => {
 
         if ( response ) {
             dispatch( setLista( response.data.usuarios.sort( (a: any, b: any) => a.name > b.name ? 1: -1  ) ) )
+            return Promise.resolve(true);
+        } else {
+            return Promise.resolve(false);
+        }
+    }
+}
+
+export const find = (id: string) => {
+    return async( dispatch: any ) => {
+        const response = await backendApi.get('usuarios/' + id, { 
+            headers: {
+                'x-token': localStorage.getItem('token')
+            }
+        })
+
+        if ( response ) {
+            return Promise.resolve( response.data );
+        } else {
+            return Promise.resolve(false);
+        }
+    }
+}
+
+export const update = (id: string, user: any) => {
+    return async( dispatch: any ) => {
+        const response = await backendApi.put('usuarios/'+id, user, { 
+            headers: {
+                'x-token': localStorage.getItem('token')
+            }
+        })
+
+        if ( response ) {
+            // dispatch( list() )
+            return Promise.resolve(true);
+        } else {
+            return Promise.resolve(false);
+        }
+    }
+}
+
+export const remove = (id: string) => {
+    return async( dispatch: any ) => {
+        const response = await backendApi.delete('usuarios/'+id, { 
+            headers: {
+                'x-token': localStorage.getItem('token')
+            }
+        })
+
+        if ( response ) {
+            // dispatch( list() )
             return Promise.resolve(true);
         } else {
             return Promise.resolve(false);

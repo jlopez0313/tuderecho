@@ -1,4 +1,20 @@
 import { Link, useParams } from 'react-router-dom';
+import Breadcrumb from '@/components/shared/Breadcrumb';
+
+const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/admin',
+        active: false
+    },{
+        name: 'Usuarios',
+        href: '/admin/usuarios',
+        active: false
+    },{
+        name: 'Formulario Usuarios',
+        active: true
+    }
+]
 
 export const FormUsuariosComponent = () => {
     const params = useParams();
@@ -6,6 +22,9 @@ export const FormUsuariosComponent = () => {
     return (
         <div className="w-100 p-4">
             <h1 className="mb-4"> Usuarios </h1>
+            
+            <Breadcrumb items={breadcrumb} />
+
             <h5 className="mb-4"> Formulario Usuarios </h5>
             <div className="card mb-4">
                 <div className="card-body">

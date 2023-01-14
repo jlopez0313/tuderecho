@@ -12,7 +12,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
   }
 
   return (
-    <div className={`side-menu-abogado bg-light border rounded-5 rounded-end animate__animated ${animateClass} rounded`}>
+    <div className={`side-menu-abogado bg-light border rounded-5 rounded-end animate__animated ${animateClass} animate__fast`}>
         
         <FontAwesomeIcon icon={faClose} className='position-absolute top-2 end-5 cursor-pointer text-white' onClick={() => onToggleClass()} />
 

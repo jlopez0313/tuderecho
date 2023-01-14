@@ -7,8 +7,8 @@ import './SideMenu.scss'
 export const SideMenu = () => {
   return (
     <div className='side-menu'>
-        <div className='bg-white w-100 text-center p-3'>
-            <Link to="/">
+        <div className='bg-white w-100 text-center p-3 border'>
+            <Link to="/admin">
             <img className='logo' src={Logo} />
           </Link>
         </div>

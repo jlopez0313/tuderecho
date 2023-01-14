@@ -17,7 +17,7 @@ export const PreRegistro = () => {
         <div className="row container">
             <div className="col-2"></div>
             <div className="col-4 text-center">
-                <Link to="/registro/cliente">
+                <Link to="/registro/Cliente">
                     <button className='type btn btn-light border shadow'>
                         <img src={Cliente} className="d-block mx-auto mb-4" />
                         <span> Soy cliente </span>
@@ -25,7 +25,7 @@ export const PreRegistro = () => {
                 </Link>
             </div>
             <div className="col-4 text-center">
-                <Link to="/registro/abogado">
+                <Link to="/registro/Abogado">
                     <button className='type btn btn-light border shadow'>
                         <img src={Abogado} className="d-block mx-auto mb-4" />
                         <span> Soy abogado </span>

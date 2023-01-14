@@ -7,6 +7,18 @@ import withReactContent from 'sweetalert2-react-content'
 import { useSelector, useDispatch } from 'react-redux';
 import { list, remove } from "@/store/tags/thunks";
 import { notify } from "@/global/global";
+import Breadcrumb from '@/components/shared/Breadcrumb';
+
+const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/admin',
+        active: false
+    },{
+        name: 'Palabras Clave',
+        active: true
+    }
+]
 
 export const TagsComponent = () => {
     const {tags} = useSelector( (state: any) => state.tag)
@@ -16,6 +28,7 @@ export const TagsComponent = () => {
         const MySwal = withReactContent(Swal)
         MySwal.fire({
             icon: 'question',
+            confirmButtonColor: 'red',
             text: 'Deseas Eliminar este registro',
             showCancelButton: true,
         }).then( ({isConfirmed}) => {
@@ -40,6 +53,9 @@ export const TagsComponent = () => {
     return (
         <div className="w-100 p-4">
             <h1 className="mb-4"> Palabras Clave </h1>
+
+            <Breadcrumb items={breadcrumb} />
+            
             <table className="table table-bordered table-striped table-hovered table-condensed">
                 <thead>
                     <tr>

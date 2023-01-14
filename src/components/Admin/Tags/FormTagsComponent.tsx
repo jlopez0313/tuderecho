@@ -4,6 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '@/hooks/useForm';
 import { create, find, update } from '@/store/tags/thunks';
 import { notify } from '@/global/global';
+import Breadcrumb from '@/components/shared/Breadcrumb';
+
+const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/admin',
+        active: false
+    },{
+        name: 'Palabras Clave',
+        href: '/admin/tags',
+        active: false
+    },{
+        name: 'Formulario Palabras Clave',
+        active: true
+    }
+]
 
 export const FormTagsComponent = () => {
     const params = useParams();
@@ -16,7 +32,9 @@ export const FormTagsComponent = () => {
         id: '', name: ''
     });
 
-    const onSave = () => {
+    const onSave = ( evt: any ) => {
+        evt.preventDefault();
+
         let data: any = null;
         let message = ''
         if (!id) {
@@ -61,39 +79,45 @@ export const FormTagsComponent = () => {
     return (
         <div className="w-100 p-4">
             <h1 className="mb-4"> Palabras Clave </h1>
+            
+            <Breadcrumb items={breadcrumb} />
+
             <h5 className="mb-4"> Formulario Palabras Clave </h5>
-            <div className="card mb-4">
-                <div className="card-body">
-                    <div className="form">
-                        {
-                            params.id ?
-                            <>
-                                <div className="mb-3 row">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">ID:</label>
-                                    <div className="col-sm-10">
-                                        <span className="form-control">{ params.id } </span>
+            <form onSubmit={onSave}>
+                <div className="card mb-4">
+                    <div className="card-body">
+                        <div className="form">
+                            {
+                                params.id ?
+                                <>
+                                    <div className="mb-3 row">
+                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">ID:</label>
+                                        <div className="col-sm-10">
+                                            <span className="form-control">{ params.id } </span>
+                                        </div>
                                     </div>
+                                </> : null
+                            }
+                            <div className="mb-3 row">
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Palabra Clave:</label>
+                                <div className="col-sm-10">
+                                    <input
+                                        required
+                                        name="name"
+                                        type="text"
+                                        className="form-control"
+                                        id="exampleFormControlInput1"
+                                        placeholder="Palabra Clave"
+                                        value={name || ""}
+                                        onChange={onInputChange} />
                                 </div>
-                            </> : null
-                        }
-                        <div className="mb-3 row">
-                            <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Palabra Clave:</label>
-                            <div className="col-sm-10">
-                                <input 
-                                    name="name"
-                                    type="text"
-                                    className="form-control"
-                                    id="exampleFormControlInput1"
-                                    placeholder="Palabra Clave"
-                                    value={name || ""}
-                                    onChange={onInputChange} />
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <button className='btn btn-primary' onClick={onSave}> Guardar </button>
+                <button className='btn btn-primary' type='submit'> Guardar </button>
+            </form>
         </div>
     )
 }

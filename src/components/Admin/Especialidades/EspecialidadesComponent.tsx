@@ -7,6 +7,18 @@ import withReactContent from 'sweetalert2-react-content'
 import { useSelector, useDispatch } from 'react-redux';
 import { list, remove } from '@/store/especialidades/thunks';
 import { notify } from '@/global/global';
+import Breadcrumb from '@/components/shared/Breadcrumb';
+
+const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/admin',
+        active: false
+    },{
+        name: 'Especialidades',
+        active: true
+    }
+]
 
 export const EspecialidadesComponent = () => {
     const {especialidades} = useSelector( (state: any) => state.especialidad)
@@ -16,6 +28,7 @@ export const EspecialidadesComponent = () => {
         const MySwal = withReactContent(Swal)
         MySwal.fire({
             icon: 'question',
+            confirmButtonColor: 'red',
             text: 'Deseas Eliminar este registro',
             showCancelButton: true,
         }).then( ({isConfirmed}) => {
@@ -41,6 +54,9 @@ export const EspecialidadesComponent = () => {
     return (
         <div className="w-100 p-4">
             <h1 className="mb-4"> Especialidades </h1>
+
+            <Breadcrumb items={breadcrumb} />
+
             <table className="table table-bordered table-striped table-hovered table-condensed">
                 <thead>
                     <tr>

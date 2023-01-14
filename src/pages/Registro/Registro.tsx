@@ -17,8 +17,9 @@ export const Registro = () => {
     });
 
 
-    const onDoRegiser = () => {
-        const data = dispatch( registerAuth( name, email, password ) )
+    const onDoRegiser = (evt: any) => {
+        evt.preventDefault();
+        const data = dispatch( registerAuth( type, name, email, password ) )
         data.then( () => {
             navigate('/abogados/perfil');
         }).catch( (error: any) => {
@@ -36,22 +37,25 @@ export const Registro = () => {
             <h2 className='mb-4 text-danger fw-bold text-center'> Regístrate </h2>
             
             <div className="form">
-                <div className="form-floating mb-3">
-                    <input name="name" onChange={onInputChange} type="email" className="form-control" id="floatingInputName" placeholder="name@example.com" />
-                    <label htmlFor="floatingInputName">Nombre Completo</label>
-                </div>
-            
-                <div className="form-floating mb-3">
-                    <input name="email" onChange={onInputChange} type="email" className="form-control" id="floatingInputEmail" placeholder="name@example.com" />
-                    <label htmlFor="floatingInputEmail">Correo electrónico</label>
-                </div>
                 
-                <div className="form-floating mb-3">
-                    <input name="password" onChange={onInputChange} type="password" className="form-control" id="floatingInputPassword" placeholder="name@example.com" />
-                    <label htmlFor="floatingInputPassword">Contraseña</label>
-                </div>
+                <form onSubmit={onDoRegiser}>
+                    <div className="form-floating mb-3">
+                        <input required name="name" onChange={onInputChange} type="text" className="form-control" id="floatingInputName" placeholder="name@example.com" />
+                        <label htmlFor="floatingInputName">Nombre Completo</label>
+                    </div>
                 
-                <button className="btn btn-primary mx-auto d-block mt-4" onClick={onDoRegiser}>Registrarme</button>
+                    <div className="form-floating mb-3">
+                        <input required name="email" onChange={onInputChange} type="email" className="form-control" id="floatingInputEmail" placeholder="name@example.com" />
+                        <label htmlFor="floatingInputEmail">Correo electrónico</label>
+                    </div>
+                    
+                    <div className="form-floating mb-3">
+                        <input required name="password" onChange={onInputChange} type="password" className="form-control" id="floatingInputPassword" placeholder="name@example.com" minLength={6} />
+                        <label htmlFor="floatingInputPassword">Contraseña</label>
+                    </div>
+                    
+                    <button className="btn btn-primary mx-auto d-block mt-4" type="submit">Registrarme</button>
+                </form>
                 
                 <div className="text-center mt-3">
                     <label htmlFor="staticEmail" className="col-form-label">Ya tienes una cuenta? &nbsp; </label>

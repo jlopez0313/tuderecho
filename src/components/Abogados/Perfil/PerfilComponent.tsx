@@ -1,24 +1,73 @@
+import { useEffect, useState } from 'react';
 import { Header } from "../shared/Header/Header"
 import { DatosPersonales } from "./DatosPersonales"
 import { InformacionPrivada } from "./InformacionPrivada"
 import { useDispatch, useSelector } from 'react-redux';
+import { decodeToken } from "react-jwt";
+import { find, update } from '@/store/user/thunks';
+import { register } from '@/store/user/UserSlice';
+import { useForm } from '@/hooks/useForm';
 
 export const PerfilComponent = () => {
+  const [id, setId] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
   const { user } = useSelector( (state: any) => state.user );
+  const dispatch = useDispatch();
+
+  const formData = {
+    especialidad: '',
+    identificacion: '',
+    name: '',
+    pais: '',
+    region: '',
+    ciudad: '',
+    email: '',
+    telefono: '',
+    cuenta: 'A',
+    estudiante: '',
+    decreto176: '',
+    tags: []
+  }
+
+  const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(formData)
+
+  const onFind = () => {
+    const token = localStorage.getItem('token') || '';
+    const { uid: id } = decodeToken(token);
+    setId( id );
+
+    const resp = dispatch( find( id ) );
+    resp.then( (data: any) => {
+      dispatch( register( data.usuario ) )
+      onSetFormState( {...formState, ...data.usuario, ...data.perfil, tags: data.perfil.tags.map(tag => tag._id)}  )
+      setSelectedTags( data.perfil.tags.map( tag => { return {value: tag._id, label: tag.name} } ) )
+    })
+  }
+
+  const onDoSubmit= ( evt ) => {
+    evt.preventDefault();
+    dispatch( update( id, formState ) )
+  }
+
+  useEffect(() => {
+    onFind()
+  }, [])
+  
 
   return (
     <>
       <Header />
       <div className="container pb-5">
-        
-        <DatosPersonales user={user} />
+        <form onSubmit={onDoSubmit}>
+          <DatosPersonales user={user} formState={formState} selectedTags={selectedTags} onInputChange={onInputChange} />
 
-        <h3 className="mt-5 text-danger"> Información Privada (Verificaremos tus Datos)</h3>
-        <hr />
+          <h3 className="mt-5 text-danger"> Información Privada (Verificaremos tus Datos)</h3>
+          <hr />
 
-        <InformacionPrivada user={user} />
+          <InformacionPrivada user={user} formState={formState} onInputChange={onInputChange} onRadioChange={onRadioChange}/>
 
-        <button className="btn btn-primary mt-3 mx-auto d-block"> Guardar </button>
+          <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> Guardar </button>
+        </form>
       </div>
     </>
   )

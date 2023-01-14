@@ -6,7 +6,7 @@ export const Slider = () => {
     <div className='slider'>
         <div className="container pt-7">
             <h2 className='w-25 d-block text-white title'>
-                Cuentanos tu caso
+                Cuéntanos tu caso
             </h2>
             <span className='d-block mb-5 subtitle'>
                 Queremos que nos comentes tu caso.

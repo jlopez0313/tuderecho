@@ -6,9 +6,9 @@ import { Perfil } from '@/pages/Abogado/Perfil/Perfil';
 export const AbogadosRoutes = () => {
   return (
     <Routes>
-        <Route path='' element={ <Index /> } />
-        <Route path='perfil' element={ <Perfil /> } />
-        <Route path="*" element={ <NotFoundPage />} />
+      <Route path='' element={ <Index /> } />
+      <Route path='perfil' element={ <Perfil /> } />
+      <Route path="*" element={ <NotFoundPage />} />
     </Routes>
   )
 }

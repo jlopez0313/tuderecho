@@ -15,13 +15,23 @@ export const useForm = ( initialState = {} ) => {
         })
     }
 
+    const onRadioChange = (evt: any) => {
+        const {name, value} = evt.target;
+        setFormState({
+            ...formState,
+            [name]: evt.target.checked ? value : initialState[name]
+        })
+    }
+
     const onResetForm = () => {
         setFormState( initialState )
     }
 
     return {
         ...formState,
+        formState,
         onSetFormState,
+        onRadioChange,
         onInputChange,
         onResetForm
     }

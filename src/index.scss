@@ -19,6 +19,9 @@ html, body {
 
 body {
     padding: 0;
+    .swal2-height-auto {
+        height: inherit;
+    }
 }
 
 #root {

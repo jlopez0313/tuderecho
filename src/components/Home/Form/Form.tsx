@@ -8,6 +8,7 @@ export const Form = () => {
         const MySwal = withReactContent(Swal)
         MySwal.fire({
             icon: 'success',
+            confirmButtonColor: 'red',
             text: `Su solicitud ha sido enviada
             a nuestra red de abogados. Por favor no 
             cierre ésta página.`
@@ -18,6 +19,7 @@ export const Form = () => {
         const MySwal = withReactContent(Swal)
         MySwal.fire({
             icon: 'question',
+            confirmButtonColor: 'red',
             html: `<p> Al diligenciar el formulario
             le informaremos a nuestra 
             comunidad acerca de tu solicitud;
