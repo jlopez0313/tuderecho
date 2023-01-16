@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux';
 import { registerAuth } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/global/global';
-import { gmailLogin } from '@/firebase/config';
+import { GmailLogin } from '@/firebase/auth';
 import GoogleButon from '@/assets/images/pre-registro/google-signin-button.png';
 import FacebookButon from '@/assets/images/pre-registro/login-with-facebook.png';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 export const Registro = () => {
     const { type }= useParams();
@@ -19,6 +20,13 @@ export const Registro = () => {
         password: ''
     });
 
+    const responseFacebook = (data: any) => {
+        console.log(data);
+    }
+
+    const onGmailLogin = () => {
+        const doLogin = GmailLogin
+    }
 
     const onDoRegiser = (evt: any) => {
         evt.preventDefault();
@@ -72,10 +80,18 @@ export const Registro = () => {
 
                     <div className="row mt-4">
                         <div className="col">
-                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => gmailLogin() } />
+                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => onGmailLogin() } />
                         </div>
-                        <div className="col">
-                            <img className='cursor-pointer' src={FacebookButon} alt="" style={{width: '100%'}} />
+                        <div className="col">                            
+                            <FacebookLogin
+                                appId="6449671321727781"
+                                autoLoad={false}
+                                fields="name,email,picture"
+                                callback={responseFacebook}
+                                render={(renderProps: any) => (
+                                    <img className='cursor-pointer' src={FacebookButon} alt="" style={{width: '100%'}} onClick={renderProps.onClick}/>
+                                )}
+                            />
                         </div>
                     </div>
                     

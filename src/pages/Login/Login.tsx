@@ -5,7 +5,10 @@ import { useDispatch } from 'react-redux';
 import { loginAuth } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/global/global';
-import { gmailLogin } from '@/firebase/config';
+import { GmailLogin } from '@/firebase/auth';
+import GoogleButon from '@/assets/images/pre-registro/google-signin-button.png';
+import FacebookButon from '@/assets/images/pre-registro/login-with-facebook.png';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 export const Login = () => {
 
@@ -17,6 +20,10 @@ export const Login = () => {
         email: '',
         password: ''
     });
+
+    const responseFacebook = (data: any) => {
+        console.log(data);
+    }
 
 
     const onDoLogin = ( evt: any ) => {
@@ -40,11 +47,6 @@ export const Login = () => {
             notify(error?.response?.data?.msg, 'error');
         })
     }
-
-    useEffect(() => {
-        gmailLogin()    
-    }, [])
-    
     
     return (
         <div className='container w-25 mt-5'>
@@ -69,12 +71,30 @@ export const Login = () => {
                     </div>
                     
                     <button type='submit' className="btn btn-primary mx-auto d-block mt-4">Ingresar</button>
+
+                    <Link to="/pre-registro">
+                        <span className='d-block mx-auto text-center mt-3'> Olvidé mi Contraseña </span>
+                    </Link>
+
+                    <div className="row mt-4">
+                        <div className="col">
+                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => GmailLogin() } />
+                        </div>
+                        <div className="col">                            
+                            <FacebookLogin
+                                appId="6449671321727781"
+                                autoLoad={false}
+                                fields="name,email,picture"
+                                callback={responseFacebook}
+                                render={(renderProps: any) => (
+                                    <img className='cursor-pointer' src={FacebookButon} alt="" style={{width: '100%'}} onClick={renderProps.onClick}/>
+                                )}
+                            />
+                        </div>
+                    </div>
+
                 </form>
                     
-                <Link to="/pre-registro">
-                    <span className='d-block mx-auto text-center mt-4'> Olvidé mi Contraseña </span>
-                </Link>
-                
                 <div className="text-center mt-3">
                     <label htmlFor="staticEmail" className="col-form-label">¿Eres nuevo con nosotros? &nbsp; </label>
                     <Link to="/pre-registro">
