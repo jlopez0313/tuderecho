@@ -21,15 +21,25 @@ export const Registro = () => {
     });
 
     const responseFacebook = (data: any) => {
-        console.log(data);
+        // console.log(data);
+        onProcessRegister( data.name, data.email, data.id )
     }
 
     const onGmailLogin = () => {
-        const doLogin = GmailLogin
+        GmailLogin()
+        .then( (data: any) => {
+            onProcessRegister( data.displayName, data.email, data.uid )
+        }).catch( (error: any) => {
+            // console.log( error )
+        })
     }
 
     const onDoRegiser = (evt: any) => {
         evt.preventDefault();
+        onProcessRegister(name, email, password)
+    }
+
+    const onProcessRegister = ( name: string, email: string, password: string ) => {
         const data = dispatch( registerAuth( type, name, email, password ) )
         data.then( ( { rol }: any ) => {
             notify('Bienvenido!', 'success');

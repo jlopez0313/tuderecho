@@ -41,8 +41,8 @@ export const PerfilComponent = () => {
     const resp = dispatch( find( id ) );
     resp.then( (data: any) => {
       dispatch( register( data.usuario ) )
-      onSetFormState( {...formState, ...data.usuario, ...data.perfil, tags: data.perfil.tags.map(tag => tag._id)}  )
-      setSelectedTags( data.perfil.tags.map( (tag: any) => { return {value: tag._id, label: tag.name} } ) )
+      onSetFormState( {...formState, ...data.usuario, ...data.perfil, tags: data.perfil?.tags.map(tag => tag._id)}  )
+      setSelectedTags( data.perfil?.tags.map( (tag: any) => { return {value: tag._id, label: tag.name} } ) )
     })
   }
 

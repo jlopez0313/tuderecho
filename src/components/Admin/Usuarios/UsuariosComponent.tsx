@@ -91,7 +91,7 @@ export const UsuariosComponent = () => {
                     {
                         usuarios?.map( (item: any, key: number) => {
                             return (
-                                <tr>
+                                <tr key={key}>
                                     <td> {key + 1} </td>
                                     <td> { item.rol } </td>
                                     <td> { item.name } </td>
@@ -106,27 +106,27 @@ export const UsuariosComponent = () => {
                                     </td>
                                     <td>
                                         <button className="btn me-1" title="Ver Detalle">
-                                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                                            <FontAwesomeIcon className='text-danger' icon={faMagnifyingGlass} />
                                         </button>
                                         {
                                             item.estado === 'P'
                                             ? 
                                             <>
                                                 <button className="btn me-1" title="Aprobar" onClick={() => onApproveUser( item )}>
-                                                    <FontAwesomeIcon icon={faCircleCheck}/>
+                                                    <FontAwesomeIcon className='text-danger' icon={faCircleCheck}/>
                                                 </button>
                                                 <button className="btn me-1" title="Rechazar" onClick={() => onDenyUser( item )}>
-                                                    <FontAwesomeIcon icon={faCircleXmark}/>
+                                                    <FontAwesomeIcon className='text-danger' icon={faCircleXmark}/>
                                                 </button>
                                             </>
                                             : item.estado == 'A' 
                                                 ?
                                                     <button className="btn me-1" title="Rechazar" onClick={() => onDenyUser( item )}>
-                                                        <FontAwesomeIcon icon={faCircleXmark}/>
+                                                        <FontAwesomeIcon className='text-danger' icon={faCircleXmark}/>
                                                     </button>
                                                 :
                                                     <button className="btn me-1" title="Aprobar" onClick={() => onApproveUser( item )}>
-                                                        <FontAwesomeIcon icon={faCircleCheck}/>
+                                                        <FontAwesomeIcon className='text-danger' icon={faCircleCheck}/>
                                                     </button> 
                                         }
                                     </td>

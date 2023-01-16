@@ -22,13 +22,24 @@ export const Login = () => {
     });
 
     const responseFacebook = (data: any) => {
-        console.log(data);
+        onProcessLogin(data.email, data.id)
     }
 
+    const onGmailLogin = () => {
+        GmailLogin()
+        .then( (data: any) => {
+            onProcessLogin( data.email, data.uid )
+        }).catch( (error: any) => {
+            // console.log( error )
+        })
+    }
 
     const onDoLogin = ( evt: any ) => {
         evt.preventDefault();
+        onProcessLogin(email, password)
+    }
 
+    const onProcessLogin = (email: string, password: string) => {
         const data = dispatch( loginAuth( email, password ) )
         data.then( ( { rol }: any ) => {
             notify('Bienvenido de nuevo!', 'success');
@@ -78,7 +89,7 @@ export const Login = () => {
 
                     <div className="row mt-4">
                         <div className="col">
-                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => GmailLogin() } />
+                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => onGmailLogin() } />
                         </div>
                         <div className="col">                            
                             <FacebookLogin
