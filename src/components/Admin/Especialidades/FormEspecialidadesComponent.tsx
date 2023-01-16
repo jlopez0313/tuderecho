@@ -29,7 +29,7 @@ export const FormEspecialidadesComponent = () => {
 
     const {especialidad} = useSelector( (state: any) => state.especialidad);
     
-    const { id, name, onSetFormState, onInputChange} = useForm({
+    const { id, name, onSetFormState, onInputChange}: any = useForm({
         id: '', name: ''
     });
 

@@ -1,14 +1,15 @@
 
-import { Home } from '@/pages/Clliente/Home/Home';
+import { Home } from '@/pages/Cliente/Home/Home';
 import { Login } from '@/pages/Login/Login';
-import { NotFoundPage } from '@/pages/shared/NotFoundPage';
 import { Registro } from '@/pages/Registro/Registro';
 import { PreRegistro } from '@/pages/PreRegistro/PreRegistro';
 import { Routes, Route } from 'react-router-dom';
-import { AbogadosRoutes } from './AbogadosRoutes';
-import { AdminRoutes } from './AdminRoutes';
-import { ClientesRoutes } from './ClientesRoutes';
+import { AbogadosRoutes } from './abogado/AbogadosRoutes';
+import { AdminRoutes } from './admin/AdminRoutes';
+import { ClientesRoutes } from './cliente/ClientesRoutes';
 import { PrivateRoutes } from './PrivateRoutes';
+import { Unauthorized } from '@/pages/Errors/Unauthorized';
+import { NotFound } from '@/pages/Errors/NotFound';
 
 export const Routing = () => {
   return (
@@ -19,20 +20,28 @@ export const Routing = () => {
         <Route path='/login' element={ <Login /> } />
         <Route path='/admin/*' 
           element={ 
-            <PrivateRoutes>
-              <AdminRoutes /> 
+            <PrivateRoutes rol={ 'Admin' }>
+              <AdminRoutes />
             </PrivateRoutes> 
           }
         />
         <Route path='/abogados/*'
           element={ 
-            <PrivateRoutes>
+            <PrivateRoutes rol={ 'Abogado' } >
               <AbogadosRoutes />
             </PrivateRoutes>
           }
         />
-        <Route path='/clientes/*' element={ <ClientesRoutes /> } />
-        <Route path="*" element={ <NotFoundPage />} />
+        <Route path='/clientes/*'
+          element={
+            <PrivateRoutes rol={ 'Cliente' }>
+              <ClientesRoutes />
+            </PrivateRoutes>
+          }
+        />
+        <Route path="*" element={ <NotFound />} />
+
+        <Route path="unauthorized" element={ <Unauthorized />} />
 
     </Routes>
   )

@@ -66,7 +66,7 @@ export const TagsComponent = () => {
                 </thead>
                 <tbody>
                     {
-                        tags?.map( (item, key) => {
+                        tags?.map( (item: any, key: number) => {
                             return (
                                 <tr key={key}>
                                     <td> {key + 1} </td>

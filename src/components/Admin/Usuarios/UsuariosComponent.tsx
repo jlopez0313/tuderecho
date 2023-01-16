@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {  faTrash, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import {  faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -90,7 +89,7 @@ export const UsuariosComponent = () => {
                 </thead>
                 <tbody>
                     {
-                        usuarios?.map( (item, key) => {
+                        usuarios?.map( (item: any, key: number) => {
                             return (
                                 <tr>
                                     <td> {key + 1} </td>

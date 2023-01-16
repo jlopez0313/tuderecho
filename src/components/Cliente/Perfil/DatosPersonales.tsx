@@ -1,55 +1,32 @@
 import { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import './Perfil.scss'
-import { list } from '@/store/especialidades/thunks';
-import { list as allTags } from '@/store/tags/thunks';
-import { CountryDropdown } from 'react-country-region-selector';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 const animatedComponents = makeAnimated();
 
 export const DatosPersonales = (
-    { user, selectedTags, formState, onInputChange } : { user: any, selectedTags: any, formState: any, onInputChange: any }
+    { user, formState, onInputChange, onRadioChange } : { user: any, formState: any, onInputChange: any, onRadioChange: any }
 ) => {
     const [profilePic, setProfilePic] = useState( Avatar );
 
-    const {especialidades} = useSelector( (state: any) => state.especialidad)
-    const {tags} = useSelector( (state: any) => state.tag)
-    const [myTags, setMyTags] = useState( [] )
     const [country, setCountry] = useState('')
+    const [region, setRegion] = useState( '' )
     const image = useRef()
-
-    const dispatch = useDispatch();
 
     const selectCountry = (val: string) => {
         setCountry( val );
         const evt = { target: { name: 'pais', value: val } }
         console.log( );
         onInputChange( evt )
+        setRegion( val );
     }
 
-    const onList = () => {
-        dispatch(list())
-        dispatch(allTags())
-    }
-
-    const onSetMyTags = () => {
-        setMyTags(
-            tags.map( (tag: any) => {
-                return {
-                    value: tag.id,
-                    label: tag.name
-                }
-            })
-        )
-    }
-
-    const onPrepareTags = (selectedTags: any[]) => {
-        const evt = { target: { name: 'tags', value: selectedTags.map( tag => { return tag.value }) } }
+    const selectRegion = (val: string) => {
+        setRegion( val );
+        const evt = { target: { name: 'region', value: val } }
         onInputChange( evt )
     }
 
@@ -58,37 +35,18 @@ export const DatosPersonales = (
     }
 
     const onUploadImage = ( evt ) => {
-        const fileReader = new FileReader();
-        fileReader.onload = (e) => {
-            const { result }: any = e.target;
-            if (result) {
-                setProfilePic(result)
-                const event = { target: { name: 'photo', value: result }}
-                onInputChange(event)
-            }
-        }
-        fileReader.readAsDataURL(evt.target.files[0]);
-
-        /*
         const newPhoto = URL.createObjectURL(evt.target.files[0])
         setProfilePic( newPhoto )
         const event = { target: { name: 'photo', value: newPhoto }}
         onInputChange(event)
-        */
     }
 
     useEffect(() => {
-        onSetMyTags()
-    }, [tags])
-
-    useEffect(() => {
         setCountry( formState.pais );
+        setRegion( formState.region );
+
         setProfilePic( formState.photo || Avatar )
     }, [formState])
-
-    useEffect(() => {
-        onList();
-    }, [])
 
     return (
         <div className="card p-3 my-4">
@@ -128,43 +86,50 @@ export const DatosPersonales = (
                 </div>
             </div>
             
-            <div className="form-floating mb-3">
-                <textarea className="form-control" placeholder='Biografía' required name='biografia' onChange={onInputChange} defaultValue={formState.biografia}></textarea>
-                <label htmlFor="staticEmail">Biografía:</label>
-            </div>
-            
             <div className="mb-3 row">
                 <div className="col-6">
                     <div className="form-floating col-sm-12">
-                        <select required value={formState.especialidad} name='especialidad' onChange={onInputChange} className="form-select" id="floatingSelect">
-                            <option value=''>Selecciona</option>
-                            {
-                                especialidades.map( (item: any, key: number) => {
-                                    return (
-                                        <option key={key} value={item.id} > {item.name} </option>
-                                    )
-                                    
-                                })
-                            }
-                        </select>
-                        <label htmlFor="especialidad">Especialidad:</label>
+                        <RegionDropdown
+                                required
+                                defaultOptionLabel='Selecciona...'
+                                className="form-control"
+                                country={ country }
+                                value={region}
+                                onChange={(val) => selectRegion(val)} />
+                            <label htmlFor="staticEmail">Región:</label>
                     </div>
                 </div>
 
                 <div className="col-6">
                     <div className="form-floating col-sm-12">
-                        <Select
-                            required
-                            name='tags'
-                            onChange={onPrepareTags}
-                            placeholder='Palabras Clave'
-                            closeMenuOnSelect={false}
-                            components={animatedComponents}
-                            isMulti
-                            value={selectedTags}
-                            options={myTags}
-                        />
+                        <input type="text" required className="form-control" placeholder="Ciudad" name="ciudad" defaultValue={formState.ciudad} onChange={onInputChange} />
+                        <label htmlFor="staticEmail">Ciudad:</label>
                     </div>
+                </div>
+            </div>
+
+            <div className="mb-3 row">
+                <div className="col-6">
+                    <div className="form-floating col-sm-12">
+                        <span className="form-control"> {user.email} </span>
+                        <label htmlFor="staticEmail">Correo:</label>
+                    </div>
+                </div>
+                <div className="form-floating col-sm-6">
+                    <input type="number"required  className="form-control"placeholder="Teléfono" name="telefono" defaultValue={formState.telefono} onChange={onInputChange} />
+                    <label htmlFor="staticEmail">Teléfono:</label>
+                </div>
+            </div>
+            
+            <div className="form-floating mb-3">
+                <textarea className="form-control" placeholder='Biografía' required name='biografia' onChange={onInputChange} defaultValue={formState.biografia}></textarea>
+                <label htmlFor="staticEmail">Biografía:</label>
+            </div>
+
+            <div className="my-4 row ms-2">
+                <div className="form-check form-switch align-items-center d-flex">
+                    <input className="form-check-input" type="checkbox" role="switch" name="cuenta" onChange={onRadioChange} value='I' checked={ formState.cuenta === 'I' } />
+                    <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">Desactivar Cuenta temporalmente</label>
                 </div>
             </div>
 

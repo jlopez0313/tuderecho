@@ -5,8 +5,8 @@ import { FormTags } from '@/pages/Admin/Tags/FormTags';
 import { Tags } from '@/pages/Admin/Tags/Tags';
 import { FormUsuarios } from '@/pages/Admin/Usuarios/FormUsuarios';
 import { Usuarios } from '@/pages/Admin/Usuarios/Usuarios';
-import { NotFoundPage } from '@/pages/shared/NotFoundPage';
 import { Routes, Route } from 'react-router-dom';
+import { NotFound } from '@/pages/Errors/NotFound';
 
 export const AdminRoutes = () => {
   return (
@@ -30,7 +30,7 @@ export const AdminRoutes = () => {
             <Route path=':id' element={ <FormEspecialidades /> } />
           </Route>
         </Route>
-        <Route path="*" element={ <NotFoundPage />} />
+        <Route path="*" element={ <NotFound />} />
     </Routes>
   )
 }

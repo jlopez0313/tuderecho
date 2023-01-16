@@ -1,9 +1,11 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
 import { loginAuth } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/global/global';
+import { gmailLogin } from '@/firebase/config';
 
 export const Login = () => {
 
@@ -21,12 +23,28 @@ export const Login = () => {
         evt.preventDefault();
 
         const data = dispatch( loginAuth( email, password ) )
-        data.then( () => {
-            navigate('/abogados/perfil');
+        data.then( ( { rol }: any ) => {
+            notify('Bienvenido de nuevo!', 'success');
+            switch (rol) {
+                case 'Abogado':
+                    navigate('/abogados/perfil');
+                break;
+                case 'Cliente':
+                    navigate('/clientes/perfil');
+                break;
+                case 'Admin':
+                    navigate('/admin');
+                break;
+            }
         }).catch( (error: any) => {
             notify(error?.response?.data?.msg, 'error');
         })
     }
+
+    useEffect(() => {
+        gmailLogin()    
+    }, [])
+    
     
     return (
         <div className='container w-25 mt-5'>

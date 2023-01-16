@@ -1,10 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Logo from '@/assets/images/logo.png'
 import './Header.scss';
+import { logout } from '@/global/global';
 
 export const Header = () => {
+  const token = localStorage.getItem('token') || '';
+
+  const navigate = useNavigate();
+
+  const onLogout = () => {
+    logout(navigate);
+  }
+
   return (
     <div className='header'>
       <Navbar className='menu'>
@@ -16,12 +25,27 @@ export const Header = () => {
             <Nav.Link href="#features">Sobre Nosotros</Nav.Link>
             <Nav.Link href="#pricing">Servicios</Nav.Link>
             <Nav.Link href="#pricing">Contactanos</Nav.Link>
-            <Link className="nav-link" to="/login">
-                <button className='btn btn-primary'> Iniciar Sesión </button>
-            </Link>
-            <Link className="nav-link" to="/pre-registro">
-                <button className='btn btn-primary'> Registrarme </button>
-            </Link>
+            {
+              !token 
+              ? 
+                <>
+                  <Link className="nav-link" to="/login">
+                    <button className='btn btn-primary'> Iniciar Sesión </button>
+                  </Link>
+                  <Link className="nav-link" to="/pre-registro">
+                    <button className='btn btn-primary'> Registrarme </button>
+                  </Link>
+                </> 
+              : 
+                <>
+                  <Link className="nav-link" to="/abogados/perfil">
+                    <button className='btn btn-primary'> Ingresa </button>
+                  </Link>
+                  <span className="nav-link">
+                    <button className='btn btn-primary' onClick={ () => onLogout() }> Salir </button>
+                  </span>
+                </>
+            }
           </Nav>
       </Navbar>
 {/*

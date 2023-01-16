@@ -67,7 +67,7 @@ export const EspecialidadesComponent = () => {
                 </thead>
                 <tbody>
                     {
-                        especialidades?.map( (item, key) => {
+                        especialidades?.map( (item: any, key: number) => {
                             return (
                                 <tr key={key}>
                                     <td> {key + 1} </td>

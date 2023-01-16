@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { registerAuth } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/global/global';
+import { gmailLogin } from '@/firebase/config';
+import GoogleButon from '@/assets/images/pre-registro/google-signin-button.png';
+import FacebookButon from '@/assets/images/pre-registro/login-with-facebook.png';
 
 export const Registro = () => {
     const { type }= useParams();
@@ -20,8 +23,19 @@ export const Registro = () => {
     const onDoRegiser = (evt: any) => {
         evt.preventDefault();
         const data = dispatch( registerAuth( type, name, email, password ) )
-        data.then( () => {
-            navigate('/abogados/perfil');
+        data.then( ( { rol }: any ) => {
+            notify('Bienvenido!', 'success');
+            switch (rol) {
+                case 'Abogado':
+                    navigate('/abogados/perfil');
+                break;
+                case 'Cliente':
+                    navigate('/clientes/perfil');
+                break;
+                case 'Admin':
+                    navigate('/admin');
+                break;
+            }
         }).catch( (error: any) => {
             notify(error?.response?.data?.msg, 'error');
         })
@@ -55,6 +69,16 @@ export const Registro = () => {
                     </div>
                     
                     <button className="btn btn-primary mx-auto d-block mt-4" type="submit">Registrarme</button>
+
+                    <div className="row mt-4">
+                        <div className="col">
+                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => gmailLogin() } />
+                        </div>
+                        <div className="col">
+                            <img className='cursor-pointer' src={FacebookButon} alt="" style={{width: '100%'}} />
+                        </div>
+                    </div>
+                    
                 </form>
                 
                 <div className="text-center mt-3">

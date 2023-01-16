@@ -27,3 +27,9 @@ export const notify = ( message: string, type: string, newOptions = {} ) => {
           break;
       }
 }
+
+export const logout = ( navigate: any ) => {
+  notify('Tu sesión ha finalizado', 'success');
+  localStorage.removeItem('token')
+  navigate("/")
+}

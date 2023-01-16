@@ -5,11 +5,13 @@ import { RegionDropdown } from 'react-country-region-selector'
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
-export const InformacionPrivada = ({ user, formState, onInputChange, onRadioChange }) => {
+export const InformacionPrivada = (
+    { user, formState, onInputChange, onRadioChange } : { user: any, formState: any, onInputChange: any, onRadioChange: any }
+) => {
     const [country, setCountry] = useState( '' )
     const [region, setRegion] = useState( '' )
 
-    const selectRegion = (val) => {
+    const selectRegion = (val: string) => {
         setRegion( val );
         const evt = { target: { name: 'region', value: val } }
         onInputChange( evt )

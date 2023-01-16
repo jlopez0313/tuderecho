@@ -7,6 +7,7 @@ import { decodeToken } from "react-jwt";
 import { find, update } from '@/store/user/thunks';
 import { register } from '@/store/user/UserSlice';
 import { useForm } from '@/hooks/useForm';
+import { notify } from '@/global/global';
 
 export const PerfilComponent = () => {
   const [id, setId] = useState('');
@@ -26,6 +27,7 @@ export const PerfilComponent = () => {
     cuenta: 'A',
     estudiante: '',
     decreto176: '',
+    photo: '',
     tags: []
   }
 
@@ -33,20 +35,21 @@ export const PerfilComponent = () => {
 
   const onFind = () => {
     const token = localStorage.getItem('token') || '';
-    const { uid: id } = decodeToken(token);
+    const { uid: id }: any = decodeToken(token);
     setId( id );
 
     const resp = dispatch( find( id ) );
     resp.then( (data: any) => {
       dispatch( register( data.usuario ) )
       onSetFormState( {...formState, ...data.usuario, ...data.perfil, tags: data.perfil.tags.map(tag => tag._id)}  )
-      setSelectedTags( data.perfil.tags.map( tag => { return {value: tag._id, label: tag.name} } ) )
+      setSelectedTags( data.perfil.tags.map( (tag: any) => { return {value: tag._id, label: tag.name} } ) )
     })
   }
 
-  const onDoSubmit= ( evt ) => {
+  const onDoSubmit= ( evt: any ) => {
     evt.preventDefault();
     dispatch( update( id, formState ) )
+    notify('Perfil Actualizado.', 'success');
   }
 
   useEffect(() => {
@@ -59,6 +62,10 @@ export const PerfilComponent = () => {
       <Header />
       <div className="container pb-5">
         <form onSubmit={onDoSubmit}>
+          
+          <h3 className="mt-5 text-danger"> Información Personal </h3>
+          <hr />
+
           <DatosPersonales user={user} formState={formState} selectedTags={selectedTags} onInputChange={onInputChange} />
 
           <h3 className="mt-5 text-danger"> Información Privada (Verificaremos tus Datos)</h3>

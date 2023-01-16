@@ -1,16 +1,22 @@
+import { logout } from '@/global/global';
 import { useEffect } from 'react';
-import { isExpired } from "react-jwt";
+import { decodeToken, isExpired } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 
-export const PrivateRoutes = ({ children }) => {
+export const PrivateRoutes = (
+    { children, rol }: { children: any, rol: string}
+) => {
     const token = localStorage.getItem('token') || '';
     const isMyTokenExpired = isExpired(token);
-    
+    const user: any = decodeToken(token);
+
     const navigate = useNavigate();
 
     useEffect(() => {
         if(isMyTokenExpired){
-            navigate("/")
+            logout(navigate);
+        } else if ( rol !== user.rol ) {
+            navigate('unauthorized')
         }
     }, []);
 
