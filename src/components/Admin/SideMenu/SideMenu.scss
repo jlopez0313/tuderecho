@@ -1,0 +1,36 @@
+.navbar-nav {
+    list-style: none;
+    padding: 10px 20px;
+
+    a {
+        margin-bottom: 15px;
+        text-decoration: none;
+        color: #c2c7d0;
+        
+
+        svg {
+            margin-right: 30px;
+        }
+    }
+}
+
+.side-menu {
+   
+    height: 100%;
+    
+    .navbar-nav {
+        a {
+            color: #c2c7d0;
+        }
+    }
+}
+
+.logo {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .side-menu {
+        width: 300px;
+    }
+}
