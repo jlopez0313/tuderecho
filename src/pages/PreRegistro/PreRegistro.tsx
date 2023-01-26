@@ -14,7 +14,7 @@ export const PreRegistro = () => {
         </div>
         <h2 className='mb-5 text-danger fw-bold'> Regístrate </h2>
 
-        <div className="row container">
+        <div className="row container m-0">
             <div className="col-sm-2"></div>
             <div className="col-sm-4 text-center mt-4">
                 <Link to="/registro/Cliente">
@@ -33,6 +33,13 @@ export const PreRegistro = () => {
                 </Link>
             </div>
             <div className="col-sm-2"></div>
+        </div>
+
+        <div className="text-center mt-5">
+            <label htmlFor="staticEmail" className="col-form-label">Ya tienes una cuenta? &nbsp; </label>
+            <Link to="/login">
+                Ingresa
+            </Link>
         </div>
     </div>
     

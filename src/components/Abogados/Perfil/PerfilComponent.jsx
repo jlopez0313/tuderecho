@@ -17,6 +17,7 @@ export const PerfilComponent = () => {
 
   const formData = {
     especialidad: '',
+    tipoDoc: '',
     identificacion: '',
     name: '',
     pais: '',
@@ -28,6 +29,7 @@ export const PerfilComponent = () => {
     estudiante: '',
     decreto176: '',
     photo: '',
+    oldImage: '',
     tags: []
   }
 
@@ -42,14 +44,20 @@ export const PerfilComponent = () => {
     resp.then( (data) => {
       dispatch( register( data.usuario ) )
       setPerfil( data.perfil );
-      onSetFormState( {...formState, ...data.usuario, ...data.perfil, tags: data.perfil?.tags.map((tag) => tag._id)}  )
+      onSetFormState( {...formState, ...data.usuario, ...data.perfil, oldImage: data.oldImage, tags: data.perfil?.tags.map((tag) => tag._id)}  )
     })
   }
 
   const onDoSubmit= ( evt ) => {
     evt.preventDefault();
-    dispatch( update( id, formState ) )
-    notify('Perfil Actualizado.', 'success');
+    const resp = dispatch( update( id, formState ) )
+    resp.then( (data) => {
+      onSetFormState( {...formState, ...data.usuario, ...data.perfil, oldImage: data.oldImage, tags: data.perfil?.tags.map((tag) => tag._id)}  )
+      notify('Perfil Actualizado.', 'success');
+    }).catch( error => {
+      console.log( error );
+      notify('Error Interno.', 'error');
+    })
   }
 
   useEffect(() => {
@@ -70,7 +78,7 @@ export const PerfilComponent = () => {
           <h3 className="mt-5 text-danger"> Información Personal </h3>
           <hr />
 
-          <DatosPersonales user={user} formState={formState} currentTags={perfil.tags} onInputChange={onInputChange} />
+          <DatosPersonales user={user} formState={formState} currentTags={perfil?.tags || [] } onInputChange={onInputChange} />
 
           <h3 className="mt-5 text-danger"> Información Privada (Verificaremos tus Datos)</h3>
           <hr />

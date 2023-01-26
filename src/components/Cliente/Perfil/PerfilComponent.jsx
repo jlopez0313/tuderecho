@@ -15,6 +15,7 @@ export const PerfilComponent = () => {
 
   const formData = {
     especialidad: null,
+    tipoDoc: '',
     identificacion: '',
     name: '',
     pais: '',
@@ -26,6 +27,7 @@ export const PerfilComponent = () => {
     estudiante: '',
     decreto176: '',
     photo: '',
+    oldImage: '',
     tags: []
   }
 
@@ -39,14 +41,20 @@ export const PerfilComponent = () => {
     const resp = dispatch( find( id ) );
     resp.then( (data) => {
       dispatch( register( data.usuario ) )
-      onSetFormState( {...formState, ...data.usuario, ...data.perfil}  )
+      onSetFormState( {...formState, ...data.usuario, oldImage: data.oldImage, ...data.perfil}  )
     })
   }
 
   const onDoSubmit= ( evt) => {
     evt.preventDefault();
-    dispatch( update( id, formState ) )
-    notify('Perfil Actualizado.', 'success');
+    const resp = dispatch( update( id, formState ) )
+    resp.then( (data) => {
+      onSetFormState( {...formState, ...data.usuario, oldImage: data.oldImage, ...data.perfil}  )
+      notify('Perfil Actualizado.', 'success');
+    }).catch( error => {
+      console.log( error );
+      notify('Error Interno.', 'error');
+    })
   }
 
   useEffect(() => {

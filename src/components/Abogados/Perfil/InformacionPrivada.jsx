@@ -41,11 +41,11 @@ export const InformacionPrivada = ({ user, formState, onInputChange, onRadioChan
                     <div className="form-floating col-sm-12">
                         <input
                             type="text"
+                            placeholder="Ej: ABC123"
                             className="form-control"
-                            minLength={7}
+                            minLength={3}
                             name='tarjeta_profesional'
                             onChange={onInputChange} 
-                            placeholder="Tarjeta Profesional"
                             defaultValue={formState.tarjeta_profesional}
                         />
                         <label htmlFor="staticEmail">Tarjeta Profesional:</label>
@@ -53,7 +53,7 @@ export const InformacionPrivada = ({ user, formState, onInputChange, onRadioChan
                 </div>
                 <div className="col-sm-6">
                     <label htmlFor="staticEmail">
-                        Estudiante: 
+                        Eres Estudiante?
                         <button className='btn' onClick={onShowAlertEstudiante}>
                             <FontAwesomeIcon icon={faQuestionCircle} />
                         </button>
@@ -61,8 +61,8 @@ export const InformacionPrivada = ({ user, formState, onInputChange, onRadioChan
                     <div className="form-floating col-sm-12">
                         <div className="form-check form-check-inline">
                             <input
-                                className="form-check-input"
                                 type="checkbox"
+                                className="form-check-input"
                                 value="S"
                                 name='estudiante'
                                 onChange={onRadioChange}
@@ -72,8 +72,8 @@ export const InformacionPrivada = ({ user, formState, onInputChange, onRadioChan
                         </div>
                         <div className="form-check form-check-inline">
                             <input
-                                className="form-check-input"
                                 type="checkbox"
+                                className="form-check-input"
                                 value="S"
                                 name='decreto176'
                                 onChange={onRadioChange}
@@ -89,18 +89,26 @@ export const InformacionPrivada = ({ user, formState, onInputChange, onRadioChan
                     <div className="form-floating col-sm-12">
                         <RegionDropdown
                             required
-                            defaultOptionLabel='Selecciona...'
+                            defaultOptionLabel='Selecciona una...'
                             className="form-control"
                             country={ country }
                             value={region}
                             onChange={(val) => selectRegion(val)} />
-                        <label htmlFor="staticEmail">Región:</label>
+                        <label htmlFor="staticEmail">Región *:</label>
                     </div>
                 </div>
                 <div className="col-sm-6">
                     <div className="form-floating col-sm-12">
-                        <input type="text" required className="form-control" placeholder="Ciudad" name="ciudad" defaultValue={formState.ciudad} onChange={onInputChange} />
-                        <label htmlFor="staticEmail">Ciudad:</label>
+                        <input
+                            type="text"
+                            placeholder="Ej: Cali"
+                            required
+                            name="ciudad"
+                            className="form-control"
+                            defaultValue={formState.ciudad}
+                            onChange={onInputChange}
+                        />
+                        <label htmlFor="staticEmail">Ciudad *:</label>
                     </div>
                 </div>
             </div>
@@ -108,17 +116,33 @@ export const InformacionPrivada = ({ user, formState, onInputChange, onRadioChan
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
                         <span className="form-control"> {user.email} </span>
-                        <label htmlFor="staticEmail">Correo:</label>
+                        <label htmlFor="staticEmail">Correo *:</label>
                     </div>
                 </div>
                 <div className="form-floating col-sm-6">
-                    <input type="number"required  className="form-control"placeholder="Teléfono" name="telefono" defaultValue={formState.telefono} onChange={onInputChange} />
-                    <label htmlFor="staticEmail">Teléfono:</label>
+                    <input
+                        type="number"
+                        placeholder="Ej: 12345679"
+                        required  
+                        className="form-control"
+                        name="telefono"
+                        defaultValue={formState.telefono}
+                        onChange={onInputChange}
+                    />
+                    <label htmlFor="staticEmail">Teléfono *:</label>
                 </div>
             </div>
             <div className="my-4 row ms-2">
                 <div className="form-check form-switch align-items-center d-flex">
-                    <input className="form-check-input" type="checkbox" role="switch" name="cuenta" onChange={onRadioChange} value='I' checked={ formState.cuenta === 'I' } />
+                    <input
+                        className="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        name="cuenta"
+                        onChange={onRadioChange}
+                        value='I'
+                        checked={ formState.cuenta === 'I' }
+                    />
                     <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">Desactivar Cuenta temporalmente</label>
                 </div>
             </div>

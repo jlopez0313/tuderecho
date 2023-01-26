@@ -5,11 +5,26 @@ import Logo from '@/assets/images/logo.png'
 import './Header.scss';
 import { logout } from '@/global/global';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { decodeToken } from 'react-jwt';
 
 export const Header = () => {
   const token = localStorage.getItem('token') || '';
-
+  const user = decodeToken(token);
   const navigate = useNavigate();
+
+  const onGoToProfile = () => {
+    switch( user.rol ) {
+      case 'Abogado':
+          navigate('/abogados/perfil');
+      break;
+      case 'Cliente':
+          navigate('/clientes/perfil');
+      break;
+      case 'Admin':
+          navigate('/admin');
+      break;
+    }
+  }
 
   const onLogout = () => {
     logout(navigate);
@@ -51,11 +66,11 @@ export const Header = () => {
                     </> 
                   : 
                     <>
-                      <Link className="nav-link" to="/abogados/perfil">
-                        <button className='btn btn-primary'> Ingresa </button>
-                      </Link>
                       <span className="nav-link">
-                        <button className='btn btn-primary' onClick={ () => onLogout() }> Salir </button>
+                        <button className='btn btn-primary' onClick={() => onGoToProfile()}> Ingresa </button>
+                      </span>
+                      <span className="nav-link">
+                        <button className='btn btn-primary' onClick={() => onLogout()}> Salir </button>
                       </span>
                     </>
                 }

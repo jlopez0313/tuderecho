@@ -2,9 +2,9 @@ import { backendApi } from "@/api/backendApi"
 import { Dispatch } from "react"
 import { register, setLista } from "./UserSlice"
 
-export const registerAuth = (rol, name, email, password) => {
+export const registerAuth = (rol, name, email, password, provider) => {
     return async( dispatch ) => {
-        const body = {rol, name, email, password, estado: rol == 'Cliente' ? 'A': 'P'}
+        const body = {rol, name, email, password, provider, estado: rol == 'Cliente' ? 'A': 'P'}
         const response = await backendApi.post('auth/register', body)
         if ( response ) {
             localStorage.setItem('token', response.data.token);
@@ -73,7 +73,7 @@ export const update = (id, user) => {
 
         if ( response ) {
             // dispatch( list() )
-            return Promise.resolve(true);
+            return Promise.resolve( response );
         } else {
             return Promise.resolve(false);
         }

@@ -1,12 +1,12 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
-import { registerAuth } from '@/store/user/thunks';
+import { registerAuth, update } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/global/global';
 import { GmailLogin } from '@/firebase/auth';
-import GoogleButon from '@/assets/images/pre-registro/google-signin-button.png';
-import FacebookButon from '@/assets/images/pre-registro/login-with-facebook.png';
+import GoogleIcon from '@/assets/images/pre-registro/google.png';
+import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 export const Registro = () => {
@@ -20,15 +20,14 @@ export const Registro = () => {
         password: ''
     });
 
-    const responseFacebook = (data) => {
-        // console.log(data);
-        onProcessRegister( data.name, data.email, data.id )
+    const onFacebookLogin = (data) => {
+        onProcessRegister( data.name, data.email, data.id, data.picture.data.url, 'FACEBOOK' )
     }
 
     const onGmailLogin = () => {
         GmailLogin()
         .then( (data) => {
-            onProcessRegister( data.displayName, data.email, data.uid )
+            onProcessRegister( data.displayName, data.email, data.uid, data.photoURL, 'GMAIL' )
         }).catch( (error) => {
             // console.log( error )
         })
@@ -36,14 +35,15 @@ export const Registro = () => {
 
     const onDoRegiser = (evt) => {
         evt.preventDefault();
-        onProcessRegister(name, email, password)
+        onProcessRegister(name, email, password, '', 'WEB')
     }
 
-    const onProcessRegister = ( name, email, password ) => {
-        const data = dispatch( registerAuth( type, name, email, password ) )
-        data.then( ( { rol } ) => {
+    const onProcessRegister = ( name, email, password, photoUrl='', provider ) => {
+        const data = dispatch( registerAuth( type, name, email, password, provider ) )
+        data.then( ( user ) => {
+            dispatch( update( user.id, {...user, photo: photoUrl} ) )
             notify('Bienvenido!', 'success');
-            switch (rol) {
+            switch (user.rol) {
                 case 'Abogado':
                     navigate('/abogados/perfil');
                 break;
@@ -90,16 +90,22 @@ export const Registro = () => {
 
                     <div className="row mt-4">
                         <div className="col">
-                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => onGmailLogin() } />
+                            <button type="button" className="btn btn-outline-danger login-btn w-100" onClick={() => onGmailLogin() } >
+                                <img className='cursor-pointer me-2' src={GoogleIcon} style={{maxWidth: '24px'}} alt=""/>
+                                Google
+                            </button>
                         </div>
-                        <div className="col">                            
+                        <div className="col">
                             <FacebookLogin
                                 appId="6449671321727781"
                                 autoLoad={false}
                                 fields="name,email,picture"
-                                callback={responseFacebook}
+                                callback={onFacebookLogin}
                                 render={(renderProps) => (
-                                    <img className='cursor-pointer' src={FacebookButon} alt="" style={{width: '100%'}} onClick={renderProps.onClick}/>
+                                    <button type="button" className="btn btn-outline-primary login-btn  w-100"  onClick={renderProps.onClick}>
+                                        <img className='cursor-pointer me-2' src={FacebookIcon} alt="" style={{maxWidth: '24px'}}/>
+                                        Facebook
+                                    </button>
                                 )}
                             />
                         </div>

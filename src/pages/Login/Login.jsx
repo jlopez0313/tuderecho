@@ -6,9 +6,10 @@ import { loginAuth } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/global/global';
 import { GmailLogin } from '@/firebase/auth';
-import GoogleButon from '@/assets/images/pre-registro/google-signin-button.png';
-import FacebookButon from '@/assets/images/pre-registro/login-with-facebook.png';
+import GoogleIcon from '@/assets/images/pre-registro/google.png';
+import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import './Login.scss';
 
 export const Login = () => {
 
@@ -55,7 +56,8 @@ export const Login = () => {
                 break;
             }
         }).catch( (error) => {
-            notify(error?.response?.data?.msg, 'error');
+            notify(error?.response?.data?.msg, 'warning');
+            navigate('/pre-registro');
         })
     }
     
@@ -89,16 +91,22 @@ export const Login = () => {
 
                     <div className="row mt-4">
                         <div className="col">
-                            <img className='cursor-pointer' src={GoogleButon} alt="" style={{width: '100%'}} onClick={() => onGmailLogin() } />
+                            <button type="button" className="btn btn-outline-danger login-btn w-100" onClick={() => onGmailLogin() } >
+                                <img className='cursor-pointer me-2' src={GoogleIcon} style={{maxWidth: '24px'}} alt=""/>
+                                Google
+                            </button>
                         </div>
-                        <div className="col">                            
+                        <div className="col">
                             <FacebookLogin
                                 appId="6449671321727781"
                                 autoLoad={false}
                                 fields="name,email,picture"
                                 callback={responseFacebook}
                                 render={(renderProps) => (
-                                    <img className='cursor-pointer' src={FacebookButon} alt="" style={{width: '100%'}} onClick={renderProps.onClick}/>
+                                    <button type="button" className="btn btn-outline-primary login-btn  w-100"  onClick={renderProps.onClick}>
+                                        <img className='cursor-pointer me-2' src={FacebookIcon} alt="" style={{maxWidth: '24px'}}/>
+                                        Facebook
+                                    </button>
                                 )}
                             />
                         </div>

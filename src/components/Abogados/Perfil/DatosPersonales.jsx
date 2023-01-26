@@ -9,6 +9,7 @@ import './Perfil.scss'
 import { list } from '@/store/especialidades/thunks';
 import { list as allTags } from '@/store/tags/thunks';
 import { CountryDropdown } from 'react-country-region-selector';
+import { notify } from '@/global/global'
 
 const animatedComponents = makeAnimated();
 
@@ -62,10 +63,17 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
     }
 
     const onUploadImage = ( evt ) => {
-        const newPhoto = URL.createObjectURL(evt.target.files[0])
-        setProfilePic( newPhoto )
-        const event = { target: { name: 'photo', value: newPhoto }}
-        onInputChange(event)
+
+        const reader = new FileReader();
+        reader.readAsDataURL(evt.target.files[0]);
+        reader.onload = function(event) {
+            setProfilePic( event.target.result )
+            const myEvent = { target: { name: 'photo', value: event.target.result }}
+            onInputChange(myEvent )
+        };
+            reader.onerror = function() {
+            notify("No se pudo cargar la imágen", "error");
+        };
     }
 
     useEffect(() => {
@@ -74,7 +82,6 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
     }, [tags])
 
     useEffect(() => {
-        console.log( currentTags )
         setSelectedTags( currentTags.map( (tag) => { return {value: tag._id, label: tag.name} } ) )
     }, [currentTags])
 
@@ -89,52 +96,96 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
 
     return (
         <div className="card p-3 my-4">
+
+            
             
             <div className="row">
                 <div className="col-sm-3 mb-3 text-center">
                     <div className="avatar-container m-auto d-flex justify-content-center align-items-center cursor-pointer" onClick={onClickImage}>
-                        <img src={profilePic} alt="" className='avatar'/>
+                        <img src={profilePic} alt='' className='avatar'/>
                         <input type='file' accept='image/png, image/jpeg' className='d-none' ref={image} onChange={onUploadImage} />
                     </div>
                 </div>
                 <div className="col-sm-9">
                     <div className="form-floating mb-2">
-                        <input type="number" required className="form-control" placeholder='Identificación' name='identificacion' defaultValue={formState.identificacion} onChange={onInputChange}/>
-                        <label htmlFor="staticEmail">Identificación:</label>
+                        <select
+                            required
+                            value={formState.tipoDoc}
+                            name='tipoDoc'
+                            onChange={onInputChange}
+                            className="form-select"
+                            id="floatingSelect"
+                        >
+                            <option value=''>Selecciona uno...</option>
+                            <option value='CC'>Cédula de Ciudadanía</option>
+                            <option value='CE'>Cédula de Extranjería</option>
+                            <option value='TI'>Tarjeta de Identidad</option>
+                            <option value='PA'>Pasaporte</option>
+                            <option value='ID'>ID</option>
+                            
+                        </select>
+                        <label htmlFor="especialidad">Tipo de Documento *:</label>
+                    </div>
+                    <div className="form-floating mb-2">
+                        <input
+                            type="number"
+                            placeholder='Ej: 123456789'
+                            required
+                            className="form-control"
+                            name='identificacion'
+                            defaultValue={formState.identificacion}
+                            onChange={onInputChange}
+                        />
+                        <label htmlFor="staticEmail">Identificación *:</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
                             type="text"
+                            required
+                            placeholder="Ej: Pedro Perez"
                             className="form-control"
-                            placeholder="Nombre"
                             name='name'
                             defaultValue={ user.name }
                             onChange={onInputChange}
                         />
-                        <label htmlFor="staticEmail">Nombre Completo:</label>
+                        <label htmlFor="staticEmail">Nombre Completo *:</label>
                     </div>
                     <div className="form-floating mb-2">
                         <CountryDropdown
                             required
-                            defaultOptionLabel="Selecciona..."
+                            defaultOptionLabel="Selecciona uno..."
                             classes="form-control"
                             value={country}
                             onChange={(val) => selectCountry(val)} />
-                        <label htmlFor="staticEmail">Pais:</label>
+                        <label htmlFor="staticEmail">Pais *:</label>
                     </div>
                 </div>
             </div>
             
             <div className="form-floating mb-3">
-                <textarea className="form-control" placeholder='Biografía' required name='biografia' onChange={onInputChange} defaultValue={formState.biografia}></textarea>
-                <label htmlFor="staticEmail">Biografía:</label>
+                <textarea
+                    placeholder='Cuéntanos sobre tí...'
+                    className="form-control"
+                    required
+                    name='biografia'
+                    onChange={onInputChange}
+                    defaultValue={formState.biografia}
+                ></textarea>
+                <label htmlFor="staticEmail">Biografía *:</label>
             </div>
             
             <div className="mb-3 row">
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
-                        <select required value={formState.especialidad} name='especialidad' onChange={onInputChange} className="form-select" id="floatingSelect">
-                            <option value=''>Selecciona</option>
+                        <select
+                            required
+                            value={formState.especialidad}
+                            name='especialidad'
+                            onChange={onInputChange}
+                            className="form-select"
+                            id="floatingSelect"
+                        >
+                            <option value=''>Selecciona una...</option>
                             {
                                 especialidades.map( (item, key) => {
                                     return (
@@ -144,7 +195,7 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                                 })
                             }
                         </select>
-                        <label htmlFor="especialidad">Especialidad:</label>
+                        <label htmlFor="especialidad">Especialidad *:</label>
                     </div>
                 </div>
 
@@ -154,7 +205,7 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                             required
                             name='tags'
                             onChange={onPrepareTags}
-                            placeholder='Palabras Clave'
+                            placeholder='Selecciona algunas *'
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti

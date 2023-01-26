@@ -6,6 +6,8 @@ import Logo from '@/assets/images/logo.png'
 import { SideMenu } from "../SideMenu/SideMenu";
 import { useState } from "react";
 import './Header.scss';
+import { Notificaciones } from "@/components/Abogados/Notificaciones/Notificaciones";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 export const Header = () => {
     const [showSubmenu, setShowSubmenu] = useState(false)
@@ -29,9 +31,16 @@ export const Header = () => {
                     <button className="btn me-3">
                         <FontAwesomeIcon icon={faComment} className='' />
                     </button>
-                    <button className="btn me-3">
-                        <FontAwesomeIcon icon={faBell}  className='' />
-                    </button>
+                    <OverlayTrigger
+                        rootClose
+                        trigger="click"
+                        placement="bottom"
+                        overlay={<Notificaciones />}
+                    >
+                        <button className="btn me-3">
+                            <FontAwesomeIcon icon={faBell}  className='' />
+                        </button>
+                    </OverlayTrigger>
                     <button className="btn me-3" onClick={ onToggleSubMenu}>
                         <FontAwesomeIcon icon={faBars} />
                     </button>

@@ -28,6 +28,10 @@ body {
     height: 100%;
 }
 
+.blurred {
+    filter: blur(8px);
+}
+
 a {
     &:hover {
         text-decoration: none;
@@ -66,6 +70,14 @@ a {
         width: 4em;
         height: 2em;
      }
+}
+
+.form-floating > .form-control::placeholder {
+  color: revert;
+}
+
+.form-floating > .form-control:not(:focus)::placeholder {
+    color: transparent;
 }
 
 @media (min-width: 576px) {
