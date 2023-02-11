@@ -4,15 +4,18 @@ import { useDispatch } from 'react-redux';
 import { registerAuth, update } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/global/global';
-import { GmailLogin } from '@/firebase/auth';
+import { GmailLogin, FacebookLogin } from '@/firebase/auth';
 import GoogleIcon from '@/assets/images/pre-registro/google.png';
 import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { useState } from 'react';
+// import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 export const Registro = () => {
     const { type }= useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
+
+    const [fbdata, setfbdata] = useState({})
 
     const {name, email, password, onInputChange} = useForm({
         name: '',
@@ -21,7 +24,13 @@ export const Registro = () => {
     });
 
     const onFacebookLogin = (data) => {
-        onProcessRegister( data.name, data.email, data.id, data.picture.data.url, 'FACEBOOK' )
+        FacebookLogin()
+        .then( (data) => {
+            console.log( data )
+            onProcessRegister( data.displayName, data.email, data.uid, data.photoURL, 'FACEBOOK' )
+        }).catch( (error) => {
+            console.log(error);
+        })
     }
 
     const onGmailLogin = () => {
@@ -29,7 +38,7 @@ export const Registro = () => {
         .then( (data) => {
             onProcessRegister( data.displayName, data.email, data.uid, data.photoURL, 'GMAIL' )
         }).catch( (error) => {
-            // console.log( error )
+            console.log(error);
         })
     }
 
@@ -55,7 +64,7 @@ export const Registro = () => {
                 break;
             }
         }).catch( (error) => {
-            notify(error?.response?.data?.msg, 'error');
+            notify(error?.response?.data?.msg || 'Internal Error onProcessRegister', 'error');
         })
     }
     
@@ -96,8 +105,14 @@ export const Registro = () => {
                             </button>
                         </div>
                         <div className="col">
+                            <button type="button" className="btn btn-outline-primary login-btn  w-100"  onClick={() => onFacebookLogin() }>
+                                <img className='cursor-pointer me-2' src={FacebookIcon} alt="" style={{maxWidth: '24px'}}/>
+                                Facebook
+                            </button>
+                            {
+                            /*
                             <FacebookLogin
-                                appId="6449671321727781"
+                                appId={import.meta.env.VITE_FACEBOOK_APP_ID}
                                 autoLoad={false}
                                 fields="name,email,picture"
                                 callback={onFacebookLogin}
@@ -107,7 +122,9 @@ export const Registro = () => {
                                         Facebook
                                     </button>
                                 )}
-                            />
+                            />   
+                            */
+                            }
                         </div>
                     </div>
                     
@@ -115,9 +132,12 @@ export const Registro = () => {
                 
                 <div className="text-center mt-3">
                     <label htmlFor="staticEmail" className="col-form-label">Ya tienes una cuenta? &nbsp; </label>
-                    <Link to="/login">
+                    <Link to="/login" replace={true}>
                         Ingresa
                     </Link>
+                </div>
+                <div>
+                    { JSON.stringify( fbdata ) }
                 </div>
             </div>
         </div>

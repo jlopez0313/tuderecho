@@ -52,7 +52,7 @@ export const FormEspecialidadesComponent = () => {
             navigate('/admin/especialidades');
 
         }).catch( (error) => {
-            notify(error?.response?.data?.msg, 'error');
+            notify(error?.response?.data?.msg || 'Internal Error onSave Especialidades', 'error');
         })
     }
 

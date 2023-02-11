@@ -51,7 +51,7 @@ export const FormTagsComponent = () => {
             navigate('/admin/tags');
 
         }).catch( (error) => {
-            notify(error?.response?.data?.msg, 'error');
+            notify(error?.response?.data?.msg || 'Internal Error onSave Tags', 'error');
         })
     }
 

@@ -31,5 +31,5 @@ export const notify = ( message, type, newOptions = {} ) => {
 export const logout = ( navigate ) => {
   notify('Tu sesión ha finalizado', 'success');
   localStorage.removeItem('token')
-  navigate("/")
+  navigate("/", { replace: true })
 }

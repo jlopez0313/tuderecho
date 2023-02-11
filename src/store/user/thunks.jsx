@@ -1,5 +1,6 @@
 import { backendApi } from "@/api/backendApi"
 import { Dispatch } from "react"
+import { headers } from "@/constants/constants"
 import { register, setLista } from "./UserSlice"
 
 export const registerAuth = (rol, name, email, password, provider) => {
@@ -67,7 +68,8 @@ export const update = (id, user) => {
     return async( dispatch ) => {
         const response = await backendApi.put('usuarios/'+id, user, { 
             headers: {
-                'x-token': localStorage.getItem('token')
+                'x-token': localStorage.getItem('token'),
+                ...headers
             }
         })
 

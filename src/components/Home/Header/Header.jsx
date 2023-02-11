@@ -57,10 +57,10 @@ export const Header = () => {
                   !token 
                   ? 
                     <>
-                      <Link className="nav-link" to="/login">
+                      <Link className="nav-link" to="/login" replace={true}>
                         <button className='btn btn-primary'> Iniciar Sesión </button>
                       </Link>
-                      <Link className="nav-link" to="/pre-registro">
+                      <Link className="nav-link" to="/pre-registro" replace={true}>
                         <button className='btn btn-primary'> Registrarme </button>
                       </Link>
                     </> 

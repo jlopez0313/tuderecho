@@ -17,7 +17,7 @@ export const PreRegistro = () => {
         <div className="row container m-0">
             <div className="col-sm-2"></div>
             <div className="col-sm-4 text-center mt-4">
-                <Link to="/registro/Cliente">
+                <Link to="/registro/Cliente" replace={true} >
                     <button className='type btn btn-light border shadow'>
                         <img src={Cliente} className="d-block mx-auto mb-4" />
                         <span> Soy cliente </span>
@@ -25,7 +25,7 @@ export const PreRegistro = () => {
                 </Link>
             </div>
             <div className="col-sm-4 text-center mt-4">
-                <Link to="/registro/Abogado">
+                <Link to="/registro/Abogado" replace={true} >
                     <button className='type btn btn-light border shadow'>
                         <img src={Abogado} className="d-block mx-auto mb-4" />
                         <span> Soy abogado </span>
@@ -37,7 +37,7 @@ export const PreRegistro = () => {
 
         <div className="text-center mt-5">
             <label htmlFor="staticEmail" className="col-form-label">Ya tienes una cuenta? &nbsp; </label>
-            <Link to="/login">
+            <Link to="/login" replace >
                 Ingresa
             </Link>
         </div>
