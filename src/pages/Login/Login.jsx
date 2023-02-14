@@ -91,7 +91,7 @@ export const Login = () => {
                     
                     <button type='submit' className="btn btn-primary mx-auto d-block mt-4">Ingresar</button>
 
-                    <Link to="/pre-registro">
+                    <Link to="/recover">
                         <span className='d-block mx-auto text-center mt-3'> Olvidé mi Contraseña </span>
                     </Link>
 

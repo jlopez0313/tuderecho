@@ -98,3 +98,38 @@ export const remove = (id) => {
         }
     }
 }
+
+export const passwords = (user) => {
+    return async( dispatch ) => {
+        const response = await backendApi.post('usuarios/passwords', user, { 
+            headers: {
+                'x-token': localStorage.getItem('token'),
+                ...headers
+            }
+        })
+
+        if ( response ) {
+            // dispatch( list() )
+            return Promise.resolve( response );
+        } else {
+            return Promise.resolve(false);
+        }
+    }
+}
+
+export const recovery = (email) => {
+    return async( dispatch ) => {
+        const response = await backendApi.post('usuarios/recovery', { email }, { 
+            headers: {
+                ...headers
+            }
+        })
+
+        if ( response ) {
+            // dispatch( list() )
+            return Promise.resolve( response );
+        } else {
+            return Promise.resolve(false);
+        }
+    }
+}

@@ -15,8 +15,6 @@ export const Registro = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
-    const [fbdata, setfbdata] = useState({})
-
     const {name, email, password, onInputChange} = useForm({
         name: '',
         email: '',
@@ -135,9 +133,6 @@ export const Registro = () => {
                     <Link to="/login" replace={true}>
                         Ingresa
                     </Link>
-                </div>
-                <div>
-                    { JSON.stringify( fbdata ) }
                 </div>
             </div>
         </div>

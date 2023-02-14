@@ -53,7 +53,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                 </li>
                 <strong className='text-danger d-block mt-5'> Inicio de Sesión </strong>
                 <li className='border shadow-sm p-2 m-2'> 
-                    <Link to='/admin/especialidades'>
+                    <Link to='/abogados/passwords'>
                         <FontAwesomeIcon className='me-2' icon={faKey} />
                         <strong className='text-dark'> Cambiar Contraseña </strong>
                     </Link>
