@@ -46,7 +46,7 @@ export const Recover = () => {
                     <button type='submit' className="btn btn-primary mx-auto d-block mt-4">Enviar</button>
 
                     <div className="text-center mt-3">
-                        <label htmlFor="staticEmail" className="col-form-label d-block">Ya tienes una cuenta? &nbsp; </label>
+                        <label htmlFor="staticEmail" className="col-form-label">Ya tienes una cuenta? &nbsp; </label>
                         <Link to="/login" replace={true}>
                             Ingresa
                         </Link>
