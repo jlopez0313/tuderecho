@@ -14,7 +14,9 @@
 
         .avatar {
             width: 68px;
-            height: auto;
+            height: 68px;
+            border-radius: 50%;
+            border: 2px solid #000;
         }
     }
     

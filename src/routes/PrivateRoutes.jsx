@@ -1,4 +1,4 @@
-import { logout } from '@/global/global';
+import { logout } from '@/helpers/helpers';
 import { useEffect } from 'react';
 import { decodeToken, isExpired } from "react-jwt";
 import { useNavigate } from "react-router-dom";

@@ -4,7 +4,7 @@ import { find, passwords } from '@/store/user/thunks';
 import { Header } from "@/components/shared/Header/Header"
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '@/hooks/useForm';
-import { notify } from '@/global/global';
+import { notify } from '@/helpers/helpers';
 import { register } from '@/store/user/UserSlice';
 
 import bcrypt from 'bcryptjs'
@@ -65,7 +65,7 @@ export const PasswordsComponent = () => {
 
     return (
         <>
-        <Header />
+        
         <div className="container pb-5">
             <form onSubmit={onDoSubmit}>
             

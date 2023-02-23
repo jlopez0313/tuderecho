@@ -3,7 +3,7 @@ import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
 import { registerAuth, update } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
-import { notify } from '@/global/global';
+import { notify } from '@/helpers/helpers';
 import { GmailLogin, FacebookLogin } from '@/firebase/auth';
 import GoogleIcon from '@/assets/images/pre-registro/google.png';
 import FacebookIcon from '@/assets/images/pre-registro/facebook.png';

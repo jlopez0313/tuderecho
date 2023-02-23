@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '@/hooks/useForm';
 import { create, find, update } from '@/store/tags/thunks';
-import { notify } from '@/global/global';
+import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
 const breadcrumb = [

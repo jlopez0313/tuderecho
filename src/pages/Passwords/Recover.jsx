@@ -3,7 +3,7 @@ import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
 import { recovery } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
-import { notify } from '@/global/global';
+import { notify } from '@/helpers/helpers';
 
 export const Recover = () => {
 

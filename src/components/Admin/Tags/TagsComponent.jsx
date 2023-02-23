@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useSelector, useDispatch } from 'react-redux';
 import { list, remove } from "@/store/tags/thunks";
-import { notify } from "@/global/global";
+import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
 const breadcrumb = [
@@ -51,7 +51,7 @@ export const TagsComponent = () => {
     }, [])
         
     return (
-        <div className="w-100 p-4">
+        <div className="w-100 p-4 overflow-auto">
             <h1 className="mb-4"> Palabras Clave </h1>
 
             <Breadcrumb items={breadcrumb} />

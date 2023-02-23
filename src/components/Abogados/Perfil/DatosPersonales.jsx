@@ -6,38 +6,47 @@ import makeAnimated from 'react-select/animated';
 
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import './Perfil.scss'
-import { list } from '@/store/especialidades/thunks';
-import { list as allTags } from '@/store/tags/thunks';
+import { list as getEspecialidades } from '@/store/especialidades/thunks';
+import { list as getAllTags } from '@/store/tags/thunks';
 import { CountryDropdown } from 'react-country-region-selector';
-import { notify } from '@/global/global'
+import { notify } from '@/helpers/helpers'
+import { tipoDocumentos } from '@/constants/constants';
 
 const animatedComponents = makeAnimated();
 
-export const DatosPersonales = ( { user, currentTags, formState, onInputChange } ) => {
-    const [profilePic, setProfilePic] = useState( Avatar );
+export const DatosPersonales = ( { formState, onInputChange } ) => {
 
     const {especialidades} = useSelector( (state) => state.especialidad)
-    const [selectedTags, setSelectedTags] = useState([]);
     const {tags} = useSelector( (state) => state.tag)
-    const [myTags, setMyTags] = useState( [] )
-    const [country, setCountry] = useState('')
+
+    const [allTags, setAllTags] = useState( [] )
+    const [myTags, setMyTags] = useState([]);
     const image = useRef(null)
 
     const dispatch = useDispatch();
 
     const selectCountry = (val) => {
-        setCountry( val );
-        const evt = { target: { name: 'pais', value: val } }
-        onInputChange( evt )
+        const evt = { target: { name: 'perfil', value: val } }
+        onInputChange( evt, 'pais' )
     }
 
-    const onList = () => {
-        dispatch(list())
-        dispatch(allTags())
+    const onGetLists = () => {
+        dispatch(getEspecialidades())
+        dispatch(getAllTags())
     }
 
     const onSetMyTags = () => {
+        const myTags = tags.filter( tag => formState.perfil.tags.includes(tag.id) )
         setMyTags(
+            myTags.map( (tag) => {
+                return {
+                    value: tag.id,
+                    label: tag.name
+                }
+            })
+        )
+
+        setAllTags(
             tags.map( (tag) => {
                 return {
                     value: tag.id,
@@ -48,14 +57,14 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
     }
 
     const onPrepareTags = (
-        newValue,
+        newTags,
         actionMeta
     ) => {
-        const tags = newValue.map( (tag) => { return tag.value })
-        const evt = { target: { name: 'tags', value: tags } }
+        const newTagsId = newTags.map( (tag) => { return tag.value })
+        const evt = { target: { name: 'perfil', value: newTagsId } }
 
-        setSelectedTags( newValue.map( (tag) => { return {value: tag.value, label: tag.label} } ) )
-        onInputChange( evt )
+        setMyTags( newTags.map( (tag) => { return {value: tag.value, label: tag.label} } ) )
+        onInputChange( evt, 'tags' )
     }
 
     const onClickImage = () => {
@@ -67,9 +76,8 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
         const reader = new FileReader();
         reader.readAsDataURL(evt.target.files[0]);
         reader.onload = function(event) {
-            setProfilePic( event.target.result )
-            const myEvent = { target: { name: 'photo', value: event.target.result }}
-            onInputChange(myEvent )
+            const myEvent = { target: { name: 'perfil', value: event.target.result }}
+            onInputChange( myEvent, 'photo' )
         };
             reader.onerror = function() {
             notify("No se pudo cargar la imágen", "error");
@@ -78,31 +86,19 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
 
     useEffect(() => {
         onSetMyTags();
-        setSelectedTags( currentTags.map( (tag) => { return {value: tag._id, label: tag.name} } ) )
-    }, [tags])
+    }, [tags, formState])
 
     useEffect(() => {
-        setSelectedTags( currentTags.map( (tag) => { return {value: tag._id, label: tag.name} } ) )
-    }, [currentTags])
-
-    useEffect(() => {
-        setCountry( formState.pais );
-        setProfilePic( formState.photo || Avatar )
-    }, [formState])
-
-    useEffect(() => {
-        onList();
+        onGetLists();
     }, [])
 
     return (
         <div className="card p-3 my-4">
-
-            
             
             <div className="row">
                 <div className="col-sm-3 mb-3 text-center">
                     <div className="avatar-container m-auto d-flex justify-content-center align-items-center cursor-pointer" onClick={onClickImage}>
-                        <img src={profilePic} alt='' className='avatar'/>
+                        <img src={formState.perfil.photo || Avatar} alt='' className='avatar'/>
                         <input type='file' accept='image/png, image/jpeg' className='d-none' ref={image} onChange={onUploadImage} />
                     </div>
                 </div>
@@ -110,19 +106,18 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                     <div className="form-floating mb-2">
                         <select
                             required
-                            value={formState.tipoDoc}
-                            name='tipoDoc'
-                            onChange={onInputChange}
                             className="form-select"
+                            name='perfil'
+                            value={formState.perfil.tipoDoc}
+                            onChange={(evt) => onInputChange(evt, 'tipoDoc')}
                             id="floatingSelect"
                         >
                             <option value=''>Selecciona uno...</option>
-                            <option value='CC'>Cédula de Ciudadanía</option>
-                            <option value='CE'>Cédula de Extranjería</option>
-                            <option value='TI'>Tarjeta de Identidad</option>
-                            <option value='PA'>Pasaporte</option>
-                            <option value='ID'>ID</option>
-                            
+                            {
+                                tipoDocumentos.map( (tipo, key) => {
+                                    return <option value={tipo.key} key={key}>{tipo.value}</option>
+                                })
+                            }
                         </select>
                         <label htmlFor="especialidad">Tipo de Documento *:</label>
                     </div>
@@ -132,9 +127,9 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                             placeholder='Ej: 123456789'
                             required
                             className="form-control"
-                            name='identificacion'
-                            defaultValue={formState.identificacion}
-                            onChange={onInputChange}
+                            name='perfil'
+                            value={formState.perfil.identificacion}
+                            onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
                         <label htmlFor="staticEmail">Identificación *:</label>
                     </div>
@@ -145,7 +140,7 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                             placeholder="Ej: Pedro Perez"
                             className="form-control"
                             name='name'
-                            defaultValue={ user.name }
+                            defaultValue={ formState.name }
                             onChange={onInputChange}
                         />
                         <label htmlFor="staticEmail">Nombre Completo *:</label>
@@ -155,7 +150,7 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                             required
                             defaultOptionLabel="Selecciona uno..."
                             classes="form-control"
-                            value={country}
+                            value={formState.perfil.pais}
                             onChange={(val) => selectCountry(val)} />
                         <label htmlFor="staticEmail">Pais *:</label>
                     </div>
@@ -167,9 +162,9 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                     placeholder='Cuéntanos sobre tí...'
                     className="form-control"
                     required
-                    name='biografia'
-                    onChange={onInputChange}
-                    defaultValue={formState.biografia}
+                    name='perfil'
+                    onChange={(evt) => onInputChange(evt, 'biografia')}
+                    value={formState.perfil.biografia}
                 ></textarea>
                 <label htmlFor="staticEmail">Biografía *:</label>
             </div>
@@ -179,9 +174,9 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                     <div className="form-floating col-sm-12">
                         <select
                             required
-                            value={formState.especialidad}
-                            name='especialidad'
-                            onChange={onInputChange}
+                            value={formState.perfil.especialidad}
+                            name='perfil'
+                            onChange={(evt) => onInputChange(evt, 'especialidad')}
                             className="form-select"
                             id="floatingSelect"
                         >
@@ -209,8 +204,8 @@ export const DatosPersonales = ( { user, currentTags, formState, onInputChange }
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti
-                            value={selectedTags}
-                            options={myTags}
+                            value={myTags}
+                            options={allTags}
                         />
                     </div>
                 </div>

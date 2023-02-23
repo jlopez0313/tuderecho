@@ -7,20 +7,40 @@ export const useForm = ( initialState = {} ) => {
         setFormState(newState)
     }
 
-    const onInputChange = (evt) => {
+    const onInputChange = (evt, key = null) => {
         const {name, value} = evt.target;
-        setFormState({
-            ...formState,
-            [name]: value
-        })
+        if ( key ) {
+            setFormState({
+                ...formState,
+                [name]: {
+                    ...formState[name],
+                    [key]: value
+                }
+            })
+        } else {
+            setFormState({
+                ...formState,
+                [name]: value
+            })
+        }
     }
 
-    const onRadioChange = (evt) => {
+    const onRadioChange = (evt, key = null) => {
         const {name, value} = evt.target;
-        setFormState({
-            ...formState,
-            [name]: evt.target.checked ? value : initialState[name]
-        })
+        if ( key ) {
+            setFormState({
+                ...formState,
+                [name]: {
+                    ...formState[name],
+                    [key]: evt.target.checked ? value : initialState[name][key]
+                }
+            })
+        } else {
+            setFormState({
+                ...formState,
+                [name]: evt.target.checked ? value : initialState[name]
+            })
+        }
     }
 
     const onResetForm = () => {

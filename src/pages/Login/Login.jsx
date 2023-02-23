@@ -4,7 +4,7 @@ import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
 import { loginAuth } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
-import { notify } from '@/global/global';
+import { notify } from '@/helpers/helpers';
 import { GmailLogin, FacebookLogin } from '@/firebase/auth';
 import GoogleIcon from '@/assets/images/pre-registro/google.png';
 import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
@@ -25,7 +25,6 @@ export const Login = () => {
     const onFacebookLogin = (data) => {
         FacebookLogin()
         .then( (data) => {
-            console.log( data )
             onProcessLogin(data.email, data.uid)
         }).catch( (error) => {
             // console.log( error )
@@ -52,10 +51,10 @@ export const Login = () => {
             notify('Bienvenido de nuevo!', 'success');
             switch (rol) {
                 case 'Abogado':
-                    navigate('/abogados/perfil');
+                    navigate('/abogados');
                 break;
                 case 'Cliente':
-                    navigate('/clientes/perfil');
+                    navigate('/clientes');
                 break;
                 case 'Admin':
                     navigate('/admin');

@@ -28,6 +28,11 @@ body {
     height: 100%;
 }
 
+.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .blurred {
     filter: blur(8px);
 }

@@ -6,8 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { list, update } from "@/store/user/thunks";
-import { notify } from '@/global/global';
+import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { Link } from 'react-router-dom';
 
 const breadcrumb = [
     {
@@ -71,7 +72,7 @@ export const UsuariosComponent = () => {
     }, [])
 
     return (
-        <div className="w-100 p-4">
+        <div className="w-100 p-4 overflow-auto">
             
             <h1 className="mb-4"> Usuarios </h1>
             
@@ -106,9 +107,9 @@ export const UsuariosComponent = () => {
                                         } 
                                     </td>
                                     <td>
-                                        <button className="btn me-1" title="Ver Detalle">
+                                        <Link className="btn me-1" to={`detalle/${item.id}`}>
                                             <FontAwesomeIcon className='text-danger' icon={faMagnifyingGlass} />
-                                        </button>
+                                        </Link>
                                         {
                                             item.estado === 'P'
                                             ? 

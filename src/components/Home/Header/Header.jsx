@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Logo from '@/assets/images/logo.png'
 import './Header.scss';
-import { logout } from '@/global/global';
+import { logout } from '@/helpers/helpers';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { decodeToken } from 'react-jwt';
 

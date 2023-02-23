@@ -1,9 +1,15 @@
 import { toast } from 'react-toastify';
 
+export const logout = ( navigate ) => {
+    notify('Tu sesión ha finalizado', 'success');
+    localStorage.removeItem('token')
+    navigate("/", { replace: true })
+}
+
 export const notify = ( message, type, newOptions = {} ) => {
     const options = {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -26,10 +32,4 @@ export const notify = ( message, type, newOptions = {} ) => {
             toast.error(message, options);
           break;
       }
-}
-
-export const logout = ( navigate ) => {
-  notify('Tu sesión ha finalizado', 'success');
-  localStorage.removeItem('token')
-  navigate("/", { replace: true })
 }

@@ -7,6 +7,8 @@ import { FormUsuarios } from '@/pages/Admin/Usuarios/FormUsuarios';
 import { Usuarios } from '@/pages/Admin/Usuarios/Usuarios';
 import { Routes, Route } from 'react-router-dom';
 import { NotFound } from '@/pages/Errors/NotFound';
+import { Detalle } from '@/pages/Admin/Usuarios/Detalle';
+import { Passwords } from '@/pages/Admin/Passwords/Passwords';
 
 export const AdminRoutes = () => {
   return (
@@ -15,6 +17,9 @@ export const AdminRoutes = () => {
         <Route path='usuarios'>
           <Route path='' element={ <Usuarios /> } />
           <Route path='crear' element={ <FormUsuarios /> } />
+          <Route path='detalle'>
+            <Route path=':id' element={ <Detalle /> } />
+          </Route>
         </Route>
         <Route path='tags'>
           <Route path='' element={ <Tags /> } />
@@ -30,6 +35,7 @@ export const AdminRoutes = () => {
             <Route path=':id' element={ <FormEspecialidades /> } />
           </Route>
         </Route>
+        <Route path='passwords' element={ <Passwords /> } />
         <Route path="*" element={ <NotFound />} />
     </Routes>
   )

@@ -4,14 +4,16 @@ import { faUsers, faRightFromBracket, faKey, faClose } from '@fortawesome/free-s
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import 'animate.css';
 import './SideMenu.scss';
-import { logout } from '@/global/global';
+import { logout } from '@/helpers/helpers';
+import { decodeToken } from "react-jwt";
 import { useSelector } from 'react-redux';
 
 export const SideMenu = ({animateClass, setAnimateClass}) => {
 
+    const token = localStorage.getItem('token') || '';
+    const { rol } = decodeToken(token);
+    const { user } = useSelector( state => state.user )
     const navigate = useNavigate()
-
-    const { user } = useSelector( (state) => state.user )
 
     const onToggleClass = () => {
         setAnimateClass('animate__slideOutRight')
@@ -27,13 +29,13 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
             <FontAwesomeIcon icon={faClose} className='position-absolute top-2 end-5 cursor-pointer text-white' onClick={() => onToggleClass()} />
 
             <div className='px-3 text-white w-100 text-center mb-4 top d-flex align-items-center'>
-                <img src={Avatar} alt="" className='avatar'/>
-                <span className='ms-4'> { user.name } </span>
+                <img src={user?.perfil?.photo || Avatar} alt="" className='avatar me-3'/>
+                <span> { user?.name } </span>
             </div>
             <ul>
                 <strong className='text-danger'> Mi Perfil </strong>
                 <li className='border shadow-sm p-2 m-2'> 
-                <Link to='/abogados/perfil'>
+                <Link to={`/${ rol.toLowerCase() }s/perfil`}>
                     <FontAwesomeIcon className='me-2' icon={faUsers} />
                     <strong className='text-dark'> Información Básica </strong>
                 </Link>
@@ -53,7 +55,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                 </li>
                 <strong className='text-danger d-block mt-5'> Inicio de Sesión </strong>
                 <li className='border shadow-sm p-2 m-2'> 
-                    <Link to='/abogados/passwords'>
+                    <Link to={`/${ rol.toLowerCase() }s/passwords`}>
                         <FontAwesomeIcon className='me-2' icon={faKey} />
                         <strong className='text-dark'> Cambiar Contraseña </strong>
                     </Link>

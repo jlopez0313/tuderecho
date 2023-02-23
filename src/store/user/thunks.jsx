@@ -74,8 +74,8 @@ export const update = (id, user) => {
         })
 
         if ( response ) {
-            // dispatch( list() )
-            return Promise.resolve( response );
+            dispatch( register( {...response.data.usuario, token: response.data.token } ) )
+            return Promise.resolve( response.data );
         } else {
             return Promise.resolve(false);
         }
