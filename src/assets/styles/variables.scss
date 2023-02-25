@@ -16,8 +16,14 @@
 $new-position-values: (
   1: 1%,
   2: 2%,
+  3: 3%,
+  4: 4%,
   5: 5%,
-  10: 10%
+  10: 10%,
+  80: 80%,
+  85: 85%,
+  90: 90%,
+  95: 95%,
 );
 
 $position-values: map-merge($position-values, $new-position-values);
@@ -38,6 +44,11 @@ $utilities: (
         property: top,
         values: $position-values
     ),
+    "height": (
+      property: height,
+      class: h,
+      values: $position-values
+    )
 );
 
 @import "bootstrap/scss/utilities/api";

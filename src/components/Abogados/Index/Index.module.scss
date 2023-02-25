@@ -1,3 +1,32 @@
 .container {
-    max-height: calc(100% - 120px);
+    height: calc(100% - 90px);
+}
+
+.left, .right {
+    flex-basis: 360px;
+    overflow-y: hidden;
+    top: 0;
+}
+
+.list {
+    .listItem {
+        width: 100%;
+
+        .thumb {
+            width: 100%;
+        }
+    }
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+     
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+    }
+     
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #bcc0c4; 
+    }
 }

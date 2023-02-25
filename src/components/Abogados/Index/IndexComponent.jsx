@@ -1,17 +1,23 @@
 import { Header } from "@/components/shared/Header/Header"
 import { Main } from "./Main/Main"
 import styles from './Index.module.scss';
+import { Left } from "./Left/Left";
+import { Right } from "./Right/Right";
 
 export const IndexComponent = () => {
   return (
     <>
       <Header />
-      <div className={`row py-4 overflow-auto ${styles.container}`}>
-        <div className="col-sm-4"></div>
-        <div className="col-sm-4">
+      <div className={`bg-light d-flex overflow-auto pt-2 ${styles.container}`}>
+        <div className={`position-sticky p-2 ${styles.left}`}>
+          <Left />
+        </div>
+        <div className="d-flex justify-content-center flex-grow-1 p-2">
           <Main />
         </div>
-        <div className="col-sm-4"></div>
+        <div className={`position-sticky p-2 ${styles.right}`}>
+          <Right />
+        </div>
       </div>      
     </>
   )

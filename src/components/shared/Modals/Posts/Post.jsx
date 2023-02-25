@@ -12,7 +12,7 @@ import { save } from '@/store/publicaciones/thunks';
 import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
 
-export const Post = (props) => {
+export const PostModal = (props) => {
 
   const [comment, setComment] = useState('');
   const [medias, setMedias] = useState([]);

@@ -15,14 +15,14 @@ export const Header = () => {
     const [showSubmenu, setShowSubmenu] = useState(false)
     const [animateClass, setAnimateClass] = useState('animate__slideInRight')
 
-    const onToggleSubMenu = () => {
+    const onShowSubMenu = () => {
         setShowSubmenu( true )
         setAnimateClass( 'animate__slideInRight' )
     }
    
     return (
-        <div className='header'>
-            <div className='p-4 d-flex flex-wrap border align-items-center justify-content-sm-between'>
+        <div className='header border shadow-sm'>
+            <div className='p-4 d-flex flex-wrap align-items-center justify-content-sm-between'>
                 <Link to="/abogados" className="order-1 m-auto">
                     <img src={Logo} className='logo2' />
                 </Link>
@@ -33,11 +33,20 @@ export const Header = () => {
                     <Button component={<List />} icon={faComment} />
                     <Button component={<Notificaciones />} icon={faBell} />
 
-                    <button className="btn me-3" onClick={ onToggleSubMenu}>
+                    <button className="btn me-3" onClick={onShowSubMenu}>
                         <FontAwesomeIcon icon={faBars} />
                     </button>
                     {
-                        showSubmenu ? <SideMenu animateClass={animateClass} setAnimateClass={setAnimateClass}/> : null
+                        showSubmenu ? 
+                            <>
+                                {
+                                    animateClass === 'animate__slideInRight' ? 
+                                        <div className="offcanvas-backdrop show"></div>
+                                    : null
+                                }
+                                <SideMenu animateClass={animateClass} setAnimateClass={setAnimateClass}/>
+                            </>
+                        : null
                     }
                 </div>
 

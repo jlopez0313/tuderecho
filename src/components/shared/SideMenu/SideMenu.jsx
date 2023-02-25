@@ -24,15 +24,16 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
     }
 
     return (
-        <div className={`side-menu-abogado bg-light border rounded-5 rounded-end animate__animated ${animateClass} animate__fast`}>
-            
-            <FontAwesomeIcon icon={faClose} className='position-absolute top-2 end-5 cursor-pointer text-white' onClick={() => onToggleClass()} />
-
-            <div className='px-3 text-white w-100 text-center mb-4 top d-flex align-items-center'>
-                <img src={user?.perfil?.photo || Avatar} alt="" className='avatar me-3'/>
-                <span> { user?.name } </span>
+        <div className={`offcanvas offcanvas-end show side-menu-abogado animate__animated ${animateClass} animate__fast`}>
+            <div className='bg-danger p-3'>
+                <FontAwesomeIcon icon={faClose} className='position-absolute top-2 end-4 cursor-pointer text-white' onClick={() => onToggleClass()} />
+                <div className='text-white w-100 text-center top d-flex align-items-center'>
+                    <img src={user?.perfil?.photo || Avatar} alt="" className='avatar me-3'/>
+                    <span className='w-100'> { user?.name } </span>
+                </div>
             </div>
-            <ul>
+
+            <ul className='mt-5'>
                 <strong className='text-danger'> Mi Perfil </strong>
                 <li className='border shadow-sm p-2 m-2'> 
                 <Link to={`/${ rol.toLowerCase() }s/perfil`}>
