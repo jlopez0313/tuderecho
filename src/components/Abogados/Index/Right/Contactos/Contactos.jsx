@@ -5,13 +5,11 @@ import styles from '../../Index.module.scss';
 export const Contactos = () => {
   return (
     <>    
-      <div className='border shadow-sm bg-white py-2 overflow-hidden h-100'>
-      
-        <div className="px-3">
-          <h5 className='text-danger w-100 fw-bold'> Contactos </h5>
-        </div>
+      <h5 className='text-danger w-100 fw-bold'> Contactos </h5>
 
-        <div className={`overflow-auto h-90 ps-3 pe-2 mt-2 ${styles.list}`}>
+      <div className='border shadow-sm bg-white overflow-hidden h-90'>
+
+        <div className={`overflow-auto h-95 pe-2 ps-3 mt-2 ${styles.list}`}>
           {
             [1,1,1,1,1].map( (item, key)=> {
 

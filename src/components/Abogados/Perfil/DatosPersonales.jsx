@@ -119,7 +119,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                                 })
                             }
                         </select>
-                        <label htmlFor="especialidad">Tipo de Documento *:</label>
+                        <label htmlFor="especialidad">Tipo de Documento *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
@@ -131,7 +131,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             value={formState.perfil.identificacion}
                             onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
-                        <label htmlFor="staticEmail">Identificación *:</label>
+                        <label htmlFor="staticEmail">Identificación *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
@@ -143,7 +143,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             defaultValue={ formState.name }
                             onChange={onInputChange}
                         />
-                        <label htmlFor="staticEmail">Nombre Completo *:</label>
+                        <label htmlFor="staticEmail">Nombre Completo *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <CountryDropdown
@@ -152,7 +152,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             classes="form-control"
                             value={formState.perfil.pais}
                             onChange={(val) => selectCountry(val)} />
-                        <label htmlFor="staticEmail">Pais *:</label>
+                        <label htmlFor="staticEmail">Pais *</label>
                     </div>
                 </div>
             </div>
@@ -166,7 +166,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                     onChange={(evt) => onInputChange(evt, 'biografia')}
                     value={formState.perfil.biografia}
                 ></textarea>
-                <label htmlFor="staticEmail">Biografía *:</label>
+                <label htmlFor="staticEmail">Biografía *</label>
             </div>
             
             <div className="mb-3 row">
@@ -190,7 +190,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                                 })
                             }
                         </select>
-                        <label htmlFor="especialidad">Especialidad *:</label>
+                        <label htmlFor="especialidad">Especialidad *</label>
                     </div>
                 </div>
 

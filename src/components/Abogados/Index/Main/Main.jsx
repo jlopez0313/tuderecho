@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { PostModal } from '@/components/shared/Modals/Posts/Post';
+import { PostModal } from '@/components/Modals/Posts/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { get, remove } from '@/store/publicaciones/thunks';
 import { notify } from '@/helpers/helpers'

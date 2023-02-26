@@ -73,7 +73,7 @@ export const PostModal = (props) => {
     >
         <Modal.Header closeButton className='text-center'>
             <Modal.Title className='m-auto' id="contained-modal-title-vcenter">
-                Crea un Post
+              {props.title}
             </Modal.Title>
         </Modal.Header>
       

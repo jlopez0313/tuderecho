@@ -85,7 +85,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                             country={ formState.perfil.pais }
                             value={formState.perfil.region}
                             onChange={(val) => selectRegion(val)} />
-                        <label htmlFor="staticEmail">Región *:</label>
+                        <label htmlFor="staticEmail">Región *</label>
                     </div>
                 </div>
                 <div className="col-sm-6">
@@ -99,7 +99,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                             value={formState.perfil.ciudad}
                             onChange={(evt) => onInputChange(evt, 'ciudad')}
                         />
-                        <label htmlFor="staticEmail">Ciudad *:</label>
+                        <label htmlFor="staticEmail">Ciudad *</label>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
                         <span className="form-control"> {formState.email} </span>
-                        <label htmlFor="staticEmail">Correo *:</label>
+                        <label htmlFor="staticEmail">Correo *</label>
                     </div>
                 </div>
                 <div className="form-floating col-sm-6">
@@ -120,7 +120,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                         value={formState.perfil.telefono}
                         onChange={(evt) => onInputChange(evt, 'telefono')}
                     />
-                    <label htmlFor="staticEmail">Teléfono *:</label>
+                    <label htmlFor="staticEmail">Teléfono *</label>
                 </div>
             </div>
             <div className="my-4 row ms-2">

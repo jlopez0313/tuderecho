@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
+import { conferenciaSlice } from "./conferencias/ConferenciaSlice"
 import { especialidadSlice } from "./especialidades/EspecialidadSlice"
 import { publicacionSlice } from "./publicaciones/PublicacionesSlice"
 import { tagSlice } from "./tags/TagSlice"
@@ -10,5 +11,6 @@ export const store = configureStore({
         especialidad: especialidadSlice.reducer,
         tag: tagSlice.reducer,
         publicacion: publicacionSlice.reducer,
+        conferencia: conferenciaSlice.reducer,
     }
 })

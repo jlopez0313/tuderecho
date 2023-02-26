@@ -7,15 +7,16 @@ import styles from '../../Index.module.scss';
 export const Videoteca = () => {
   return (
     <>
-        <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"> 
-            <FontAwesomeIcon icon={faPencil} />
-            <span className='ms-3'>Sube tu Video</span>
-        </div>
+        <h5 className='text-danger w-100 fw-bold'> Videoteca </h5>
 
-        <div className='border shadow-sm bg-white py-2 overflow-hidden h-90'>
+        <div className='border shadow-sm bg-white overflow-hidden h-90'>
 
-            <div className="px-3">
-                <h5 className='text-danger w-100 fw-bold'> Videoteca </h5>
+            <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"> 
+                <FontAwesomeIcon icon={faPencil} />
+                <span className='ms-3'>Sube tu Video</span>
+            </div>
+
+            <div className="px-3 mt-2">
                 <input className="m-auto form-control explorar" type="text" placeholder="Buscar..."/>
             </div>
 

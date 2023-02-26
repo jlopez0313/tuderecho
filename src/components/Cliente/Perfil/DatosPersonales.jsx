@@ -61,7 +61,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                                 })
                             }
                         </select>
-                        <label htmlFor="especialidad">Tipo de Documento *:</label>
+                        <label htmlFor="especialidad">Tipo de Documento *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
@@ -73,7 +73,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             defaultValue={formState.perfil.identificacion}
                             onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
-                        <label htmlFor="staticEmail">Identificación *:</label>
+                        <label htmlFor="staticEmail">Identificación *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
@@ -85,7 +85,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             value={ formState.name }
                             onChange={onInputChange}
                         />
-                        <label htmlFor="staticEmail">Nombre Completo *:</label>
+                        <label htmlFor="staticEmail">Nombre Completo *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <CountryDropdown
@@ -94,7 +94,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             classes="form-control"
                             value={formState.perfil.pais}
                             onChange={(val) => selectCountry(val)} />
-                        <label htmlFor="staticEmail">Pais *:</label>
+                        <label htmlFor="staticEmail">Pais *</label>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                                 country={ formState.perfil.pais }
                                 value={ formState.perfil.region }
                                 onChange={(val) => selectRegion(val)} />
-                            <label htmlFor="staticEmail">Región *:</label>
+                            <label htmlFor="staticEmail">Región *</label>
                     </div>
                 </div>
 
@@ -124,7 +124,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             defaultValue={formState.perfil.ciudad}
                             onChange={(evt) => onInputChange(evt, 'ciudad')}
                         />
-                        <label htmlFor="staticEmail">Ciudad *:</label>
+                        <label htmlFor="staticEmail">Ciudad *</label>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
                         <span className="form-control"> {formState.email} </span>
-                        <label htmlFor="staticEmail">Correo *:</label>
+                        <label htmlFor="staticEmail">Correo *</label>
                     </div>
                 </div>
                 <div className="form-floating col-sm-6">
@@ -146,7 +146,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                         defaultValue={formState.perfil.telefono}
                         onChange={(evt) => onInputChange(evt, 'telefono')}
                     />
-                    <label htmlFor="staticEmail">Teléfono  *:</label>
+                    <label htmlFor="staticEmail">Teléfono  *</label>
                 </div>
             </div>
             
@@ -159,7 +159,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                     onChange={(evt) => onInputChange(evt, 'biografia')}
                     value={formState.perfil.biografia}
                 ></textarea>
-                <label htmlFor="staticEmail">Biografía *:</label>
+                <label htmlFor="staticEmail">Biografía *</label>
             </div>
 
             <div className="my-4 row ms-2">
