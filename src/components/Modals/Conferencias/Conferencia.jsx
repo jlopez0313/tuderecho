@@ -16,7 +16,7 @@ import { create } from '@/store/conferencias/thunks';
 
 export const ConferenciaModal = (props) => {
 
-    const formData = {
+    const initFormData = {
         titulo: '',
         conferencista: '',
         fecha: '',
@@ -26,7 +26,7 @@ export const ConferenciaModal = (props) => {
         archivo: '',
     }
 
-    const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(formData)
+    const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const dispatch = useDispatch()
 
@@ -62,7 +62,8 @@ export const ConferenciaModal = (props) => {
 
         callSave
         .then( () => {
-            notify('Conferencia registrada!', 'success')
+            notify('Conferencia registrada!', 'success');
+            onSetFormState(initFormData)
             props.onHide();
         })
         .catch( error => {
