@@ -4,6 +4,7 @@ import { especialidadSlice } from "./especialidades/EspecialidadSlice"
 import { publicacionSlice } from "./publicaciones/PublicacionesSlice"
 import { tagSlice } from "./tags/TagSlice"
 import { userSlice } from "./user/UserSlice"
+import { videotecaSlice } from "./videoteca/VideotecaSlice"
 
 export const store = configureStore({
     reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
         tag: tagSlice.reducer,
         publicacion: publicacionSlice.reducer,
         conferencia: conferenciaSlice.reducer,
+        videoteca: videotecaSlice.reducer,
     }
 })

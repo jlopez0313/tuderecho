@@ -6,46 +6,23 @@ import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
-import { subDays } from 'date-fns'
-import es from "date-fns/locale/es";
-import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import style from './Conferencia.module.scss'
-import { create } from '@/store/conferencias/thunks';
+import style from './Videoteca.module.scss'
+import { create } from '@/store/videoteca/thunks';
 
-export const ConferenciaModal = (props) => {
+export const VideotecaModal = (props) => {
 
     const initFormData = {
         titulo: '',
         conferencista: '',
-        fecha: '',
-        objetivo: '',
+        video: '',
         gratis: 'S',
         precio: '',
-        archivo: '',
     }
 
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const dispatch = useDispatch()
-
-    const onSetStartDate = (date) => {
-        const evt = { target: {name: 'fecha', value: date} }
-        onInputChange( evt )
-    }
-
-    const onUploadImage = ( evt ) => {
-
-        const reader = new FileReader();
-        reader.readAsDataURL(evt.target.files[0]);
-        reader.onload = function(event) {
-            const myEvent = { target: { name: 'archivo', value: event.target.result }}
-            onInputChange( myEvent )
-        };
-            reader.onerror = function() {
-            notify("No se pudo cargar la imágen", "error");
-        };
-    }
 
     const onDoSubmit = (evt) => {
         evt.preventDefault();
@@ -61,18 +38,14 @@ export const ConferenciaModal = (props) => {
 
         callSave
         .then( () => {
-            notify('Conferencia registrada!', 'success');
+            notify('Videoteca registrada!', 'success');
             onSetFormState(initFormData)
             props.onHide();
         })
         .catch( error => {
-            notify('onDoSubmit Conferencia: Internal Error', 'error')
+            notify('onDoSubmit Videoteca: Internal Error', 'error')
         })
     }
-
-    useEffect(() => {
-        registerLocale("es-CO", es);
-    }, []);
 
     return (
         <Modal
@@ -115,34 +88,15 @@ export const ConferenciaModal = (props) => {
                         </div>
 
                         <div className="form-floating mb-3">
-                            <DatePicker
+                            <input
                                 required
+                                name="video"
                                 className='form-control'
-                                withPortal
-                                placeholderText="Fecha *"
-                                isClearable
-                                showTimeSelect
-                                dateFormat="Pp"
-                                timeFormat="p"
-                                locale={'es-CO'}
-                                showPopperArrow={false}
-                                selected={formState.fecha}
-                                minDate={subDays(new Date(), -2)}
-                                onChange={(date) => onSetStartDate(date)}
-                            />
-                        </div>
-                        
-                        <div className="form-floating mb-3">
-                            <textarea
-                                required
-                                name="objetivo"
-                                className='form-control'
-                                placeholder='Describe el objetivo de la Conferencia'
+                                placeholder='Ej: UyI4v5sxT54'
                                 onChange={onInputChange}
-                                value={ formState.objetivo }
-                                style={{height: '150px'}}
-                            ></textarea>
-                            <label htmlFor="especialidad">Objetivo *</label>
+                                value={ formState.video }
+                            />
+                            <label htmlFor="especialidad">Youtube Video ID *</label>
                         </div>
 
                         <div className="d-flex justify-content-evenly mb-3">
@@ -173,17 +127,7 @@ export const ConferenciaModal = (props) => {
                             : null
                         }
 
-                        <div className="mb-3">
-                            <input
-                                required
-                                className="form-control"
-                                type="file"
-                                accept='image/png, image/jpeg'
-                                onChange={onUploadImage}
-                            />
-                        </div>
-
-                        <img src={formState.archivo} alt='' className={style.archivo}/>
+                        <img src={`http://img.youtube.com/vi/${formState.video}/0.jpg`} alt='' className={style.archivo}/>
 
                 </Modal.Body>
 

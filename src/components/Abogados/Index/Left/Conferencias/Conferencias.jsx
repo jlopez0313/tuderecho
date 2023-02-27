@@ -17,7 +17,6 @@ export const Conferencias = () => {
 
     const onGetList = async () => {
         dispatch( list() )
-        console.log( lista )
     }
 
     const onRefreshConferencias = () => {
