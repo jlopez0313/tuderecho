@@ -13,7 +13,7 @@ export const Conferencia = ({item, onRemove}) => {
 
   return (
     <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${styles.listItem}`}>
-        <Card.Img variant="top" className='rounded-0' src={item.archivo}/>
+        <Card.Img variant="top" className='rounded-0' src={item.archivo} alt='' />
 
         <Card.Body>
           {

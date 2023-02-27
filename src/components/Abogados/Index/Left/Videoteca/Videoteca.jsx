@@ -30,10 +30,10 @@ export const Videoteca = () => {
         removed
         .then( () => {
             onGetList();
-            notify('Conferencia removida', 'success')
+            notify('Video removido', 'success')
         })
         .catch( error => {
-            notify('Conferencias onRemove: Internal Error', 'error')
+            notify('Video onRemove: Internal Error', 'error')
         })
     }
 
@@ -61,7 +61,7 @@ export const Videoteca = () => {
                 <div className={`overflow-auto h-75 pe-2 ps-3 mt-2 ${styles.list}`}>
                     {
                         lista.map((item, key) => {
-                            return <Video item={item} key={key} />
+                            return <Video item={item} key={key} onRemove={onRemove} />
                         })
                     }
                 </div>

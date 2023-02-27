@@ -12,7 +12,7 @@ export const Video = ({item, onRemove}) => {
 
   return (
     <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${styles.listItem}`}>
-        <Card.Img variant="top" className='rounded-0' src={`http://img.youtube.com/vi/${item.video}/0.jpg`}/>
+        <Card.Img variant="top" className='rounded-0' src={`http://img.youtube.com/vi/${item.video}/0.jpg`} alt='' />
 
         <Card.Body>
           {

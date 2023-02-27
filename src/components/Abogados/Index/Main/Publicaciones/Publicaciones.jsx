@@ -18,6 +18,7 @@ export const Publicaciones = ({publi, onRemoveComment}) => {
                         variant="top"
                         className={`${styles.avatar}`}
                         src={ publi.user.perfil.photo || Avatar}
+                        alt=''
                     />
                 </div>
                 <div className="ms-2 d-flex flex-column w-100">
