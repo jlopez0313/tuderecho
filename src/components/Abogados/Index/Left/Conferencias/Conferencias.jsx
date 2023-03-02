@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Conferencia } from './Conferencia/Conferencia';
+import { Conferencia } from '@/components/shared/Conferencia/Conferencia';
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from '../../Index.module.scss';
+import styles from '@/assets/styles/shared.module.scss';
 import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';
 import { list, remove } from '@/store/conferencias/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,7 +45,7 @@ export const Conferencias = () => {
         <>
             <h5 className='text-danger w-100 fw-bold'> Conferencias </h5>
 
-            <div className='border shadow-sm bg-white overflow-hidden h-95'>
+            <div className='border shadow-sm bg-white overflow-hidden h-100'>
 
                 <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"
                     onClick={() => setModalShow(true)}

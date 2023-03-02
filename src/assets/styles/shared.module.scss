@@ -1,0 +1,23 @@
+// Left - Main - Right
+.list {
+    .listItem {
+        width: 100%;
+
+        .thumb {
+            width: 100%;
+        }
+    }
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: #bcc0c4; 
+    }
+}

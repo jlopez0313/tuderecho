@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Header } from "@/components/shared/Header/Header"
 import { DatosPersonales } from "./DatosPersonales"
 import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
@@ -71,7 +70,6 @@ export const PerfilComponent = () => {
 
   return (
     <>
-      <Header />
       <div className="container pb-5">
         <form onSubmit={onDoSubmit}>
           

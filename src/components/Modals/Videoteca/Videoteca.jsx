@@ -10,14 +10,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import style from './Videoteca.module.scss'
 import { create } from '@/store/videoteca/thunks';
 
-export const VideotecaModal = (props) => {
+export const VideotecaModal = ({item = {}, ...props}) => {
 
     const initFormData = {
-        titulo: '',
-        conferencista: '',
-        video: '',
-        gratis: 'S',
-        precio: '',
+        titulo:     item?.titulo    || '',
+        video:      item?.video     || '',
+        gratis:     item?.gratis    || 'S',
+        precio:     item?.precio    || '',
+        conferencista:  item?.conferencista     || '',
     }
 
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
@@ -26,6 +26,7 @@ export const VideotecaModal = (props) => {
 
     const onDoSubmit = (evt) => {
         evt.preventDefault();
+
         const token = localStorage.getItem('token') || '';
         const { uid } = decodeToken(token);
 
@@ -46,6 +47,14 @@ export const VideotecaModal = (props) => {
             notify('onDoSubmit Videoteca: Internal Error', 'error')
         })
     }
+
+    useEffect(() => {
+        if ( item.titulo ) {
+            onSetFormState({
+                ...item,
+            })
+        }
+    }, [item]);
 
     return (
         <Modal

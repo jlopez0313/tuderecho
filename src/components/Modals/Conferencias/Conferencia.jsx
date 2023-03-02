@@ -6,30 +6,32 @@ import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
-import { subDays } from 'date-fns'
+import { format, subDays } from 'date-fns'
 import es from "date-fns/locale/es";
 import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Conferencia.module.scss'
 import { create } from '@/store/conferencias/thunks';
 
-export const ConferenciaModal = (props) => {
+export const ConferenciaModal = ({item = {}, ...props}) => {
 
     const initFormData = {
-        titulo: '',
-        conferencista: '',
-        fecha: '',
-        objetivo: '',
-        gratis: 'S',
-        precio: '',
-        archivo: '',
+        titulo:     item?.titulo    || '',
+        fecha:      item?.fecha     || '',
+        objetivo:   item?.objetivo  || '',
+        gratis:     item?.gratis    || 'S',
+        precio:     item?.precio    || '',
+        archivo:    item?.archivo   || '',
+        conferencista: item?.conferencista || '',
     }
 
+    
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const dispatch = useDispatch()
 
     const onSetStartDate = (date) => {
+        console.log(date)
         const evt = { target: {name: 'fecha', value: date} }
         onInputChange( evt )
     }
@@ -63,7 +65,7 @@ export const ConferenciaModal = (props) => {
         .then( () => {
             notify('Conferencia registrada!', 'success');
             onSetFormState(initFormData)
-            props.onHide();
+            props.onHide( true );
         })
         .catch( error => {
             notify('onDoSubmit Conferencia: Internal Error', 'error')
@@ -73,6 +75,15 @@ export const ConferenciaModal = (props) => {
     useEffect(() => {
         registerLocale("es-CO", es);
     }, []);
+
+    useEffect(() => {
+        if ( item.fecha ) {
+            onSetFormState({
+                ...item,
+                fecha: new Date( item.fecha )
+            })
+        }
+    }, [item]);
 
     return (
         <Modal
@@ -97,7 +108,7 @@ export const ConferenciaModal = (props) => {
                                 className='form-control'
                                 placeholder='Ej: El Abogado como mediador de conflictos'
                                 onChange={onInputChange}
-                                value={ formState.titulo }
+                                defaultValue={ formState.titulo }
                             />
                             <label htmlFor="especialidad">Título *</label>
                         </div>
@@ -109,7 +120,7 @@ export const ConferenciaModal = (props) => {
                                 className='form-control'
                                 placeholder='Ej: Pedro Pérez'
                                 onChange={onInputChange}
-                                value={ formState.conferencista }
+                                defaultValue={ formState.conferencista }
                             />
                             <label htmlFor="especialidad">Nombre del Conferencista *</label>
                         </div>
@@ -166,7 +177,7 @@ export const ConferenciaModal = (props) => {
                                         className='form-control'
                                         placeholder='Ej: $50 USD'
                                         onChange={onInputChange}
-                                        value={ formState.precio }
+                                        defaultValue={ formState.precio }
                                     />
                                     <label htmlFor="especialidad">Precio Suscripción *</label>
                                 </div>

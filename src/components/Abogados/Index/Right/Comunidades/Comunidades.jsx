@@ -46,7 +46,7 @@ export const Comunidades = () => {
 
       <h5 className='text-danger w-100 fw-bold'> Comunidades </h5>
 
-      <div className='border shadow-sm bg-white overflow-hidden h-95'>
+      <div className='border shadow-sm bg-white overflow-hidden h-100'>
         
         <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"
           onClick={() => setModalShow(true)}

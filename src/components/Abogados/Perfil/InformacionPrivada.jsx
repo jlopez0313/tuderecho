@@ -37,7 +37,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                             minLength={3}
                             name='perfil'
                             onChange={(evt) => onInputChange(evt, 'tarjeta_profesional')} 
-                            value={formState.perfil.tarjeta_profesional}
+                            value={formState.perfil?.tarjeta_profesional}
                         />
                         <label htmlFor="staticEmail">Tarjeta Profesional:</label>
                     </div>
@@ -57,7 +57,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                                 value="S"
                                 name='perfil'
                                 onChange={(evt) => onRadioChange(evt, 'estudiante')}
-                                checked={ formState.perfil.estudiante === 'S' }
+                                checked={ formState.perfil?.estudiante === 'S' }
                             />
                             <label className="form-check-label" htmlFor="inlineCheckbox1"> SI </label>
                         </div>
@@ -68,7 +68,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                                 value="S"
                                 name='perfil'
                                 onChange={(evt) => onRadioChange(evt, 'decreto176')}
-                                checked={ formState.perfil.decreto176 === 'S' }
+                                checked={ formState.perfil?.decreto176 === 'S' }
                             />
                             <label className="form-check-label" htmlFor="inlineCheckbox2"> Estudiante de Derecho - licencia temporal (Decreto 176 de 1971) </label>
                         </div>
@@ -82,8 +82,8 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                             required
                             defaultOptionLabel='Selecciona una...'
                             className="form-control"
-                            country={ formState.perfil.pais }
-                            value={formState.perfil.region}
+                            country={ formState.perfil?.pais }
+                            value={formState.perfil?.region}
                             onChange={(val) => selectRegion(val)} />
                         <label htmlFor="staticEmail">Región *</label>
                     </div>
@@ -96,7 +96,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                             required
                             name="perfil"
                             className="form-control"
-                            value={formState.perfil.ciudad}
+                            value={formState.perfil?.ciudad}
                             onChange={(evt) => onInputChange(evt, 'ciudad')}
                         />
                         <label htmlFor="staticEmail">Ciudad *</label>
@@ -117,7 +117,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                         required  
                         className="form-control"
                         name="perfil"
-                        value={formState.perfil.telefono}
+                        value={formState.perfil?.telefono}
                         onChange={(evt) => onInputChange(evt, 'telefono')}
                     />
                     <label htmlFor="staticEmail">Teléfono *</label>
@@ -132,7 +132,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                         name="perfil"
                         onChange={(evt) => onRadioChange(evt, 'cuenta')}
                         value='I'
-                        checked={ formState.perfil.cuenta === 'I' }
+                        checked={ formState.perfil?.cuenta === 'I' }
                     />
                     <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">Desactivar Cuenta temporalmente</label>
                 </div>

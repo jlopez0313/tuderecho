@@ -17,7 +17,7 @@ export const Publicaciones = ({publi, onRemoveComment}) => {
                     <Card.Img
                         variant="top"
                         className={`${styles.avatar}`}
-                        src={ publi.user.perfil.photo || Avatar}
+                        src={ publi.user.perfil?.photo || Avatar}
                         alt=''
                     />
                 </div>

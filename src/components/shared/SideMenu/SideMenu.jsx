@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUsers, faRightFromBracket, faKey, faClose } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faRightFromBracket, faKey, faClose, faUser, faVideo, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import 'animate.css';
 import './SideMenu.scss';
@@ -34,13 +34,34 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
             </div>
 
             <ul className='mt-5'>
-                <strong className='text-danger'> Mi Perfil </strong>
+                <strong className='text-danger d-block'> Mi Perfil </strong>
                 <li className='border shadow-sm p-2 m-2'> 
-                <Link to={`/${ rol.toLowerCase() }s/perfil`}>
-                    <FontAwesomeIcon className='me-2' icon={faUsers} />
-                    <strong className='text-dark'> Información Básica </strong>
-                </Link>
+                    <Link to={`/${ rol.toLowerCase() }s/perfil`}>
+                        <FontAwesomeIcon className='me-2' icon={faUser} />
+                        <strong className='text-dark'> Información Básica </strong>
+                    </Link>
                 </li>
+
+                <strong className='text-danger d-block mt-5'> Mi Gestión </strong>
+                <li className='border shadow-sm p-2 m-2'> 
+                    <Link to={`/${ rol.toLowerCase() }s/gestion/comunidades`}>
+                        <FontAwesomeIcon className='me-2' icon={faUsers} />
+                        <strong className='text-dark'> Comunidades </strong>
+                    </Link>
+                </li>
+                <li className='border shadow-sm p-2 m-2'> 
+                    <Link to={`/${ rol.toLowerCase() }s/gestion/conferencias`}>
+                        <FontAwesomeIcon className='me-2' icon={faPersonChalkboard} />
+                        <strong className='text-dark'> Conferencias </strong>
+                    </Link>
+                </li>
+                <li className='border shadow-sm p-2 m-2'> 
+                    <Link to={`/${ rol.toLowerCase() }s/gestion/videoteca`}>
+                        <FontAwesomeIcon className='me-2' icon={faVideo} />
+                        <strong className='text-dark'> Videotecas </strong>
+                    </Link>
+                </li>
+
                 <strong className='text-danger d-block mt-5'> Lenguaje de la Aplicación </strong>
                 <li className='mt-3'>
                     <div className="form-check">
@@ -54,6 +75,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                         <label className="form-check-label" htmlFor="inlineCheckbox2"> <strong> Inglés </strong> </label>
                     </div>
                 </li>
+
                 <strong className='text-danger d-block mt-5'> Inicio de Sesión </strong>
                 <li className='border shadow-sm p-2 m-2'> 
                     <Link to={`/${ rol.toLowerCase() }s/passwords`}>

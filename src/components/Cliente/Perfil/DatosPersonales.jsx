@@ -40,7 +40,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
             <div className="row">
                 <div className="col-sm-3 mb-3 text-center">
                     <div className="avatar-container m-auto d-flex justify-content-center align-items-center cursor-pointer" onClick={onClickImage}>
-                        <img src={formState.perfil.photo || Avatar} alt='' className='avatar'/>
+                        <img src={formState.perfil?.photo || Avatar} alt='' className='avatar'/>
                         <input type='file' accept='image/png, image/jpeg' className='d-none' ref={image} onChange={onUploadImage} />
                     </div>
                 </div>
@@ -50,7 +50,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             required
                             className="form-select"
                             name='perfil'
-                            value={formState.perfil.tipoDoc}
+                            value={formState.perfil?.tipoDoc}
                             onChange={(evt) => onInputChange(evt, 'tipoDoc')}
                             id="floatingSelect"
                         >
@@ -70,7 +70,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             required
                             className="form-control"
                             name='perfil'
-                            defaultValue={formState.perfil.identificacion}
+                            defaultValue={formState.perfil?.identificacion}
                             onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
                         <label htmlFor="staticEmail">Identificación *</label>
@@ -92,7 +92,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             required
                             defaultOptionLabel="Selecciona uno..."
                             classes="form-control"
-                            value={formState.perfil.pais}
+                            value={formState.perfil?.pais}
                             onChange={(val) => selectCountry(val)} />
                         <label htmlFor="staticEmail">Pais *</label>
                     </div>
@@ -106,8 +106,8 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                                 required
                                 defaultOptionLabel='Selecciona una...'
                                 className="form-control"
-                                country={ formState.perfil.pais }
-                                value={ formState.perfil.region }
+                                country={ formState.perfil?.pais }
+                                value={ formState.perfil?.region }
                                 onChange={(val) => selectRegion(val)} />
                             <label htmlFor="staticEmail">Región *</label>
                     </div>
@@ -121,7 +121,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             className="form-control"
                             placeholder="Ej: Cali"
                             name="perfil"
-                            defaultValue={formState.perfil.ciudad}
+                            defaultValue={formState.perfil?.ciudad}
                             onChange={(evt) => onInputChange(evt, 'ciudad')}
                         />
                         <label htmlFor="staticEmail">Ciudad *</label>
@@ -143,7 +143,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                         required
                         className="form-control"
                         name="perfil"
-                        defaultValue={formState.perfil.telefono}
+                        defaultValue={formState.perfil?.telefono}
                         onChange={(evt) => onInputChange(evt, 'telefono')}
                     />
                     <label htmlFor="staticEmail">Teléfono  *</label>
@@ -157,7 +157,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                     required
                     name='perfil'
                     onChange={(evt) => onInputChange(evt, 'biografia')}
-                    value={formState.perfil.biografia}
+                    value={formState.perfil?.biografia}
                 ></textarea>
                 <label htmlFor="staticEmail">Biografía *</label>
             </div>
@@ -171,7 +171,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                         name="perfil"
                         onChange={(evt) => onRadioChange(evt, 'cuenta')}
                         value='I'
-                        checked={ formState.perfil.cuenta === 'I' }
+                        checked={ formState.perfil?.cuenta === 'I' }
                     />
                     <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">Desactivar Cuenta temporalmente</label>
                 </div>

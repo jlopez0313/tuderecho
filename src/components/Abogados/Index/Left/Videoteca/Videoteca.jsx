@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Video } from './Video/Video';
+import { Video } from '@/components/shared/Video/Video';
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from '../../Index.module.scss';
+import styles from '@/assets/styles/shared.module.scss';
 import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
 import { list, remove } from '@/store/videoteca/thunks';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,7 +45,7 @@ export const Videoteca = () => {
         <>
             <h5 className='text-danger w-100 fw-bold'> Videoteca </h5>
 
-            <div className='border shadow-sm bg-white overflow-hidden h-90'>
+            <div className='border shadow-sm bg-white overflow-hidden h-100'>
 
                 <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"
                     onClick={() => setModalShow(true)}
@@ -60,7 +60,7 @@ export const Videoteca = () => {
 
                 <div className={`overflow-auto h-75 pe-2 ps-3 mt-2 ${styles.list}`}>
                     {
-                        lista.map((item, key) => {
+                        lista?.map((item, key) => {
                             return <Video item={item} key={key} onRemove={onRemove} />
                         })
                     }

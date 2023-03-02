@@ -36,7 +36,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
     }
 
     const onSetMyTags = () => {
-        const myTags = tags.filter( tag => formState.perfil.tags.includes(tag.id) )
+        const myTags = tags.filter( tag => formState.perfil?.tags.includes(tag.id) )
         setMyTags(
             myTags.map( (tag) => {
                 return {
@@ -98,7 +98,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
             <div className="row">
                 <div className="col-sm-3 mb-3 text-center">
                     <div className="avatar-container m-auto d-flex justify-content-center align-items-center cursor-pointer" onClick={onClickImage}>
-                        <img src={formState.perfil.photo || Avatar} alt='' className='avatar'/>
+                        <img src={formState.perfil?.photo || Avatar} alt='' className='avatar'/>
                         <input type='file' accept='image/png, image/jpeg' className='d-none' ref={image} onChange={onUploadImage} />
                     </div>
                 </div>
@@ -108,7 +108,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             required
                             className="form-select"
                             name='perfil'
-                            value={formState.perfil.tipoDoc}
+                            value={formState.perfil?.tipoDoc}
                             onChange={(evt) => onInputChange(evt, 'tipoDoc')}
                             id="floatingSelect"
                         >
@@ -128,7 +128,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             required
                             className="form-control"
                             name='perfil'
-                            value={formState.perfil.identificacion}
+                            value={formState.perfil?.identificacion}
                             onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
                         <label htmlFor="staticEmail">Identificación *</label>
@@ -150,7 +150,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             required
                             defaultOptionLabel="Selecciona uno..."
                             classes="form-control"
-                            value={formState.perfil.pais}
+                            value={formState.perfil?.pais}
                             onChange={(val) => selectCountry(val)} />
                         <label htmlFor="staticEmail">Pais *</label>
                     </div>
@@ -164,7 +164,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                     required
                     name='perfil'
                     onChange={(evt) => onInputChange(evt, 'biografia')}
-                    value={formState.perfil.biografia}
+                    value={formState.perfil?.biografia}
                 ></textarea>
                 <label htmlFor="staticEmail">Biografía *</label>
             </div>
@@ -174,7 +174,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                     <div className="form-floating col-sm-12">
                         <select
                             required
-                            value={formState.perfil.especialidad}
+                            value={formState.perfil?.especialidad}
                             name='perfil'
                             onChange={(evt) => onInputChange(evt, 'especialidad')}
                             className="form-select"
