@@ -1,9 +1,10 @@
 import Card from 'react-bootstrap/Card';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faMessage, faThumbsUp, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { decodeToken } from "react-jwt";
 import styles from './Publicaciones.module.scss';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
 
 export const Publicaciones = ({publi, onRemoveComment}) => {
 
@@ -64,6 +65,24 @@ export const Publicaciones = ({publi, onRemoveComment}) => {
                     : null
                 }
             </Card.Body>
+            <Card.Footer>
+                <div className="d-flex justify-content-between">
+                    <small className='text-danger cursor-pointer'>
+                        32 <FontAwesomeIcon icon={faThumbsUp} className='me-2' />
+                        Me Gusta
+                    </small>
+                    
+                    <small className='text-danger cursor-pointer'>
+                        45 <FontAwesomeIcon icon={faMessage} className='me-2' />
+                        Comentar
+                    </small>
+                    
+                    <small className='text-danger cursor-pointer'> 
+                        12 <FontAwesomeIcon icon={faShare} className='me-2' />
+                        Compartir
+                    </small>
+                </div>
+            </Card.Footer>
         </Card>
     )
 }

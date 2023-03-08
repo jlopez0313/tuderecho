@@ -89,6 +89,21 @@ small {
     font-size: .75em;
 }
 
+.bs-popover-auto[data-popper-placement^=bottom],
+.bs-popover-bottom {
+    .popover-arrow {
+        &::after {
+            border-bottom-color: var(--bg-red);
+        }
+    }
+
+    .popover-header {
+        &::before {
+            border-bottom: 0;
+        }
+    }
+}
+
 
 @media (min-width: 576px) {
     .w-sm-25 {

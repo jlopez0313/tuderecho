@@ -8,12 +8,13 @@ export const Notificaciones = forwardRef(
             <Popover
                 ref={ref}
                 {...props}
+                className='rounded-0'
                 style={{
-                    ...props.style, maxWidth: '360px', width: '360px'
+                    ...props.style, maxWidth: '345px', width: '345px', height: 'calc(100% - 90px)'
                 }}
             >
-                <Popover.Header>
-                    <strong>Notificacfiones</strong>
+                <Popover.Header className='bg-danger text-white rounded-0'>
+                    <strong> Notificaciones </strong>
                 </Popover.Header>
                 <Popover.Body>
                     <div>Notificaciones</div>    
