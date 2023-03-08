@@ -1,9 +1,11 @@
 import { backendApi } from "@/api/backendApi"
-import { comunidad, set } from "./ComunidadesSlice"
+import { comunidad, set, setLoading } from "./ComunidadesSlice"
 
-export const list = () => {
+export const myList = ( search = '' ) => {
     return async( dispatch ) => {
-        const response = await backendApi.get('comunidades/', { 
+        dispatch( setLoading( true ) )
+
+        const response = await backendApi.post(`comunidades/my-list/${search}`, {}, { 
             headers: {
                 'x-token': localStorage.getItem('token')
             }
@@ -11,9 +13,32 @@ export const list = () => {
 
         if ( response ) {
             dispatch( set( response.data.comunidades ) )
-            return Promise.resolve(true);
+            dispatch( setLoading( false ) )
+
+            return Promise.resolve( true );
         } else {
-            return Promise.resolve(false);
+            return Promise.resolve( false );
+        }
+    }
+}
+
+export const list = ( search = '' ) => {
+    return async( dispatch ) => {
+        dispatch( setLoading( true ) )
+
+        const response = await backendApi.get(`comunidades/${search}`, { 
+            headers: {
+                'x-token': localStorage.getItem('token')
+            }
+        })
+
+        if ( response ) {
+            dispatch( set( response.data.comunidades ) )
+            dispatch( setLoading( false ) )
+
+            return Promise.resolve( true );
+        } else {
+            return Promise.resolve( false );
         }
     }
 }

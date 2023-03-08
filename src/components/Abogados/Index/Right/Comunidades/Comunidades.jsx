@@ -7,22 +7,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
 import { list, remove } from '@/store/comunidades/thunks';
 import { notify } from '@/helpers/helpers';
+import Spinner from 'react-bootstrap/Spinner';
 
 export const Comunidades = () => {
 
   const dispatch = useDispatch();
-  const { comunidades: lista } = useSelector( (state) => state.comunidad )
+  const { comunidades: lista, isLoading } = useSelector( (state) => state.comunidad )
 
   const [modalShow, setModalShow] = useState(false);
+  const [search, setSearch] = useState('');
 
   const onGetList = async () => {
-    dispatch( list() )
+    dispatch( list(search) )
   }
 
   const onRefreshComunidades = () => {
     onGetList()
     setModalShow(false)
   }
+  
   const onRemove = ( id ) => {
     const removed = dispatch( remove( id ) )
 
@@ -36,9 +39,14 @@ export const Comunidades = () => {
     })
   }
 
+  const doSetSearch = (evt) => {
+    setSearch( evt.target.value )
+  }
+
   useEffect( () => {
-      onGetList()
-  }, [])
+    const timer = setTimeout(() => onGetList(), search ? 1000 : 0);
+      return () => clearTimeout(timer);
+  }, [search])
 
 
   return (
@@ -56,15 +64,21 @@ export const Comunidades = () => {
         </div>
 
         <div className="px-3 mt-2">
-          <input className="m-auto form-control explorar" type="text" placeholder="Buscar..."/>
+          <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
         </div>
 
         <div className={`overflow-auto h-75 ps-3 pe-2 mt-2 ${styles.list}`}>
           {
-            lista.map( (item, key)=> {
+            isLoading
+            ? 
+                <div className="text-center">
+                    <Spinner animation="grow" />
+                </div>
+            :
+              lista.map( (item, key)=> {
 
-                return <Comunidad key={key} item={item} onRemove={onRemove} />
-            })
+                  return <Comunidad key={key} item={item} onRemove={onRemove} />
+              })
           }
         </div>
 

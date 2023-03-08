@@ -7,16 +7,18 @@ import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';
 import { list, remove } from '@/store/conferencias/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { notify } from '@/helpers/helpers';
+import Spinner from 'react-bootstrap/Spinner';
 
 export const Conferencias = () => {
     
     const dispatch = useDispatch();
-    const { conferencias: lista } = useSelector( (state) => state.conferencia )
+    const { conferencias: lista, isLoading } = useSelector( (state) => state.conferencia )
 
     const [modalShow, setModalShow] = useState(false);
+    const [search, setSearch] = useState('');
 
     const onGetList = async () => {
-        dispatch( list() )
+        dispatch( list(search) )
     }
 
     const onRefreshConferencias = () => {
@@ -37,9 +39,14 @@ export const Conferencias = () => {
         })
     }
 
+    const doSetSearch = (evt) => {
+      setSearch( evt.target.value )
+    }
+
     useEffect( () => {
-        onGetList()
-    }, [])
+        const timer = setTimeout(() => onGetList(), search ? 1000 : 0);
+        return () => clearTimeout(timer);
+    }, [search])
 
     return (
         <>
@@ -55,14 +62,20 @@ export const Conferencias = () => {
                 </div>
 
                 <div className="px-3 mt-2">
-                    <input className="m-auto form-control explorar" type="text" placeholder="Buscar..."/>
+                    <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
                 </div>
 
                 <div className={`overflow-auto h-75 ps-3 pe-2 mt-2 ${styles.list}`}>
                     {
-                        lista?.map((item, key) => {
-                            return <Conferencia item={item} key={key} onRemove={onRemove} />
-                        })
+                        isLoading
+                        ? 
+                            <div className="text-center">
+                                <Spinner animation="grow" />
+                            </div>
+                        :
+                            lista?.map((item, key) => {
+                                return <Conferencia item={item} key={key} onRemove={onRemove} />
+                            })
                     }
                 </div>
 

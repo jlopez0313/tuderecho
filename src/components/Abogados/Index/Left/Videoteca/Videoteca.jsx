@@ -7,16 +7,18 @@ import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
 import { list, remove } from '@/store/videoteca/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { notify } from '@/helpers/helpers';
+import Spinner from 'react-bootstrap/Spinner';
 
 export const Videoteca = () => {
 
     const dispatch = useDispatch();
-    const { videoteca: lista } = useSelector( (state) => state.videoteca )
+    const { videoteca: lista, isLoading } = useSelector( (state) => state.videoteca )
     
     const [modalShow, setModalShow] = useState(false);
+    const [search, setSearch] = useState('');
 
     const onGetList = async () => {
-        dispatch( list() )
+        dispatch( list(search) )
     }
     
     const onRefreshVideoteca = () => {
@@ -37,9 +39,14 @@ export const Videoteca = () => {
         })
     }
 
+    const doSetSearch = (evt) => {
+      setSearch( evt.target.value )
+    }
+
     useEffect( () => {
-        onGetList()
-    }, [])
+        const timer = setTimeout(() => onGetList(), search ? 1000 : 0);
+        return () => clearTimeout(timer);
+    }, [search])
 
     return (
         <>
@@ -55,14 +62,20 @@ export const Videoteca = () => {
                 </div>
 
                 <div className="px-3 mt-2">
-                    <input className="m-auto form-control explorar" type="text" placeholder="Buscar..."/>
+                    <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
                 </div>
 
                 <div className={`overflow-auto h-75 pe-2 ps-3 mt-2 ${styles.list}`}>
                     {
-                        lista?.map((item, key) => {
-                            return <Video item={item} key={key} onRemove={onRemove} />
-                        })
+                        isLoading
+                        ? 
+                            <div className="text-center">
+                                <Spinner animation="grow" />
+                            </div>
+                        :
+                            lista?.map((item, key) => {
+                                return <Video item={item} key={key} onRemove={onRemove} />
+                            })
                     }
                 </div>
 

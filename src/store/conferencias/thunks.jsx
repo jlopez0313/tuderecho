@@ -1,9 +1,11 @@
 import { backendApi } from "@/api/backendApi"
-import { conferencia, set } from "./ConferenciaSlice"
+import { conferencia, set, setLoading } from "./ConferenciaSlice"
 
-export const list = () => {
+export const myList = ( search = '' ) => {
     return async( dispatch ) => {
-        const response = await backendApi.get('conferencias/', { 
+        dispatch( setLoading( true ) )
+
+        const response = await backendApi.post(`conferencias/my-list/${search}`, {}, { 
             headers: {
                 'x-token': localStorage.getItem('token')
             }
@@ -11,9 +13,32 @@ export const list = () => {
 
         if ( response ) {
             dispatch( set( response.data.conferencias ) )
-            return Promise.resolve(true);
+            dispatch( setLoading( false ) )
+
+            return Promise.resolve( true );
         } else {
-            return Promise.resolve(false);
+            return Promise.resolve( false );
+        }
+    }
+}
+
+export const list = ( search = '' ) => {
+    return async( dispatch ) => {
+        dispatch( setLoading( true ) )
+
+        const response = await backendApi.get(`conferencias/${search}`, { 
+            headers: {
+                'x-token': localStorage.getItem('token')
+            }
+        })
+
+        if ( response ) {
+            dispatch( set( response.data.conferencias ) )
+            dispatch( setLoading( false ) )
+
+            return Promise.resolve( true );
+        } else {
+            return Promise.resolve( false );
         }
     }
 }

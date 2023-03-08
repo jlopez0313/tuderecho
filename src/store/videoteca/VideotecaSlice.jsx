@@ -4,11 +4,15 @@ export const videotecaSlice = createSlice({
     name: 'videoteca',
     initialState: {
         videoteca: [],
-        video: {}
+        video: {},
+        isLoading: false,
     },
     reducers: {
         set: ( state, data ) => {
             state.videoteca = data.payload;
+        },
+        setLoading: ( state, data ) => {
+            state.isLoading = data.payload;
         },
         video: ( state, data ) => {
             state.video = data.payload;
@@ -16,4 +20,4 @@ export const videotecaSlice = createSlice({
     }
 })
 
-export const { set, conferencia } = videotecaSlice.actions
+export const { set, video, setLoading } = videotecaSlice.actions
