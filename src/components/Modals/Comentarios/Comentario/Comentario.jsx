@@ -45,7 +45,10 @@ export const Comentario = ({ item }) => {
                         Me Gusta
                     </small>
                     
-                    <small className='text-danger cursor-pointer' onClick={() => setModalShow(true)}>
+                    <small 
+                        className=''
+                        // onClick={() => setModalShow(true)}
+                    >
                         {totalComments == 0 ? '' : totalComments} <FontAwesomeIcon icon={faMessage} className='me-2' />
                         Comentar
                     </small>
