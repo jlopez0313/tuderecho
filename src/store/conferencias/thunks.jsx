@@ -11,10 +11,10 @@ export const myList = ( search = '' ) => {
             }
         })
 
+        dispatch( setLoading( false ) )
+
         if ( response ) {
             dispatch( set( response.data.conferencias ) )
-            dispatch( setLoading( false ) )
-
             return Promise.resolve( true );
         } else {
             return Promise.resolve( false );
@@ -32,10 +32,10 @@ export const list = ( search = '' ) => {
             }
         })
 
+        dispatch( setLoading( false ) )
+
         if ( response ) {
             dispatch( set( response.data.conferencias ) )
-            dispatch( setLoading( false ) )
-
             return Promise.resolve( true );
         } else {
             return Promise.resolve( false );

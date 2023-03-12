@@ -21,8 +21,11 @@ export const Conferencias = () => {
         dispatch( list(search) )
     }
 
-    const onRefreshConferencias = () => {
-        onGetList()
+    const onRefreshConferencias = ( doRefresh ) => {
+        if (doRefresh) {
+            onGetList()
+        }
+
         setModalShow(false)
     }
 
@@ -52,9 +55,9 @@ export const Conferencias = () => {
         <>
             <h5 className='text-danger w-100 fw-bold'> Conferencias </h5>
 
-            <div className='border shadow-sm bg-white overflow-hidden h-100'>
+            <div className='border rounded shadow-sm bg-white overflow-hidden h-100'>
 
-                <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"
+                <div className="w-100 rounded text-center border p-2 bg-danger text-white cursor-pointer"
                     onClick={() => setModalShow(true)}
                 > 
                     <FontAwesomeIcon icon={faPencil} />
@@ -84,7 +87,7 @@ export const Conferencias = () => {
             <ConferenciaModal
                 title='Crea una Conferencia'
                 show={modalShow}
-                onHide={() => onRefreshConferencias()}
+                onHide={(doRefresh = false ) => onRefreshConferencias( doRefresh)}
             />
         </>
     )

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-function Breadcrumb({ items }) {
+function Breadcrumb({ items, ...props }) {
     return (
-        <nav>
+        <nav {...props}>
             <ol className="breadcrumb">
                 {
                     items.map( (item, key) => {

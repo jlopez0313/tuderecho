@@ -1,18 +1,23 @@
+import React from 'react'
 import Card from 'react-bootstrap/Card';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faThumbsUp, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { decodeToken } from "react-jwt";
-import styles from './Publicaciones.module.scss';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { usePublicacion } from '@/hooks/usePublicacion';
+import styles from './Publicacion.module.scss';
+import { decodeToken } from "react-jwt";
 
-export const Publicaciones = ({publi, onRemoveComment}) => {
-
+export const Publicacion = ({publi, onComentar}) => {
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);
+    const [modalShow, setModalShow] = useState(false);
+    
+    const {totalComments} = usePublicacion(publi);
 
     return (
-        <Card className='mt-3 p-3 shadow-sm rounded-0'>
+        <Card className='mb-3 p-2 shadow-sm rounded'>
             <div className={`d-flex align-items-center ${styles.owner}`}>
                 <div>
                     <Card.Img
@@ -47,9 +52,9 @@ export const Publicaciones = ({publi, onRemoveComment}) => {
                 <Card.Text>
                     {publi.comment}
                 </Card.Text>
-                <div className={`${publi.medias.length > 1 ? styles.grid : ''}`}>
+                <div className={`${publi.medias?.length > 1 ? styles.grid : ''}`}>
                     {
-                        publi.medias.map( (media, key2) => {
+                        publi.medias?.map( (media, key2) => {
                             return <div key={ key2 } className={`${styles.gridItem}`}>
                                 <img className={`${styles.media}`} src={media} />
                             </div>
@@ -67,22 +72,22 @@ export const Publicaciones = ({publi, onRemoveComment}) => {
             </Card.Body>
             <Card.Footer>
                 <div className="d-flex justify-content-between">
-                    <small className='text-danger cursor-pointer'>
+                    <small className=''>
                         32 <FontAwesomeIcon icon={faThumbsUp} className='me-2' />
                         Me Gusta
                     </small>
                     
-                    <small className='text-danger cursor-pointer'>
-                        45 <FontAwesomeIcon icon={faMessage} className='me-2' />
+                    <small className='text-danger cursor-pointer' onClick={() => onComentar()}>
+                        {totalComments == 0 ? '' : totalComments} <FontAwesomeIcon icon={faMessage} className='me-2' />
                         Comentar
                     </small>
                     
-                    <small className='text-danger cursor-pointer'> 
+                    <small className=''> 
                         12 <FontAwesomeIcon icon={faShare} className='me-2' />
                         Compartir
                     </small>
                 </div>
             </Card.Footer>
-        </Card>
+        </Card>      
     )
 }

@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
 import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
-import { notify } from '@/helpers/helpers'
+import { notify, getYoutubeId } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Videoteca.module.scss'
@@ -41,11 +41,17 @@ export const VideotecaModal = ({item = {}, ...props}) => {
         .then( () => {
             notify('Videoteca registrada!', 'success');
             onSetFormState(initFormData)
-            props.onHide();
+            props.onHide( true );
         })
         .catch( error => {
             notify('onDoSubmit Videoteca: Internal Error', 'error')
         })
+    }
+
+    const onGetYoutubeId = async (evt) => {
+        const ID = getYoutubeId( evt.target.value )
+        const event = {target: { name: 'video', value: ID } }
+        onInputChange( event )
     }
 
     useEffect(() => {
@@ -99,13 +105,11 @@ export const VideotecaModal = ({item = {}, ...props}) => {
                         <div className="form-floating mb-3">
                             <input
                                 required
-                                name="video"
                                 className='form-control'
-                                placeholder='Ej: UyI4v5sxT54'
-                                onChange={onInputChange}
-                                value={ formState.video }
+                                placeholder='Ej: https://www.youtube.com/watch?v=3082r1-0DXc'
+                                onChange={onGetYoutubeId}
                             />
-                            <label htmlFor="especialidad">Youtube Video ID *</label>
+                            <label htmlFor="especialidad">Youtube URL *</label>
                         </div>
 
                         <div className="d-flex justify-content-evenly mb-3">
@@ -136,12 +140,21 @@ export const VideotecaModal = ({item = {}, ...props}) => {
                             : null
                         }
 
-                        <img src={`http://img.youtube.com/vi/${formState.video}/0.jpg`} alt='' className={style.archivo}/>
+                        {
+                            formState.video 
+                            ?
+                                <img src={`http://img.youtube.com/vi/${formState.video}/0.jpg`} alt='' className={style.archivo}/>
+                            :
+                                <div className="alert alert-danger">
+                                    No Video Found
+                                </div>
+                        }
+
 
                 </Modal.Body>
 
                 <Modal.Footer className='d-block text-center'>
-                    <Button className='w-100 m-0' type='submit'> Crear </Button>
+                    <Button className='w-100 m-0' type='submit' disabled={!formState.video}> Crear </Button>
                 </Modal.Footer>
             </form>
         </Modal>        

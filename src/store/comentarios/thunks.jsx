@@ -1,10 +1,10 @@
 import { backendApi } from "@/api/backendApi"
-import { setList, setLoading } from "./PublicacionesSlice"
+import { setList, setLoading } from "./ComentariosSlice"
 
 export const get = ( ) => {
     return async( dispatch ) => {
         dispatch( setLoading( true ) )
-        const response = await backendApi.get('publicaciones/', 
+        const response = await backendApi.get('comentarios/', 
             { 
                 headers: {
                     'x-token': localStorage.getItem('token')
@@ -15,7 +15,7 @@ export const get = ( ) => {
         dispatch( setLoading( false ) )
 
         if ( response ) {
-            dispatch( setList( response.data.publicaciones) )
+            dispatch( setList( response.data.comentarios) )
             return Promise.resolve(true);
         } else {
             return Promise.resolve(false);
@@ -23,10 +23,10 @@ export const get = ( ) => {
     }
 }
 
-export const save = ( publicacion ) => {
+export const create = ( comentario ) => {
     return async( dispatch ) => {
-        const response = await backendApi.post('publicaciones/', 
-            publicacion,
+        const response = await backendApi.post('comentarios/', 
+            comentario,
             { 
                 headers: {
                     'x-token': localStorage.getItem('token')
@@ -44,7 +44,7 @@ export const save = ( publicacion ) => {
 
 export const remove = (id) => {
     return async( dispatch ) => {
-        const response = await backendApi.delete('publicaciones/'+id, { 
+        const response = await backendApi.delete('comentarios/'+id, { 
             headers: {
                 'x-token': localStorage.getItem('token')
             }

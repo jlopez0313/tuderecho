@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Comunidad } from './Comunidad/Comunidad'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import styles from '../../Index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
 import { list, remove } from '@/store/comunidades/thunks';
 import { notify } from '@/helpers/helpers';
 import Spinner from 'react-bootstrap/Spinner';
+import styles from '@/assets/styles/shared.module.scss';
 
 export const Comunidades = () => {
 
@@ -21,8 +21,11 @@ export const Comunidades = () => {
     dispatch( list(search) )
   }
 
-  const onRefreshComunidades = () => {
-    onGetList()
+  const onRefreshComunidades = (doRefresh) => {
+    if (doRefresh) {
+      onGetList()
+    }
+
     setModalShow(false)
   }
   
@@ -54,9 +57,9 @@ export const Comunidades = () => {
 
       <h5 className='text-danger w-100 fw-bold'> Comunidades </h5>
 
-      <div className='border shadow-sm bg-white overflow-hidden h-100'>
+      <div className='border rounded shadow-sm bg-white overflow-hidden h-100'>
         
-        <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"
+        <div className="w-100 rounded text-center border p-2 bg-danger text-white cursor-pointer"
           onClick={() => setModalShow(true)}
         > 
           <FontAwesomeIcon icon={faPencil} />
@@ -85,7 +88,7 @@ export const Comunidades = () => {
         <ComunidadesModal
             title='Crea tu Comunidad'
             show={modalShow}
-            onHide={() => onRefreshComunidades()}
+            onHide={(doRefresh = false) => onRefreshComunidades(doRefresh)}
         />
 
       </div>

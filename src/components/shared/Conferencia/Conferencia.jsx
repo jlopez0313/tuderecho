@@ -13,8 +13,8 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
   const { uid } = decodeToken(token);
 
   return (
-    <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${styles.listItem}`}>
-        <Card.Img variant="top" className='rounded-0' src={item.archivo} alt='' />
+    <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${styles.listItem}`}>
+        <Card.Img variant="top" className='rounded' src={item.archivo} alt='' />
 
         <Card.Body>
           <Card.Text className='d-flex flex-column mb-2'>
@@ -27,7 +27,7 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
           <div className='d-flex justify-content-between'>
             
             <small
-              className={`text-danger ${ uid === item.user.id ? 'w-100' : '' } `}
+              className={`${ uid === item.user.id ? 'w-100' : '' } `}
             >
               <FontAwesomeIcon icon={faShare} className='me-2' />
               Compartir
@@ -38,7 +38,7 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
                 <>
                     <FontAwesomeIcon
                         icon={faEdit}
-                        className='cursor-pointer text-danger me-4'
+                        className='me-4'
                         // onClick={() => onEdit( item ) }
                         title="Editar"
                     />

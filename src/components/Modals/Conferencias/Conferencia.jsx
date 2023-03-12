@@ -25,7 +25,6 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
         conferencista: item?.conferencista || '',
     }
 
-    
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const dispatch = useDispatch()
@@ -87,10 +86,10 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
 
     return (
         <Modal
-        {...props}
-        size="md"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
+            {...props}
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
         >
             <form onSubmit={onDoSubmit}>
                 <Modal.Header closeButton className='text-center'>

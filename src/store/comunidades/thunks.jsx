@@ -11,10 +11,10 @@ export const myList = ( search = '' ) => {
             }
         })
 
+        dispatch( setLoading( false ) )
+
         if ( response ) {
             dispatch( set( response.data.comunidades ) )
-            dispatch( setLoading( false ) )
-
             return Promise.resolve( true );
         } else {
             return Promise.resolve( false );
@@ -32,10 +32,10 @@ export const list = ( search = '' ) => {
             }
         })
 
-        if ( response ) {
-            dispatch( set( response.data.comunidades ) )
-            dispatch( setLoading( false ) )
+        dispatch( setLoading( false ) )
 
+        if ( response ) {
+            dispatch( set( response.data.comunidades ) )            
             return Promise.resolve( true );
         } else {
             return Promise.resolve( false );

@@ -1,0 +1,51 @@
+.owner {
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+
+    
+    .icon {
+        color: var(--bg-red);;
+        font-size: 1.3em;
+    }
+
+    .user {
+        font-size: .85em;
+    }
+
+    .date {
+        color: #777;
+    }
+}
+
+.grid {
+    columns: 2;
+    column-gap: 0.25em;
+}
+
+
+.gridItem {
+    position: relative;
+
+    .remove {
+        position: absolute;
+        top: 8px;
+        right: 4px;
+        color: #fff;
+        font-size: 15px;
+        background-color: rgba(15, 20, 25, 0.75);
+        border-radius: 50%;
+        padding: 5px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .media {
+        margin-top: 0.25em;
+        width: 100%;
+        border-radius: 10px;
+    }
+}

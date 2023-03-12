@@ -12,7 +12,7 @@ export const Comunidad = ({item, onRemove}) => {
   const { uid } = decodeToken(token);
 
   return (
-    <div className='d-flex border mb-3 p-3 shadow-sm bg-light'>
+    <div className='d-flex border rounded mb-3 p-3 shadow-sm bg-light'>
         <div>
             <img src={item.archivo || Avatar} className={`me-3 ${styles.avatar}`} />
         </div>
@@ -29,8 +29,8 @@ export const Comunidad = ({item, onRemove}) => {
                     <>
                         <FontAwesomeIcon
                             icon={faEdit}
-                            className='cursor-pointer text-danger me-4'
-                            onClick={() => onRemove( item.id ) }
+                            className='me-4'
+                            // onClick={() => onRemove( item.id ) }
                             title="Editar"
                         />
                         
@@ -42,7 +42,7 @@ export const Comunidad = ({item, onRemove}) => {
                         />
                     </>
                   : 
-                    <small className='text-danger'>
+                    <small className=''>
                       <FontAwesomeIcon icon={faCartShopping} className='me-2' />
                       Suscribirse { item.gratis === 'S' ? 'Gratis' : `$${item.precio}`}
                     </small>

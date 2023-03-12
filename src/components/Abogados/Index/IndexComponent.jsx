@@ -2,6 +2,7 @@ import { Main } from "./Main/Main"
 import styles from './Index.module.scss';
 import { Left } from "./Left/Left";
 import { Right } from "./Right/Right";
+// import shared from '@/assets/styles/shared.module.scss';
 
 export const IndexComponent = () => {
   return (
@@ -10,7 +11,7 @@ export const IndexComponent = () => {
         <div className={`position-sticky p-2 ${styles.left}`}>
           <Left />
         </div>
-        <div className="d-flex justify-content-center flex-grow-1 p-2">
+        <div className={`d-flex justify-content-center flex-grow-1 p-2`}>
           <Main />
         </div>
         <div className={`position-sticky p-2 ${styles.right}`}>

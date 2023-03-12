@@ -6,6 +6,18 @@ import { notify } from '@/helpers/helpers';
 import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
 import { Video } from '@/components/shared/Video/Video';
 import Spinner from 'react-bootstrap/Spinner';
+import Breadcrumb from '@/components/shared/Breadcrumb';
+
+const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/abogados',
+        active: false
+    },{
+        name: 'Mi Videoteca',
+        active: true
+    }
+]
 
 export const VideotecaComponent = () => {
 
@@ -55,7 +67,10 @@ export const VideotecaComponent = () => {
     return (
         <>
             <div className="container pb-5">
-                <h3 className="mt-5 text-danger"> Mi Videoteca </h3>
+                
+                <Breadcrumb className='mt-3' items={breadcrumb} />
+
+                <h3 className="mt-4 text-danger"> Mi Videoteca </h3>
 
                 <div className="px-3 mt-2">
                     <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>

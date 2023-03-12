@@ -7,7 +7,7 @@ export const Contactos = () => {
     <>    
       <h5 className='text-danger w-100 fw-bold'> Contactos </h5>
 
-      <div className='border shadow-sm bg-white overflow-hidden h-100'>
+      <div className='border rounded shadow-sm bg-white overflow-hidden h-100'>
 
         <div className={`overflow-auto h-95 pe-2 ps-3 mt-2 ${styles.list}`}>
           {

@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const publicacionSlice = createSlice({
+export const comentariosSlice = createSlice({
     name: 'publicacion',
     initialState: {
-        publis: [],
-        tag: {},
+        comentarios: [],
+        comentario: {},
         isLoading: false,
     },
     reducers: {
         setList: ( state, data ) => {
-            state.publis = data.payload;
+            state.comentarios = data.payload;
         },
         setLoading: ( state, data ) => {
             state.isLoading = data.payload;
@@ -17,4 +17,4 @@ export const publicacionSlice = createSlice({
     }
 })
 
-export const { setList, setLoading } = publicacionSlice.actions
+export const { setList, setLoading } = comentariosSlice.actions

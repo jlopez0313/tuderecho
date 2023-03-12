@@ -33,3 +33,12 @@ export const notify = ( message, type, newOptions = {} ) => {
           break;
       }
 }
+
+export const getYoutubeId = (url) => {
+  // let regex = /(youtu.*be.*)\/(watch\?v=|embed\/|v|shorts|)(.*?((?=[&#?])|$))/gm;
+  let regex = /(https?:\/\/)?(www.)?(youtube\.com|youtu\.be|youtube-nocookie\.com)\/(?:embed\/|v\/|watch\?v=|watch\?list=(.*)&v=|watch\?(.*[^&]&)v=)?((\w|-){11})(&list=(\w+)&?)?/gims
+  const arr = regex.exec(url);
+  console.log( arr )
+  if( arr ) return arr[6]
+  return '';
+}

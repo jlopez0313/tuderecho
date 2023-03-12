@@ -6,6 +6,18 @@ import styles from './Conferencias.module.scss'
 import { notify } from '@/helpers/helpers';
 import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';
 import Spinner from 'react-bootstrap/Spinner';
+import Breadcrumb from '@/components/shared/Breadcrumb';
+
+const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/abogados',
+        active: false
+    },{
+        name: 'Mis Conferencias',
+        active: true
+    }
+]
 
 export const ConferenciasComponent = () => {
 
@@ -55,7 +67,10 @@ export const ConferenciasComponent = () => {
     return (
         <>
             <div className="container pb-5">
-                <h3 className="mt-5 text-danger"> Mis Conferencias </h3>
+                
+                <Breadcrumb className='mt-3' items={breadcrumb} />
+
+                <h3 className="mt-4 text-danger"> Mis Conferencias </h3>
 
                 <div className="px-3 mt-2">
                     <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>

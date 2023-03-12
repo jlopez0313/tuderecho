@@ -21,8 +21,11 @@ export const Videoteca = () => {
         dispatch( list(search) )
     }
     
-    const onRefreshVideoteca = () => {
-        onGetList()
+    const onRefreshVideoteca = (doRefresh) => {
+        if (doRefresh) {
+            onGetList()
+        }
+
         setModalShow(false)
     }
 
@@ -52,9 +55,9 @@ export const Videoteca = () => {
         <>
             <h5 className='text-danger w-100 fw-bold'> Videoteca </h5>
 
-            <div className='border shadow-sm bg-white overflow-hidden h-100'>
+            <div className='border rounded shadow-sm bg-white overflow-hidden h-100'>
 
-                <div className="w-100 text-center border p-2 bg-danger text-white cursor-pointer"
+                <div className="w-100 rounded text-center border p-2 bg-danger text-white cursor-pointer"
                     onClick={() => setModalShow(true)}
                 > 
                     <FontAwesomeIcon icon={faPencil} />
@@ -84,7 +87,7 @@ export const Videoteca = () => {
             <VideotecaModal
                 title='Sube tu Video'
                 show={modalShow}
-                onHide={() => onRefreshVideoteca()}
+                onHide={(doRefresh = false) => onRefreshVideoteca(doRefresh)}
             />
         </>
     )

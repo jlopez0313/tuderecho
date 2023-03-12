@@ -3,11 +3,13 @@ import { PostModal } from '@/components/Modals/Posts/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { get, remove } from '@/store/publicaciones/thunks';
 import { notify } from '@/helpers/helpers'
-import { Publicaciones } from './Publicaciones/Publicaciones';
+import { Publicacion } from './Publicacion/Publicacion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import styles from './Main.module.scss';
+
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 export const Main = () => {
 
@@ -15,13 +17,13 @@ export const Main = () => {
     
     const [modalShow, setModalShow] = useState(false);
     const dispatch = useDispatch();
-    const { publis } = useSelector( (state) => state.publicacion )
+    const { publis, isLoading } = useSelector( (state) => state.publicacion )
 
     const onGetList = async () => {
         dispatch( get() )
     }
 
-    const onRemoveComment = ( id ) => {
+    const onRemovePubli = ( id ) => {
         const removed = dispatch( remove( id ) )
 
         removed
@@ -34,8 +36,11 @@ export const Main = () => {
         })
     }
 
-    const onRefreshPublis = () => {
-        onGetList()
+    const onRefreshPublis = (doRefresh) => {
+        if (doRefresh) {
+            onGetList()
+        }
+
         setModalShow(false)
     }
 
@@ -44,8 +49,8 @@ export const Main = () => {
     }, [])
 
     return (
-        <div className={styles.main}>
-            <div className='bg-white d-flex border shadow-sm px-3 py-2 align-items-center'>
+        <div className={`${styles.main}`}>
+            <div className='bg-white rounded d-flex border shadow-sm px-3 py-2 align-items-center'>
                 <div>
                     <img src={user?.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
                 </div>
@@ -61,13 +66,24 @@ export const Main = () => {
             <PostModal
                 title='Crea un Post'
                 show={modalShow}
-                onHide={() => onRefreshPublis()}
+                onHide={(doRefresh = false) => onRefreshPublis( doRefresh )}
             />
 
             {
-                publis?.map( (publi, key) => {
-                    return <Publicaciones publi={publi} onRemoveComment={onRemoveComment} key={key} />
-                })
+                isLoading
+                ? 
+                    <div className="text-center mt-5">
+                        <Spinner animation="grow" />
+                    </div>
+                :
+                    publis?.map( (publi, key) => {
+                        return <Publicacion
+                                key={key}
+                                publi={publi}
+                                onRemovePubli={(doRefresh = false) => onRemovePubli(doRefresh)}
+                                onRefreshPublis={(doRefresh = false) => onRefreshPublis(doRefresh)}
+                            />
+                    })
             }
 
         </div>

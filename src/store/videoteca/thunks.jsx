@@ -38,6 +38,7 @@ export const list = ( search = '' ) => {
 
             return Promise.resolve( true );
         } else {
+            dispatch( setLoading( false ) )
             return Promise.resolve( false );
         }
     }

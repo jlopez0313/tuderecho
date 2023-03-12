@@ -7,6 +7,18 @@ import { find, update } from '@/store/user/thunks';
 import { register } from '@/store/user/UserSlice';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
+import Breadcrumb from '@/components/shared/Breadcrumb';
+
+const breadcrumb = [
+  {
+      name: 'Home',
+      href: '/abogados',
+      active: false
+  },{
+      name: 'Mi Perfil',
+      active: true
+  }
+]
 
 export const PerfilComponent = () => {
   const dispatch = useDispatch();
@@ -73,8 +85,10 @@ export const PerfilComponent = () => {
     <>
       <div className="container pb-5">
         <form onSubmit={onDoSubmit}>
+
+          <Breadcrumb className='mt-3' items={breadcrumb} />
           
-          <h3 className="mt-5 text-danger"> Información Personal </h3>
+          <h3 className="mt-4 text-danger"> Información Personal </h3>
           <hr />
 
           <DatosPersonales formState={formState} onInputChange={onInputChange} />

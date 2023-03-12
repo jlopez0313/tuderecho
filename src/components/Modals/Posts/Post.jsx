@@ -57,7 +57,7 @@ export const PostModal = (props) => {
       setGif('');
       setMedias([])
       notify('Publicación registrada!', 'success')
-      props.onHide();
+      props.onHide( true );
     })
     .catch( error => {
       notify('onDoSavePubli: Internal Error', 'error')

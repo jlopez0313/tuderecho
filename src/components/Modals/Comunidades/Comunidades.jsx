@@ -53,7 +53,7 @@ export const ComunidadesModal = (props) => {
         .then( () => {
             notify('Comunidad registrada!', 'success');
             onSetFormState(initFormData)
-            props.onHide();
+            props.onHide( true );
         })
         .catch( error => {
             notify('onDoSubmit Comunidad: Internal Error', 'error')

@@ -4,7 +4,7 @@ import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 
 export const Contacto = () => {
   return (
-    <div className='d-flex align-items-center border mb-2 p-2 shadow-sm bg-light'>
+    <div className='d-flex rounded align-items-center border mb-2 p-2 shadow-sm bg-light'>
         <div>
             <img src={Avatar} className={`me-3 ${styles.avatar}`} />
         </div>
