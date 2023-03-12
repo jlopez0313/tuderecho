@@ -25,7 +25,7 @@ export const Comunidad = ({item, onRemove, onEdit}) => {
           <div className='d-flex justify-content-between'>
             
             <small
-              className={`text-danger ${ uid === item.user.id ? 'w-100' : '' } `}
+              className={`${ uid === item.user.id ? 'w-100' : '' } `}
             >
               <FontAwesomeIcon icon={faShare} className='me-2' />
               Compartir
@@ -36,7 +36,7 @@ export const Comunidad = ({item, onRemove, onEdit}) => {
                 <>
                     <FontAwesomeIcon
                         icon={faEdit}
-                        className='cursor-pointer text-danger me-4'
+                        className='me-4'
                         // onClick={() => onEdit( item ) }
                         title="Editar"
                     />
