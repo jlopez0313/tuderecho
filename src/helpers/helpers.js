@@ -42,3 +42,13 @@ export const getYoutubeId = (url) => {
   if( arr ) return arr[6]
   return '';
 }
+
+export const setNumberformat = (number) => {
+  return number >= 1000000000
+          ? Math.floor(number/1000000000) + 'B'
+          : number >= 1000000
+              ? Math.floor(number/1000000) + 'M'
+              : number >= 1000
+                  ? Math.floor(number/1000) + 'K'
+                  : number
+}

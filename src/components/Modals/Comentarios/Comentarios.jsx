@@ -7,7 +7,7 @@ import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
-import { create, get } from '@/store/comentarios/thunks';
+import { create } from '@/helpers/Comentarios';
 import { Comentario } from './Comentario/Comentario';
 import { Publicacion } from './Publicacion/Publicacion';
 import styles from './Comentarios.module.scss';
@@ -38,7 +38,7 @@ export const ComentariosModal = ({publi, ...props}) => {
 
         callSave
         .then( () => {
-            notify('Conferencia registrada!', 'success');
+            notify('Comentario registrado!', 'success');
             onSetFormState(initFormData)
             props.onHide( true );
         })
@@ -76,7 +76,7 @@ export const ComentariosModal = ({publi, ...props}) => {
                             <Publicacion publi={publi} onComentar={onComentar}/>
 
                             {
-                                publi.comentarios.map( (item, key) => {
+                                publi.comentarios?.map( (item, key) => {
                                     
 
                                     return <Comentario key={key} item={item} />

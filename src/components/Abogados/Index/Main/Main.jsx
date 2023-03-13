@@ -76,10 +76,10 @@ export const Main = () => {
                         <Spinner animation="grow" />
                     </div>
                 :
-                    publis?.map( (publi, key) => {
+                    publis?.map( (post, key) => {
                         return <Publicacion
                                 key={key}
-                                publi={publi}
+                                post={post}
                                 onRemovePubli={(doRefresh = false) => onRemovePubli(doRefresh)}
                                 onRefreshPublis={(doRefresh = false) => onRefreshPublis(doRefresh)}
                             />

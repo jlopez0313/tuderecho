@@ -4,22 +4,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faThumbsUp, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { decodeToken } from "react-jwt";
 import styles from './Publicacion.module.scss';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { faShare, faThumbsUp as myLike } from '@fortawesome/free-solid-svg-icons';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
 import { useState } from 'react';
 import { usePublicacion } from '@/hooks/usePublicacion';
+import { sendLike, hasMyLike } from '@/helpers/Likes';
+import { setNumberformat } from '@/helpers/helpers';
 
-export const Publicacion = ({publi, onRefreshPublis, onRemovePubli}) => {
+export const Publicacion = ({post, onRefreshPublis, onRemovePubli}) => {
+
+    const [publi, setPubli] = useState( post )
 
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);
     const [modalShow, setModalShow] = useState(false);
     
-    const {totalComments} = usePublicacion(publi);
+    const {totalComments, totalLikes} = usePublicacion(publi);
 
     const onHideModal = (doRefresh) => {
         onRefreshPublis(doRefresh)
         setModalShow(false)
+    }
+
+    const toggleLike = async (id) => {
+        const toggled = await sendLike('publicaciones', id);
+        setPubli( toggled )
     }
     
     return (
@@ -79,8 +88,17 @@ export const Publicacion = ({publi, onRefreshPublis, onRemovePubli}) => {
                 </Card.Body>
                 <Card.Footer>
                     <div className="d-flex justify-content-between">
-                        <small className=''>
-                            32 <FontAwesomeIcon icon={faThumbsUp} className='me-2' />
+                        <small className='text-danger cursor-pointer' onClick={() => toggleLike( publi.id )}>
+                            {
+                                totalLikes == 0 
+                                ? ''
+                                : setNumberformat(totalLikes)
+                            }
+                            {
+                                hasMyLike( publi )
+                                ? <FontAwesomeIcon icon={myLike} className='ms-1 me-2' /> 
+                                : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-2' />
+                            }
                             Me Gusta
                         </small>
                         

@@ -4,7 +4,7 @@ export const publicacionSlice = createSlice({
     name: 'publicacion',
     initialState: {
         publis: [],
-        tag: {},
+        publicacion: {},
         isLoading: false,
     },
     reducers: {
