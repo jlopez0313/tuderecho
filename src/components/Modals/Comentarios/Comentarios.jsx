@@ -9,22 +9,23 @@ import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
 import { create } from '@/helpers/Comentarios';
 import { Comentario } from './Comentario/Comentario';
-import { Publicacion } from './Publicacion/Publicacion';
+import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import styles from './Comentarios.module.scss';
 import shared from '@/assets/styles/shared.module.scss';
 
-export const ComentariosModal = ({publi, ...props}) => {
+export const ComentariosModal = ({post, onSetPubli, ...props}) => {
+
+    const [publi, setPubli] = useState( post );
 
     const initFormData = {
-        publicacion: publi.id,
+        publicacion: post.id,
         comentario: '',
     }
     
     const { onInputChange,  onSetFormState, formState } = useForm(initFormData)
     const comentario = useRef()
-    const dispatch = useDispatch()
 
-    const onDoSubmit = (evt) => {
+    const onDoSubmit = async (evt) => {
         evt.preventDefault();
         const token = localStorage.getItem('token') || '';
         const { uid } = decodeToken(token);
@@ -34,26 +35,34 @@ export const ComentariosModal = ({publi, ...props}) => {
             user: uid,
         }
 
-        const callSave = dispatch( create( obj ) )
-
-        callSave
-        .then( () => {
+        const saved = await create( obj )
+        if ( saved ) {
             notify('Comentario registrado!', 'success');
             onSetFormState(initFormData)
-            props.onHide( true );
-        })
-        .catch( error => {
+            const list = [...publi.comentarios, saved]
+            const post = {...publi, comentarios: list}
+            setPubli( post );
+            onSetPubli( post )
+            // props.onHide( true );
+        } else {
             notify('onDoSubmit Conferencia: Internal Error', 'error')
-        })
+        }
     }
 
     const onComentar = () => {
         comentario.current.select()
     }
 
+    const onDoRemoveComment = (id) => {
+        const list = publi.comentarios.filter( comment => comment.id !== id)
+        const post = {...publi, comentarios: list}
+        setPubli( post );
+        onSetPubli( post )
+    } 
+
     useEffect(()=> {
-        // dispatch(get())
-    }, [])
+        setPubli( post )
+    }, [post])
 
     return (
         <Modal
@@ -73,13 +82,17 @@ export const ComentariosModal = ({publi, ...props}) => {
                     <Modal.Body className={`py-0 ${styles.body} ${shared.list}`}>
 
                         <div className='overflow-auto'>
-                            <Publicacion publi={publi} onComentar={onComentar}/>
+                            <Publicacion
+                                post={publi}
+                                onComentar={onComentar}
+                                onSetPubli={onSetPubli}
+                            />
 
                             {
                                 publi.comentarios?.map( (item, key) => {
                                     
 
-                                    return <Comentario key={key} item={item} />
+                                    return <Comentario key={key} item={item} onDoRemoveComment={onDoRemoveComment} />
                                 })
                             }
                         </div>
@@ -95,7 +108,7 @@ export const ComentariosModal = ({publi, ...props}) => {
                                 className='form-control'
                                 placeholder='Escribe tu comentario'
                                 onChange={onInputChange}
-                                defaultValue={ formState.comentario }
+                                value={ formState.comentario }
                             />
                             <label htmlFor="especialidad">Tu Comentario *</label>
                         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faMessage, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faShare, faThumbsUp as myLike } from '@fortawesome/free-solid-svg-icons';
@@ -7,8 +8,9 @@ import { sendLike, hasMyLike } from '@/helpers/Likes';
 import styles from './Comentario.module.scss'
 import { decodeToken } from "react-jwt";
 import { setNumberformat } from '@/helpers/helpers';
+import { remove } from '@/helpers/Comentarios';
 
-export const Comentario = ({ item }) => {
+export const Comentario = ({ item, onDoRemoveComment }) => {
 
     const [comment, setComment] = useState( item )
 
@@ -20,6 +22,11 @@ export const Comentario = ({ item }) => {
     const toggleLike = async (id) => {
         const toggled = await sendLike('comentarios', id);
         setComment( toggled )
+    }
+
+    const onRemoveComment = async (id) => {
+        const removed = await remove(id);
+        onDoRemoveComment( id )
     }
 
     return (
@@ -37,8 +44,8 @@ export const Comentario = ({ item }) => {
                             ?
                                 <FontAwesomeIcon
                                     icon={faTrashCan}
-                                    className=''
-                                    // onClick={() => onRemovePubli( item.id ) }
+                                    className='text-danger cursor-pointer'
+                                    onClick={() => onRemoveComment( item.id ) }
                                     title="Eliminar"
                                 />
                             : null
@@ -50,7 +57,7 @@ export const Comentario = ({ item }) => {
                     Creado el {new Date(item.created_at).toLocaleDateString()}
                 </small>
                 <div className="d-flex justify-content-between">
-                    <small className='text-danger cursor-pointer' onClick={() => toggleLike( item._id )}>
+                    <small className='text-danger cursor-pointer' onClick={() => toggleLike( item.id )}>
                         {
                             totalLikes == 0 
                             ? ''

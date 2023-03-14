@@ -3,24 +3,32 @@ import { PostModal } from '@/components/Modals/Posts/Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { get, remove } from '@/store/publicaciones/thunks';
 import { notify } from '@/helpers/helpers'
-import { Publicacion } from './Publicacion/Publicacion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import styles from './Main.module.scss';
-
+import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import Spinner from 'react-bootstrap/esm/Spinner';
+import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
 
 export const Main = () => {
 
     const { user } = useSelector( state => state.user )
     
     const [modalShow, setModalShow] = useState(false);
+    const [post, setPost] = useState({});
+    const [showModalComments, setShowModalComments] = useState(false);
     const dispatch = useDispatch();
-    const { publis, isLoading } = useSelector( (state) => state.publicacion )
+    const { publis: lista, isLoading } = useSelector( (state) => state.publicacion )
+    const [publis, setPublis] = useState(lista);
 
     const onGetList = async () => {
         dispatch( get() )
+    }
+
+    const onComentar = ( post ) => {
+        setPost(post)
+        setShowModalComments( true )
     }
 
     const onRemovePubli = ( id ) => {
@@ -44,9 +52,25 @@ export const Main = () => {
         setModalShow(false)
     }
 
+    const onHideModal = (doRefresh) => {
+        onRefreshPublis(doRefresh)
+        setShowModalComments(false)
+    }
+
+    const onSetPubli = (publi) => {
+        const idx = publis.findIndex( item => item.id === publi.id );
+        const posts = [...publis ]
+        posts.splice(idx, 1, publi);
+        setPublis(posts)
+    }
+
     useEffect( () => {
         onGetList()
     }, [])
+
+    useEffect( () => {
+        setPublis(lista)
+    }, [lista])
 
     return (
         <div className={`${styles.main}`}>
@@ -80,11 +104,21 @@ export const Main = () => {
                         return <Publicacion
                                 key={key}
                                 post={post}
+                                onSetPubli={onSetPubli}
+                                onComentar={() => onComentar(post)}
                                 onRemovePubli={(doRefresh = false) => onRemovePubli(doRefresh)}
                                 onRefreshPublis={(doRefresh = false) => onRefreshPublis(doRefresh)}
                             />
                     })
             }
+
+            <ComentariosModal
+                title='Comentarios'
+                show={showModalComments}
+                post={post}
+                onHide={(doRefresh = false) => onHideModal( doRefresh )}
+                onSetPubli={onSetPubli}
+            />
 
         </div>
     )

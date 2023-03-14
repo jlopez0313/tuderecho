@@ -5,31 +5,28 @@ import { faMessage, faThumbsUp, faTrashCan } from '@fortawesome/free-regular-svg
 import { decodeToken } from "react-jwt";
 import styles from './Publicacion.module.scss';
 import { faShare, faThumbsUp as myLike } from '@fortawesome/free-solid-svg-icons';
-import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePublicacion } from '@/hooks/usePublicacion';
 import { sendLike, hasMyLike } from '@/helpers/Likes';
 import { setNumberformat } from '@/helpers/helpers';
 
-export const Publicacion = ({post, onRefreshPublis, onRemovePubli}) => {
+export const Publicacion = ({post, onSetPubli, onRemovePubli, onComentar}) => {
 
     const [publi, setPubli] = useState( post )
 
     const token = localStorage.getItem('token') || '';
-    const { uid } = decodeToken(token);
-    const [modalShow, setModalShow] = useState(false);
-    
+    const { uid } = decodeToken(token);    
     const {totalComments, totalLikes} = usePublicacion(publi);
-
-    const onHideModal = (doRefresh) => {
-        onRefreshPublis(doRefresh)
-        setModalShow(false)
-    }
 
     const toggleLike = async (id) => {
         const toggled = await sendLike('publicaciones', id);
         setPubli( toggled )
+        onSetPubli( toggled )
     }
+
+    useEffect(()=> {
+        setPubli( post )
+    }, [post])
     
     return (
         <>
@@ -39,20 +36,20 @@ export const Publicacion = ({post, onRefreshPublis, onRemovePubli}) => {
                         <Card.Img
                             variant="top"
                             className={`${styles.avatar}`}
-                            src={ publi.user.perfil?.photo || Avatar}
+                            src={ publi.user?.perfil?.photo || Avatar}
                             alt=''
                         />
                     </div>
                     <div className="ms-2 d-flex flex-column w-100">
 
-                        <strong className={styles.user}>  {publi.user.name} </strong>
+                        <strong className={styles.user}>  {publi.user?.name} </strong>
                         <small className={styles.date}>
                             Creado el {new Date(publi.fecha).toLocaleDateString()}
                         </small>
                     </div>
                     <div className={`flex-shrink-1 ${styles.icon}`}>
                         {
-                            uid === publi.user.id 
+                            uid === publi.user?.id 
                             ?
                                 <FontAwesomeIcon
                                     icon={faTrashCan}
@@ -102,7 +99,8 @@ export const Publicacion = ({post, onRefreshPublis, onRemovePubli}) => {
                             Me Gusta
                         </small>
                         
-                        <small className='text-danger cursor-pointer' onClick={() => setModalShow(true)}>
+                        {/*<small className='text-danger cursor-pointer' onClick={() => oncomentarsetModalShow(true)}> */}
+                        <small className='text-danger cursor-pointer' onClick={() => onComentar()}>
                             {totalComments == 0 ? '' : totalComments} <FontAwesomeIcon icon={faMessage} className='me-2' />
                             Comentar
                         </small>
@@ -113,14 +111,7 @@ export const Publicacion = ({post, onRefreshPublis, onRemovePubli}) => {
                         </small>
                     </div>
                 </Card.Footer>
-            </Card>
-
-            <ComentariosModal
-                title='Comentarios'
-                show={modalShow}
-                publi={publi}
-                onHide={(doRefresh = false) => onHideModal( doRefresh )}
-            />
+            </Card>           
         </>
     )
 }
