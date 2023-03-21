@@ -10,24 +10,24 @@ import styles from './Main.module.scss';
 import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
+import { setPubli } from '@/store/publicaciones/PublicacionesSlice';
 
 export const Main = () => {
 
     const { user } = useSelector( state => state.user )
     
     const [modalShow, setModalShow] = useState(false);
-    const [post, setPost] = useState({});
     const [showModalComments, setShowModalComments] = useState(false);
     const dispatch = useDispatch();
-    const { publis: lista, isLoading } = useSelector( (state) => state.publicacion )
+    const { publis: lista, post, isLoading } = useSelector( (state) => state.publicacion )
     const [publis, setPublis] = useState(lista);
 
     const onGetList = async () => {
         dispatch( get() )
     }
 
-    const onComentar = ( post ) => {
-        setPost(post)
+    const onComentar = async ( post ) => {
+        await dispatch( setPubli( post ) )
         setShowModalComments( true )
     }
 
@@ -72,6 +72,11 @@ export const Main = () => {
         setPublis(lista)
     }, [lista])
 
+    useEffect( () => {
+        console.log('publi setted')
+        onSetPubli( post )
+    }, [post])
+    
     return (
         <div className={`${styles.main}`}>
             <div className='bg-white rounded d-flex border shadow-sm px-3 py-2 align-items-center'>
@@ -104,7 +109,6 @@ export const Main = () => {
                         return <Publicacion
                                 key={key}
                                 post={post}
-                                onSetPubli={onSetPubli}
                                 onComentar={() => onComentar(post)}
                                 onRemovePubli={(doRefresh = false) => onRemovePubli(doRefresh)}
                                 onRefreshPublis={(doRefresh = false) => onRefreshPublis(doRefresh)}
@@ -117,7 +121,6 @@ export const Main = () => {
                 show={showModalComments}
                 post={post}
                 onHide={(doRefresh = false) => onHideModal( doRefresh )}
-                onSetPubli={onSetPubli}
             />
 
         </div>

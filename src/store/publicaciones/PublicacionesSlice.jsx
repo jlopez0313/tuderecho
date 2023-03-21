@@ -4,7 +4,7 @@ export const publicacionSlice = createSlice({
     name: 'publicacion',
     initialState: {
         publis: [],
-        publicacion: {},
+        post: {},
         isLoading: false,
     },
     reducers: {
@@ -14,7 +14,10 @@ export const publicacionSlice = createSlice({
         setLoading: ( state, data ) => {
             state.isLoading = data.payload;
         },
+        setPubli: ( state, data ) => {
+            state.post = data.payload;
+        },
     }
 })
 
-export const { setList, setLoading } = publicacionSlice.actions
+export const { setList, setPubli, setLoading, update } = publicacionSlice.actions
