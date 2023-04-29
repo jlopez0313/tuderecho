@@ -6,7 +6,7 @@ import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
-import { create } from '@/helpers/Comentarios';
+import { create } from '@/services/Comentarios';
 import { Comentario } from './Comentario/Comentario';
 import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import styles from './Comentarios.module.scss';
@@ -67,7 +67,7 @@ export const ComentariosModal = ({post, ...props}) => {
             centered
             className={styles.modal}
         >
-                <Modal.Header closeButton className='text-center'>
+                <Modal.Header closeButton className='text-center pb-0'>
                     <Modal.Title className='m-auto' id="contained-modal-title-vcenter">
                         {props.title}
                     </Modal.Title>

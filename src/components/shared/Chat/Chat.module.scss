@@ -1,0 +1,63 @@
+.chat {
+    width: 328px;
+    margin-left: 10px;
+
+    .chatHeader {
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+    }
+
+    .chatBody {
+        height: calc(38vh - 5px);
+        background-color: #fff;
+        padding: 10px;
+        font-size: .8em;
+        overflow-y: scroll;
+
+        .avatar {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+
+        .recipient {
+            background-color: #efefef;
+        }
+
+        .sender {
+            background-color: #f5ccc2;
+            margin-left: auto;
+        }
+
+        
+
+        .senderName {
+            text-align: right;
+            margin-bottom: 0;
+        }
+
+        
+
+        .status {
+            position: fixed;
+            bottom: 60px;
+            font-size: .75em;
+            font-style: italic;
+        }
+    }
+
+    .chatFooter {
+        background-color: #f9f5eb;
+        padding: 10px;
+    }
+}

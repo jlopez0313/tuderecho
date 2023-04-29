@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
-import { getGifs } from '@/helpers/getGifs';
+import { getGifs } from '@/services/getGifs';
 import Spinner from 'react-bootstrap/Spinner';
 
 export const GifsModal = ( {onSetGif, ...props} ) => {

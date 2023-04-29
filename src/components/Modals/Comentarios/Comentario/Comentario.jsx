@@ -4,14 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp, faMessage, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faShare, faThumbsUp as myLike } from '@fortawesome/free-solid-svg-icons';
 import { usePublicacion } from '@/hooks/usePublicacion';
-import { sendLike, hasMyLike } from '@/helpers/Likes';
+import { sendLike, hasMyLike } from '@/services/Likes';
 import styles from './Comentario.module.scss'
 import { decodeToken } from "react-jwt";
 import { setNumberformat } from '@/helpers/helpers';
-import { remove } from '@/helpers/Comentarios';
+import { create, remove } from '@/services/Comentarios';
 import { useSelector } from 'react-redux';
 import { notify } from '@/helpers/helpers'
-import { create } from '@/helpers/Comentarios';
 import { useForm } from '@/hooks/useForm';
 
 export const Comentario = ({ item, ...props }) => {

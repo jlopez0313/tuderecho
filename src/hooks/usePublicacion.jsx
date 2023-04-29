@@ -6,7 +6,9 @@ export const usePublicacion = (newPubli) => {
     const dispatch = useDispatch();
     
     const [totalComments, setTotalComments] = useState(0)
+    const [totalShares, setTotalShares] = useState(0)
     const [totalLikes, setTotalLikes] = useState(0)
+
     const { post } = useSelector( (state) => state.publicacion )
     
     const countComments = (myPubli) => {
@@ -72,13 +74,19 @@ export const usePublicacion = (newPubli) => {
         setTotalLikes( myPubli.likes?.length )
     }
 
+    const countShares = (myPubli) => {
+        setTotalShares( myPubli.shares?.length )
+    }
+
     useEffect(() => {
         countComments(newPubli)
+        countShares(newPubli)
         countLikes(newPubli)
     }, [newPubli])
     
     return {
         totalComments,
+        totalShares,
         totalLikes,
         onAddChild,
         onRemoveChild

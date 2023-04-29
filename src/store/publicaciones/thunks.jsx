@@ -15,6 +15,7 @@ export const get = ( ) => {
         dispatch( setLoading( false ) )
 
         if ( response ) {
+            console.log(response.data.publicaciones)
             dispatch( setList( response.data.publicaciones) )
             return Promise.resolve(true);
         } else {

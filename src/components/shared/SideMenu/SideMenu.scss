@@ -16,7 +16,8 @@
     ul {
         list-style: none;
         margin-bottom: 0;
-
+        overflow: auto;
+        
         li {
             a {
                 text-decoration: none;

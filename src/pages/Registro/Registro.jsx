@@ -7,7 +7,6 @@ import { notify } from '@/helpers/helpers';
 import { GmailLogin, FacebookLogin } from '@/firebase/auth';
 import GoogleIcon from '@/assets/images/pre-registro/google.png';
 import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
-import { useState } from 'react';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 export const Registro = () => {

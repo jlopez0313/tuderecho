@@ -10,6 +10,7 @@ import styles from './Main.module.scss';
 import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
+
 import { setPubli } from '@/store/publicaciones/PublicacionesSlice';
 
 export const Main = () => {
@@ -18,6 +19,7 @@ export const Main = () => {
     
     const [modalShow, setModalShow] = useState(false);
     const [showModalComments, setShowModalComments] = useState(false);
+    const [showModalShare, setShowModalShare] = useState(false);
     const dispatch = useDispatch();
     const { publis: lista, post, isLoading } = useSelector( (state) => state.publicacion )
     const [publis, setPublis] = useState(lista);
@@ -29,6 +31,11 @@ export const Main = () => {
     const onComentar = async ( post ) => {
         await dispatch( setPubli( post ) )
         setShowModalComments( true )
+    }
+
+    const onSharing = async ( post ) => {
+        await dispatch( setPubli( post ) )
+        setShowModalShare( true )
     }
 
     const onRemovePubli = ( id ) => {
@@ -55,6 +62,12 @@ export const Main = () => {
     const onHideModal = (doRefresh) => {
         onRefreshPublis(doRefresh)
         setShowModalComments(false)
+        setShowModalShare(false)
+    }
+
+    const onHideShare = (doRefresh) => {
+        onRefreshPublis(doRefresh)
+        setShowModalShare(false)
     }
 
     const onSetPubli = (publi) => {
@@ -65,7 +78,7 @@ export const Main = () => {
     }
 
     useEffect( () => {
-        onGetList()
+        // onGetList()
     }, [])
 
     useEffect( () => {
@@ -73,7 +86,6 @@ export const Main = () => {
     }, [lista])
 
     useEffect( () => {
-        console.log('publi setted')
         onSetPubli( post )
     }, [post])
     
@@ -92,12 +104,6 @@ export const Main = () => {
                 </div>
             </div>
 
-            <PostModal
-                title='Crea un Post'
-                show={modalShow}
-                onHide={(doRefresh = false) => onRefreshPublis( doRefresh )}
-            />
-
             {
                 isLoading
                 ? 
@@ -110,17 +116,31 @@ export const Main = () => {
                                 key={key}
                                 post={post}
                                 onComentar={() => onComentar(post)}
+                                onSharing={() => onSharing(post)}
                                 onRemovePubli={(doRefresh = false) => onRemovePubli(doRefresh)}
                                 onRefreshPublis={(doRefresh = false) => onRefreshPublis(doRefresh)}
                             />
                     })
             }
 
+            <PostModal
+                title='Crea un Post'
+                show={modalShow}
+                onHide={(doRefresh = false) => onRefreshPublis( doRefresh )}
+            />
+
             <ComentariosModal
                 title='Comentarios'
                 show={showModalComments}
                 post={post}
                 onHide={(doRefresh = false) => onHideModal( doRefresh )}
+            />
+
+            <PostModal
+                title='Compartir'
+                show={showModalShare}
+                post={post}
+                onHide={(doRefresh = false) => onHideShare( doRefresh )}
             />
 
         </div>

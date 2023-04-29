@@ -1,5 +1,4 @@
 import { backendApi } from "@/api/backendApi"
-import { Dispatch } from "react"
 import { headers } from "@/constants/constants"
 import { register, setLista } from "./UserSlice"
 

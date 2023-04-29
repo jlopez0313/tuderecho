@@ -1,0 +1,6 @@
+.modal {
+    .body {
+        max-height: calc(100vh - 265px);
+        overflow: scroll;
+    }
+}

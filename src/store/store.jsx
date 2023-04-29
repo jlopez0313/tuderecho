@@ -6,6 +6,7 @@ import { publicacionSlice } from "./publicaciones/PublicacionesSlice"
 import { tagSlice } from "./tags/TagSlice"
 import { userSlice } from "./user/UserSlice"
 import { videotecaSlice } from "./videoteca/VideotecaSlice"
+import { chatSlice } from "./chat/ChatSlice"
 
 export const store = configureStore({
     reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
         conferencia: conferenciaSlice.reducer,
         comunidad: comunidadesSlice.reducer,
         videoteca: videotecaSlice.reducer,
+        chat: chatSlice.reducer,
     }
 })

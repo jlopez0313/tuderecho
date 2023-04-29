@@ -11,7 +11,6 @@ import bcrypt from 'bcryptjs'
 
 export const PasswordsComponent = () => {
 
-    const [id, setId] = useState('');
     const [perfil, setPerfil] = useState({ tags: [] });
     const { user } = useSelector( (state) => state.user );
     const dispatch = useDispatch();
@@ -27,10 +26,8 @@ export const PasswordsComponent = () => {
 
     const onFind = () => {
         const token = localStorage.getItem('token') || '';
-        const { uid: id } = decodeToken(token);
-        setId( id );
-    
-        const resp = dispatch( find( id ) );
+        const { uid } = decodeToken(token);
+        const resp = dispatch( find( uid ) );
         resp.then( (data) => {
             dispatch( register( data.usuario ) )
             setPerfil( data.perfil );
