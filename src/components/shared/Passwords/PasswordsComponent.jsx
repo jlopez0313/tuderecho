@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { decodeToken } from "react-jwt";
-import { find, passwords } from '@/store/user/thunks';
+import { find, passwords } from '@/services/Usuarios';
 import { Header } from "@/components/shared/Header/Header"
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '@/hooks/useForm';
@@ -11,7 +11,7 @@ import bcrypt from 'bcryptjs'
 
 export const PasswordsComponent = () => {
 
-    const [perfil, setPerfil] = useState({ tags: [] });
+    // const [perfil, setPerfil] = useState({ tags: [] });
     const { user } = useSelector( (state) => state.user );
     const dispatch = useDispatch();
 
@@ -27,10 +27,10 @@ export const PasswordsComponent = () => {
     const onFind = () => {
         const token = localStorage.getItem('token') || '';
         const { uid } = decodeToken(token);
-        const resp = dispatch( find( uid ) );
-        resp.then( (data) => {
+        find( uid )
+        .then( (data) => {
             dispatch( register( data.usuario ) )
-            setPerfil( data.perfil );
+            // setPerfil( data.perfil );
             onSetFormState( {...formState, email: data.usuario.email }  )
         })
     }
@@ -45,8 +45,8 @@ export const PasswordsComponent = () => {
         } else if( formState.password1 !== formState.password2 ) {
             notify('Tu nueva contraseña no coincide', 'error')
         } else {
-            const resp = dispatch( passwords( formState ) )
-            resp.then( () => {
+            passwords( formState )
+            .then( () => {
                 onFind();
                 notify('Contraseña Actualizada.', 'success');
             }).catch( error => {

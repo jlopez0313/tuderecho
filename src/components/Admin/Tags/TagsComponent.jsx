@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useSelector, useDispatch } from 'react-redux';
-import { list, remove } from "@/store/tags/thunks";
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { all as getAll, remove } from '@/services/Tags';
 
 const breadcrumb = [
     {
@@ -21,8 +20,8 @@ const breadcrumb = [
 ]
 
 export const TagsComponent = () => {
-    const {tags} = useSelector( (state) => state.tag)
-    const dispatch = useDispatch();
+
+    const [tags, setTags] = useState([])
 
     const onDeleteItem = (id) => {
         const MySwal = withReactContent(Swal)
@@ -33,8 +32,8 @@ export const TagsComponent = () => {
             showCancelButton: true,
         }).then( ({isConfirmed}) => {
             if ( isConfirmed ) {
-                const removed = dispatch(remove(id))
-                removed.then( () => {
+                remove(id)
+                .then( () => {
                     onList();
                     notify('Especialidad eliminada!', 'success')
                 })
@@ -42,8 +41,8 @@ export const TagsComponent = () => {
         })
     }
 
-    const onList = () => {
-        dispatch(list())
+    const onList = async () => {
+        setTags( await ( getAll()) || [] )
     }
 
     useEffect(() => {

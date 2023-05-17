@@ -4,21 +4,21 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from '@/assets/styles/shared.module.scss';
 import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
-import { list, remove } from '@/store/videoteca/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import { list, remove } from '@/services/Videoteca';
 import { notify } from '@/helpers/helpers';
 import Spinner from 'react-bootstrap/Spinner';
 
 export const Videoteca = () => {
 
-    const dispatch = useDispatch();
-    const { videoteca: lista, isLoading } = useSelector( (state) => state.videoteca )
-    
     const [modalShow, setModalShow] = useState(false);
     const [search, setSearch] = useState('');
+    const [lista, setLista] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const onGetList = async () => {
-        dispatch( list(search) )
+        setIsLoading( true )
+        setLista( await list(search) )
+        setIsLoading( false )
     }
     
     const onRefreshVideoteca = (doRefresh) => {
@@ -30,9 +30,7 @@ export const Videoteca = () => {
     }
 
     const onRemove = ( id ) => {
-        const removed = dispatch( remove( id ) )
-
-        removed
+        remove( id )
         .then( () => {
             onGetList();
             notify('Video removido', 'success')
@@ -86,7 +84,7 @@ export const Videoteca = () => {
 
             <VideotecaModal
                 title='Sube tu Video'
-                show={modalShow}
+                modalShow={modalShow}
                 onHide={(doRefresh = false) => onRefreshVideoteca(doRefresh)}
             />
         </>

@@ -1,14 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {  faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { list, update } from "@/store/user/thunks";
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 import { Link } from 'react-router-dom';
+import { all as getAll, update } from '@/services/Usuarios';
 
 const breadcrumb = [
     {
@@ -23,8 +22,8 @@ const breadcrumb = [
 
 
 export const UsuariosComponent = () => {
-    const {usuarios} = useSelector( (state) => state.user)
-    const dispatch = useDispatch();
+    
+    const [usuarios, setUsuarios] = useState([])
 
     const onApproveUser = ( user ) => {
         const MySwal = withReactContent(Swal)
@@ -36,8 +35,8 @@ export const UsuariosComponent = () => {
         }).then( ({isConfirmed}) => {
             if ( isConfirmed ) {
 
-                const removed = dispatch(update(user.id, {...user, estado: 'A'}))
-                removed.then( () => {
+                update(user.id, {...user, estado: 'A'})
+                .then( () => {
                     onList();
                     notify('Usuario Aprobado!', 'success')
                 })
@@ -54,8 +53,8 @@ export const UsuariosComponent = () => {
             showCancelButton: true,
         }).then( ({isConfirmed}) => {
             if ( isConfirmed ) {
-                const removed = dispatch(update(user.id, {...user, estado: 'R'}))
-                removed.then( () => {
+                update(user.id, {...user, estado: 'R'})
+                .then( () => {
                     onList();
                     notify('Usuario Rechazado!', 'success')
                 })
@@ -63,8 +62,8 @@ export const UsuariosComponent = () => {
         })
     }
 
-    const onList = () => {
-        dispatch(list())
+    const onList = async () => {
+        setUsuarios( await ( getAll()) || [] )
     }
 
     useEffect(() => {

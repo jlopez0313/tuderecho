@@ -8,5 +8,7 @@ export default defineConfig({
     alias: [{ find: '@', replacement: '/src' }],
   },
   server: { https: true },
-  plugins: [react(), mkcert()]
+  plugins: [react({
+    jsxRuntime: 'classic'
+  }), mkcert()]
 })

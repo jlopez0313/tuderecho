@@ -4,9 +4,7 @@ import shared from '@/assets/styles/shared.module.scss';
 import styles from './Contactos.module.scss';
 import { Chat } from '@/components/shared/Chat/Chat';
 import { decodeToken } from "react-jwt";
-import { allConectados } from '@/services/Users';
 import socketIO from 'socket.io-client';
-import { setConectados } from '@/store/chat/ChatSlice';
 import { signal } from "@preact/signals-react";
 
 const onlineUsers = signal([]);
@@ -43,12 +41,6 @@ export const Contactos = () => {
 
       }
     })
-
-  }
-
-  const getConectados = async () => {
-    const lista = await allConectados();
-    setConectados( lista )
   }
 
   const onAddChat = ( usuario ) => {

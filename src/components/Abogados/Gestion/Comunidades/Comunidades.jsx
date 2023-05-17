@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { myList, remove } from '@/store/comunidades/thunks';
+import { myList, remove } from '@/services/Comunidades';
 import styles from './Comunidades.module.scss'
 import { notify } from '@/helpers/helpers';
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
@@ -21,20 +20,21 @@ const breadcrumb = [
 
 export const ComunidadesComponent = () => {
 
-    const dispatch = useDispatch();
-    const { comunidades: lista, isLoading } = useSelector( (state) => state.comunidad )
-    
     const [item, setItem] = useState({});
     const [modalShow, setModalShow] = useState(false);
     const [search, setSearch] = useState('');
-    
+    const [lista, setLista] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
     const onShowModal = ( item ) => {
         setItem(item);
         setModalShow(true);
     }
 
     const onGetList = async () => {
-        dispatch( myList(search) )
+        setIsLoading( true )
+        setLista( await myList(search) )
+        setIsLoading( false )
     }
 
     const onRefreshVideoteca = (callRefresh = false) => {
@@ -43,9 +43,7 @@ export const ComunidadesComponent = () => {
     }
 
     const onRemove = ( id ) => {
-        const removed = dispatch( remove( id ) )
-
-        removed
+        remove( id )
         .then( () => {
             onGetList();
             notify('Videoteca removida', 'success')

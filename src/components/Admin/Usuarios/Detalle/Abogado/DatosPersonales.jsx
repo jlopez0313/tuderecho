@@ -1,18 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import '../Perfil.scss'
-import { list } from '@/store/especialidades/thunks';
 import { tipoDocumentos } from '@/constants/constants';
+import { all as getAll } from '@/services/Especialidades';
+import { all as getTags } from '@/services/Tags';
 
-export const DatosPersonales = ( { currentTags, formState } ) => {
-    const {especialidades} = useSelector( (state) => state.especialidad)
-    const dispatch = useDispatch();
+export const DatosPersonales = ( { formState } ) => {
+    const [especialidades, setEspecialidades] = useState([])
+    const [myTags, setMyTags] = useState([]);
+    const [tags, setTags] = useState([])
 
-    const onList = () => {
-        dispatch(list())
+    const onList = async () => {
+        setTags( await ( getTags()) || [] )
+        setEspecialidades( await getAll() )
     }
+
+    const onSetMyTags = () => {
+        const myTags = tags.filter( tag => formState.perfil?.tags.includes(tag.id) )
+        setMyTags(
+            myTags.map( (tag) => {
+                return tag.name
+            })
+        )
+    }
+
+    useEffect(() => {
+        onSetMyTags();
+    }, [tags, formState])
 
     useEffect(() => {
         onList();
@@ -20,8 +34,6 @@ export const DatosPersonales = ( { currentTags, formState } ) => {
 
     return (
         <div className="card p-3 my-4">
-
-            
             
             <div className="row">
                 <div className="col-sm-3 mb-3 text-center">
@@ -31,11 +43,11 @@ export const DatosPersonales = ( { currentTags, formState } ) => {
                 </div>
                 <div className="col-sm-9">
                     <div className="form-floating mb-2">
-                        <span className="form-control"> { tipoDocumentos.find(tipo => tipo.key === formState.tipoDoc)?.value } </span>
+                        <span className="form-control"> { tipoDocumentos.find(tipo => tipo.key === formState.perfil?.tipoDoc)?.value } </span>
                         <label htmlFor="especialidad">Tipo de Documento *:</label>
                     </div>
                     <div className="form-floating mb-2">
-                        <span className="form-control"> {formState.identificacion} </span>
+                        <span className="form-control"> {formState.perfil?.identificacion} </span>
                         <label htmlFor="staticEmail">Identificación *:</label>
                     </div>
                     <div className="form-floating mb-2">
@@ -43,28 +55,28 @@ export const DatosPersonales = ( { currentTags, formState } ) => {
                         <label htmlFor="staticEmail">Nombre Completo *:</label>
                     </div>
                     <div className="form-floating mb-2">
-                        <span className="form-control"> {formState.pais} </span>
+                        <span className="form-control"> {formState.perfil?.pais} </span>
                         <label htmlFor="staticEmail">Pais *:</label>
                     </div>
                 </div>
             </div>
             
             <div className="form-floating mb-3">
-                <span className="form-control"> {formState.biografia} </span>
+                <span className="form-control"> {formState.perfil?.biografia} </span>
                 <label htmlFor="staticEmail">Biografía *:</label>
             </div>
             
             <div className="mb-3 row">
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
-                        <span className="form-control"> {especialidades.find(item => item.id === formState.especialidad)?.name} </span>
+                        <span className="form-control"> {especialidades.find(item => item.id === formState.perfil?.especialidad)?.name} </span>
                         <label htmlFor="especialidad">Especialidad *:</label>
                     </div>
                 </div>
 
                 <div className="col-sm-6">
                     <div className="form-floating col-sm-12">
-                        <span className="form-control"> {currentTags.map(tag => { return tag.name }).join(', ')} </span>
+                        <span className="form-control"> {myTags.join(', ')} </span>
                     </div>
                 </div>
             </div>

@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setPubli } from '@/store/publicaciones/PublicacionesSlice';
 
-export const usePublicacion = (newPubli) => {
-    const dispatch = useDispatch();
+export const usePublicacion = (newPubli, setPubli) => {
     
     const [totalComments, setTotalComments] = useState(0)
     const [totalShares, setTotalShares] = useState(0)
     const [totalLikes, setTotalLikes] = useState(0)
 
-    const { post } = useSelector( (state) => state.publicacion )
-    
     const countComments = (myPubli) => {
         const total = doCount( myPubli );
         setTotalComments( total - 1 )
@@ -31,7 +26,7 @@ export const usePublicacion = (newPubli) => {
     }
 
     const onAddChild = async (comment) => {
-        const updated = addChild (post, comment)
+        const updated = addChild (newPubli, comment)
         await dispatch( setPubli( updated ) )
     }
 

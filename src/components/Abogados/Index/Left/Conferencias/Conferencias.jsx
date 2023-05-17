@@ -4,21 +4,22 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from '@/assets/styles/shared.module.scss';
 import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';
-import { list, remove } from '@/store/conferencias/thunks';
-import { useDispatch, useSelector } from 'react-redux';
+import { list, remove } from '@/services/Conferencias';
 import { notify } from '@/helpers/helpers';
 import Spinner from 'react-bootstrap/Spinner';
 
+
 export const Conferencias = () => {
     
-    const dispatch = useDispatch();
-    const { conferencias: lista, isLoading } = useSelector( (state) => state.conferencia )
-
-    const [modalShow, setModalShow] = useState(false);
+    const [modalShow, setModalShow] = useState( false );
     const [search, setSearch] = useState('');
+    const [lista, setLista] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const onGetList = async () => {
-        dispatch( list(search) )
+        setIsLoading( true )
+        setLista( await list(search) )
+        setIsLoading( false )
     }
 
     const onRefreshConferencias = ( doRefresh ) => {
@@ -30,9 +31,7 @@ export const Conferencias = () => {
     }
 
     const onRemove = ( id ) => {
-        const removed = dispatch( remove( id ) )
-
-        removed
+        remove( id )
         .then( () => {
             onGetList();
             notify('Conferencia removida', 'success')
@@ -83,12 +82,13 @@ export const Conferencias = () => {
                 </div>
 
             </div>
-
-            <ConferenciaModal
-                title='Crea una Conferencia'
-                show={modalShow}
-                onHide={(doRefresh = false ) => onRefreshConferencias( doRefresh)}
-            />
+            {
+                <ConferenciaModal
+                    title='Crea una Conferencia'
+                    modalShow={modalShow}
+                    onHide={(doRefresh = false ) => onRefreshConferencias( doRefresh)}
+                />
+            }
         </>
     )
 }

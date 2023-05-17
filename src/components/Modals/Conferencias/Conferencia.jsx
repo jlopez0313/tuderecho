@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useMemo, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
-import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
@@ -11,10 +10,15 @@ import es from "date-fns/locale/es";
 import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Conferencia.module.scss'
-import { create } from '@/store/conferencias/thunks';
+import { create } from '@/services/Conferencias';
+import { signal } from '@preact/signals-react';
 
-export const ConferenciaModal = ({item = {}, ...props}) => {
+const shown = signal( false );
+export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
+    const [show, setShow] = useState( true );
+    const [file, setFile] = useState( {} );
+    
     const initFormData = {
         titulo:     item?.titulo    || '',
         fecha:      item?.fecha     || '',
@@ -27,7 +31,18 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
 
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
-    const dispatch = useDispatch()
+    const doHide = ( hide = false ) => {
+        setShow( false )
+        
+        setTimeout( () => {
+            props.onHide( hide );
+        }, 100)
+
+        setTimeout( () => {
+            setShow( true )
+        }, 200)
+
+    }
 
     const onSetStartDate = (date) => {
         console.log(date)
@@ -37,34 +52,29 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
 
     const onUploadImage = ( evt ) => {
 
-        const reader = new FileReader();
-        reader.readAsDataURL(evt.target.files[0]);
-        reader.onload = function(event) {
-            const myEvent = { target: { name: 'archivo', value: event.target.result }}
-            onInputChange( myEvent )
-        };
-            reader.onerror = function() {
-            notify("No se pudo cargar la imágen", "error");
-        };
+        setFile(evt.target.files[0])
+
+        const myEvent2 = { target: { name: 'preview', value: URL.createObjectURL(evt.target.files[0]) }}
+        onInputChange( myEvent2 )
     }
 
     const onDoSubmit = (evt) => {
         evt.preventDefault();
         const token = localStorage.getItem('token') || '';
         const { uid } = decodeToken(token);
+        console.log( formState );
 
         const obj = {
             ...formState,
+            archivo: file,
             user: uid,
         }
 
-        const callSave = dispatch( create( obj ) )
-
-        callSave
+        create( obj )
         .then( () => {
             notify('Conferencia registrada!', 'success');
             onSetFormState(initFormData)
-            props.onHide( true );
+            doHide( true );
         })
         .catch( error => {
             notify('onDoSubmit Conferencia: Internal Error', 'error')
@@ -74,7 +84,7 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
     useEffect(() => {
         registerLocale("es-CO", es);
     }, []);
-
+    
     useEffect(() => {
         if ( item.fecha ) {
             onSetFormState({
@@ -83,23 +93,23 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
             })
         }
     }, [item]);
+    
+    if (modalShow) {
 
-    return (
-        <Modal
-            {...props}
-            size="md"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <form onSubmit={onDoSubmit}>
-                <Modal.Header closeButton className='text-center'>
-                    <Modal.Title className='m-auto' id="contained-modal-title-vcenter">
-                        {props.title}
-                    </Modal.Title>
-                </Modal.Header>
-            
-                <Modal.Body className='py-0'>
-                    
+        return (
+            <Modal
+                show={ show }
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >      
+                <form onSubmit={onDoSubmit}>
+                    <Modal.Header closeButton className='text-center' onHide={doHide}>
+                        <Modal.Title className='m-auto' id="contained-modal-title-vcenter">
+                            {props.title}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className='py-0'>
                         <div className="form-floating mb-3">
                             <input
                                 required
@@ -111,7 +121,7 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
                             />
                             <label htmlFor="especialidad">Título *</label>
                         </div>
-
+    
                         <div className="form-floating mb-3">
                             <input
                                 required
@@ -123,7 +133,7 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
                             />
                             <label htmlFor="especialidad">Nombre del Conferencista *</label>
                         </div>
-
+    
                         <div className="form-floating mb-3">
                             <DatePicker
                                 required
@@ -140,6 +150,7 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
                                 minDate={subDays(new Date(), -2)}
                                 onChange={(date) => onSetStartDate(date)}
                             />
+    
                         </div>
                         
                         <div className="form-floating mb-3">
@@ -154,7 +165,7 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
                             ></textarea>
                             <label htmlFor="especialidad">Objetivo *</label>
                         </div>
-
+    
                         <div className="d-flex justify-content-evenly mb-3">
                             <div className="form-check form-check-inline">
                                 <input className="form-check-input" type="radio" name="gratis" value="S" checked={ formState.gratis === 'S' } onChange={onRadioChange}/>
@@ -165,7 +176,7 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
                                 <label className="form-check-label" htmlFor="inlineRadio2">Pago</label>
                             </div>
                         </div>
-
+    
                         {
                             formState.gratis === 'N' ?
                                 <div className="form-floating mb-3">
@@ -182,7 +193,7 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
                                 </div>
                             : null
                         }
-
+    
                         <div className="mb-3">
                             <input
                                 required
@@ -192,15 +203,15 @@ export const ConferenciaModal = ({item = {}, ...props}) => {
                                 onChange={onUploadImage}
                             />
                         </div>
-
-                        <img src={formState.archivo} alt='' className={style.archivo}/>
-
-                </Modal.Body>
-
-                <Modal.Footer className='d-block text-center'>
-                    <Button className='w-100 m-0' type='submit'> Crear </Button>
-                </Modal.Footer>
-            </form>
-        </Modal>        
-    )
-}
+                        <img src={formState.preview} alt='' className={style.archivo}/>
+    
+                    </Modal.Body>
+    
+                    <Modal.Footer className='d-block text-center'>
+                        <Button className='w-100 m-0' type='submit'> Crear </Button>
+                    </Modal.Footer>
+                </form>
+            </Modal>
+        )
+    }
+})

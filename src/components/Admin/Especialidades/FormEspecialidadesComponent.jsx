@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
-import { create, find, update } from '@/store/especialidades/thunks';
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { create, find } from '@/services/Especialidades';
 
 const breadcrumb = [
     {
@@ -21,13 +20,9 @@ const breadcrumb = [
     }
 ]
 
-
 export const FormEspecialidadesComponent = () => {
     const params = useParams();
-    const dispatch = useDispatch();
     const navigate = useNavigate()
-
-    const {especialidad} = useSelector( (state) => state.especialidad);
     
     const { id, name, onSetFormState, onInputChange} = useForm({
         id: '', name: ''
@@ -39,11 +34,11 @@ export const FormEspecialidadesComponent = () => {
         let data = null;
         let message = ''
         if (!id) {
-            data = dispatch( create( name ) )
+            data = create( name )
             message = 'Especialidad registrada!'
         }
         else {
-            data = dispatch( update( id, name ) )
+            data = update( id, name )
             message = 'Especialidad actualizada!'
         }
 
@@ -56,7 +51,8 @@ export const FormEspecialidadesComponent = () => {
         })
     }
 
-    const onDoFind = () => {
+    const onDoFind = async () => {
+        const especialidad = await find ( params.id )
         onSetFormState({
             id: especialidad.id,
             name: especialidad.name
@@ -64,18 +60,10 @@ export const FormEspecialidadesComponent = () => {
     }
 
     useEffect(() => {
-        onDoFind()
-    }, [especialidad])
-
-    useEffect(() => {
         if ( params.id ) {
-            dispatch( find( params.id ) )
-        } else {
-            onSetFormState({
-                id: '', name: ''
-            })
+            onDoFind()
         }
-    }, [])
+    }, [params])
     
     return (
         <div className="w-100 p-4">

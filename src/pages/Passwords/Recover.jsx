@@ -1,13 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
-import { useDispatch } from 'react-redux';
-import { recovery } from '@/store/user/thunks';
+import { recovery } from '@/services/Usuarios';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
 
 export const Recover = () => {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate()
 
     const { email, onInputChange} = useForm({
@@ -16,9 +14,9 @@ export const Recover = () => {
 
     const onDoLogin = ( evt ) => {
         evt.preventDefault();
-        const data = dispatch( recovery( email ) )
-        data.then( () => {
-            notify('Hemos enviado un correo a tu cuenta!', 'success');
+        recovery( email )
+        .then( () => {
+            notify('Hemos enviado un mensaje a tu cuenta de correo!', 'success');
             navigate('/login');
         }).catch( (error) => {
             notify(error?.response?.data?.msg || 'Internal Error onProcessLogin', 'warning');

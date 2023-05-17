@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { myList, remove } from '@/store/conferencias/thunks';
+import { myList, remove } from '@/services/Conferencias';
 import { Conferencia } from '@/components/shared/Conferencia/Conferencia';
 import styles from './Conferencias.module.scss'
 import { notify } from '@/helpers/helpers';
@@ -21,12 +20,11 @@ const breadcrumb = [
 
 export const ConferenciasComponent = () => {
 
-    const dispatch = useDispatch();
-    const { conferencias: lista, isLoading } = useSelector( (state) => state.conferencia )
-    
     const [item, setItem] = useState({});
     const [modalShow, setModalShow] = useState(false);
     const [search, setSearch] = useState('');
+    const [lista, setLista] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     
     const onShowModal = ( item ) => {
         setItem(item);
@@ -34,7 +32,9 @@ export const ConferenciasComponent = () => {
     }
 
     const onGetList = async () => {
-        dispatch( myList(search) )
+        setIsLoading( true )
+        setLista( await myList(search) )
+        setIsLoading( false )
     }
 
     const onRefreshConferencias = (callRefresh = false) => {
@@ -43,9 +43,7 @@ export const ConferenciasComponent = () => {
     }
 
     const onRemove = ( id ) => {
-        const removed = dispatch( remove( id ) )
-
-        removed
+        remove( id )
         .then( () => {
             onGetList();
             notify('Conferencia removida', 'success')

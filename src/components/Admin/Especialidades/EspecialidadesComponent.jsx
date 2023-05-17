@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { useSelector, useDispatch } from 'react-redux';
-import { list, remove } from '@/store/especialidades/thunks';
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { all as getAll, remove } from '@/services/Especialidades';
 
 const breadcrumb = [
     {
@@ -21,8 +20,9 @@ const breadcrumb = [
 ]
 
 export const EspecialidadesComponent = () => {
-    const {especialidades} = useSelector( (state) => state.especialidad)
-    const dispatch = useDispatch();
+    
+    const [especialidades, setEspecialidades] = useState([])
+    
 
     const onDeleteItem = ( id ) => {
         const MySwal = withReactContent(Swal)
@@ -33,8 +33,8 @@ export const EspecialidadesComponent = () => {
             showCancelButton: true,
         }).then( ({isConfirmed}) => {
             if ( isConfirmed ) {
-                const removed = dispatch(remove(id))
-                removed.then( () => {
+                remove(id)
+                .then( () => {
                     onList();
                     notify('Especialidad eliminada!', 'success')
                 })
@@ -42,8 +42,8 @@ export const EspecialidadesComponent = () => {
         })
     }
 
-    const onList = () => {
-        dispatch(list())
+    const onList = async () => {
+        setEspecialidades( await ( getAll()) || [] )
     }
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { backendApi } from "@/api/backendApi"
-import { headers } from "@/constants/constants"
-import { register, setLista } from "./UserSlice"
+
+import { register } from "./UserSlice"
 
 export const registerAuth = (rol, name, email, password, provider) => {
     return async( dispatch ) => {
@@ -24,109 +24,6 @@ export const loginAuth = (email, password) => {
             localStorage.setItem('token', response.data.token);
             dispatch( register( {...response.data.usuario, token: response.data.token } ) )
             return Promise.resolve(response.data.usuario);
-        } else {
-            return Promise.resolve(false);
-        }
-    }
-}
-
-export const list = () => {
-    return async( dispatch ) => {
-        const response = await backendApi.get('usuarios/', { 
-            headers: {
-                'x-token': localStorage.getItem('token')
-            }
-        })
-
-        if ( response ) {
-            dispatch( setLista( response.data.usuarios.sort( (a, b) => a.name > b.name ? 1: -1  ) ) )
-            return Promise.resolve(true);
-        } else {
-            return Promise.resolve(false);
-        }
-    }
-}
-
-export const find = (id) => {
-    return async( dispatch ) => {
-        const response = await backendApi.get('usuarios/' + id, { 
-            headers: {
-                'x-token': localStorage.getItem('token')
-            }
-        })
-
-        if ( response ) {
-            return Promise.resolve( response.data );
-        } else {
-            return Promise.resolve(false);
-        }
-    }
-}
-
-export const update = (id, user) => {
-    return async( dispatch ) => {
-        const response = await backendApi.put('usuarios/'+id, user, { 
-            headers: {
-                'x-token': localStorage.getItem('token'),
-                ...headers
-            }
-        })
-
-        if ( response ) {
-            dispatch( register( {...response.data.usuario, token: response.data.token } ) )
-            return Promise.resolve( response.data );
-        } else {
-            return Promise.resolve(false);
-        }
-    }
-}
-
-export const remove = (id) => {
-    return async( dispatch ) => {
-        const response = await backendApi.delete('usuarios/'+id, { 
-            headers: {
-                'x-token': localStorage.getItem('token')
-            }
-        })
-
-        if ( response ) {
-            // dispatch( list() )
-            return Promise.resolve(true);
-        } else {
-            return Promise.resolve(false);
-        }
-    }
-}
-
-export const passwords = (user) => {
-    return async( dispatch ) => {
-        const response = await backendApi.post('usuarios/passwords', user, { 
-            headers: {
-                'x-token': localStorage.getItem('token'),
-                ...headers
-            }
-        })
-
-        if ( response ) {
-            // dispatch( list() )
-            return Promise.resolve( response );
-        } else {
-            return Promise.resolve(false);
-        }
-    }
-}
-
-export const recovery = (email) => {
-    return async( dispatch ) => {
-        const response = await backendApi.post('usuarios/recovery', { email }, { 
-            headers: {
-                ...headers
-            }
-        })
-
-        if ( response ) {
-            // dispatch( list() )
-            return Promise.resolve( response );
         } else {
             return Promise.resolve(false);
         }

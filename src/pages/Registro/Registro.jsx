@@ -1,7 +1,8 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
-import { registerAuth, update } from '@/store/user/thunks';
+import { registerAuth } from '@/store/user/thunks';
+import { update } from '@/services/Usuarios';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
 import { GmailLogin, FacebookLogin } from '@/firebase/auth';
@@ -47,7 +48,16 @@ export const Registro = () => {
     const onProcessRegister = ( name, email, password, photoUrl='', provider ) => {
         const data = dispatch( registerAuth( type, name, email, password, provider ) )
         data.then( ( user ) => {
-            dispatch( update( user.id, {...user, photo: photoUrl} ) )
+
+            update( user.id, {...user, photo: photoUrl} )
+            .then( (data) => {
+                dispatch( register( {...data.usuario} ) )
+            }).catch( error => {
+                console.log( error );
+                notify('Error Interno.', 'error');
+            })
+
+
             notify('Bienvenido!', 'success');
             switch (user.rol) {
                 case 'Abogado':

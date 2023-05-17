@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { Comunidad } from './Comunidad/Comunidad'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useDispatch, useSelector } from 'react-redux';
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
-import { list, remove } from '@/store/comunidades/thunks';
+import { list, remove } from '@/services/Comunidades';
 import { notify } from '@/helpers/helpers';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from '@/assets/styles/shared.module.scss';
 
 export const Comunidades = () => {
 
-  const dispatch = useDispatch();
-  const { comunidades: lista, isLoading } = useSelector( (state) => state.comunidad )
-
   const [modalShow, setModalShow] = useState(false);
   const [search, setSearch] = useState('');
-
+  const [lista, setLista] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  
   const onGetList = async () => {
-    dispatch( list(search) )
+    setIsLoading( true )
+    setLista( await list(search) )
+    setIsLoading( false )
   }
 
   const onRefreshComunidades = (doRefresh) => {
@@ -30,9 +30,7 @@ export const Comunidades = () => {
   }
   
   const onRemove = ( id ) => {
-    const removed = dispatch( remove( id ) )
-
-    removed
+    remove( id )
     .then( () => {
         onGetList();
         notify('Comunidad removida', 'success')
@@ -87,7 +85,7 @@ export const Comunidades = () => {
 
         <ComunidadesModal
             title='Crea tu Comunidad'
-            show={modalShow}
+            modalShow={modalShow}
             onHide={(doRefresh = false) => onRefreshComunidades(doRefresh)}
         />
 

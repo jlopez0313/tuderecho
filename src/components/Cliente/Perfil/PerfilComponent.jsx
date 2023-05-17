@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { DatosPersonales } from "./DatosPersonales"
 import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
-import { find, update } from '@/store/user/thunks';
+import { find, update } from '@/services/Usuarios';
 import { register } from '@/store/user/UserSlice';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
@@ -41,8 +41,8 @@ export const PerfilComponent = () => {
     const { uid } = decodeToken(token);
     setId(uid);
 
-    const resp = dispatch( find( uid ) );
-    resp.then( (data) => {
+    find( uid )
+    .then( (data) => {
       dispatch( register( {...data.usuario} ) )
       onSetFormState( {...formState, ...data.usuario}  )
     })
@@ -52,9 +52,10 @@ export const PerfilComponent = () => {
   const onDoSubmit= ( evt ) => {
     evt.preventDefault();
 
-    const resp = dispatch( update( id, formState ) )
-    resp.then( (data) => {
+    update( id, formState )
+    .then( (data) => {
       onSetFormState( {...formState, ...data.usuario}  )
+      dispatch( register( {...data.usuario} ) )
       notify('Perfil Actualizado.', 'success');
     }).catch( error => {
       console.log( error );

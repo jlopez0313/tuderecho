@@ -1,38 +1,33 @@
 import { useEffect, useState, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import './Perfil.scss'
-import { list as getEspecialidades } from '@/store/especialidades/thunks';
-import { list as getAllTags } from '@/store/tags/thunks';
 import { CountryDropdown } from 'react-country-region-selector';
 import { notify } from '@/helpers/helpers'
 import { tipoDocumentos } from '@/constants/constants';
+import { all as getAll } from '@/services/Especialidades';
+import { all as getTags } from '@/services/Tags';
 
 const animatedComponents = makeAnimated();
 
 export const DatosPersonales = ( { formState, onInputChange } ) => {
 
-    const {especialidades} = useSelector( (state) => state.especialidad)
-    const {tags} = useSelector( (state) => state.tag)
-
-    const [allTags, setAllTags] = useState( [] )
+    const [especialidades, setEspecialidades] = useState([])
+    const [tags, setTags] = useState([])
+    const [mappedTags, setMappedTags] = useState( [] )
     const [myTags, setMyTags] = useState([]);
     const image = useRef(null)
-
-    const dispatch = useDispatch();
 
     const selectCountry = (val) => {
         const evt = { target: { name: 'perfil', value: val } }
         onInputChange( evt, 'pais' )
     }
 
-    const onGetLists = () => {
-        dispatch(getEspecialidades())
-        dispatch(getAllTags())
+    const onGetLists = async() => {
+        setTags( await ( getTags()) || [] )
+        setEspecialidades( await getAll() )
+
     }
 
     const onSetMyTags = () => {
@@ -46,7 +41,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
             })
         )
 
-        setAllTags(
+        setMappedTags(
             tags.map( (tag) => {
                 return {
                     value: tag.id,
@@ -205,7 +200,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             components={animatedComponents}
                             isMulti
                             value={myTags}
-                            options={allTags}
+                            options={mappedTags}
                         />
                     </div>
                 </div>

@@ -10,21 +10,19 @@ import { usePublicacion } from '@/hooks/usePublicacion';
 import { sendLike, hasMyLike } from '@/services/Likes';
 import { setNumberformat } from '@/helpers/helpers';
 import { useDispatch } from 'react-redux';
-import { setPubli } from '@/store/publicaciones/PublicacionesSlice';
 
-export const Publicacion = ({post, showActions = true, onComentar, onSharing, ...props}) => {
+export const Publicacion = ({post, setPost, showActions = true, onComentar, onSharing, ...props}) => {
 
-    const dispatch = useDispatch();
-    const [publi, setPost] = useState( post )
+    const [publi, setPubli] = useState( post )
 
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);    
-    const {totalComments, totalLikes, totalShares} = usePublicacion(publi);
+    const {totalComments, totalLikes, totalShares} = usePublicacion(publi, setPubli);
 
     const toggleLike = async (id) => {
         const toggled = await sendLike('publicaciones', id);
+        setPubli( toggled )
         setPost( toggled )
-        await dispatch( setPubli( toggled ) )
     }
 
     const onRemovePubli = async ( id ) => {
@@ -32,7 +30,7 @@ export const Publicacion = ({post, showActions = true, onComentar, onSharing, ..
     }
 
     useEffect(()=> {
-        setPost( post )
+        setPubli( post )
     }, [post])
     
     return (

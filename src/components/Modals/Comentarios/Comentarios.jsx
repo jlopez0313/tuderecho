@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
@@ -13,8 +13,9 @@ import styles from './Comentarios.module.scss';
 import shared from '@/assets/styles/shared.module.scss';
 import { usePublicacion } from '@/hooks/usePublicacion';
 
-export const ComentariosModal = ({post, ...props}) => {
+export const ComentariosModal = memo( ( {modalShown, post, ...props} ) => {
 
+    const [show, setShow] = useState( true );
     const [publi, setPubli] = useState( post );
     const {onAddChild} = usePublicacion( publi );
 
@@ -25,6 +26,20 @@ export const ComentariosModal = ({post, ...props}) => {
     
     const { onInputChange,  onSetFormState, formState } = useForm(initFormData)
     const comentario = useRef()
+
+
+    const doHide = ( hide = false ) => {
+        setShow( false )
+        
+        setTimeout( () => {
+            props.onHide( hide );
+        }, 100)
+
+        setTimeout( () => {
+            setShow( true )
+        }, 200)
+
+    }
 
     const onDoSubmit = async (evt) => {
         if (evt.key === 'Enter') {
@@ -59,58 +74,60 @@ export const ComentariosModal = ({post, ...props}) => {
         })
     }, [post])
 
-    return (
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            className={styles.modal}
-        >
-                <Modal.Header closeButton className='text-center pb-0'>
-                    <Modal.Title className='m-auto' id="contained-modal-title-vcenter">
-                        {props.title}
-                    </Modal.Title>
-                </Modal.Header>
-            
-                <Modal.Body className={`py-0 ${styles.body} ${shared.list}`}>
+    if ( modalShown ) {
+        return (
+            <Modal
+                show={show}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                className={styles.modal}
+            >
+                    <Modal.Header closeButton className='text-center pb-0' onHide={doHide}>
+                        <Modal.Title className='m-auto' id="contained-modal-title-vcenter">
+                            {props.title}
+                        </Modal.Title>
+                    </Modal.Header>
+                
+                    <Modal.Body className={`py-0 ${styles.body} ${shared.list}`}>
 
-                    <div className='overflow-auto'>
-                        <Publicacion
-                            className='mb-3'
-                            post={publi}
-                            onComentar={onComentar}
-                        />
+                        <div className='overflow-auto'>
+                            <Publicacion
+                                className='mb-3'
+                                post={publi}
+                                onComentar={onComentar}
+                            />
 
-                        {
-                            publi.comentarios?.map( (item, key) => {
-                                return <Comentario 
-                                    key={key}
-                                    item={item}
-                                />
-                            })
-                        }
-                    </div>
+                            {
+                                publi.comentarios?.map( (item, key) => {
+                                    return <Comentario 
+                                        key={key}
+                                        item={item}
+                                    />
+                                })
+                            }
+                        </div>
 
-                </Modal.Body>
+                    </Modal.Body>
 
-                <Modal.Footer className='d-block'>
-                    <div className="form-floating mb-3">
-                        <input
-                            ref={comentario}
-                            required
-                            name="comentario"
-                            className='form-control'
-                            placeholder='Escribe tu comentario'
-                            onChange={onInputChange}
-                            value={ formState.comentario }
-                            onKeyUp={onDoSubmit}
-                        />
-                        <label htmlFor="especialidad">Tu Comentario *</label>
-                    </div>
+                    <Modal.Footer className='d-block'>
+                        <div className="form-floating mb-3">
+                            <input
+                                ref={comentario}
+                                required
+                                name="comentario"
+                                className='form-control'
+                                placeholder='Escribe tu comentario'
+                                onChange={onInputChange}
+                                value={ formState.comentario }
+                                onKeyUp={onDoSubmit}
+                            />
+                            <label htmlFor="especialidad">Tu Comentario *</label>
+                        </div>
 
-                    <Button className='w-100 m-0' type='submit'> Crear </Button>
-                </Modal.Footer>
-        </Modal>        
-    )
-}
+                        <Button className='w-100 m-0' type='submit'> Crear </Button>
+                    </Modal.Footer>
+            </Modal>        
+        )
+    }
+})

@@ -24,7 +24,7 @@ export const InformacionPrivada = ({ formState }) => {
             <div className="mb-3 row">
                 <div className="col-sm-6">
                     <div className="form-floating col-sm-12">
-                        <span className="form-control"> {formState.tarjeta_profesional} </span>
+                        <span className="form-control"> {formState.perfil?.tarjeta_profesional} </span>
                         <label htmlFor="staticEmail">Tarjeta Profesional:</label>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ export const InformacionPrivada = ({ formState }) => {
                                 className="form-check-input"
                                 name='estudiante'
                                 readOnly={true}
-                                checked={ formState.estudiante === 'S' }
+                                checked={ formState.perfil?.estudiante === 'S' }
                             />
                             <label className="form-check-label" htmlFor="inlineCheckbox1"> SI </label>
                         </div>
@@ -52,7 +52,7 @@ export const InformacionPrivada = ({ formState }) => {
                                 className="form-check-input"
                                 name='decreto176'
                                 readOnly={true}
-                                checked={ formState.decreto176 === 'S' }
+                                checked={ formState.perfil?.decreto176 === 'S' }
                             />
                             <label className="form-check-label" htmlFor="inlineCheckbox2"> Estudiante de Derecho - licencia temporal (Decreto 176 de 1971) </label>
                         </div>
@@ -62,13 +62,13 @@ export const InformacionPrivada = ({ formState }) => {
             <div className="mb-3 row">
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
-                        <span className="form-control"> {formState.region} </span>
+                        <span className="form-control"> {formState.perfil?.region} </span>
                         <label htmlFor="staticEmail">Región *:</label>
                     </div>
                 </div>
                 <div className="col-sm-6">
                     <div className="form-floating col-sm-12">
-                        <span className="form-control"> {formState.ciudad} </span>
+                        <span className="form-control"> {formState.perfil?.ciudad} </span>
                         <label htmlFor="staticEmail">Ciudad *:</label>
                     </div>
                 </div>
@@ -81,14 +81,26 @@ export const InformacionPrivada = ({ formState }) => {
                     </div>
                 </div>
                 <div className="form-floating col-sm-6">
-                    <span className="form-control"> {formState.telefono} </span>
+                    <span className="form-control"> {formState.perfil?.telefono} </span>
                     <label htmlFor="staticEmail">Teléfono *:</label>
                 </div>
             </div>
-            <div className="row">
+            <div className="mb-3 row">
+                <div className="form-floating col-sm-6">
+                    <div className="form-floating col-sm-12">
+                        <span className="form-control">
+                            {
+                                formState.estado === 'R' 
+                                ? 'Rechazado'
+                                : 'Aprobado'
+                            }
+                        </span>
+                        <label htmlFor="staticEmail">Estado</label>
+                    </div>
+                </div>
                 <div className="col-sm-6">
                     {
-                        formState.cuenta === 'I' 
+                        formState.perfil?.cuenta === 'I' 
                         ? <div className="alert alert-danger"> Cuenta temporalmente desactivada </div>
                         : <div className="alert alert-success"> Cuenta activa </div>
                     }

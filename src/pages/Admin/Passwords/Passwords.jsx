@@ -9,7 +9,7 @@ const breadcrumb = [
         href: '/admin',
         active: false
     },{
-        name: 'Passwords',
+        name: 'Contraseñas',
         active: true
     }
 ]

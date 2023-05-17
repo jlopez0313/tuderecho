@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { myList, remove } from '@/store/videoteca/thunks';
+import { myList, remove } from '@/services/Videoteca';
 import styles from './Videoteca.module.scss'
 import { notify } from '@/helpers/helpers';
 import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
@@ -21,12 +20,12 @@ const breadcrumb = [
 
 export const VideotecaComponent = () => {
 
-    const dispatch = useDispatch();
-    const { videoteca: lista, isLoading } = useSelector( (state) => state.videoteca )
-    
     const [item, setItem] = useState({});
     const [modalShow, setModalShow] = useState(false);
     const [search, setSearch] = useState('');
+    const [lista, setLista] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
     
     const onShowModal = ( item ) => {
         setItem(item);
@@ -34,7 +33,9 @@ export const VideotecaComponent = () => {
     }
 
     const onGetList = async () => {
-        dispatch( myList() )
+        setIsLoading( true )
+        setLista( await myList(search) )
+        setIsLoading( false )
     }
 
     const onRefreshVideoteca = (callRefresh = false) => {
@@ -43,9 +44,7 @@ export const VideotecaComponent = () => {
     }
 
     const onRemove = ( id ) => {
-        const removed = dispatch( remove( id ) )
-
-        removed
+        remove( id )
         .then( () => {
             onGetList();
             notify('Videoteca removida', 'success')

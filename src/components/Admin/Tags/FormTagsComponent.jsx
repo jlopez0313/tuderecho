@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
-import { create, find, update } from '@/store/tags/thunks';
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { create, find } from '@/services/Tags';
 
 const breadcrumb = [
     {
@@ -23,10 +22,7 @@ const breadcrumb = [
 
 export const FormTagsComponent = () => {
     const params = useParams();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const {tag} = useSelector( (state) => state.tag);
     
     const { id, name, onSetFormState, onInputChange} = useForm({
         id: '', name: ''
@@ -38,11 +34,11 @@ export const FormTagsComponent = () => {
         let data = null;
         let message = ''
         if (!id) {
-            data = dispatch( create( name ) )
+            data = create( name )
             message = 'Palabra Clave registrada!'
         }
         else {
-            data = dispatch( update( id, name ) )
+            data = update( id, name )
             message = 'Palabra Clave actualizada!'
         }
 
@@ -55,7 +51,8 @@ export const FormTagsComponent = () => {
         })
     }
 
-    const onDoFind = () => {
+    const onDoFind = async () => {
+        const tag = await find ( params.id )
         onSetFormState({
             id: tag.id,
             name: tag.name
@@ -63,18 +60,10 @@ export const FormTagsComponent = () => {
     }
 
     useEffect(() => {
-        onDoFind()
-    }, [tag])
-
-    useEffect(() => {
         if ( params.id ) {
-            dispatch( find( params.id ) )
-        } else {
-            onSetFormState({
-                id: '', name: ''
-            })
+            onDoFind()
         }
-    }, [])
+    }, [params])
     
     return (
         <div className="w-100 p-4">

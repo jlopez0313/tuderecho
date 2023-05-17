@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { PostModal } from '@/components/Modals/Posts/Post';
-import { useDispatch, useSelector } from 'react-redux';
-import { get, remove } from '@/store/publicaciones/thunks';
+import { useSelector } from 'react-redux';
+import { list, remove } from '@/services/Publicaciones';
 import { notify } from '@/helpers/helpers'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
@@ -11,8 +11,6 @@ import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
 
-import { setPubli } from '@/store/publicaciones/PublicacionesSlice';
-
 export const Main = () => {
 
     const { user } = useSelector( state => state.user )
@@ -20,28 +18,28 @@ export const Main = () => {
     const [modalShow, setModalShow] = useState(false);
     const [showModalComments, setShowModalComments] = useState(false);
     const [showModalShare, setShowModalShare] = useState(false);
-    const dispatch = useDispatch();
-    const { publis: lista, post, isLoading } = useSelector( (state) => state.publicacion )
-    const [publis, setPublis] = useState(lista);
+    const [lista, setLista] = useState([])
+    const [post, setPost] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
 
     const onGetList = async () => {
-        dispatch( get() )
+        setIsLoading( true )
+        setLista( await list() )
+        setIsLoading( false )
     }
 
     const onComentar = async ( post ) => {
-        await dispatch( setPubli( post ) )
+        setPost( post )
         setShowModalComments( true )
     }
 
     const onSharing = async ( post ) => {
-        await dispatch( setPubli( post ) )
+        setPost( post )
         setShowModalShare( true )
     }
 
     const onRemovePubli = ( id ) => {
-        const removed = dispatch( remove( id ) )
-
-        removed
+        remove( id )
         .then( () => {
             onGetList();
             notify('Publicación removida', 'success')
@@ -71,23 +69,19 @@ export const Main = () => {
     }
 
     const onSetPubli = (publi) => {
-        const idx = publis.findIndex( item => item.id === publi.id );
-        const posts = [...publis ]
+        const idx = lista.findIndex( item => item.id === publi.id );
+        const posts = [...lista ]
         posts.splice(idx, 1, publi);
-        setPublis(posts)
+        setLista(posts)
     }
-
-    useEffect( () => {
-        // onGetList()
-    }, [])
-
-    useEffect( () => {
-        setPublis(lista)
-    }, [lista])
 
     useEffect( () => {
         onSetPubli( post )
     }, [post])
+
+    useEffect( () => {
+        onGetList()
+    }, [])
     
     return (
         <div className={`${styles.main}`}>
@@ -111,10 +105,11 @@ export const Main = () => {
                         <Spinner animation="grow" />
                     </div>
                 :
-                    publis?.map( (post, key) => {
+                    lista?.map( (post, key) => {
                         return <Publicacion
                                 key={key}
                                 post={post}
+                                setPost={setPost}
                                 onComentar={() => onComentar(post)}
                                 onSharing={() => onSharing(post)}
                                 onRemovePubli={(doRefresh = false) => onRemovePubli(doRefresh)}
@@ -125,20 +120,20 @@ export const Main = () => {
 
             <PostModal
                 title='Crea un Post'
-                show={modalShow}
+                modalShow={modalShow}
                 onHide={(doRefresh = false) => onRefreshPublis( doRefresh )}
             />
 
             <ComentariosModal
                 title='Comentarios'
-                show={showModalComments}
+                modalShown={showModalComments}
                 post={post}
                 onHide={(doRefresh = false) => onHideModal( doRefresh )}
             />
 
             <PostModal
                 title='Compartir'
-                show={showModalShare}
+                modalShow={showModalShare}
                 post={post}
                 onHide={(doRefresh = false) => onHideShare( doRefresh )}
             />

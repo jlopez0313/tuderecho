@@ -1,8 +1,6 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { find, update } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { DatosPersonales as DatosAbogado } from './Detalle/Abogado/DatosPersonales';
 import { DatosPersonales as DatosCliente } from './Detalle/Cliente/DatosPersonales';
@@ -10,6 +8,7 @@ import { InformacionPrivada } from './Detalle/Abogado/InformacionPrivada';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { notify } from '@/helpers/helpers';
+import { find, update } from '@/services/Usuarios';
 
 const breadcrumb = [
     {
@@ -28,29 +27,34 @@ const breadcrumb = [
 
 export const DetalleComponent = () => {
     const formData = {
-        especialidad: '',
-        tipoDoc: '',
-        identificacion: '',
-        name: '',
-        pais: '',
-        region: '',
-        ciudad: '',
-        email: '',
-        telefono: '',
         cuenta: 'A',
-        estudiante: '',
-        decreto176: '',
-        photo: '',
-        oldImage: '',
-        tags: []
-    }
+        email: '',
+        name: '',
+        perfil: {
+          biografia: '',
+          ciudad: '',
+          cuenta: '',
+          decreto176: '',
+          especialidad: '',
+          estudiante: '',
+          identificacion: '',
+          oldImage: '',
+          pais: '',
+          photo: '',
+          region: '',
+          tags: [],
+          tarjeta_profesional: '',
+          telefono: '',
+          tipoDoc: ''
+        },
+      }
 
     const params = useParams();
     const navigate = useNavigate()
-    const dispatch = useDispatch();
     const { onSetFormState, formState } = useForm(formData)
 
     const onApproveUser = ( user ) => {
+        console.log( user );
         const MySwal = withReactContent(Swal)
         MySwal.fire({
             icon: 'question',
@@ -60,8 +64,8 @@ export const DetalleComponent = () => {
         }).then( ({isConfirmed}) => {
             if ( isConfirmed ) {
 
-                const removed = dispatch(update(user.id, {...user, estado: 'A'}))
-                removed.then( () => {
+                update(user.id, {...user, estado: 'A'})
+                .then( () => {
                     navigate('/admin/usuarios')
                     notify('Usuario Aprobado!', 'success')
                 })
@@ -70,6 +74,7 @@ export const DetalleComponent = () => {
     }
 
     const onDenyUser = (user) => {
+        console.log( user );
         const MySwal = withReactContent(Swal)
         MySwal.fire({
             icon: 'question',
@@ -78,8 +83,8 @@ export const DetalleComponent = () => {
             showCancelButton: true,
         }).then( ({isConfirmed}) => {
             if ( isConfirmed ) {
-                const removed = dispatch(update(user.id, {...user, estado: 'R'}))
-                removed.then( () => {
+                update(user.id, {...user, estado: 'R'})
+                .then( () => {
                     navigate('/admin/usuarios')
                     notify('Usuario Rechazado!', 'success')
                 })
@@ -87,10 +92,10 @@ export const DetalleComponent = () => {
         })
     }
 
-    const onFind = () => {
-        const resp = dispatch( find( params.id ) );
-        resp.then( (data) => {
-            onSetFormState( {...formState, ...data.usuario, ...data.perfil, oldImage: data.oldImage, tags: data.perfil?.tags, id: data.usuario.id}  )
+    const onFind = async () => {
+        find ( params.id )
+        .then( (data) => {
+            onSetFormState( {...formState, ...data.usuario} )
         })
     }
 
@@ -113,8 +118,8 @@ export const DetalleComponent = () => {
 
                         {
                             formState.rol === 'Abogado'
-                            ? <DatosAbogado formState={formState} currentTags={formState?.tags || [] }/>
-                            : <DatosCliente formState={formState} currentTags={formState?.tags || [] }/>
+                            ? <DatosAbogado formState={formState}/>
+                            : <DatosCliente formState={formState}/>
                         }
                         
                         {

@@ -59,7 +59,7 @@ export const SideMenu = () => {
 
                                 <Link to='/admin/passwords'>
                                     <FontAwesomeIcon icon={faKey} />
-                                    Cambiar Contraseña
+                                    Contraseñas
                                 </Link>
                                 
                                 <Nav.Item>
