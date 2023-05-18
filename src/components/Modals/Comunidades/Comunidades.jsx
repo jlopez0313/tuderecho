@@ -23,31 +23,30 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const [show, setShow] = useState( true );
+    const [file, setFile] = useState( {} );
 
     const doHide = ( hide = false ) => {
         setShow( false )
         
-        setTimeout( () => {
+        const timer1 = setTimeout( () => {
             props.onHide( hide );
         }, 100)
 
-        setTimeout( () => {
+        const timer2 = setTimeout( () => {
             setShow( true )
         }, 200)
+
+        // clearTimeout(timer1)
+        // clearTimeout(timer2)
 
     }
 
     const onUploadImage = ( evt ) => {
 
-        const reader = new FileReader();
-        reader.readAsDataURL(evt.target.files[0]);
-        reader.onload = function(event) {
-            const myEvent = { target: { name: 'archivo', value: event.target.result }}
-            onInputChange( myEvent )
-        };
-            reader.onerror = function() {
-            notify("No se pudo cargar la imágen", "error");
-        };
+        setFile(evt.target.files[0])
+
+        const myEvent2 = { target: { name: 'preview', value: URL.createObjectURL(evt.target.files[0]) }}
+        onInputChange( myEvent2 )
     }
 
     const onDoSubmit = (evt) => {
@@ -57,6 +56,7 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
         const obj = {
             ...formState,
+            archivo: file,
             user: uid,
         }
 
@@ -151,7 +151,7 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                 />
                             </div>
 
-                            <img src={formState.archivo} alt='' className={style.archivo}/>
+                            <img src={formState.preview} alt='' className={style.archivo}/>
 
                     </Modal.Body>
 

@@ -25,9 +25,11 @@ export const Chat = ({ socket, user, chat, onHideChat }) => {
 
     const onMinimizeChat = (minimize) => {
         if ( !minimize) {
-            setTimeout( () => {
+            const timer = setTimeout( () => {
                 goToBottom();
             }, 200)
+
+            // clearTimeout(timer)
         }
 
         setMinimize(minimize)
@@ -55,9 +57,11 @@ export const Chat = ({ socket, user, chat, onHideChat }) => {
 
         setHeaderStyles( { background: 'bg-outline-danger', textColor: 'text-dark' } )
 
-        setTimeout( () => {
+        const timer = setTimeout( () => {
             setHeaderStyles( { background: 'bg-danger', textColor: 'text-white' } )
         }, 500)
+        
+        // clearTimeout(timer)
     }
 
     const goToBottom = () => {
@@ -68,9 +72,11 @@ export const Chat = ({ socket, user, chat, onHideChat }) => {
         // 👇️ scroll to bottom every time messages change
         if ( minimize ) {
             changeHeaderStyles();
-            setTimeout(()=> {
+            const timer = setTimeout(()=> {
                 changeHeaderStyles();
             }, 1000)
+
+            // clearTimeout(timer)
         } else {
             goToBottom();
         }

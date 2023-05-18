@@ -6,11 +6,13 @@ import { Passwords } from '@/pages/Passwords/Passwords';
 import { Videoteca } from '@/pages/Abogado/Gestion/Videoteca';
 import { Conferencias } from '@/pages/Abogado/Gestion/Conferencias';
 import { Comunidades } from '@/pages/Abogado/Gestion/Comunidades';
+import { Comunidades as ComunidadesIndex } from '@/pages/Abogado/Comunidades/Comunidades';
 
 export const AbogadosRoutes = () => {
   return (
     <Routes>
       <Route path='' element={ <Index /> } />
+      <Route path='comunidades' element={ <ComunidadesIndex /> } />
       <Route path='perfil' element={ <Perfil /> } />
       <Route path='gestion/*' element={
         <Routes>

@@ -29,12 +29,10 @@ export const save = async ( body ) => {
         }
     })
 
-    console.log( formData );
-
     const response = await backendApi.post(modulo, formData)
 
     if ( response ) {
-        return Promise.resolve(true);
+        return Promise.resolve(response.data.saved);
     } else {
         return Promise.resolve(false);
     }

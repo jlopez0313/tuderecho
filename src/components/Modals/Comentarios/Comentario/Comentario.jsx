@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp, faMessage, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faThumbsUp, faMessage, faTrashCan, faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { faShare, faThumbsUp as myLike } from '@fortawesome/free-solid-svg-icons';
 import { usePublicacion } from '@/hooks/usePublicacion';
 import { sendLike, hasMyLike } from '@/services/Likes';
@@ -12,8 +12,15 @@ import { create, remove } from '@/services/Comentarios';
 import { useSelector } from 'react-redux';
 import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
+import { memo } from 'react';
+import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
+import { format, render, cancel, register } from 'timeago.js';
+import { localeFunc } from '@/helpers/timeAgo';
 
-export const Comentario = ({ item, ...props }) => {
+export const Comentario = memo( ( { item, ...props } ) => {
+
+    const { publicacion, setPublicacion } = useContext( PublicacionContext );
+    register('my-locale', localeFunc);
 
     const [parent, setParent] = useState( item )
     const [addComment, setAddComment] = useState( false )
@@ -24,12 +31,13 @@ export const Comentario = ({ item, ...props }) => {
     const { uid } = decodeToken(token);
 
     const initFormData = {
+        publicacionID: publicacion.id,
         parent: item.id,
         comentario: '',
     }
 
     const { onInputChange,  onSetFormState, formState } = useForm(initFormData)
-    const {totalComments, totalLikes, onAddChild, onRemoveChild} = usePublicacion(parent);
+    const {totalComments, totalLikes} = usePublicacion(parent, setParent);
 
     const toggleLike = async (id) => {
         const toggled = await sendLike('comentarios', id);
@@ -45,13 +53,19 @@ export const Comentario = ({ item, ...props }) => {
     }
 
     const onRemoveComment = async (id) => {
-        const updated = await onRemoveChild( id );
-        setParent( updated );
-        await remove( id )
+        const publi = await remove( id, formState );
+        if ( publi ) {
+            notify('Comentario eliminado!', 'success');
+            setPublicacion( publi )
+            onComentar( false )
+        } else {
+            notify('onDoSubmit Comentario: Internal Error', 'error')
+        }
     }
 
     const onSendcomment = async (evt) => {
-        if (evt.key === 'Enter') {
+        evt.preventDefault();
+        // if (evt.key === 'Enter') {
             const obj = {
                 ...formState,
                 user: uid,
@@ -61,12 +75,12 @@ export const Comentario = ({ item, ...props }) => {
             if ( saved ) {
                 notify('Comentario registrado!', 'success');
                 onSetFormState(initFormData)
-                await onAddChild( saved )
+                setPublicacion( saved )
                 onComentar( false )
             } else {
                 notify('onDoSubmit Comentario: Internal Error', 'error')
             }
-        }
+        // }
     }
 
     useEffect(()=> {
@@ -102,9 +116,11 @@ export const Comentario = ({ item, ...props }) => {
                             }
                         </div>
                     </div>
-                    {parent.comentario}
+                    <div  className='text-break w-98'>
+                        {parent.comentario}
+                    </div>
                     <small className={styles.date}>
-                        Creado el {new Date(parent.created_at).toLocaleDateString()}
+                        { format(parent.createdAt, 'my-locale') }
                     </small>
                     <div className="">
                         <small
@@ -139,6 +155,7 @@ export const Comentario = ({ item, ...props }) => {
                 parent.comentarios.map( (child, key) => {
                     return <div className="ms-5" key={key}>
                         <Comentario
+                            onSetPubli={setParent}
                             item={child}
                         />
                     </div>
@@ -148,27 +165,34 @@ export const Comentario = ({ item, ...props }) => {
             {
                 addComment 
                 ? 
-                    <div className='ms-5 d-flex'>
+                    <div className='ms-5 d-flex align-items-center justify-content-between border rounded px-1 mb-2'>
                         <div>
                             <img src={user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
                         </div>
-                        <div className="form-floating mb-3 w-100">
-                            <input
-                                ref={ inputRef }
-                                required
-                                name="comentario"
-                                className='form-control'
-                                placeholder='Escribe tu comentario'
-                                onChange={onInputChange}
-                                value={ formState.comentario }
-                                onKeyUp={onSendcomment}
-                            />
-                            <label htmlFor="especialidad">Tu Comentario *</label>
-                        </div>
+                        <form onSubmit={onSendcomment} className='w-100'>
+                            <div className="form-floating">
+                                <input
+                                    ref={ inputRef }
+                                    required
+                                    name="comentario"
+                                    className='form-control border-0 pe-5'
+                                    placeholder='Escribe tu comentario'
+                                    onChange={onInputChange}
+                                    value={ formState.comentario }
+                                />
+                                <label htmlFor="especialidad">Tu Comentario *</label>
+                                <FontAwesomeIcon 
+                                    role="button"
+                                    className={`position-absolute bottom-25 end-0 me-2 text-danger ${ formState.comentario ? '' : 'disabled'}`}
+                                    icon={faPaperPlane}
+                                    onClick={onSendcomment}
+                                />  
+                            </div>
+                        </form>
                     </div>
                 : null
 
             }
         </>
     )
-}
+})

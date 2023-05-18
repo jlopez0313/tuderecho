@@ -12,11 +12,11 @@ export const create = async ( comentario ) => {
     }
 }
 
-export const remove = async (id) => {
-    const response = await backendApi.delete(module + id)
+export const remove = async (id, formData) => {
+    const response = await backendApi.delete(module + id, { data: formData } )
 
     if ( response ) {
-        return true;
+        return response.data.publi;
     } else {
         return false;
     }

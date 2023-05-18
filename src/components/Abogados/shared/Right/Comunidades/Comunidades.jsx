@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Comunidad } from './Comunidad/Comunidad'
-import { faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
 import { list, remove } from '@/services/Comunidades';
 import { notify } from '@/helpers/helpers';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from '@/assets/styles/shared.module.scss';
+import Button from 'react-bootstrap/esm/Button';
+import { Link } from 'react-router-dom';
 
 export const Comunidades = () => {
 
@@ -55,7 +57,7 @@ export const Comunidades = () => {
 
       <h5 className='text-danger w-100 fw-bold'> Comunidades </h5>
 
-      <div className='border rounded shadow-sm bg-white overflow-hidden h-100'>
+      <div className='border rounded shadow-sm bg-white overflow-hidden h-100 position-relative'>
         
         <div className="w-100 rounded text-center border p-2 bg-danger text-white cursor-pointer"
           onClick={() => setModalShow(true)}
@@ -89,6 +91,11 @@ export const Comunidades = () => {
             onHide={(doRefresh = false) => onRefreshComunidades(doRefresh)}
         />
 
+        <Link to="/abogados/comunidades" className="order-1 m-auto">
+          <Button className='position-absolute rounded-circle bottom-5 end-5'>
+            <FontAwesomeIcon icon={faSearch} />
+          </Button>
+        </Link>
       </div>
     </>
   )

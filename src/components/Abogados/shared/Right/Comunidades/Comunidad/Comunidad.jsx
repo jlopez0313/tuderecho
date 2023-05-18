@@ -25,6 +25,7 @@ export const Comunidad = ({item, onRemove}) => {
                   Personas: 25
                 </small>
                 {
+                /*
                   uid === item.user.id ? 
                     <>
                         <FontAwesomeIcon
@@ -46,6 +47,7 @@ export const Comunidad = ({item, onRemove}) => {
                       <FontAwesomeIcon icon={faCartShopping} className='me-2' />
                       Suscribirse { item.gratis === 'S' ? 'Gratis' : `$${item.precio}`}
                     </small>
+                */
                 }
 
             </div>

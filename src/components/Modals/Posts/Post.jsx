@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useContext, useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
@@ -13,8 +13,11 @@ import { notify } from '@/helpers/helpers'
 import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import styles from './Post.module.scss';
 import shared from '@/assets/styles/shared.module.scss';
+import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 
 export const PostModal = memo( ( {modalShow, post, ...props} ) => {
+
+  const { publicacion, setPublicacion } = useContext( PublicacionContext );
 
   const [postID, setPostID] = useState('');
   const [comment, setComment] = useState('');
@@ -23,16 +26,19 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
   const [gif, setGif] = useState('');
   const [show, setShow] = useState( true );
 
-  const doHide = ( hide = false ) => {
+  const doHide = ( refresh = false ) => {
       setShow( false )
       
-      setTimeout( () => {
-          props.onHide( hide );
+      const timer1 = setTimeout( () => {
+          props.onHide( refresh );
       }, 100)
 
-      setTimeout( () => {
+      const timer2 = setTimeout( () => {
           setShow( true )
       }, 200)
+
+      // clearTimeout(timer1)
+      // clearTimeout(timer2)
 
   }
 
@@ -69,7 +75,7 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
     setPreviews([...prevs])
   }
 
-  const onDoSavePubli = () => {
+  const onDoSavePubli = async () => {
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);
 
@@ -82,24 +88,26 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
       fecha: new Date()
     }
 
-    save( obj )
-    .then( () => {
+    const saved = await save( obj );
+    
+    if( saved ) {
       setComment('');
       setGif('');
       setMedias([])
       notify('Publicación registrada!', 'success')
       doHide( true );
-    })
-    .catch( error => {
+    } else {
       notify('onDoSavePubli: Internal Error', 'error')
-    })
+    }
   }
 
   useEffect(() => {
-    setPostID(post?.id)
-  }, [post])
+    if (publicacion) 
+      setPostID(publicacion.id)
+  }, [publicacion])
   
   if (modalShow) {
+
     return (
       <Modal
         show={show}
@@ -150,12 +158,12 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
               }
 
               {
-                post
+                publicacion
                 ?
                   <div className='overflow-auto'>
                     <Publicacion
                         className='mb-3'
-                        post={post}
+                        post={publicacion}
                         showActions={false}
                     />
                   </div>

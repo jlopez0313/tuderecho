@@ -21,7 +21,14 @@ export const myList = async ( search = '' ) => {
 }
 
 export const create = async (body) => {
-    const response = await backendApi.post(module, body)
+    delete body.preview;
+    
+    const formData = new FormData();
+    Object.keys( body ).forEach( key => {
+        formData.append( key, body[key] )
+    })
+    
+    const response = await backendApi.post(module, formData)
 
     if ( response ) {
         return Promise.resolve(true);

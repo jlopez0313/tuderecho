@@ -28,8 +28,6 @@ export const create = async (body) => {
         formData.append( key, body[key] )
     })
 
-    console.log( body, formData );
-
     const response = await backendApi.post(module, formData)
 
     if ( response ) {

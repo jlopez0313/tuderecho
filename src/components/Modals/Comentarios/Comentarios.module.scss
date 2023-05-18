@@ -3,4 +3,11 @@
         max-height: calc(100vh - 265px);
         overflow: scroll;
     }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    
 }

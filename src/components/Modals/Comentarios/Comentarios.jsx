@@ -1,6 +1,7 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+import React, { memo, useContext, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import '../MyModal.scss'
 import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
@@ -12,18 +13,23 @@ import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
 import styles from './Comentarios.module.scss';
 import shared from '@/assets/styles/shared.module.scss';
 import { usePublicacion } from '@/hooks/usePublicacion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
+import { useSelector } from 'react-redux';
+import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 
-export const ComentariosModal = memo( ( {modalShown, post, ...props} ) => {
+export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
+
+    const { publicacion, setPublicacion } = useContext( PublicacionContext );
 
     const [show, setShow] = useState( true );
-    const [publi, setPubli] = useState( post );
-    const {onAddChild} = usePublicacion( publi );
-
+    
     const initFormData = {
-        publicacion: post.id,
         comentario: '',
     }
     
+    const { user } = useSelector( state => state.user )
+
     const { onInputChange,  onSetFormState, formState } = useForm(initFormData)
     const comentario = useRef()
 
@@ -31,18 +37,21 @@ export const ComentariosModal = memo( ( {modalShown, post, ...props} ) => {
     const doHide = ( hide = false ) => {
         setShow( false )
         
-        setTimeout( () => {
+        const timer1 = setTimeout( () => {
             props.onHide( hide );
         }, 100)
 
-        setTimeout( () => {
+        const timer2 = setTimeout( () => {
             setShow( true )
         }, 200)
 
+        // clearTimeout(timer1)
+        // clearTimeout(timer2)
     }
 
     const onDoSubmit = async (evt) => {
-        if (evt.key === 'Enter') {
+        evt.preventDefault();
+        // if (evt.key === 'Enter') {
             const token = localStorage.getItem('token') || '';
             const { uid } = decodeToken(token);
 
@@ -55,11 +64,12 @@ export const ComentariosModal = memo( ( {modalShown, post, ...props} ) => {
             if ( saved ) {
                 notify('Comentario registrado!', 'success');
                 onSetFormState(initFormData)
-                onAddChild( saved )
+                // onAddChild( publicacion, saved )
+                setPublicacion( saved )
             } else {
                 notify('onDoSubmit Conferencia: Internal Error', 'error')
             }
-        }
+        // }
     }
 
     const onComentar = () => {
@@ -67,14 +77,19 @@ export const ComentariosModal = memo( ( {modalShown, post, ...props} ) => {
     }
 
     useEffect(()=> {
-        setPubli( post )
-        onSetFormState({
-            ...initFormData,
-            publicacion: post.id
-        })
-    }, [post])
+        if ( publicacion) {
+            onSetFormState({
+                ...initFormData,
+                publicacion: publicacion.id,
+                publicacionID: publicacion.id
+            })
 
-    if ( modalShown ) {
+
+        }
+    }, [publicacion])
+    
+
+    if ( modalShow ) {
         return (
             <Modal
                 show={show}
@@ -94,13 +109,13 @@ export const ComentariosModal = memo( ( {modalShown, post, ...props} ) => {
                         <div className='overflow-auto'>
                             <Publicacion
                                 className='mb-3'
-                                post={publi}
+                                post={publicacion}
                                 onComentar={onComentar}
                             />
 
                             {
-                                publi.comentarios?.map( (item, key) => {
-                                    return <Comentario 
+                                publicacion.comentarios?.map( (item, key) => {
+                                    return <Comentario
                                         key={key}
                                         item={item}
                                     />
@@ -111,23 +126,32 @@ export const ComentariosModal = memo( ( {modalShown, post, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block'>
-                        <div className="form-floating mb-3">
-                            <input
-                                ref={comentario}
-                                required
-                                name="comentario"
-                                className='form-control'
-                                placeholder='Escribe tu comentario'
-                                onChange={onInputChange}
-                                value={ formState.comentario }
-                                onKeyUp={onDoSubmit}
-                            />
-                            <label htmlFor="especialidad">Tu Comentario *</label>
+                        <div className='d-flex align-items-center justify-content-between border rounded px-1 mb-2'>
+                            <div>
+                                <img src={user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
+                            </div>
+                            <form className='w-100' onSubmit={onDoSubmit}>
+                                <div className="form-floating">
+                                    <input
+                                        ref={comentario}
+                                        required
+                                        name="comentario"
+                                        className='form-control border-0 pe-5'
+                                        placeholder='Escribe tu comentario'
+                                        onChange={onInputChange}
+                                        value={ formState.comentario }
+                                    />
+                                    <label htmlFor="especialidad">Tu Comentario *</label>
+                                    <FontAwesomeIcon
+                                        role="button"
+                                        className={`position-absolute bottom-25 end-0 me-2 text-danger ${ formState.comentario ? '' : 'disabled'}`}
+                                        icon={faPaperPlane} onClick={onDoSubmit}
+                                    />
+                                </div>
+                            </form>
                         </div>
-
-                        <Button className='w-100 m-0' type='submit'> Crear </Button>
                     </Modal.Footer>
-            </Modal>        
+            </Modal>
         )
     }
 })

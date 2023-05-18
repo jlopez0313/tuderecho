@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
-export const usePublicacion = (newPubli, setPubli) => {
+export const usePublicacion = (newPubli, setParent) => {
     
-    const [totalComments, setTotalComments] = useState(0)
+    // const [totalComments, setTotalComments] = useState(0)
     const [totalShares, setTotalShares] = useState(0)
     const [totalLikes, setTotalLikes] = useState(0)
 
+    /*
     const countComments = (myPubli) => {
         const total = doCount( myPubli );
         setTotalComments( total - 1 )
@@ -24,10 +25,11 @@ export const usePublicacion = (newPubli, setPubli) => {
 
         return total;
     }
+    
 
-    const onAddChild = async (comment) => {
-        const updated = addChild (newPubli, comment)
-        await dispatch( setPubli( updated ) )
+    const onAddChild = async (parent, comment) => {
+        const updated = addChild (parent, comment)
+        setParent( updated )
     }
 
     const addChild = ( parent, newChild )  => {
@@ -44,8 +46,8 @@ export const usePublicacion = (newPubli, setPubli) => {
     }
 
     const onRemoveChild = async ( commentID ) => {
-        const updated = removeChild (post, commentID)
-        await dispatch( setPubli( updated ) )
+        const updated = removeChild (newPubli, commentID)
+        setParent( updated )
         return updated;
     }
 
@@ -64,6 +66,7 @@ export const usePublicacion = (newPubli, setPubli) => {
             return {...parent, comentarios}
         }
     }
+    */
 
     const countLikes = (myPubli) => {
         setTotalLikes( myPubli.likes?.length )
@@ -74,16 +77,16 @@ export const usePublicacion = (newPubli, setPubli) => {
     }
 
     useEffect(() => {
-        countComments(newPubli)
-        countShares(newPubli)
-        countLikes(newPubli)
+        if ( newPubli ) {
+            // countComments(newPubli)
+            countShares(newPubli)
+            countLikes(newPubli)
+        }
     }, [newPubli])
     
     return {
-        totalComments,
+        // totalComments,
         totalShares,
         totalLikes,
-        onAddChild,
-        onRemoveChild
     }
 }

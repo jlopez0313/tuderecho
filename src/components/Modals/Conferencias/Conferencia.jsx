@@ -34,13 +34,16 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     const doHide = ( hide = false ) => {
         setShow( false )
         
-        setTimeout( () => {
+        const timer1 = setTimeout( () => {
             props.onHide( hide );
         }, 100)
 
-        setTimeout( () => {
+        const timer2 = setTimeout( () => {
             setShow( true )
         }, 200)
+
+        // clearTimeout(timer1)
+        // clearTimeout(timer2)
 
     }
 

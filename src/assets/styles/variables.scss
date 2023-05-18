@@ -19,11 +19,13 @@ $new-position-values: (
   3: 3%,
   4: 4%,
   5: 5%,
+  25: 25%,
   10: 10%,
   80: 80%,
   85: 85%,
   90: 90%,
   95: 95%,
+  98: 98%,
 );
 
 $position-values: map-merge($position-values, $new-position-values);
@@ -44,9 +46,18 @@ $utilities: (
         property: top,
         values: $position-values
     ),
+    "bottom": (
+        property: bottom,
+        values: $position-values
+    ),
     "height": (
       property: height,
       class: h,
+      values: $position-values
+    ),
+    "width": (
+      property: width,
+      class: w,
       values: $position-values
     )
 );
