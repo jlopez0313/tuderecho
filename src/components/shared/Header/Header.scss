@@ -1,12 +1,13 @@
 .header {
 
     .logo2 {
-        width: 250px;
+        width: 160px;
     }
 }
 
 .explorar {
     background: url('/assets/images/abogado/shared/search.png');
+    background-size: auto 60%;
     background-position: 10px 50%;
     background-repeat: no-repeat;
     padding-left: 45px !important;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { myList, remove } from '@/services/Conferencias';
-import { Conferencia } from '@/components/shared/Conferencia/Conferencia';
+import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
 import styles from './Conferencias.module.scss'
 import { notify } from '@/helpers/helpers';
 import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';

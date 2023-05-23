@@ -10,7 +10,7 @@ import { EmojiButton } from './Emojis/EmojiButton';
 import { save } from '@/services/Publicaciones';
 import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
-import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
+import { Publicacion } from '@/components/Abogados/shared/Publicacion/Publicacion';
 import styles from './Post.module.scss';
 import shared from '@/assets/styles/shared.module.scss';
 import { PublicacionContext } from '@/context/publicacion/PublicacionContext';

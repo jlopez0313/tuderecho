@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import styles from './Main.module.scss';
-import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
+import { Publicacion } from '@/components/Abogados/shared/Publicacion/Publicacion';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
 import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';

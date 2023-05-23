@@ -7,8 +7,11 @@ import './SideMenu.scss';
 import { logout } from '@/helpers/helpers';
 import { decodeToken } from "react-jwt";
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 export const SideMenu = ({animateClass, setAnimateClass}) => {
+
+    const { i18n } = useTranslation();
 
     const token = localStorage.getItem('token') || '';
     const { rol } = decodeToken(token);
@@ -65,13 +68,13 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                 <strong className='text-danger d-block mt-5'> Lenguaje de la Aplicación </strong>
                 <li className='mt-3'>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" id="inlineCheckbox2" value="option2" />
+                        <input className="form-check-input" type="radio" name="lang" defaultChecked={i18n.language == 'es-US'} onClick={() => i18n.changeLanguage('es-US')} />
                         <label className="form-check-label" htmlFor="inlineCheckbox2"> <strong> Español </strong> </label>
                     </div>
                 </li>
                 <li>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" id="inlineCheckbox2" value="option2" />
+                        <input className="form-check-input" type="radio" name="lang" defaultChecked={i18n.language == 'en-US'} onClick={() => i18n.changeLanguage('en-US')} />
                         <label className="form-check-label" htmlFor="inlineCheckbox2"> <strong> Inglés </strong> </label>
                     </div>
                 </li>

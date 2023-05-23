@@ -1,6 +1,5 @@
 import React, { memo, useContext, useEffect, useRef, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import '../MyModal.scss'
 import { decodeToken } from "react-jwt";
@@ -9,10 +8,9 @@ import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
 import { create } from '@/services/Comentarios';
 import { Comentario } from './Comentario/Comentario';
-import { Publicacion } from '@/components/shared/Publicacion/Publicacion';
+import { Publicacion } from '@/components/Abogados/shared/Publicacion/Publicacion';
 import styles from './Comentarios.module.scss';
 import shared from '@/assets/styles/shared.module.scss';
-import { usePublicacion } from '@/hooks/usePublicacion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { useSelector } from 'react-redux';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Conferencia } from '@/components/shared/Conferencia/Conferencia';
+import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from '@/assets/styles/shared.module.scss';

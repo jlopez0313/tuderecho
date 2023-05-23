@@ -3,23 +3,30 @@ import { Comunidad } from './Comunidad/Comunidad'
 import { faPencil, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
-import { list, remove } from '@/services/Comunidades';
+import { myList, remove } from '@/services/Comunidades';
 import { notify } from '@/helpers/helpers';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from '@/assets/styles/shared.module.scss';
 import Button from 'react-bootstrap/esm/Button';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 export const Comunidades = () => {
+
+  const { t } = useTranslation();
 
   const [modalShow, setModalShow] = useState(false);
   const [search, setSearch] = useState('');
   const [lista, setLista] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const { refresh } = useSelector(state => state.comunidad);
+  const dispatch = useDispatch();
   
   const onGetList = async () => {
     setIsLoading( true )
-    setLista( await list(search) )
+    setLista( await myList(search) )
     setIsLoading( false )
   }
 
@@ -51,11 +58,17 @@ export const Comunidades = () => {
       return () => clearTimeout(timer);
   }, [search])
 
+  useEffect( () => {
+    if ( refresh ) {
+      onGetList();
+    }
+  }, [refresh])
+
 
   return (
     <>
 
-      <h5 className='text-danger w-100 fw-bold'> Comunidades </h5>
+      <h5 className='text-danger w-100 fw-bold'> {t('comunidades.title')} </h5>
 
       <div className='border rounded shadow-sm bg-white overflow-hidden h-100 position-relative'>
         
@@ -80,7 +93,9 @@ export const Comunidades = () => {
             :
               lista.map( (item, key)=> {
 
-                  return <Comunidad key={key} item={item} onRemove={onRemove} />
+                  return (
+                    <Comunidad key={key} item={item} onRemove={onRemove} />
+                  )
               })
           }
         </div>
@@ -92,7 +107,7 @@ export const Comunidades = () => {
         />
 
         <Link to="/abogados/comunidades" className="order-1 m-auto">
-          <Button className='position-absolute rounded-circle bottom-5 end-5'>
+          <Button className='position-absolute rounded-circle bottom-2 end-2'>
             <FontAwesomeIcon icon={faSearch} />
           </Button>
         </Link>

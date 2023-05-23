@@ -22,12 +22,12 @@ export const Header = () => {
    
     return (
         <div className='header border shadow-sm'>
-            <div className='p-4 d-flex flex-wrap align-items-center justify-content-sm-between'>
+            <div className='px-4 py-2 d-flex flex-wrap align-items-center justify-content-sm-between'>
                 <Link to="/abogados" className="order-1 m-auto">
                     <img src={Logo} className='logo2' />
                 </Link>
                 
-                <input className="m-auto order-sm-2 order-3 form-control w-sm-50 p-3 explorar" type="text" placeholder="Explorar..." aria-label="default input example" />
+                <input className="m-auto order-sm-2 order-3 form-control w-sm-50 p-2 explorar" type="text" placeholder="Explorar..." aria-label="default input example" />
                 
                 <div className="d-flex order-sm-3 order-2 ms-auto justify-content-between">
                     <Button component={<List />} icon={faComment} />

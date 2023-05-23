@@ -1,7 +1,6 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
 import styles from '@/assets/styles/shared.module.scss';
-import { format } from 'date-fns'
 import { decodeToken } from 'react-jwt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';

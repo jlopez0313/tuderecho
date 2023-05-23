@@ -37,8 +37,28 @@ export const create = async (body) => {
     }
 }
 
+export const find = async (id) => {
+    const response = await backendApi.get(module + 'find/' + id)
+
+    if ( response ) {
+        return Promise.resolve( response.data );
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 export const remove = async (id) => {
     const response = await backendApi.delete(module + id)
+
+    if ( response ) {
+        return Promise.resolve(true);
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
+export const subscribe = async (id) => {
+    const response = await backendApi.post(module + 'subscribe/' + id)
 
     if ( response ) {
         return Promise.resolve(true);
