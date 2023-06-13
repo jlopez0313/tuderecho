@@ -11,7 +11,11 @@ import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import './Login.scss';
 
+import { useTranslation } from 'react-i18next';
+
 export const Login = () => {
+
+    const { t } = useTranslation();
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -48,7 +52,7 @@ export const Login = () => {
     const onProcessLogin = (email, password) => {
         const data = dispatch( loginAuth( email, password ) )
         data.then( ( { rol } ) => {
-            notify('Bienvenido de nuevo!', 'success');
+            notify( t('login.alerts.welcome'), 'success');
             switch (rol) {
                 case 'Abogado':
                     navigate('/abogados');
@@ -61,7 +65,7 @@ export const Login = () => {
                 break;
             }
         }).catch( (error) => {
-            notify(error?.response?.data?.msg || 'Internal Error onProcessLogin', 'warning');
+            notify(error?.response?.data?.msg || t('login.alerts.error'), 'warning');
             navigate('/pre-registro', { replace: true });
         })
     }
@@ -73,25 +77,25 @@ export const Login = () => {
                     <img src={Logo} className='logo-preregistro' />
                 </Link>
             </div>
-            <h2 className='mb-4 text-danger fw-bold text-center'> Inicia Sesión </h2>
+            <h2 className='mb-4 text-danger fw-bold text-center'> { t('login.title') } </h2>
             
             <div className="form">
                 <form onSubmit={onDoLogin}>
 
                     <div className="form-floating mb-3">
-                        <input required name="email" onChange={onInputChange} type="email" className="form-control" id="floatingInputEmail" placeholder="name@example.com" />
-                        <label htmlFor="floatingInputEmail">Correo electrónico</label>
+                        <input required name="email" onChange={onInputChange} type="email" className="form-control" id="floatingInputEmail" placeholder={ t('login.form.email-placeholder') } />
+                        <label htmlFor="floatingInputEmail"> { t('login.form.email') } </label>
                     </div>
                     
                     <div className="form-floating mb-3">
-                        <input required name="password" onChange={onInputChange} type="password" className="form-control" id="floatingInputPassword" placeholder="name@example.com" minLength={6} />
-                        <label htmlFor="floatingInputPassword">Contraseña</label>
+                        <input required name="password" onChange={onInputChange} type="password" className="form-control" id="floatingInputPassword" placeholder={ t('login.form.password-placeholder') } minLength={6} />
+                        <label htmlFor="floatingInputPassword"> { t('login.form.password') } </label>
                     </div>
                     
-                    <button type='submit' className="btn btn-primary mx-auto d-block mt-4">Ingresar</button>
+                    <button type='submit' className="btn btn-primary mx-auto d-block mt-4"> { t('login.form.login') } </button>
 
                     <Link to="/recover">
-                        <span className='d-block mx-auto text-center mt-3'> Olvidé mi Contraseña </span>
+                        <span className='d-block mx-auto text-center mt-3'> { t('login.form.forgot') } </span>
                     </Link>
 
                     <div className="row mt-4">
@@ -128,9 +132,9 @@ export const Login = () => {
                 </form>
                     
                 <div className="text-center mt-3">
-                    <label htmlFor="staticEmail" className="col-form-label">¿Eres nuevo con nosotros? &nbsp; </label>
+                    <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.new') } &nbsp; </label>
                     <Link to="/pre-registro" replace={true} >
-                        Regístrate
+                        { t('login.form.register') }
                     </Link>
                 </div>
                     

@@ -9,7 +9,11 @@ import { register } from '@/store/user/UserSlice';
 
 import bcrypt from 'bcryptjs'
 
+import { useTranslation } from 'react-i18next';
+
 export const PasswordsComponent = () => {
+
+    const { t } = useTranslation();
 
     // const [perfil, setPerfil] = useState({ tags: [] });
     const { user } = useSelector( (state) => state.user );
@@ -40,18 +44,16 @@ export const PasswordsComponent = () => {
         
         const passwowrdValid = bcrypt.compareSync(formState.password, user.password)
 
-        if( !passwowrdValid ) {
-            notify('Tu contraseña actual no coincide', 'error')
-        } else if( formState.password1 !== formState.password2 ) {
-            notify('Tu nueva contraseña no coincide', 'error')
+        if( !passwowrdValid || formState.password1 !== formState.password2 ) {
+            notify( t('passwords.alerts.error-passwords'), 'error')
         } else {
             passwords( formState )
             .then( () => {
                 onFind();
-                notify('Contraseña Actualizada.', 'success');
+                notify( t('passwords.alerts.saved'), 'success');
             }).catch( error => {
                 console.log( error );
-                notify('Error Interno.', 'error');
+                notify( t('passwords.alerts.error'), 'error');
             })
         }
     }
@@ -66,7 +68,7 @@ export const PasswordsComponent = () => {
         <div className="container pb-5">
             <form onSubmit={onDoSubmit}>
             
-                <h3 className="mt-5 text-danger"> Cambiar Contraseña </h3>
+                <h3 className="mt-5 text-danger"> { t('passwords.form.title') } </h3>
                 <hr />
 
                 <div className="card p-3 my-4">
@@ -76,42 +78,42 @@ export const PasswordsComponent = () => {
                                 <input
                                     type="password"
                                     required
-                                    placeholder="Ej: ABC123"
+                                    placeholder={ t('passwords.form.current-placeholder') }
                                     className="form-control"
                                     name='password'
                                     onChange={onInputChange}
                                 />
-                                <label htmlFor="staticEmail"> Contraseña Actual *:</label>
+                                <label htmlFor="staticEmail"> { t('passwords.form.current') } *:</label>
                             </div>
                             <div className="form-floating mb-2">
                                 <input
                                     type="password"
-                                    placeholder='Ej: ABC456'
+                                    placeholder={ t('passwords.form.new-placeholder') }
                                     required
                                     className="form-control"
                                     name='password1'
                                     onChange={onInputChange}
                                     onCopy={(e) => e.preventDefault()}
                                 />
-                                <label htmlFor="staticEmail">Nueva Contraseña *:</label>
+                                <label htmlFor="staticEmail"> { t('passwords.form.new') } *:</label>
                             </div>
                             <div className="form-floating mb-2">
                                 <input
                                     type="password"
                                     required
-                                    placeholder="Ej: ABC456"
+                                    placeholder={ t('passwords.form.repeat-placeholder') }
                                     className="form-control"
                                     name='password2'
                                     onChange={onInputChange}
                                     onPaste={(e) => e.preventDefault()}
                                 />
-                                <label htmlFor="staticEmail">Repetir Contraseña *:</label>
+                                <label htmlFor="staticEmail">{ t('passwords.form.repeat') } *:</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> Guardar </button>
+                <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> { t('save') } </button>
             </form>
         </div>
         </>

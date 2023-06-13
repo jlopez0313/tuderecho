@@ -1,4 +1,9 @@
 // Left - Main - Right
+
+.container {
+    height: calc(100% - 45px);
+}
+
 .list {
     .listItem {
         width: 100%;

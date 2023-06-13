@@ -11,15 +11,15 @@ export const Comunidad = () => {
             <Header />
             <div className={`${styles.abogado}`}>
             <div className={`bg-light d-flex overflow-auto pt-2 ${styles.container}`}>
-                <div className={`position-sticky p-2 ${styles.left}`}>
+                <div className={`left position-sticky p-2 ${styles.left}`}>
                 <Left />
                 </div>
             
-                <div className={`d-flex justify-content-center flex-grow-1 p-2`}>
-                <ComunidadComponent />
+                <div className={`d-flex justify-content-center flex-grow-1`}>
+                    <ComunidadComponent />
                 </div>
 
-                <div className={`position-sticky p-2 ${styles.right}`}>
+                <div className={`right position-sticky p-2 ${styles.right}`}>
                 <Right />
                 </div>          
             </div>

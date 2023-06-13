@@ -7,18 +7,23 @@ import Tabs from 'react-bootstrap/Tabs';
 import { decodeToken } from 'react-jwt';
 import { Lista } from './Lista/Lista';
 
-const breadcrumb = [
-    {
-        name: 'Home',
-        href: '/abogados',
-        active: false
-    },{
-        name: 'Comunidades',
-        active: true
-    }
-]
+import { useTranslation } from 'react-i18next';
 
-export const Main = () => {  
+export const Main = () => {
+
+    const { t } = useTranslation();
+
+    const breadcrumb = [
+        {
+            name: 'Home',
+            href: '/abogados',
+            active: false
+        },{
+            name: t('comunidades.title'),
+            active: true
+        }
+    ]
+
   
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);
@@ -40,10 +45,10 @@ export const Main = () => {
                 unmountOnExit={true}
                 onSelect={(evt) => onSelect(evt) }
             >
-                <Tab eventKey="home" title="Descubrir">
+                <Tab eventKey="home" title={ t('comunidades.discover') }>
                     <Lista uid={ null } />
                 </Tab>
-                <Tab eventKey="profile" title="Mis Comunidades">
+                <Tab eventKey="profile" title={ t('comunidades.my-list') }>
                     <Lista uid={ uid }/>
                 </Tab>
             </Tabs>

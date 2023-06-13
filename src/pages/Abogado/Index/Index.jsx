@@ -10,7 +10,7 @@ export const Index = () => {
         <Header />
         <div className={`${styles.abogado}`}>
           <div className={`bg-light d-flex overflow-auto pt-2 ${styles.container}`}>
-            <div className={`position-sticky p-2 ${styles.left}`}>
+            <div className={`left position-sticky p-2 ${styles.left}`}>
               <Left />
             </div>
             
@@ -18,7 +18,7 @@ export const Index = () => {
               <Main />
             </div>
             
-            <div className={`position-sticky p-2 ${styles.right}`}>
+            <div className={`right position-sticky p-2 ${styles.right}`}>
               <Right />
             </div>
           </div>

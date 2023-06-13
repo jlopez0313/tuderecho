@@ -1,5 +1,288 @@
 {
+    "edit": "Edit",
+    "explore": "Explore...",
+    "free": "Free",
+    "people": "People",
+    "remove": "Remove",
+    "save": "Save",
+    "search": "Search...",
+    "see": "View more",
+    "share": "Share",
+    "subscribe": "Subscribe",
+    "empty": "No yet records...",
+
+    "bolsa": {
+        "title": "My Bag"
+    },
+
+    "chat": {
+        "form" : {
+            "message-placehoder": "Write your message"
+        }
+    },
+
+    "comentarios": {
+        "title": "Comments",
+        "your-comment": "Your comment",
+        "form" : {
+            "comentario-placehoder": "Write your comment"
+        },
+        "alerts": {
+            "error": "Comment onRemove: Internal Error",
+            "removed": "Comment removed",
+            "saved": "Comment saved"
+        }
+    },
+
     "comunidades": {
-        "title" : "Communities"
+        "create": "Create your Community",
+        "discover" : "Discover",
+        "empty" : "No yet records...",
+        "my-list" : "My Communities",
+        "suscription":"Suscription",
+        "title" : "Communities",
+        "update": "Update your Community",
+        "form" : {
+            "cover": "Cover",
+            "pay": "Pay",
+            "price": "Suscription Price",
+            "price-placeholder": "Ex: $50 USD",
+            "title": "Title",
+            "title-placeholder": "Ex: The lawyer as a conflicts mediator",
+            "target": "Target",
+            "target-placeholder": "Describe the target of the Community"
+        },
+        "alerts": {
+            "error": "Community onRemove: Internal Error",
+            "paid": "Suscription Registered",
+            "removed": "Community removed",
+            "saved": "Community saved"
+        }
+    },
+
+    "conferencias": {
+        "conference": "Conference",
+        "create": "Create your Conference",
+        "date": "Date",
+        "discover" : "Discover",
+        "empty" : "No yet records...",
+        "expositor": "Expositor",
+        "my-list" : "My Conferences",
+        "remove": "Remove",
+        "suscription": "Suscription",
+        "title": "Conferences",
+        "update": "Update your Conference",
+        "form" : {
+            "cover": "Cover",
+            "date": "Date",
+            "date-message": "Remember the conference will be on",
+            "expositor": "Expositor",
+            "expositor-placeholder": "Ex: Jhon Doe",
+            "pay": "Pay",
+            "price": "Suscription Price",
+            "price-placeholder": "Ex: $50 USD",
+            "title": "Title",
+            "title-placeholder": "Ex: The lawyer as a conflicts mediator",
+            "target": "Target",
+            "target-placeholder": "Describe the target of the Conference"
+        },
+        "alerts": {
+            "error": "Conference onRemove: Internal Error",
+            "paid": "Suscription Registered",
+            "removed": "Conference removed",
+            "saved": "Conference saved"
+        }
+    },
+
+    "contacts": {
+        "title": "Contacts"
+    },
+
+    "home": {
+        "header": {
+            "home": "Home",
+            "about": "About us",
+            "services": "Services",
+            "contact": "Contact us",
+            "login": "LogIn",
+            "register": "Register",
+            "enter": "Enter",
+            "leave": "Leave"
+        },
+        "slider": {
+            "description": "We want you to tell us your case",
+            "start": "Start case",
+            "title": "Tell us your case"
+        }
+    },
+
+    "login": {
+        "title": "LogIn",
+        "form" : {
+            "email": "Email",
+            "email-placeholder": "name@example.com",
+            "forgot": "Forgot my password",
+            "login": "LogIn",
+            "new": "Are you new here?",
+            "password": "Password",
+            "password-placeholder": "******",
+            "register": "Register",
+            "registered": "Already have an accout?"
+        },
+        "alerts": {
+            "error": "Login internal error",
+            "welcome": "Welcome again"
+        }
+    },
+
+    "passwords": {
+        "form": {
+            "current": "Current password",
+            "current-placeholder": "Ex: ABC123",
+            "email": "Email",
+            "new": "New password",
+            "new-placeholder": "Ex: DEF456",
+            "publish": "Publish",
+            "remove": "Remove",
+            "repeat": "Repeat new password",
+            "repeat-placeholder": "Ex: DEF456",
+            "send": "Send",
+            "title": "Change Password"
+        },
+        "alerts": {
+            "error": "Passwords internal error",
+            "error-passwords": "Your password is incorrect",
+            "saved": "Password updated"
+        }
+    },
+
+    "posts": {
+        "create": "Create a Post",
+        "comment": "Comments",
+        "like": "Likes",
+        "share": "Shares",
+        "title": "Posts",
+        "form": {
+            "post": "What do you want to say today?",
+            "publish": "Publish",
+            "remove": "Remove"
+        },
+        "alerts": {
+            "error": "Post onRemove: Internal Error",
+            "removed": "Post removed",
+            "saved": "Post saved"
+        }
+    },
+
+    "profile": {
+        "title": "My Profile",
+        "form": {
+            "basic": "Basic Information (We will confirm your data) ",
+            "biography": "Biography",
+            "biography-placeholder": "Tell us about you...",
+            "city": "City",
+            "city-placeholder": "Ex: New York",
+            "chose": "Chose one...",
+            "chose-some": "Chose some...",
+            "country": "Country",
+            "document": "Document type",
+            "email": "Email",
+            "id": "ID Number",
+            "id-placeholder": "Ex: 123456789",
+            "inactive": "Account temporarily inactive",
+            "law-student": "Law student - temporary license (Decree 176 of 1971)",
+            "name": "Full Name",
+            "name-placeholder": "Ex: John Doe",
+            "personal": "Personal Information",
+            "phone": "Phone Number",
+            "professional-card": "Professional Card",
+            "region": "Region",
+            "specialization": "Specialization",
+            "student": "Are you a student?",
+            "student-alert": "If you are still a student you can access our network of lawyers but you will not receive attention requests. Unless that you be decree 176.",
+            "yes": "Yes"
+        },
+        "alerts": {
+            "error": "Profile onRemove: Internal Error",
+            "error-image": "The image couldn't be loaded",
+            "updated": "Profile updated"
+        }
+    },
+
+    "register": {
+        "client": "I'm a Client",
+        "lawyer": "I'm a Lawyer",
+        "title": "Register",
+        
+        "form": {
+            "email": "Email",
+            "email-placeholder": "Ex: john@doe.com",
+            "name": "Full Name",
+            "name-placeholder": "Ex: John Doe",
+            "password": "Password",
+            "password-placeholder": "******",
+            "remove": "Remove",
+            "save": "Save"
+        }
+    },
+
+    "sidemenu": {
+        "profile": {
+            "basic-info": "Basic Information",
+            "title":"My profile"
+        },
+
+        "gestion": {
+            "bag": "My bag",
+            "comunidades": "Communities",
+            "conferencias": "Conferences",
+            "title": "Management",
+            "videoteca": "Videoteca"
+        },
+
+        "language": {
+            "english": "English",
+            "spanish": "Spanish",
+            "title": "Language"
+        },
+
+        "login": {
+            "logout": "Logout",
+            "passwords": "Change Password",
+            "title": "Log In"
+        }
+    },
+
+    "videoteca": {
+        "conference": "Conference",
+        "create": "Upload your video",
+        "discover" : "Discover",
+        "empty" : "No yet records...",
+        "expositor": "Expositor",
+        "my-list" : "My Videoteca",
+        "title": "Videoteca",
+        "suscription": "Suscription",
+        "update": "Update your Video",
+        "form" : {
+            "cover": "Cover",
+            "date": "Date",
+            "expositor": "Expositor",
+            "expositor-placeholder": "Ex: Jhon Doe",
+            "free": "Free",
+            "pay": "Pay",
+            "price": "Suscription Price",
+            "price-placeholder": "Ex: $50 USD",
+            "title": "Title",
+            "title-placeholder": "Ex: The lawyer as a conflicts mediator",
+            "target": "Target",
+            "url": "Youtube URL",
+            "video-empty": "No Video Found"
+        },
+        "alerts": {
+            "error": "Videoteca onRemove: Internal Error",
+            "paid": "Suscription Registered",
+            "removed": "Videoteca removed",
+            "saved": "Videoteca saved"
+        }
     }
 }

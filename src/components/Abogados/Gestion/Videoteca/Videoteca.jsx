@@ -3,22 +3,26 @@ import { myList, remove } from '@/services/Videoteca';
 import styles from './Videoteca.module.scss'
 import { notify } from '@/helpers/helpers';
 import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
-import { Video } from '@/components/shared/Video/Video';
+import { Video } from './Video/Video';
 import Spinner from 'react-bootstrap/Spinner';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
-const breadcrumb = [
-    {
-        name: 'Home',
-        href: '/abogados',
-        active: false
-    },{
-        name: 'Mi Videoteca',
-        active: true
-    }
-]
+import { useTranslation } from 'react-i18next';
 
 export const VideotecaComponent = () => {
+
+    const { t } = useTranslation();
+
+    const breadcrumb = [
+        {
+            name: 'Home',
+            href: '/abogados',
+            active: false
+        },{
+            name: t('videoteca.title'),
+            active: true
+        }
+    ]
 
     const [item, setItem] = useState({});
     const [modalShow, setModalShow] = useState(false);
@@ -47,10 +51,10 @@ export const VideotecaComponent = () => {
         remove( id )
         .then( () => {
             onGetList();
-            notify('Videoteca removida', 'success')
+            notify( t('videoteca.alerts.removed'), 'success')
         })
         .catch( error => {
-            notify('Videoteca onRemove: Internal Error', 'error')
+            notify( t('videoteca.alerts.error'), 'error')
         })
     }
 
@@ -69,10 +73,10 @@ export const VideotecaComponent = () => {
                 
                 <Breadcrumb className='mt-3' items={breadcrumb} />
 
-                <h3 className="mt-4 text-danger"> Mi Videoteca </h3>
+                <h3 className="mt-4 text-danger"> { t('videoteca.my-list') } </h3>
 
                 <div className="px-3 mt-2">
-                    <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
+                    <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
                 <div className="d-flex flex-column">
@@ -95,7 +99,7 @@ export const VideotecaComponent = () => {
 
                 <VideotecaModal
                     item={ item }
-                    title='Modifica tu Conferencia'
+                    title={ t('videoteca.update') }
                     show={modalShow}
                     onHide={( callRefresh ) => onRefreshVideoteca( callRefresh )}
                 />

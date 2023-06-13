@@ -1,5 +1,7 @@
 .header {
-
+    .logo-sm {
+        display: none;
+    }
     .logo2 {
         width: 160px;
     }
@@ -11,4 +13,32 @@
     background-position: 10px 50%;
     background-repeat: no-repeat;
     padding-left: 45px !important;
+}
+
+@media (max-width: 385px) {
+    .header {
+        .plus-min {
+            display: block !important;
+        }
+
+        .left-min,
+        .right-min {
+            display: none !important;
+        }
+    }
+}
+
+@media (max-width: 520px) {
+    .header {
+        .logo-sm {
+            border: 1px solid red;
+            border-radius: 50%;
+            display: block;
+            height: 40px;
+        }
+
+        .logo2 {
+            display: none;
+        }
+    }
 }

@@ -17,7 +17,11 @@ import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 import { format, render, cancel, register } from 'timeago.js';
 import { localeFunc } from '@/helpers/timeAgo';
 
+import { useTranslation } from 'react-i18next';
+
 export const Comentario = memo( ( { item, ...props } ) => {
+
+    const { t } = useTranslation();
 
     const { publicacion, setPublicacion } = useContext( PublicacionContext );
     register('my-locale', localeFunc);
@@ -55,11 +59,11 @@ export const Comentario = memo( ( { item, ...props } ) => {
     const onRemoveComment = async (id) => {
         const publi = await remove( id, formState );
         if ( publi ) {
-            notify('Comentario eliminado!', 'success');
+            notify( t('comentarios.alerts.removed'), 'success');
             setPublicacion( publi )
             onComentar( false )
         } else {
-            notify('onDoSubmit Comentario: Internal Error', 'error')
+            notify( t('comentarios.alerts.error'), 'error')
         }
     }
 
@@ -73,12 +77,12 @@ export const Comentario = memo( ( { item, ...props } ) => {
 
             const saved = await create( obj )
             if ( saved ) {
-                notify('Comentario registrado!', 'success');
+                notify( t('comentarios.alerts.saved'), 'success');
                 onSetFormState(initFormData)
                 setPublicacion( saved )
                 onComentar( false )
             } else {
-                notify('onDoSubmit Comentario: Internal Error', 'error')
+                notify( t('comentarios.alerts.error'), 'error')
             }
         // }
     }
@@ -110,7 +114,7 @@ export const Comentario = memo( ( { item, ...props } ) => {
                                         icon={faTrashCan}
                                         className='text-danger cursor-pointer'
                                         onClick={() => onRemoveComment( parent.id ) }
-                                        title="Eliminar"
+                                        title={ t('remove') }
                                     />
                                 : null
                             }
@@ -137,7 +141,7 @@ export const Comentario = memo( ( { item, ...props } ) => {
                                 ? <FontAwesomeIcon icon={myLike} className='ms-1 me-2' /> 
                                 : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-2' />
                             }
-                            Me Gusta
+                            { t('psots.likes') }
                         </small>
                         
                         <small 
@@ -145,7 +149,7 @@ export const Comentario = memo( ( { item, ...props } ) => {
                             onClick={() => onComentar( true )}
                         >
                             {totalComments == 0 ? '' : totalComments} <FontAwesomeIcon icon={faMessage} className='me-2' />
-                            Comentar
+                            { t('save') }
                         </small>
                     </div>
                 </div>
@@ -176,11 +180,11 @@ export const Comentario = memo( ( { item, ...props } ) => {
                                     required
                                     name="comentario"
                                     className='form-control border-0 pe-5'
-                                    placeholder='Escribe tu comentario'
+                                    placeholder={ t('comentarios.form.comentario-placehoder') }
                                     onChange={onInputChange}
                                     value={ formState.comentario }
                                 />
-                                <label htmlFor="especialidad">Tu Comentario *</label>
+                                <label htmlFor="especialidad">{ t('comentarios.your-comment') } *</label>
                                 <FontAwesomeIcon 
                                     role="button"
                                     className={`position-absolute bottom-25 end-0 me-2 text-danger ${ formState.comentario ? '' : 'disabled'}`}

@@ -10,29 +10,34 @@ import es from "date-fns/locale/es";
 import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Conferencia.module.scss'
-import { create } from '@/services/Conferencias';
+import { create, update } from '@/services/Conferencias';
 import { signal } from '@preact/signals-react';
+
+import { useTranslation } from 'react-i18next';
 
 const shown = signal( false );
 export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
+    const { t } = useTranslation();
+
     const [show, setShow] = useState( true );
-    const [file, setFile] = useState( {} );
+    const [file, setFile] = useState( null );
     
     const initFormData = {
-        titulo:     item?.titulo    || '',
-        fecha:      item?.fecha     || '',
-        objetivo:   item?.objetivo  || '',
-        gratis:     item?.gratis    || 'S',
-        precio:     item?.precio    || '',
-        archivo:    item?.archivo   || '',
-        conferencista: item?.conferencista || '',
+        titulo: '',
+        fecha:'',
+        objetivo: '',
+        gratis: 'S',
+        precio: '',
+        archivo: '',
+        conferencista: '',
     }
 
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const doHide = ( hide = false ) => {
         setShow( false )
+        setFile('');
         
         const timer1 = setTimeout( () => {
             props.onHide( hide );
@@ -54,7 +59,6 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     }
 
     const onUploadImage = ( evt ) => {
-
         setFile(evt.target.files[0])
 
         const myEvent2 = { target: { name: 'preview', value: URL.createObjectURL(evt.target.files[0]) }}
@@ -65,7 +69,6 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         evt.preventDefault();
         const token = localStorage.getItem('token') || '';
         const { uid } = decodeToken(token);
-        console.log( formState );
 
         const obj = {
             ...formState,
@@ -73,14 +76,21 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
             user: uid,
         }
 
-        create( obj )
+        let action = null;
+        if (item.id) {
+            action = update( item.id, obj )
+        } else {
+            action = create( obj )
+        }
+
+        action
         .then( () => {
-            notify('Conferencia registrada!', 'success');
+            notify( t('conferencias.alerts.saved'), 'success');
             onSetFormState(initFormData)
             doHide( true );
         })
         .catch( error => {
-            notify('onDoSubmit Conferencia: Internal Error', 'error')
+            notify( t('conferencias.alerts.error'), 'error')
         })
     }
 
@@ -88,14 +98,17 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         registerLocale("es-CO", es);
     }, []);
     
-    useEffect(() => {
-        if ( item.fecha ) {
-            onSetFormState({
+    useEffect(()=> {
+        if (item.id) {
+            const data = { 
                 ...item,
+                preview: item.archivo,
+                archivo: null,
                 fecha: new Date( item.fecha )
-            })
+            }
+            onSetFormState( data )
         }
-    }, [item]);
+    }, [item])
     
     if (modalShow) {
 
@@ -118,11 +131,11 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                 required
                                 name="titulo"
                                 className='form-control'
-                                placeholder='Ej: El Abogado como mediador de conflictos'
+                                placeholder={ t('conferencias.form.title-placeholder') }
                                 onChange={onInputChange}
                                 defaultValue={ formState.titulo }
                             />
-                            <label htmlFor="especialidad">Título *</label>
+                            <label htmlFor="especialidad"> { t('conferencias.form.title') } *</label>
                         </div>
     
                         <div className="form-floating mb-3">
@@ -130,11 +143,11 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                 required
                                 name="conferencista"
                                 className='form-control'
-                                placeholder='Ej: Pedro Pérez'
+                                placeholder={ t('conferencias.form.expositor-placeholder') }
                                 onChange={onInputChange}
                                 defaultValue={ formState.conferencista }
                             />
-                            <label htmlFor="especialidad">Nombre del Conferencista *</label>
+                            <label htmlFor="especialidad">{ t('conferencias.form.expositor') } *</label>
                         </div>
     
                         <div className="form-floating mb-3">
@@ -142,7 +155,7 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                 required
                                 className='form-control'
                                 withPortal
-                                placeholderText="Fecha *"
+                                placeholderText={ t('conferencias.form.date') + ' *' }
                                 isClearable
                                 showTimeSelect
                                 dateFormat="Pp"
@@ -161,22 +174,22 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                 required
                                 name="objetivo"
                                 className='form-control'
-                                placeholder='Describe el objetivo de la Conferencia'
+                                placeholder={ t('conferencias.form.target-placeholder') }
                                 onChange={onInputChange}
                                 value={ formState.objetivo }
                                 style={{height: '150px'}}
                             ></textarea>
-                            <label htmlFor="especialidad">Objetivo *</label>
+                            <label htmlFor="especialidad">{ t('conferencias.form.target') } *</label>
                         </div>
     
                         <div className="d-flex justify-content-evenly mb-3">
                             <div className="form-check form-check-inline">
                                 <input className="form-check-input" type="radio" name="gratis" value="S" checked={ formState.gratis === 'S' } onChange={onRadioChange}/>
-                                <label className="form-check-label" htmlFor="inlineRadio1">Gratis</label>
+                                <label className="form-check-label" htmlFor="inlineRadio1"> { t('free') } </label>
                             </div>
                             <div className="form-check form-check-inline">
                                 <input className="form-check-input" type="radio" name="gratis" value="N" checked={ formState.gratis === 'N' } onChange={onRadioChange}/>
-                                <label className="form-check-label" htmlFor="inlineRadio2">Pago</label>
+                                <label className="form-check-label" htmlFor="inlineRadio2"> { t('conferencias.form.cover') } </label>
                             </div>
                         </div>
     
@@ -188,18 +201,18 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                         name='precio'
                                         type='number'
                                         className='form-control'
-                                        placeholder='Ej: $50 USD'
+                                        placeholder={ t('conferencias.form.price-placeholder') }
                                         onChange={onInputChange}
                                         defaultValue={ formState.precio }
                                     />
-                                    <label htmlFor="especialidad">Precio Suscripción *</label>
+                                    <label htmlFor="especialidad"> { t('conferencias.form.price') } *</label>
                                 </div>
                             : null
                         }
     
                         <div className="mb-3">
                             <input
-                                required
+                                required={!item.id}
                                 className="form-control"
                                 type="file"
                                 accept='image/png, image/jpeg'
@@ -211,7 +224,7 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
     
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit'> Crear </Button>
+                        <Button className='w-100 m-0' type='submit'> { t('save') } </Button>
                     </Modal.Footer>
                 </form>
             </Modal>

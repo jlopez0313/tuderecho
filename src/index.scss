@@ -106,6 +106,12 @@ small {
 }
 
 
+@media (max-width: 575px) {
+    .main {
+        width: 100%;
+    }
+}
+
 @media (min-width: 576px) {
     .w-sm-25 {
         width: 25%;
@@ -115,3 +121,28 @@ small {
         width: 50%;
     }
 }
+
+@media (max-width: 900px) {
+    .explorar {
+        display: none;
+    }
+    
+    .right {
+        display: none;
+    }
+
+    .right-min {
+        display: block !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .left {
+        display: none;
+    }
+
+    .left-min {
+        display: block !important;
+    }
+}
+

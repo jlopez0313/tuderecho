@@ -9,13 +9,20 @@ import { GifsButton } from './Gifs/GifsButton';
 import { EmojiButton } from './Emojis/EmojiButton';
 import { save } from '@/services/Publicaciones';
 import { decodeToken } from "react-jwt";
+
 import { notify } from '@/helpers/helpers'
 import { Publicacion } from '@/components/Abogados/shared/Publicacion/Publicacion';
 import styles from './Post.module.scss';
 import shared from '@/assets/styles/shared.module.scss';
 import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 
-export const PostModal = memo( ( {modalShow, post, ...props} ) => {
+import { useTranslation } from 'react-i18next';
+import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
+import { Videoteca } from '@/components/Abogados/shared/Videoteca/Videoteca';
+
+export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = null, comunidad = '', post, ...props} ) => {
+
+  const { t } = useTranslation();
 
   const { publicacion, setPublicacion } = useContext( PublicacionContext );
 
@@ -81,6 +88,9 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
 
     const obj = {
       user: uid,
+      conferencia: conferencia?.id || '',
+      videoteca: videoteca?.id || '',
+      comunidad,
       comment,
       gif,
       medias,
@@ -94,10 +104,10 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
       setComment('');
       setGif('');
       setMedias([])
-      notify('Publicación registrada!', 'success')
+      notify( t('posts.alerts.saved'), 'success')
       doHide( true );
     } else {
-      notify('onDoSavePubli: Internal Error', 'error')
+      notify( t('posts.alerts.error'), 'error')
     }
   }
 
@@ -127,7 +137,7 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
               <textarea
                 className='form-control'
                 rows='5'
-                placeholder='Que quieres escribir hoy?'
+                placeholder={ t('posts.form.post') }
                 onChange={(evt) => setComment( evt.target.value )}
                 value={ comment }
               ></textarea>
@@ -138,7 +148,7 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
                     {
                       previews.map( (media, key) => {
                         return <div className='grid-item' key={key}>
-                          <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => onDoRemove( key )} title='Eliminar' />
+                          <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => onDoRemove( key )} title={ t('posts.form.remmove') } />
                           <img className='media' src={media} />
                         </div>
                       })
@@ -151,7 +161,7 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
                 gif
                 ?
                   <div className='grid-item'>
-                    <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => setGif( null )} title='Eliminar' />
+                    <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => setGif( null )} title={ t('posts.form.remove') } />
                     <img className='media' src={gif} />
                   </div>
                 : null
@@ -166,6 +176,24 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
                         post={publicacion}
                         showActions={false}
                     />
+                  </div>
+                : null
+              }
+
+              {
+                conferencia
+                ?
+                  <div className='overflow-auto'>
+                    <Conferencia conferencia={conferencia} />
+                  </div>
+                : null
+              }
+
+              {
+                videoteca
+                ?
+                  <div className='overflow-auto'>
+                    <Videoteca videoteca={videoteca} />
                   </div>
                 : null
               }
@@ -193,7 +221,7 @@ export const PostModal = memo( ( {modalShow, post, ...props} ) => {
           </Modal.Body>
 
           <Modal.Footer className='d-block text-center'>
-              <Button className='w-100 m-0' onClick={onDoSavePubli}> Publicar </Button>
+              <Button className='w-100 m-0' onClick={onDoSavePubli}> { t('posts.form.publish') } </Button>
           </Modal.Footer>
       </Modal>        
     )

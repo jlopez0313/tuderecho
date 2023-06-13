@@ -9,18 +9,23 @@ import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
-const breadcrumb = [
-  {
-      name: 'Home',
-      href: '/abogados',
-      active: false
-  },{
-      name: 'Mi Perfil',
-      active: true
-  }
-]
+import { useTranslation } from 'react-i18next';
 
 export const PerfilComponent = () => {
+  
+  const { t } = useTranslation();
+
+  const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/abogados',
+        active: false
+    },{
+        name: t('profile.title'),
+        active: true
+    }
+  ]
+
   const dispatch = useDispatch();
   const [id, setId] = useState('');
 
@@ -68,10 +73,10 @@ export const PerfilComponent = () => {
     update( id, formState )
     .then( (data) => {
       onSetFormState( {...formState, ...data.usuario}  )
-      notify('Perfil Actualizado.', 'success');
+      notify( t('profile.alerts.updated'), 'success');
     }).catch( error => {
       console.log( error );
-      notify('Error Interno.', 'error');
+      notify( t('profile.alerts.error'), 'error');
     })
 
   }
@@ -88,17 +93,17 @@ export const PerfilComponent = () => {
 
           <Breadcrumb className='mt-3' items={breadcrumb} />
           
-          <h3 className="mt-4 text-danger"> Información Personal </h3>
+          <h3 className="mt-4 text-danger"> { t('profile.form.personal') } </h3>
           <hr />
 
           <DatosPersonales formState={formState} onInputChange={onInputChange} />
 
-          <h3 className="mt-5 text-danger"> Información Privada (Verificaremos tus Datos)</h3>
+          <h3 className="mt-5 text-danger"> { t('profile.form.basic') } </h3>
           <hr />
 
           <InformacionPrivada formState={formState} onInputChange={onInputChange} onRadioChange={onRadioChange}/>
 
-          <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> Guardar </button>
+          <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> { t('save') } </button>
         </form>
       </div>
     </>

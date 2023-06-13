@@ -9,9 +9,13 @@ import { tipoDocumentos } from '@/constants/constants';
 import { all as getAll } from '@/services/Especialidades';
 import { all as getTags } from '@/services/Tags';
 
+import { useTranslation } from 'react-i18next';
+
 const animatedComponents = makeAnimated();
 
 export const DatosPersonales = ( { formState, onInputChange } ) => {
+
+    const { t } = useTranslation();
 
     const [especialidades, setEspecialidades] = useState([])
     const [tags, setTags] = useState([])
@@ -75,7 +79,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
             onInputChange( myEvent, 'photo' )
         };
             reader.onerror = function() {
-            notify("No se pudo cargar la imágen", "error");
+            notify( t('profile.alerts.error-image'), "error");
         };
     }
 
@@ -107,61 +111,61 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             onChange={(evt) => onInputChange(evt, 'tipoDoc')}
                             id="floatingSelect"
                         >
-                            <option value=''>Selecciona uno...</option>
+                            <option value=''> { t('profile.form.chose') } </option>
                             {
                                 tipoDocumentos.map( (tipo, key) => {
                                     return <option value={tipo.key} key={key}>{tipo.value}</option>
                                 })
                             }
                         </select>
-                        <label htmlFor="especialidad">Tipo de Documento *</label>
+                        <label htmlFor="perfil"> { t('profile.form.document') } *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
                             type="number"
-                            placeholder='Ej: 123456789'
+                            placeholder={ t('profile.form.id-placeholder') }
                             required
                             className="form-control"
                             name='perfil'
                             value={formState.perfil?.identificacion}
                             onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
-                        <label htmlFor="staticEmail">Identificación *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.id') } *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
                             type="text"
                             required
-                            placeholder="Ej: Pedro Perez"
+                            placeholder={ t('profile.form.name-placeholder') }
                             className="form-control"
                             name='name'
                             defaultValue={ formState.name }
                             onChange={onInputChange}
                         />
-                        <label htmlFor="staticEmail">Nombre Completo *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.name') } *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <CountryDropdown
                             required
-                            defaultOptionLabel="Selecciona uno..."
+                            defaultOptionLabel={ t('profile.form.chose') }
                             classes="form-control"
                             value={formState.perfil?.pais}
                             onChange={(val) => selectCountry(val)} />
-                        <label htmlFor="staticEmail">Pais *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.country') } *</label>
                     </div>
                 </div>
             </div>
             
             <div className="form-floating mb-3">
                 <textarea
-                    placeholder='Cuéntanos sobre tí...'
+                    placeholder={ t('profile.form.biography-placeholder') }
                     className="form-control"
                     required
                     name='perfil'
                     onChange={(evt) => onInputChange(evt, 'biografia')}
                     value={formState.perfil?.biografia}
                 ></textarea>
-                <label htmlFor="staticEmail">Biografía *</label>
+                <label htmlFor="staticEmail"> { t('profile.form.biography') } *</label>
             </div>
             
             <div className="mb-3 row">
@@ -175,7 +179,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             className="form-select"
                             id="floatingSelect"
                         >
-                            <option value=''>Selecciona una...</option>
+                            <option value=''> { t('profile.form.chose') }</option>
                             {
                                 especialidades.map( (item, key) => {
                                     return (
@@ -185,7 +189,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                                 })
                             }
                         </select>
-                        <label htmlFor="especialidad">Especialidad *</label>
+                        <label htmlFor="especialidad"> { t('profile.form.specialization') } *</label>
                     </div>
                 </div>
 
@@ -195,7 +199,7 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                             required
                             name='tags'
                             onChange={onPrepareTags}
-                            placeholder='Selecciona algunas *'
+                            placeholder={ t('profile.form.chose-some') }
                             closeMenuOnSelect={false}
                             components={animatedComponents}
                             isMulti

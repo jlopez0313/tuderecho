@@ -7,10 +7,14 @@ import { decodeToken } from "react-jwt";
 import socketIO from 'socket.io-client';
 import { signal } from "@preact/signals-react";
 
+import { useTranslation } from 'react-i18next';
+
 const onlineUsers = signal([]);
 const chatList = signal([])
 
 export const Contactos = () => {
+
+  const { t } = useTranslation();
 
   const socket = useRef( );
   const token = localStorage.getItem('token') || '';
@@ -70,10 +74,10 @@ export const Contactos = () => {
 
   return (
     <>    
-      <h5 className='text-danger w-100 fw-bold'> Contactos </h5>
+      <h5 className='text-danger w-100 fw-bold'> { t('contacts.title') } </h5>
 
-      <div className='border rounded shadow-sm bg-white overflow-hidden h-100'>
-
+      <div className={`border rounded shadow-sm bg-white overflow-hidden ${shared.container}`}>
+        
         <div className={`overflow-auto h-95 pe-2 ps-3 mt-2 ${shared.list}`}>
           {
             onlineUsers.value.map( (usuario, key)=> {

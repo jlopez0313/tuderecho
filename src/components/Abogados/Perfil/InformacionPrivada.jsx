@@ -5,7 +5,12 @@ import { RegionDropdown } from 'react-country-region-selector'
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
+import { useTranslation } from 'react-i18next';
+
 export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) => {
+
+    const { t } = useTranslation();
+
     const selectRegion = (val) => {
         const evt = { target: { name: 'perfil', value: val } }
         onInputChange( evt, 'region' )
@@ -16,11 +21,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
         MySwal.fire({
             icon: 'question',
             confirmButtonColor: 'red',
-            html: `<p>Si aún eres estudiante
-                puedes acceder a nuestra red
-                de abogados pero no recibirás 
-                solicitudes de atención. A No ser
-                que seas decreto 176. </p>`,
+            html: `<p> ${ t('profile.form.student-alert') } </p>`,
         })
     }
 
@@ -39,12 +40,12 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                             onChange={(evt) => onInputChange(evt, 'tarjeta_profesional')} 
                             value={formState.perfil?.tarjeta_profesional}
                         />
-                        <label htmlFor="staticEmail">Tarjeta Profesional:</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.professional-card') } :</label>
                     </div>
                 </div>
                 <div className="col-sm-6">
                     <label htmlFor="staticEmail">
-                        Eres Estudiante?
+                        { t('profile.form.student') }
                         <button className='btn' onClick={onShowAlertEstudiante}>
                             <FontAwesomeIcon icon={faQuestionCircle} />
                         </button>
@@ -59,7 +60,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                                 onChange={(evt) => onRadioChange(evt, 'estudiante')}
                                 checked={ formState.perfil?.estudiante === 'S' }
                             />
-                            <label className="form-check-label" htmlFor="inlineCheckbox1"> SI </label>
+                            <label className="form-check-label" htmlFor="inlineCheckbox1"> { t('profile.form.yes') } </label>
                         </div>
                         <div className="form-check form-check-inline">
                             <input
@@ -70,7 +71,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                                 onChange={(evt) => onRadioChange(evt, 'decreto176')}
                                 checked={ formState.perfil?.decreto176 === 'S' }
                             />
-                            <label className="form-check-label" htmlFor="inlineCheckbox2"> Estudiante de Derecho - licencia temporal (Decreto 176 de 1971) </label>
+                            <label className="form-check-label" htmlFor="inlineCheckbox2"> { t('profile.form.law-student') } </label>
                         </div>
                     </div>
                 </div>
@@ -80,26 +81,26 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                     <div className="form-floating col-sm-12">
                         <RegionDropdown
                             required
-                            defaultOptionLabel='Selecciona una...'
+                            defaultOptionLabel={ t('profile.form.chose') }
                             className="form-control"
                             country={ formState.perfil?.pais }
                             value={formState.perfil?.region}
                             onChange={(val) => selectRegion(val)} />
-                        <label htmlFor="staticEmail">Región *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.region') } *</label>
                     </div>
                 </div>
                 <div className="col-sm-6">
                     <div className="form-floating col-sm-12">
                         <input
                             type="text"
-                            placeholder="Ej: Cali"
+                            placeholder={ t('profile.form.city-placeholder') }
                             required
                             name="perfil"
                             className="form-control"
                             value={formState.perfil?.ciudad}
                             onChange={(evt) => onInputChange(evt, 'ciudad')}
                         />
-                        <label htmlFor="staticEmail">Ciudad *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.city') } *</label>
                     </div>
                 </div>
             </div>
@@ -107,7 +108,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
                         <span className="form-control"> {formState.email} </span>
-                        <label htmlFor="staticEmail">Correo *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.email') } *</label>
                     </div>
                 </div>
                 <div className="form-floating col-sm-6">
@@ -120,7 +121,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                         value={formState.perfil?.telefono}
                         onChange={(evt) => onInputChange(evt, 'telefono')}
                     />
-                    <label htmlFor="staticEmail">Teléfono *</label>
+                    <label htmlFor="staticEmail"> { t('profile.form.phone') } *</label>
                 </div>
             </div>
             <div className="my-4 row ms-2">
@@ -134,7 +135,7 @@ export const InformacionPrivada = ({ formState, onInputChange, onRadioChange }) 
                         value='I'
                         checked={ formState.perfil?.cuenta === 'I' }
                     />
-                    <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">Desactivar Cuenta temporalmente</label>
+                    <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault"> { t('profile.form.inactive') } </label>
                 </div>
             </div>
         </div>

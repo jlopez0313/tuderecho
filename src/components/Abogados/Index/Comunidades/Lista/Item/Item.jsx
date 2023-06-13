@@ -7,9 +7,13 @@ import { faCartShopping, faShare } from '@fortawesome/free-solid-svg-icons';
 import style from './Item.module.scss';
 import { Link } from 'react-router-dom';
 import { ComunidadesModal } from '@/components/Modals/Payment/Comunidades/Comunidades';
+import { numberFormat } from '@/helpers/numbers';
 
+import { useTranslation } from 'react-i18next';
 
-export const Item = ({ item, uid, onRefresh, onRemove }) => {
+export const Item = ({ item, uid, onRefresh, onEdit, onRemove }) => {
+
+    const { t } = useTranslation();
 
     const [paymentModal, setPaymentModal] = useState(false);
 
@@ -20,67 +24,70 @@ export const Item = ({ item, uid, onRefresh, onRemove }) => {
     
     return (
         <div>
-            <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${styles.listItem}`}>
+            <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${style.listItem}`}>
+                
+                <div className={`rounded ${style.imgContent}`}>
+                    <Card.Img variant="top" className={`rounded ${style.picture}`} src={item.archivo} alt='' />
+                </div>
+                
                 <Card.Body>
-                    <div className="d-flex border rounded mb-3 p-3 shadow-sm bg-light">
-                        <div>
-                            <img src={item.archivo} className={`me-3 ${style.avatar}`} />
+                    <div className="d-flex flex-column w-100 mb-2">
+                        <strong> {item.titulo} </strong>
+                        <div className="d-flex justify-content-between">
+                            <small className="w-100">{ t('people') }: 25</small>
                         </div>
-                        <div className="d-flex flex-column w-100">
-                            <strong> {item.titulo} </strong>
-                            <div className="d-flex justify-content-between">
-                                <small className="w-100">Personas: 25</small>
-                            </div>
+                        <div className="">
+                            <small className="w-100">{item.objetivo}</small>
                         </div>
                     </div>
                 
-                <div className='d-flex justify-content-between align-items-center'>
-                    {
-                        uid ?
-                            <Link className='w-100' to={`${item.id}`}>
-                                <button type='button' className="btn btn-primary w-100" > Ver </button>
-                            </Link>
-                        : 
-                            <button type='button' className="btn btn-primary w-100" onClick={() => setPaymentModal(true)}>
-                                <FontAwesomeIcon icon={faCartShopping} className='me-2' />
-                                { item.gratis === 'S' ? 'Gratis' : `$${item.precio}`}
-                             </button>
-                    }
-                        
-                    {
-                        /*
-                        uid === item.user.id ? 
-                            <>
-                                <FontAwesomeIcon 
-                                    icon={faShare} 
-                                    className='me-3'
-                                    title='Compartir'
-                                />
-                                <FontAwesomeIcon
-                                    icon={faEdit}
-                                    className='me-3'
-                                    // onClick={() => onEdit( item ) }
-                                    title="Editar"
-                                />
-                                
-                                <FontAwesomeIcon
-                                    icon={faTrashCan}
-                                    className='cursor-pointer text-danger'
-                                    onClick={() => onRemove( item.id ) }
-                                    title="Eliminar"
-                                />
-                            </>
-                        : null
-                        */
-                    }
+                    <div className='d-flex justify-content-between align-items-center'>
+                        {
+                            uid ?
+                                <Link className={`${uid === item.user.id ? 'me-2' : ''} w-100`} to={`${item.id}`}>
+                                    <button type='button' className="btn btn-primary w-100" > { t('see') } </button>
+                                </Link>
+                            : 
+                                <button type='button' className="btn btn-primary w-100" onClick={() => setPaymentModal(true)}>
+                                    <FontAwesomeIcon icon={faCartShopping} className='me-2' />
+                                    { item.gratis === 'S' ? t('free') : `$ ${ numberFormat(item.precio) }`}
+                                </button>
+                        }
+                            
+                        {
+                            
+                            uid === item.user.id ? 
+                                <>
+                                    <FontAwesomeIcon 
+                                        icon={faShare} 
+                                        className='me-3'
+                                        title={ t('share') }
+                                    />
+                                    <FontAwesomeIcon
+                                        icon={faEdit}
+                                        className='me-3 cursor-pointer text-danger'
+                                        onClick={() => onEdit( item ) }
+                                        title={ t('edit') }
+                                    />
+                                    
+                                    <FontAwesomeIcon
+                                        icon={faTrashCan}
+                                        className='cursor-pointer text-danger'
+                                        onClick={() => onRemove( item.id ) }
+                                        title={ t('remove') }
+                                    />
+                                </>
+                            : null
+                            
+                        }
 
-                </div>
+                    </div>
                 </Card.Body>
 
             </Card>
 
             <ComunidadesModal
-                title='Suscripción'
+                title={ t('comunidades.suscription') }
                 item={ item }
                 modalShow={paymentModal}
                 onHide={(refresh = false) => onDoRefresh( refresh )}

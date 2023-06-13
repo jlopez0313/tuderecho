@@ -7,24 +7,30 @@ import { notify, getYoutubeId } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Videoteca.module.scss'
-import { create } from '@/services/Videoteca';
+import { create, update } from '@/services/Videoteca';
+
+import { useTranslation } from 'react-i18next';
 
 export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
+    const { t } = useTranslation();
+
     const initFormData = {
-        titulo:     item?.titulo    || '',
-        video:      item?.video     || '',
-        gratis:     item?.gratis    || 'S',
-        precio:     item?.precio    || '',
-        conferencista:  item?.conferencista     || '',
+        titulo: '',
+        video: '',
+        gratis: 'S',
+        precio: '',
+        conferencista: '',
     }
 
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const [show, setShow] = useState( true );
+    const [videoUrl, setVideoUrl] = useState('');
 
     const doHide = ( hide = false ) => {
         setShow( false )
+        setVideoUrl( '' )
         
         const timer1 = setTimeout( () => {
             props.onHide( hide );
@@ -50,25 +56,35 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
             user: uid,
         }
 
-        create( obj )
+        let action = null;
+        if (item.id) {
+            action = update( item.id, obj )
+        } else {
+            action = create( obj )
+        }
+
+        action
         .then( () => {
-            notify('Videoteca registrada!', 'success');
+            notify( t('posts.alerts.saved'), 'success');
             onSetFormState(initFormData)
             doHide( true );
         })
         .catch( error => {
-            notify('onDoSubmit Videoteca: Internal Error', 'error')
+            notify( t('posts.alerts.error'), 'error')
         })
     }
 
     const onGetYoutubeId = async (evt) => {
+        setVideoUrl(evt.target.value);
+
         const ID = getYoutubeId( evt.target.value )
         const event = {target: { name: 'video', value: ID } }
         onInputChange( event )
     }
 
     useEffect(() => {
-        if ( item.titulo ) {
+        if ( item.id ) {
+            setVideoUrl('http://www.youtube.com/watch?v=' + item.video);
             onSetFormState({
                 ...item,
             })
@@ -97,11 +113,11 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                     required
                                     name="titulo"
                                     className='form-control'
-                                    placeholder='Ej: El Abogado como mediador de conflictos'
+                                    placeholder={ t('videoteca.form.title-placeholder') }
                                     onChange={onInputChange}
                                     value={ formState.titulo }
                                 />
-                                <label htmlFor="especialidad">Título *</label>
+                                <label htmlFor="especialidad"> { t('videoteca.form.title') } *</label>
                             </div>
 
                             <div className="form-floating mb-3">
@@ -109,11 +125,11 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                     required
                                     name="conferencista"
                                     className='form-control'
-                                    placeholder='Ej: Pedro Pérez'
+                                    placeholder={ t('videoteca.form.expositor-placeholder') }
                                     onChange={onInputChange}
                                     value={ formState.conferencista }
                                 />
-                                <label htmlFor="especialidad">Nombre del Conferencista *</label>
+                                <label htmlFor="especialidad">{ t('videoteca.form.expositor') } *</label>
                             </div>
 
                             <div className="form-floating mb-3">
@@ -122,18 +138,19 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                     className='form-control'
                                     placeholder='Ej: https://www.youtube.com/watch?v=3082r1-0DXc'
                                     onChange={onGetYoutubeId}
+                                    value={videoUrl}
                                 />
-                                <label htmlFor="especialidad">Youtube URL *</label>
+                                <label htmlFor="especialidad">{ t('videoteca.form.url') } *</label>
                             </div>
 
                             <div className="d-flex justify-content-evenly mb-3">
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="radio" name="gratis" value="S" checked={ formState.gratis === 'S' } onChange={onRadioChange}/>
-                                    <label className="form-check-label" htmlFor="inlineRadio1">Gratis</label>
+                                    <label className="form-check-label" htmlFor="inlineRadio1">{ t('videoteca.form.free') }</label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="radio" name="gratis" value="N" checked={ formState.gratis === 'N' } onChange={onRadioChange}/>
-                                    <label className="form-check-label" htmlFor="inlineRadio2">Pago</label>
+                                    <label className="form-check-label" htmlFor="inlineRadio2">{ t('videoteca.form.cover') }</label>
                                 </div>
                             </div>
 
@@ -145,11 +162,11 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                             name='precio'
                                             type='number'
                                             className='form-control'
-                                            placeholder='Ej: $50 USD'
+                                            placeholder={ t('videoteca.form.price-placeholder') }
                                             onChange={onInputChange}
                                             value={ formState.precio }
                                         />
-                                        <label htmlFor="especialidad">Precio Suscripción *</label>
+                                        <label htmlFor="especialidad">{ t('videoteca.form.price') } *</label>
                                     </div>
                                 : null
                             }
@@ -160,7 +177,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                     <img src={`http://img.youtube.com/vi/${formState.video}/0.jpg`} alt='' className={style.archivo}/>
                                 :
                                     <div className="alert alert-danger">
-                                        No Video Found
+                                        { t('videoteca.form.video-empty') }
                                     </div>
                             }
 
@@ -168,7 +185,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit' disabled={!formState.video}> Crear </Button>
+                        <Button className='w-100 m-0' type='submit' disabled={!formState.video}> { t('save') } </Button>
                     </Modal.Footer>
                 </form>
             </Modal>        

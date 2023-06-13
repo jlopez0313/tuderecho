@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
@@ -8,9 +8,12 @@ import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Comunidades.module.scss'
-import { create } from '@/services/Comunidades';
+import { create, update } from '@/services/Comunidades';
+import { useTranslation } from 'react-i18next';
 
 export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
+
+    const { t } = useTranslation();
 
     const initFormData = {
         titulo: '',
@@ -23,10 +26,11 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
     const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(initFormData)
 
     const [show, setShow] = useState( true );
-    const [file, setFile] = useState( {} );
+    const [file, setFile] = useState( null );
 
     const doHide = ( hide = false ) => {
         setShow( false )
+        setFile('');
         
         const timer1 = setTimeout( () => {
             props.onHide( hide );
@@ -42,7 +46,6 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
     }
 
     const onUploadImage = ( evt ) => {
-
         setFile(evt.target.files[0])
 
         const myEvent2 = { target: { name: 'preview', value: URL.createObjectURL(evt.target.files[0]) }}
@@ -60,16 +63,35 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
             user: uid,
         }
 
-        create( obj )
+        let action = null;
+        if (item.id) {
+            action = update( item.id, obj )
+        } else {
+            action = create( obj )
+        }
+
+        action
         .then( () => {
-            notify('Comunidad registrada!', 'success');
+            notify( t('comunidades.alerts.saved'), 'success');
             onSetFormState(initFormData)
             doHide( true );
         })
         .catch( error => {
-            notify('onDoSubmit Comunidad: Internal Error', 'error')
+            console.log( error );
+            notify( t('comunidades.alerts.error'), 'error')
         })
     }
+
+    useEffect(()=> {
+        if (item.id) {
+            const data = {
+                ...item,
+                preview: item.archivo,
+                archivo: null,
+            }
+            onSetFormState( data )
+        }
+    }, [item])
 
     if (modalShow) {
         return (
@@ -93,11 +115,11 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                     required
                                     name="titulo"
                                     className='form-control'
-                                    placeholder='Ej: El Abogado como mediador de conflictos'
+                                    placeholder={ t('comunidades.form.title-placeholder') }
                                     onChange={onInputChange}
                                     value={ formState.titulo }
                                 />
-                                <label htmlFor="especialidad">Título *</label>
+                                <label htmlFor="especialidad"> { t('comunidades.form.title') } *</label>
                             </div>
 
                             <div className="form-floating mb-3">
@@ -105,22 +127,22 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                     required
                                     name="objetivo"
                                     className='form-control'
-                                    placeholder='Describe el objetivo de la Comunidad'
+                                    placeholder={ t('comunidades.form.target-placeholder') }
                                     onChange={onInputChange}
                                     value={ formState.objetivo }
                                     style={{height: '150px'}}
                                 ></textarea>
-                                <label htmlFor="especialidad">Objetivo *</label>
+                                <label htmlFor="especialidad"> { t('comunidades.form.target') } *</label>
                             </div>
 
                             <div className="d-flex justify-content-evenly mb-3">
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="radio" name="gratis" value="S" checked={ formState.gratis === 'S' } onChange={onRadioChange}/>
-                                    <label className="form-check-label" htmlFor="inlineRadio1">Gratis</label>
+                                    <label className="form-check-label" htmlFor="inlineRadio1"> { t('free') } </label>
                                 </div>
                                 <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="radio" name="gratis" value="N" checked={ formState.gratis === 'N' } onChange={onRadioChange}/>
-                                    <label className="form-check-label" htmlFor="inlineRadio2">Pago</label>
+                                    <label className="form-check-label" htmlFor="inlineRadio2"> { t('comunidades.form.cover') } </label>
                                 </div>
                             </div>
 
@@ -132,18 +154,18 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                             name='precio'
                                             type='number'
                                             className='form-control'
-                                            placeholder='Ej: $50 USD'
+                                            placeholder={ t('comunidades.form.price-placeholder') }
                                             onChange={onInputChange}
                                             value={ formState.precio }
                                         />
-                                        <label htmlFor="especialidad">Precio Suscripción *</label>
+                                        <label htmlFor="especialidad"> { t('comunidades.form.price') } *</label>
                                     </div>
                                 : null
                             }
 
                             <div className="mb-3">
                                 <input
-                                    required
+                                    required={!item.id}
                                     className="form-control"
                                     type="file"
                                     accept='image/png, image/jpeg'
@@ -156,7 +178,7 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit'> Crear </Button>
+                        <Button className='w-100 m-0' type='submit'> { t('save') } </Button>
                     </Modal.Footer>
                 </form>
             </Modal>        

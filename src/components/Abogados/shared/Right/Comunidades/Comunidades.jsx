@@ -10,24 +10,27 @@ import styles from '@/assets/styles/shared.module.scss';
 import Button from 'react-bootstrap/esm/Button';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { setRefresh } from '@/store/comunidades/ComunidadesSlice';
 import { useTranslation } from 'react-i18next';
 
 export const Comunidades = () => {
 
   const { t } = useTranslation();
+  
+  const { refresh } = useSelector(state => state.comunidad);
+  const dispatch = useDispatch()
 
   const [modalShow, setModalShow] = useState(false);
   const [search, setSearch] = useState('');
   const [lista, setLista] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  const { refresh } = useSelector(state => state.comunidad);
-  const dispatch = useDispatch();
   
   const onGetList = async () => {
     setIsLoading( true )
     setLista( await myList(search) )
     setIsLoading( false )
+    dispatch( setRefresh(false) );
   }
 
   const onRefreshComunidades = (doRefresh) => {
@@ -42,10 +45,10 @@ export const Comunidades = () => {
     remove( id )
     .then( () => {
         onGetList();
-        notify('Comunidad removida', 'success')
+        notify( t('comunidades.alerts.removed'), 'success')
     })
     .catch( error => {
-        notify('Comunidad onRemove: Internal Error', 'error')
+        notify( t('comunidades.alerts.error'), 'error')
     })
   }
 
@@ -68,19 +71,19 @@ export const Comunidades = () => {
   return (
     <>
 
-      <h5 className='text-danger w-100 fw-bold'> {t('comunidades.title')} </h5>
+      <h5 className='text-danger w-100 fw-bold'> { t('comunidades.title') } </h5>
 
-      <div className='border rounded shadow-sm bg-white overflow-hidden h-100 position-relative'>
-        
+      <div className={`border rounded shadow-sm bg-white overflow-hidden position-relative ${styles.container}`}>
+
         <div className="w-100 rounded text-center border p-2 bg-danger text-white cursor-pointer"
           onClick={() => setModalShow(true)}
         > 
           <FontAwesomeIcon icon={faPencil} />
-          <span className='ms-3'>Crea tu Comunidad</span>
+          <span className='ms-3'> { t('comunidades.create') } </span>
         </div>
 
         <div className="px-3 mt-2">
-          <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
+          <input className="m-auto form-control explorar" type="text" placeholder={t('search')} onChange={doSetSearch}/>
         </div>
 
         <div className={`overflow-auto h-75 ps-3 pe-2 mt-2 ${styles.list}`}>
@@ -91,17 +94,20 @@ export const Comunidades = () => {
                     <Spinner animation="grow" />
                 </div>
             :
-              lista.map( (item, key)=> {
+              lista?.length > 0
+              ?
+                lista.map( (item, key)=> {
 
-                  return (
-                    <Comunidad key={key} item={item} onRemove={onRemove} />
-                  )
-              })
+                    return (
+                      <Comunidad key={key} item={item} onRemove={onRemove} />
+                    )
+                })
+              : <div className='alert alert-danger'> { t('empty') } </div>
           }
         </div>
 
         <ComunidadesModal
-            title='Crea tu Comunidad'
+            title={ t('comunidades.create') }
             modalShow={modalShow}
             onHide={(doRefresh = false) => onRefreshComunidades(doRefresh)}
         />

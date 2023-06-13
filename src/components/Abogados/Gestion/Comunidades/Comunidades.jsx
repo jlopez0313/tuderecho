@@ -7,18 +7,22 @@ import { Comunidad } from './Comunidad/Comunidad';
 import Spinner from 'react-bootstrap/Spinner';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
-const breadcrumb = [
-    {
-        name: 'Home',
-        href: '/abogados',
-        active: false
-    },{
-        name: 'Mis Comunidades',
-        active: true
-    }
-]
+import { useTranslation } from 'react-i18next';
 
 export const ComunidadesComponent = () => {
+    
+    const { t } = useTranslation();
+
+    const breadcrumb = [
+        {
+            name: 'Home',
+            href: '/abogados',
+            active: false
+        },{
+            name: t('comunidades.title'),
+            active: true
+        }
+    ]
 
     const [item, setItem] = useState({});
     const [modalShow, setModalShow] = useState(false);
@@ -46,10 +50,10 @@ export const ComunidadesComponent = () => {
         remove( id )
         .then( () => {
             onGetList();
-            notify('Videoteca removida', 'success')
+            notify( t('comunidades.alerts.removed'), 'success')
         })
         .catch( error => {
-            notify('Videoteca onRemove: Internal Error', 'error')
+            notify( t('comunidades.alerts.error'), 'error')
         })
     }
 
@@ -68,10 +72,10 @@ export const ComunidadesComponent = () => {
                 
                 <Breadcrumb className='mt-3' items={breadcrumb} />
 
-                <h3 className="mt-4 text-danger"> Mis Comunidades </h3>
+                <h3 className="mt-4 text-danger"> { t('comunidades.my-list') } </h3>
 
                 <div className="px-3 mt-2">
-                    <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
+                    <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
                 <div className="d-flex flex-column">
@@ -94,8 +98,8 @@ export const ComunidadesComponent = () => {
 
                 <ComunidadesModal
                     item={ item }
-                    title='Modifica tu Comunidad'
-                    show={modalShow}
+                    title= { t('comunidades.update') }
+                    modalShow={modalShow}
                     onHide={( callRefresh ) => onRefreshVideoteca( callRefresh )}
                 />
                 

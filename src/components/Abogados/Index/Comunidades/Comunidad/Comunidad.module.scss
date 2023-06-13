@@ -1,3 +1,23 @@
 .main {
-    width: 680px;
+    max-width: 680px;
+    width: 100%;
+    
+    .imgContent {
+        overflow: hidden;
+        width: 100%;
+        height: 280px;
+        background-color: black;
+
+        .picture {
+            margin: 0 50%;
+            height: 100%;
+            translate: (-50%);
+            width: fit-content !important;
+            border-radius: 50%;
+        }
+    }
+
+    .content {
+        width: 680px;
+    }
 }

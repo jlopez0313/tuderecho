@@ -1,65 +1,28 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Card from 'react-bootstrap/Card';
-import styles from '@/assets/styles/shared.module.scss';
 import { format } from 'date-fns'
-import { decodeToken } from 'react-jwt';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { faCartShopping, faShare } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
-export const Conferencia = ({item, onRemove, onEdit}) => {
-  
-  const token = localStorage.getItem('token') || '';
-  const { uid } = decodeToken(token);
+export const Conferencia = memo( ( {conferencia} ) => {
+    
+    const { t } = useTranslation();
 
-  return (
-    <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${styles.listItem}`}>
-        <Card.Img variant="top" className='rounded' src={item.archivo} alt='' />
-
-        <Card.Body>
-          <Card.Text className='d-flex flex-column mb-2'>
-            <small className='text-uppercase d-flex'> 
-              <strong className='flex-grow-1'> Conferencia {item.titulo} </strong>
-            </small>
-            <small className=''> Expositor: {item.user.name} </small>
-            <small className=''> Fecha: { format(new Date(item.fecha), 'yyyy-MM-dd,  HH:mm') } </small>
-          </Card.Text>
-          <div className='d-flex justify-content-between'>
-            
-            <small
-              className={`${ uid === item.user.id ? 'w-100' : '' } `}
-            >
-              <FontAwesomeIcon icon={faShare} className='me-2' />
-              Compartir
-            </small>
-            
-            {
-                uid === item.user.id ? 
-                <>
-                    <FontAwesomeIcon
-                        icon={faEdit}
-                        className='me-4'
-                        // onClick={() => onEdit( item ) }
-                        title="Editar"
-                    />
+    return (
+        <Card className={`d-flex flex-column border rounded shadow-sm bg-light mt-3 w-100`}>
                     
-                    <FontAwesomeIcon
-                        icon={faTrashCan}
-                        className='cursor-pointer text-danger'
-                        onClick={() => onRemove( item.id ) }
-                        title="Eliminar"
-                    />
-                </>
-                :
-                <small className='text-danger'> 
-                  <FontAwesomeIcon icon={faCartShopping} className='me-2' />
-                  Suscribirse { item.gratis === 'S' ? 'Gratis' : `$${item.precio}`}
-                </small>
-            }
+            <div className={`rounded`}>
+                <Card.Img variant="top" className={`rounded`} src={conferencia.archivo} alt='' />
+            </div>
 
-          </div>
-        </Card.Body>
-
-    </Card>
-  )
-}
+            <Card.Body>
+                <Card.Text className='d-flex flex-column'>
+                    <small className='text-uppercase d-flex'> 
+                        <strong className='flex-grow-1'>  { t('conferencias.conference') } {conferencia.titulo} </strong>
+                    </small>
+                    <small className=''> { t('conferencias.expositor') }: {conferencia.conferencista} </small>
+                    <small className=''> { t('conferencias.date') }: { format(new Date(conferencia.fecha), 'yyyy-MM-dd,  HH:mm') } </small>
+                </Card.Text>                      
+            </Card.Body>
+        </Card>
+    )
+})

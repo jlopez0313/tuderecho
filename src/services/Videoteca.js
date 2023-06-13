@@ -30,8 +30,28 @@ export const create = async (body) => {
     }
 }
 
+export const update = async (id, body) => {
+    const response = await backendApi.put(module + id, body)
+
+    if ( response ) {
+        return Promise.resolve(true);
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 export const remove = async (id) => {
     const response = await backendApi.delete(module + id)
+
+    if ( response ) {
+        return Promise.resolve(true);
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
+export const subscribe = async (id) => {
+    const response = await backendApi.post(module + 'subscribe/' + id)
 
     if ( response ) {
         return Promise.resolve(true);

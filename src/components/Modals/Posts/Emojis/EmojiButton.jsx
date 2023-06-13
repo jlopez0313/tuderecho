@@ -20,7 +20,7 @@ export const EmojiButton = ({onSetComment}) => {
                 onClick={() => setModalShow( true )}
             />
             <Emojis
-                show={ show }
+                showEmojis={ show }
                 onHide={() => setModalShow( false )}
                 onChosenEmoji={onChosenEmoji}
             />

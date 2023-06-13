@@ -4,11 +4,11 @@ import { Comunidades } from './Comunidades/Comunidades'
 
 export const Right = () => {
   return (
-    <div className='h-90'>
+    <div className='h-100'>
         <div className='h-50'>
           <Comunidades />          
         </div>
-        <div className='mt-5 h-50'>
+        <div className='h-50'>
           <Contactos />          
         </div>
     </div>

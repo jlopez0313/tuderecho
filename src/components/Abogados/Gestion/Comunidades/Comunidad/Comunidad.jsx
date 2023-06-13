@@ -4,16 +4,25 @@ import styles from '@/assets/styles/shared.module.scss';
 import { decodeToken } from 'react-jwt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { faCartShopping, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faSearch, faShare } from '@fortawesome/free-solid-svg-icons';
+import style from './Comunidad.module.scss'
+import { Link } from 'react-router-dom';
+
+import { useTranslation } from 'react-i18next';
 
 export const Comunidad = ({item, onRemove, onEdit}) => {
   
+  const { t } = useTranslation();
+
   const token = localStorage.getItem('token') || '';
   const { uid } = decodeToken(token);
 
   return (
-    <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${styles.listItem}`}>
-        <Card.Img variant="top" className='rounded-0' src={item.archivo} alt='' />
+    <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${style.listItem}`}>
+        
+        <div className={`rounded ${style.imgContent}`}>
+          <Card.Img variant="top" className={`rounded ${style.picture}`} src={item.archivo} alt='' />
+        </div>
 
         <Card.Body>
           <Card.Text className='d-flex flex-column mb-2'>
@@ -27,31 +36,35 @@ export const Comunidad = ({item, onRemove, onEdit}) => {
               className={`${ uid === item.user.id ? 'w-100' : '' } `}
             >
               <FontAwesomeIcon icon={faShare} className='me-2' />
-              Compartir
+              { t('share') }
             </small>
+
+            <Link to={'/abogados/comunidades/' + item.id} className={ uid == item.user.id && 'me-4' }>
+              <FontAwesomeIcon
+                  icon={faSearch}
+                  className='cursor-pointer text-danger'
+                  title={ t('see') }
+              />
+            </Link>
             
             {
                 uid === item.user.id ? 
                 <>
                     <FontAwesomeIcon
                         icon={faEdit}
-                        className='me-4'
-                        // onClick={() => onEdit( item ) }
-                        title="Editar"
+                        className='me-4 cursor-pointer text-danger'
+                        onClick={() => onEdit( item ) }
+                        title={ t('edit') }
                     />
                     
                     <FontAwesomeIcon
                         icon={faTrashCan}
                         className='cursor-pointer text-danger'
                         onClick={() => onRemove( item.id ) }
-                        title="Eliminar"
+                        title={ t('remove') }
                     />
                 </>
-                :
-                <small className='text-danger'> 
-                  <FontAwesomeIcon icon={faCartShopping} className='me-2' />
-                  Suscribirse { item.gratis === 'S' ? 'Gratis' : `$${item.precio}`}
-                </small>
+                : null
             }
 
           </div>

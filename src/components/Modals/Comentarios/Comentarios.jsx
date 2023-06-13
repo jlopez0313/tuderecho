@@ -16,7 +16,11 @@ import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { useSelector } from 'react-redux';
 import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 
+import { useTranslation } from 'react-i18next';
+
 export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
+
+    const { t } = useTranslation();
 
     const { publicacion, setPublicacion } = useContext( PublicacionContext );
 
@@ -60,12 +64,12 @@ export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
 
             const saved = await create( obj )
             if ( saved ) {
-                notify('Comentario registrado!', 'success');
+                notify( t('comentarios.alerts.saved'), 'success');
                 onSetFormState(initFormData)
                 // onAddChild( publicacion, saved )
                 setPublicacion( saved )
             } else {
-                notify('onDoSubmit Conferencia: Internal Error', 'error')
+                notify( t('comentarios.alerts.error'), 'error')
             }
         // }
     }
@@ -135,11 +139,11 @@ export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
                                         required
                                         name="comentario"
                                         className='form-control border-0 pe-5'
-                                        placeholder='Escribe tu comentario'
+                                        placeholder= { t('comentarios.form.comentario-placehoder') }
                                         onChange={onInputChange}
                                         value={ formState.comentario }
                                     />
-                                    <label htmlFor="especialidad">Tu Comentario *</label>
+                                    <label htmlFor="especialidad"> { t('comentarios.your-comment') } *</label>
                                     <FontAwesomeIcon
                                         role="button"
                                         className={`position-absolute bottom-25 end-0 me-2 text-danger ${ formState.comentario ? '' : 'disabled'}`}

@@ -2,8 +2,8 @@ import { backendApi } from "@/api/backendApi"
 
 const modulo = 'publicaciones/'
 
-export const list = async ( ) => {
-    const response = await backendApi.get(modulo)
+export const list = async ( { comunidad } ) => {
+    const response = await backendApi.post(modulo + 'list', { comunidad })
 
     if ( response ) {
         return Promise.resolve(response.data.publicaciones);
@@ -30,6 +30,7 @@ export const save = async ( body ) => {
     })
 
     const response = await backendApi.post(modulo, formData)
+    console.log(response);
 
     if ( response ) {
         return Promise.resolve(response.data.saved);

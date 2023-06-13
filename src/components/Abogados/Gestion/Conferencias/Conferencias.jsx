@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { myList, remove } from '@/services/Conferencias';
-import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
+import { Conferencia } from './Conferencia/Conferencia';
 import styles from './Conferencias.module.scss'
 import { notify } from '@/helpers/helpers';
 import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';
 import Spinner from 'react-bootstrap/Spinner';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
-const breadcrumb = [
-    {
-        name: 'Home',
-        href: '/abogados',
-        active: false
-    },{
-        name: 'Mis Conferencias',
-        active: true
-    }
-]
+import { useTranslation } from 'react-i18next';
 
 export const ConferenciasComponent = () => {
+
+    const { t } = useTranslation();
+
+    const breadcrumb = [
+        {
+            name: 'Home',
+            href: '/abogados',
+            active: false
+        },{
+            name: t('conferencias.title'),
+            active: true
+        }
+    ]
 
     const [item, setItem] = useState({});
     const [modalShow, setModalShow] = useState(false);
@@ -46,10 +50,10 @@ export const ConferenciasComponent = () => {
         remove( id )
         .then( () => {
             onGetList();
-            notify('Conferencia removida', 'success')
+            notify( t('conferencias.alerts.removed'), 'success')
         })
         .catch( error => {
-            notify('Conferencias onRemove: Internal Error', 'error')
+            notify( t('conferencias.alerts.error'), 'error')
         })
     }
 
@@ -68,10 +72,10 @@ export const ConferenciasComponent = () => {
                 
                 <Breadcrumb className='mt-3' items={breadcrumb} />
 
-                <h3 className="mt-4 text-danger"> Mis Conferencias </h3>
+                <h3 className="mt-4 text-danger"> { t('conferencias.my-list') } </h3>
 
                 <div className="px-3 mt-2">
-                    <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
+                    <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
                 <div className="d-flex flex-column">
@@ -95,8 +99,8 @@ export const ConferenciasComponent = () => {
 
                 <ConferenciaModal
                     item={ item }
-                    title='Modifica tu Conferencia'
-                    show={modalShow}
+                    title={ t('conferencias.update') }
+                    modalShow={modalShow}
                     onHide={( callRefresh ) => onRefreshConferencias( callRefresh )}
                 />
                 

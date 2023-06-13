@@ -7,7 +7,12 @@ import { register } from '@/store/user/UserSlice';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
 
+import { useTranslation } from 'react-i18next';
+
 export const PerfilComponent = () => {
+
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const [id, setId] = useState('');
 
@@ -56,10 +61,10 @@ export const PerfilComponent = () => {
     .then( (data) => {
       onSetFormState( {...formState, ...data.usuario}  )
       dispatch( register( {...data.usuario} ) )
-      notify('Perfil Actualizado.', 'success');
+      notify( t('profile.alerts.updated'), 'success');
     }).catch( error => {
       console.log( error );
-      notify('Error Interno.', 'error');
+      notify( t('profile.alerts.error'), 'error');
     })
 
   }
@@ -74,12 +79,12 @@ export const PerfilComponent = () => {
       <div className="container pb-5">
         <form onSubmit={onDoSubmit}>
           
-          <h3 className="mt-5 text-danger"> Información Personal </h3>
+          <h3 className="mt-5 text-danger"> { t('profile.form.personal') } </h3>
           <hr />
 
           <DatosPersonales formState={formState} onInputChange={onInputChange} onRadioChange={onRadioChange} />
 
-          <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> Guardar </button>
+          <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> { t('save') } </button>
         </form>
       </div>
     </>

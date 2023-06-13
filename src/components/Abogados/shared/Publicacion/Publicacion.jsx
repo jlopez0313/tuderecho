@@ -13,8 +13,14 @@ import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 import { format, render, cancel, register } from 'timeago.js';
 import { remove } from '@/services/Publicaciones';
 import { notify } from '@/helpers/helpers'
+import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
+import { Videoteca } from '@/components/Abogados/shared/Videoteca/Videoteca';
+
+import { useTranslation } from 'react-i18next';
 
 export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onSharing, showActions = true, ...props} ) => {
+
+    const { t } = useTranslation();
 
     const {setPublicacion, setIndex } = useContext( PublicacionContext );
 
@@ -33,10 +39,10 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
         remove( id )
         .then( () => {
             onRemovePubli ( idx );
-            notify('Publicación removida', 'success')
+            notify( t('posts.alerts.removed'), 'success')
         })
         .catch( error => {
-            notify('onRemoveComment: Internal Error', 'error')
+            notify( t('posts.alerts.error'), 'error')
         })
     }
 
@@ -81,7 +87,7 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                                 icon={faTrashCan}
                                 className='cursor-pointer'
                                 onClick={() => doRemovePubli( publi.id ) }
-                                title="Eliminar"
+                                title={ t('posts.form.remove') }
                             />
                         : null
                     }
@@ -119,8 +125,31 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                             showActions={false}
                         />
                     </div>
-                    :null
+                    : publi.hasOwnProperty('post')
+                        ? 
+                            `<b>This content isn't available right now</b>
+                            When this happens, it's usually because the owner only shared it with a small group of people, changed who can see it or it's been deleted.`
+                        : null
                 }
+                
+                {
+                    publi.conferencia?.id
+                    ?
+                    <div className='overflow-auto'>
+                        <Conferencia conferencia={publi.conferencia} />
+                    </div>
+                    : null
+                }
+
+                {
+                    publi.videoteca?.id
+                    ?
+                    <div className='overflow-auto'>
+                        <Videoteca videoteca={publi.videoteca} />
+                    </div>
+                    : null
+                }
+
             </Card.Body>
             {
                 showActions
@@ -138,17 +167,17 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                                     ? <FontAwesomeIcon icon={myLike} className='ms-1 me-2' /> 
                                     : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-2' />
                                 }
-                                Me Gusta
+                                <span className=''> { t('posts.like') } </span>
                             </small>
                             
                             <small className='text-danger cursor-pointer' onClick={onSetPublicacion}>
                                 {post.total_comments == 0 ? '' : post.total_comments} <FontAwesomeIcon icon={faMessage} className='me-2' />
-                                Comentar
+                                <span className=''> { t('posts.comment') } </span>
                             </small>
                             
                             <small className='text-danger cursor-pointer' onClick={doSharing}> 
                                 {totalShares == 0 ? '' : totalShares} <FontAwesomeIcon icon={faShare} className='me-2' />
-                                Compartir
+                                <span className=''> { t('posts.share') } </span>
                             </small>
                         </div>
                     </Card.Footer>

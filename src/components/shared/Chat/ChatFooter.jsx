@@ -3,7 +3,11 @@ import styles from './Chat.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
+import { useTranslation } from 'react-i18next';
+
 export const ChatFooter = ({ socket, user, chat }) => {
+
+    const { t } = useTranslation();
 
     const [message, setMessage] = useState('');
   
@@ -61,7 +65,7 @@ export const ChatFooter = ({ socket, user, chat }) => {
             <form className="form d-flex" onSubmit={(e) => onSendMessage(e)}>
                 <input
                     type="text"
-                    placeholder="Escribe tu mensaje"
+                    placeholder={ t('chat.form.message-placehoder') }
                     className="form-control message"
                     value={message}
                     onChange={(e) => handleTyping(e)}

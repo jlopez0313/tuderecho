@@ -1,5 +1,284 @@
 {
+    "edit": "Editar",
+    "explore": "Explorar...",
+    "free": "Gratis",
+    "people": "Personas",
+    "remove": "Remover",
+    "save": "Guardar",
+    "search": "Buscar...",
+    "see": "Ver más",
+    "share": "Compartir",
+    "subscribe": "Suscribirse",
+    "empty": "Sin registros aún...",
+
+    "chat": {
+        "form" : {
+            "message-placehoder": "Escribe tu mensaje"
+        }
+    },
+
+    "comentarios": {
+        "title": "Comentarioss",
+        "your-comment": "Tu comentario",
+        "form" : {
+            "comentario-placehoder": "Escribe tu comentario"
+        },
+        "alerts": {
+            "error": "Comment onRemove: Internal Error",
+            "removed": "Comentario removido",
+            "saved": "Comentario guardado"
+        }
+    },
+
     "comunidades": {
-        "title" : "Comunidades"
+        "create": "Crea tu Comunidad",
+        "discover" : "Descubrir",
+        "empty" : "Sin registros aún...",
+        "my-list" : "Mis Comunidades",
+        "suscription":"Suscripción",
+        "title" : "Comunidades",
+        "update": "Modifica tu Comunidad",
+        "form" : {
+            "cover": "Pago",
+            "pay": "Pagar",
+            "price": "Precio",
+            "price-placeholder": "Ej: $50 USD",
+            "title": "Título",
+            "title-placeholder": "Ej: El abogado como mediador de conflictos",
+            "target": "Objetivo",
+            "target-placeholder": "Describe el objetivo de la comunidad"
+        },
+        "alerts": {
+            "error": "Community onRemove: Internal Error",
+            "paid": "Suscripción Registrada",
+            "removed": "Comunidad removida",
+            "saved": "Comunidad guardada"
+        }
+    },
+
+    "conferencias": {
+        "conference": "Conferencia",
+        "create": "Crea tu Conferencia",
+        "date": "Fecha",
+        "discover" : "Descubrir",
+        "empty" : "Sin registros aún...",
+        "expositor": "Expositor",
+        "my-list" : "Mis Conferencias",
+        "remove": "Remover",
+        "suscription": "Suscripción",
+        "title": "Conferencias",
+        "update": "Modifica tu Conferencia",
+        "form" : {
+            "cover": "Pago",
+            "date": "Fecha",
+            "date-message": "Recuerda que la conferencia será el",
+            "expositor": "Expositor",
+            "expositor-placeholder": "Ex: Juan Perez",
+            "pay": "Pagar",
+            "price": "Precio",
+            "price-placeholder": "Ex: $50 USD",
+            "title": "Título",
+            "title-placeholder": "Ej: El abogado como mediador de conflictos",
+            "target": "Target",
+            "target-placeholder": "Describe el objetivo de la Conferencia"
+        },
+        "alerts": {
+            "error": "Conference onRemove: Internal Error",
+            "paid": "Suscripción Registrada",
+            "removed": "Conferencia removida",
+            "saved": "Conferencia guardada"
+        }
+    },
+
+    "contacts": {
+        "title": "Contactos"
+    },
+
+    "home": {
+        "header": {
+            "home": "Inicio",
+            "about": "Sobre Nosotros",
+            "services": "Servicios",
+            "contact": "Contáctanos",
+            "login": "Login",
+            "register": "Registro",
+            "enter": "Ingreso",
+            "leave": "Salir"
+        },
+        "slider": {
+            "description": "Queremos que nos cuentes tu caso",
+            "start": "Iniciar caso",
+            "title": "Cuéntanos tu caso"
+        }
+    },
+
+    "login": {
+        "title": "Log In",
+        "form" : {
+            "email": "Email",
+            "email-placeholder": "name@example.com",
+            "forgot": "Olvidé mi contraseña",
+            "login": "Log In",
+            "new": "Eres nuevo con nosotros?",
+            "password": "Contraseña",
+            "password-placeholder": "******",
+            "register": "Registrate",
+            "registered": "Ya tienes una cuenta?"
+        },
+        "alerts": {
+            "error": "Login internal error",
+            "welcome": "Bienvenido de nuevo"
+        }
+    },
+
+    "passwords": {
+        "form": {
+            "current": "Contraseña actual",
+            "current-placeholder": "Ex: ABC123",
+            "email": "Email",
+            "new": "Nueva Contraseña",
+            "new-placeholder": "Ex: DEF456",
+            "publish": "Publicar",
+            "remove": "Remover",
+            "repeat": "Repetir nueva contraseña",
+            "repeat-placeholder": "Ex: DEF456",
+            "send": "enviar",
+            "title": "Cambiar Contraseña"
+        },
+        "alerts": {
+            "error": "Passwords internal error",
+            "error-passwords": "Tu contraseña es incorrecta",
+            "saved": "Contraseña modificada"
+        }
+    },
+
+    "posts": {
+        "create": "Crea un Post",
+        "comment": "Comentarios",
+        "like": "Me gusta",
+        "share": "Compartir",
+        "title": "Posts",
+        "form": {
+            "post": "Que quieres decir hoy?",
+            "publish": "Publicar",
+            "remove": "Remover"
+        },
+        "alerts": {
+            "error": "Post onRemove: Internal Error",
+            "removed": "Post removido",
+            "saved": "Post guardado"
+        }
+    },
+
+    "profile": {
+        "title": "Mi Perfil",
+        "form": {
+            "basic": "Información básica (Confirmaremos tus datos) ",
+            "biography": "Biografía",
+            "biography-placeholder": "Cuéntanos de ti...",
+            "city": "Ciudad",
+            "city-placeholder": "Ej: Cali",
+            "chose": "Escoge uno...",
+            "chose-some": "Escoge algunos...",
+            "country": "País",
+            "document": "Tipo de Documento",
+            "email": "Email",
+            "id": "Documento",
+            "id-placeholder": "Ej: 123456789",
+            "inactive": "Inactivar cuenta temporalmente",
+            "law-student": "Estudiante de derecho - licencia temporal (Decreto 176 de 1971)",
+            "name": "Nombre completo",
+            "name-placeholder": "Ej: Juan Perez",
+            "personal": "Información Personal",
+            "phone": "Teléfono",
+            "professional-card": "Tarjeta Profesional",
+            "region": "Región",
+            "specialization": "Especialidad",
+            "student": "Eres estudiante?",
+            "student-alert": "Si aún eres estudiante puedes acceder a nuestra red de abogados pero no recibirás  solicitudes de atención. A No ser que seas decreto 176.",
+            "yes": "Sí"
+        },
+        "alerts": {
+            "error": "Proflie onRemove: Internal Error",
+            "error-image": "no se pudo cargar la imágen",
+            "updated": "Perfil actualizado"
+        }
+    },
+
+    "register": {
+        "client": "Soy Cliente",
+        "lawyer": "Soy Abogado",
+        "title": "Regístrate",
+        
+        "form": {
+            "email": "Email",
+            "email-placeholder": "Ex: nombre@correo.com",
+            "name": "Nombre Completo",
+            "name-placeholder": "Ej: Pedro Pérez",
+            "password": "Contraseña",
+            "password-placeholder": "******",
+            "remove": "Remover",
+            "save": "Gaurdar"
+        }
+    },
+
+    "sidemenu": {
+        "profile": {
+            "basic-info": "Información Básica",
+            "title":"Mi Perfil"
+        },
+
+        "gestion": {
+            "bag": "Mi Bolsa",
+            "comunidades": "Comunidades",
+            "conferencias": "Conferencias",
+            "title": "Mi Gestión",
+            "videoteca": "Videoteca"
+        },
+
+        "language": {
+            "english": "Inglés",
+            "spanish": "Español",
+            "title": "Idioma"
+        },
+
+        "login": {
+            "logout": "Salir",
+            "passwords": "Cambiar Contraseña",
+            "title": "Log In"
+        }
+    },
+
+    "videoteca": {
+        "conference": "Conferencia",
+        "create": "Sube tu video",
+        "discover" : "Descubrir",
+        "empty" : "Sin registros aún...",
+        "expositor": "Expositor",
+        "my-list" : "Mi Videoteca",
+        "title": "Videoteca",
+        "suscription": "Suscripción",
+        "update": "Modifica tu video",
+        "form" : {
+            "cover": "Pago",
+            "date": "Fecha",
+            "expositor": "Expositor",
+            "expositor-placeholder": "Ex: Juan Pérez",
+            "free": "Gratis",
+            "pay": "Pagar",
+            "price": "Precio",
+            "price-placeholder": "Ej: $50 USD",
+            "title": "Título",
+            "title-placeholder": "Ej: El abogado como mediador de conflictos",
+            "target": "Objetivo",
+            "url": "Youtube URL",
+            "video-empty": "Video no encontrado"
+        },
+        "alerts": {
+            "error": "Videoteca onRemove: Internal Error",
+            "paid": "Suscripción Registrada",
+            "removed": "Videoteca removida",
+            "saved": "Videoteca guardada"
+        }
     }
 }

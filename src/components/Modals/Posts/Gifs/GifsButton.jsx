@@ -17,7 +17,7 @@ export const GifsButton = ({ onSetGif, gif, medias}) => {
                 title="GIF"
             > GIF </span>
             <GifsModal
-                show={ show }
+                showGifs={ show }
                 onHide={() => setModalShow( false )}
                 onSetGif={(gif) => onDoSetGif( gif )}
             />

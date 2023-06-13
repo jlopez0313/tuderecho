@@ -4,7 +4,12 @@ import './Perfil.scss'
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { tipoDocumentos } from '@/constants/constants';
 
+import { useTranslation } from 'react-i18next';
+
 export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => {
+
+    const { t } = useTranslation();
+
     const image = useRef(null)
 
     const selectCountry = (val) => {
@@ -54,47 +59,47 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             onChange={(evt) => onInputChange(evt, 'tipoDoc')}
                             id="floatingSelect"
                         >
-                            <option value=''>Selecciona uno...</option>
+                            <option value=''> { t('profile.form.chose') } </option>
                             {
                                 tipoDocumentos.map( (tipo, key) => {
                                     return <option value={tipo.key} key={key}>{tipo.value}</option>
                                 })
                             }
                         </select>
-                        <label htmlFor="especialidad">Tipo de Documento *</label>
+                        <label htmlFor="especialidad"> { t('profile.form.document') } *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
                             type="number"
-                            placeholder='Ej: 123456789'
+                            placeholder={ t('profile.form.id-placeholder') }
                             required
                             className="form-control"
                             name='perfil'
                             defaultValue={formState.perfil?.identificacion}
                             onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
-                        <label htmlFor="staticEmail">Identificación *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.id') } *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <input
                             type="text"
                             required
-                            placeholder="Ej: Pedro Perez"
+                            placeholder={ t('profile.form.name-placeholder') }
                             className="form-control"
                             name='name'
                             value={ formState.name }
                             onChange={onInputChange}
                         />
-                        <label htmlFor="staticEmail">Nombre Completo *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.name') } *</label>
                     </div>
                     <div className="form-floating mb-2">
                         <CountryDropdown
                             required
-                            defaultOptionLabel="Selecciona uno..."
+                            defaultOptionLabel={ t('profile.form.chose') }
                             classes="form-control"
                             value={formState.perfil?.pais}
                             onChange={(val) => selectCountry(val)} />
-                        <label htmlFor="staticEmail">Pais *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.country') } *</label>
                     </div>
                 </div>
             </div>
@@ -104,12 +109,12 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                     <div className="form-floating col-sm-12">
                         <RegionDropdown
                                 required
-                                defaultOptionLabel='Selecciona una...'
+                                defaultOptionLabel={ t('profile.form.chose') }
                                 className="form-control"
                                 country={ formState.perfil?.pais }
                                 value={ formState.perfil?.region }
                                 onChange={(val) => selectRegion(val)} />
-                            <label htmlFor="staticEmail">Región *</label>
+                            <label htmlFor="staticEmail"> { t('profile.form.region') } *</label>
                     </div>
                 </div>
 
@@ -119,12 +124,12 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             type="text"
                             required
                             className="form-control"
-                            placeholder="Ej: Cali"
+                            placeholder={ t('profile.form.city-placeholder') }
                             name="perfil"
                             defaultValue={formState.perfil?.ciudad}
                             onChange={(evt) => onInputChange(evt, 'ciudad')}
                         />
-                        <label htmlFor="staticEmail">Ciudad *</label>
+                        <label htmlFor="staticEmail">{ t('profile.form.city') } *</label>
                     </div>
                 </div>
             </div>
@@ -133,7 +138,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                 <div className="col-sm-6 mb-3">
                     <div className="form-floating col-sm-12">
                         <span className="form-control"> {formState.email} </span>
-                        <label htmlFor="staticEmail">Correo *</label>
+                        <label htmlFor="staticEmail"> { t('profile.form.email') } *</label>
                     </div>
                 </div>
                 <div className="form-floating col-sm-6">
@@ -146,7 +151,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                         defaultValue={formState.perfil?.telefono}
                         onChange={(evt) => onInputChange(evt, 'telefono')}
                     />
-                    <label htmlFor="staticEmail">Teléfono  *</label>
+                    <label htmlFor="staticEmail"> { t('profile.form.phone') } *</label>
                 </div>
             </div>
             
@@ -159,7 +164,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                     onChange={(evt) => onInputChange(evt, 'biografia')}
                     value={formState.perfil?.biografia}
                 ></textarea>
-                <label htmlFor="staticEmail">Biografía *</label>
+                <label htmlFor="staticEmail"> { t('profile.form.biography') } *</label>
             </div>
 
             <div className="my-4 row ms-2">
@@ -173,7 +178,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                         value='I'
                         checked={ formState.perfil?.cuenta === 'I' }
                     />
-                    <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">Desactivar Cuenta temporalmente</label>
+                    <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">  { t('profile.form.inactive') }</label>
                 </div>
             </div>
 

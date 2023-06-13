@@ -11,7 +11,11 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
 import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
 
-export const Main = () => {
+import { useTranslation } from 'react-i18next';
+
+export const Main = ({ comunidad = '' }) => {
+
+    const { t } = useTranslation();
 
     const { user } = useSelector( state => state.user )
     
@@ -23,7 +27,7 @@ export const Main = () => {
 
     const onGetList = async () => {
         setIsLoading( true )
-        setLista( await list() )
+        setLista( await list({ comunidad }) )
         setIsLoading( false )
     }
 
@@ -80,7 +84,7 @@ export const Main = () => {
     
     return (
         <PublicacionProvider>
-            <div className={`${styles.main}`}>
+            <div className={`main ${styles.main}`}>
                 <div className='bg-white rounded d-flex border shadow-sm px-3 py-2 align-items-center'>
                     <div>
                         <img src={user?.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
@@ -90,7 +94,7 @@ export const Main = () => {
                         onClick={() => setModalShow(true)}
                     >
                         <FontAwesomeIcon icon={faPencil} />
-                        <span className='ms-3'>Crea un Post</span>
+                        <span className='ms-3'> { t('posts.create') } </span>
                     </div>
                 </div>
 
@@ -114,19 +118,21 @@ export const Main = () => {
                 }
                 
                 <PostModal
-                    title='Crea un Post'
+                    title={ t('posts.create') }
+                    comunidad={comunidad}
                     modalShow={modalShow}
                     onHide={(refresh = false) => onRefreshPublis( refresh )}
                 />
 
                 <ComentariosModal
-                    title='Comentarios'
+                    title={ t('comentarios.title') }
                     modalShow={showModalComments}
                     onHide={(refresh = false) => onHideModal( refresh )}
                 />
  
                 <PostModal
-                    title='Compartir'
+                    title={ t('share') }
+                    comunidad={comunidad}
                     modalShow={showModalShare}
                     onHide={(doRefresh = false) => onHideShare( doRefresh )}
                 />

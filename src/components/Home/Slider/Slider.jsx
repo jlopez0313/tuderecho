@@ -1,17 +1,22 @@
 import React from 'react'
 import './Slider.scss';
 
+import { useTranslation } from 'react-i18next';
+
 export const Slider = () => {
+
+  const { t } = useTranslation();
+
   return (
     <div className='slider'>
         <div className="container pt-7">
             <h2 className='w-sm-25 d-block text-white title'>
-              Coméntanos tu caso
+              { t('home.slider.title') }
             </h2>
             <span className='d-block mb-5 subtitle'>
-                Queremos que nos comentes tu caso.
+              { t('home.slider.description') }
             </span>
-            <button className='btn btn-primary'> Iniciar Caso </button>
+            <button className='btn btn-primary'> { t('home.slider.start') } </button>
         </div>
     </div>
   )

@@ -5,17 +5,15 @@ import { Contacto } from './Contacto/Contacto';
 import styles from '@/assets/styles/shared.module.scss';
 
 export const List = forwardRef(
-    ({ popper, children, ...props }, ref) => {
+    () => {
         return (
-            <Popover
-                ref={ref}
-                {...props}
-                className='rounded-0'
+            <div
+                className='rounded popover'
                 style={{
-                    ...props.style, maxWidth: '345px', width: '345px', height: 'calc(100% - 90px)'
+                    maxWidth: '345px', width: '345px', height: '100%'
                 }}
             >
-                <Popover.Header className='bg-danger text-white rounded-0'>
+                <Popover.Header className='bg-danger text-white rounded-top'>
                     <strong> Chat </strong>
                 </Popover.Header>
                 <Popover.Body className={styles.popperBody}>
@@ -30,7 +28,7 @@ export const List = forwardRef(
                 </div>
                     
                 </Popover.Body>
-            </Popover>
+            </div>
         )
     }
 )

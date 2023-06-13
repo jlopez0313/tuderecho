@@ -8,7 +8,11 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { decodeToken } from 'react-jwt';
 import { useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 export const Header = () => {
+
+  const { t } = useTranslation();
 
   const token = localStorage.getItem('token') || '';
   const user = decodeToken(token);
@@ -70,28 +74,28 @@ export const Header = () => {
 
             <Offcanvas.Body>
               <Nav className="ms-auto">
-                  <Nav.Link href="#home">Inicio</Nav.Link>
-                  <Nav.Link href="#features">Sobre Nosotros</Nav.Link>
-                  <Nav.Link href="#pricing">Servicios</Nav.Link>
-                  <Nav.Link href="#pricing">Contáctanos</Nav.Link>
+                  <Nav.Link href="#home"> { t('home.header.home') } </Nav.Link>
+                  <Nav.Link href="#features"> { t('home.header.about') } </Nav.Link>
+                  <Nav.Link href="#pricing"> { t('home.header.services') } </Nav.Link>
+                  <Nav.Link href="#pricing"> { t('home.header.contact') } </Nav.Link>
                   {
                     !token 
                     ? 
                       <>
                         <Link className="nav-link" to="/login" replace={true}>
-                          <button className='btn btn-primary'> Iniciar Sesión </button>
+                          <button className='btn btn-primary'> { t('home.header.login') } </button>
                         </Link>
                         <Link className="nav-link" to="/pre-registro" replace={true}>
-                          <button className='btn btn-primary'> Registrarme </button>
+                          <button className='btn btn-primary'> { t('home.header.register') } </button>
                         </Link>
                       </> 
                     : 
                       <>
                         <span className="nav-link">
-                          <button className='btn btn-primary' onClick={() => onGoToProfile()}> Ingresa </button>
+                          <button className='btn btn-primary' onClick={() => onGoToProfile()}> { t('home.header.enter') } </button>
                         </span>
                         <span className="nav-link">
-                          <button className='btn btn-primary' onClick={() => onLogout()}> Salir </button>
+                          <button className='btn btn-primary' onClick={() => onLogout()}> { t('home.header.leave') } </button>
                         </span>
                       </>
                   }
@@ -100,67 +104,9 @@ export const Header = () => {
           </div>
 
         { show === 'show' && <div className="offcanvas-backdrop fade show"></div> }
-        {/* 
-          <Navbar.Offcanvas
-            id='offcanvasNavbar-expand-sm'
-            aria-labelledby='offcanvasNavbarLabel-expand-sm'
-            placement="end"
-          >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title id='offcanvasNavbarLabel-expand-sm'>
-                <img className='logo' src={Logo} />
-              </Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-              <Nav className="ms-auto">
-                <Nav.Link href="#home">Inicio</Nav.Link>
-                <Nav.Link href="#features">Sobre Nosotros</Nav.Link>
-                <Nav.Link href="#pricing">Servicios</Nav.Link>
-                <Nav.Link href="#pricing">Contáctanos</Nav.Link>
-                {
-                  !token 
-                  ? 
-                    <>
-                      <Link className="nav-link" to="/login" replace={true}>
-                        <button className='btn btn-primary'> Iniciar Sesión </button>
-                      </Link>
-                      <Link className="nav-link" to="/pre-registro" replace={true}>
-                        <button className='btn btn-primary'> Registrarme </button>
-                      </Link>
-                    </> 
-                  : 
-                    <>
-                      <span className="nav-link">
-                        <button className='btn btn-primary' onClick={() => onGoToProfile()}> Ingresa </button>
-                      </span>
-                      <span className="nav-link">
-                        <button className='btn btn-primary' onClick={() => onLogout()}> Salir </button>
-                      </span>
-                    </>
-                }
-              </Nav>
-            </Offcanvas.Body>
-          </Navbar.Offcanvas>
-        */}
+        
       </Navbar>
-{/*
-        <div className="col d-flex align-items-center justify-content-end">
-          <Link to="/login">
-            
-          </Link>
-        </div>
-        <div className="col d-flex align-items-center justify-content-end">
-          <Link to="/registro">
-            
-          </Link>
-        </div>
-        <div className="col-6">
-          <input placeholder='Ciudad de búsqueda' className='form-control ciudad' />
-        </div>
-        <div className="col-6">
-          <input placeholder='Palabras claves' className='form-control tags' />
-      </div>
-*/}
+
     </div>
   )
 }

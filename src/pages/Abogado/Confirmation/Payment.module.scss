@@ -1,0 +1,15 @@
+.container {
+    height: 100%;
+}
+
+.left, .right {
+    flex-basis: 360px;
+    overflow-y: hidden;
+    top: 0;
+}
+
+.abogado {
+    // min-height: 1220px;
+    height: calc(100% - 62px);
+    width: 100%;
+}

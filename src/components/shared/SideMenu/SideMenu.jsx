@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUsers, faRightFromBracket, faKey, faClose, faUser, faVideo, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faRightFromBracket, faKey, faClose, faUser, faVideo, faPersonChalkboard, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import 'animate.css';
 import './SideMenu.scss';
@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 export const SideMenu = ({animateClass, setAnimateClass}) => {
 
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const token = localStorage.getItem('token') || '';
     const { rol } = decodeToken(token);
@@ -37,59 +37,74 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
             </div>
 
             <ul className='mt-5'>
-                <strong className='text-danger d-block'> Mi Perfil </strong>
+                <strong className='text-danger d-block'> { t("sidemenu.profile.title") } </strong>
                 <li className='border shadow-sm p-2 m-2'> 
                     <Link to={`/${ rol.toLowerCase() }s/perfil`}>
                         <FontAwesomeIcon className='me-2' icon={faUser} />
-                        <strong className='text-dark'> Información Básica </strong>
+                        <strong className='text-dark'> { t("sidemenu.profile.basic-info") } </strong>
                     </Link>
                 </li>
+            </ul>
 
-                <strong className='text-danger d-block mt-5'> Mi Gestión </strong>
-                <li className='border shadow-sm p-2 m-2'> 
-                    <Link to={`/${ rol.toLowerCase() }s/gestion/comunidades`}>
-                        <FontAwesomeIcon className='me-2' icon={faUsers} />
-                        <strong className='text-dark'> Comunidades </strong>
-                    </Link>
-                </li>
-                <li className='border shadow-sm p-2 m-2'> 
-                    <Link to={`/${ rol.toLowerCase() }s/gestion/conferencias`}>
-                        <FontAwesomeIcon className='me-2' icon={faPersonChalkboard} />
-                        <strong className='text-dark'> Conferencias </strong>
-                    </Link>
-                </li>
-                <li className='border shadow-sm p-2 m-2'> 
-                    <Link to={`/${ rol.toLowerCase() }s/gestion/videoteca`}>
-                        <FontAwesomeIcon className='me-2' icon={faVideo} />
-                        <strong className='text-dark'> Videotecas </strong>
-                    </Link>
-                </li>
+            {
+                rol.toLowerCase() == 'abogado' && 
+                    <ul className=''>
+                        <strong className='text-danger d-block mt-5'> { t("sidemenu.gestion.title") } </strong>
+                        <li className='border shadow-sm p-2 m-2'> 
+                            <Link to={`/${ rol.toLowerCase() }s/gestion/comunidades`}>
+                                <FontAwesomeIcon className='me-2' icon={faUsers} />
+                                <strong className='text-dark'> { t("sidemenu.gestion.comunidades") } </strong>
+                            </Link>
+                        </li>
+                        <li className='border shadow-sm p-2 m-2'> 
+                            <Link to={`/${ rol.toLowerCase() }s/gestion/conferencias`}>
+                                <FontAwesomeIcon className='me-2' icon={faPersonChalkboard} />
+                                <strong className='text-dark'> { t("sidemenu.gestion.conferencias") } </strong>
+                            </Link>
+                        </li>
+                        <li className='border shadow-sm p-2 m-2'> 
+                            <Link to={`/${ rol.toLowerCase() }s/gestion/videoteca`}>
+                                <FontAwesomeIcon className='me-2' icon={faVideo} />
+                                <strong className='text-dark'> { t("sidemenu.gestion.videoteca") } </strong>
+                            </Link>
+                        </li>
+                        <li className='border shadow-sm p-2 m-2'> 
+                            <Link to={`/${ rol.toLowerCase() }s/gestion/bolsa`}>
+                                <FontAwesomeIcon className='me-2' icon={faSackDollar} />
+                                <strong className='text-dark'> { t("sidemenu.gestion.bag") } </strong>
+                            </Link>
+                        </li>
+                    </ul>
+            }
 
-                <strong className='text-danger d-block mt-5'> Lenguaje de la Aplicación </strong>
+            <ul className=''>
+                <strong className='text-danger d-block mt-5'> { t("sidemenu.language.title") } </strong>
                 <li className='mt-3'>
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="lang" defaultChecked={i18n.language == 'es-US'} onClick={() => i18n.changeLanguage('es-US')} />
-                        <label className="form-check-label" htmlFor="inlineCheckbox2"> <strong> Español </strong> </label>
+                        <label className="form-check-label" htmlFor="inlineCheckbox2"> <strong> { t("sidemenu.language.spanish") } </strong> </label>
                     </div>
                 </li>
                 <li>
                     <div className="form-check">
                         <input className="form-check-input" type="radio" name="lang" defaultChecked={i18n.language == 'en-US'} onClick={() => i18n.changeLanguage('en-US')} />
-                        <label className="form-check-label" htmlFor="inlineCheckbox2"> <strong> Inglés </strong> </label>
+                        <label className="form-check-label" htmlFor="inlineCheckbox2"> <strong> { t("sidemenu.language.english") } </strong> </label>
                     </div>
                 </li>
+            </ul>
 
-                <strong className='text-danger d-block mt-5'> Inicio de Sesión </strong>
+            <ul className=''>
+                <strong className='text-danger d-block mt-5'> { t("sidemenu.login.title") } </strong>
                 <li className='border shadow-sm p-2 m-2'> 
                     <Link to={`/${ rol.toLowerCase() }s/passwords`}>
                         <FontAwesomeIcon className='me-2' icon={faKey} />
-                        <strong className='text-dark'> Cambiar Contraseña </strong>
+                        <strong className='text-dark'> { t("sidemenu.login.passwords") } </strong>
                     </Link>
                 </li>
                 <li className='border shadow-sm p-2 m-2'> 
                     <button className='btn' onClick={() => onLogout()}>
                         <FontAwesomeIcon className='text-danger me-2' icon={faRightFromBracket} />
-                        <strong className='text-dark'> Cerrar Sesión </strong>
+                        <strong className='text-dark'> { t("sidemenu.login.logout") } </strong>
                     </button>
                 </li>
             </ul>
