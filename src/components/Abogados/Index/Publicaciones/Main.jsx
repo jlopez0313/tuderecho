@@ -7,14 +7,16 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import styles from './Main.module.scss';
 import { Publicacion } from '@/components/Abogados/shared/Publicacion/Publicacion';
-import Spinner from 'react-bootstrap/esm/Spinner';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
 import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useTranslation } from 'react-i18next';
+import { Loader } from '@/components/shared/Loader/Loader';
 
 export const Main = ({ comunidad = '' }) => {
 
+    const limit = 10;
     const { t } = useTranslation();
 
     const { user } = useSelector( state => state.user )
@@ -24,11 +26,30 @@ export const Main = ({ comunidad = '' }) => {
     const [showModalShare, setShowModalShare] = useState(false);
     const [lista, setLista] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    
 
     const onGetList = async () => {
         setIsLoading( true )
-        setLista( await list({ comunidad }) )
+        setLista( await list({ comunidad }, page, limit) )
+        
+        if ( lista.length < limit ) {
+            setHasMore( false )
+        }
+
         setIsLoading( false )
+        setPage(prevPage => prevPage + 1);
+    }
+
+    const onGetMore = async () => {
+        const moreList = await list({ comunidad }, page, limit);
+        if ( moreList.length < limit ) {
+            setHasMore( false )
+        }
+
+        setLista( list => [...list, ...moreList] )
+        setPage(prevPage => prevPage + 1);
     }
 
     const onComentar = async ( idx ) => {
@@ -99,22 +120,29 @@ export const Main = ({ comunidad = '' }) => {
                 </div>
 
                 {
-                    isLoading
-                    ? 
-                        <div className="text-center mt-5">
-                            <Spinner animation="grow" />
-                        </div>
+                    isLoading ? <Loader />
                     :
-                        lista?.map( (post, key) => {
-                            return <Publicacion
-                                key={key}
-                                post={post}
-                                idx={key}
-                                onComentar={() => onComentar()}
-                                onSharing={() => onSharing()}
-                                onRemovePubli={(idx) => onRemovePubli(idx)}
-                            />
-                        })
+                        <InfiniteScroll
+                            dataLength={ lista.length }
+                            next={onGetMore}
+                            hasMore={ hasMore }
+                            loader={ <Loader /> }
+                            endMessage={ <div className='mt-3'> </div> }
+                            scrollableTarget="scrollableDiv"
+                        >
+                            {
+                                lista?.map( (post, key) => {
+                                    return <Publicacion
+                                        key={key}
+                                        post={post}
+                                        idx={key}
+                                        onComentar={() => onComentar()}
+                                        onSharing={() => onSharing()}
+                                        onRemovePubli={(idx) => onRemovePubli(idx)}
+                                    />
+                                })
+                            }
+                        </InfiniteScroll>
                 }
                 
                 <PostModal

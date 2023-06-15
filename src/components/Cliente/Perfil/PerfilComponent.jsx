@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DatosPersonales } from "./DatosPersonales"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { decodeToken } from "react-jwt";
 import { find, update } from '@/services/Usuarios';
 import { register } from '@/store/user/UserSlice';
@@ -14,6 +14,7 @@ export const PerfilComponent = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
+  const { user } = useSelector( state => state.user );
   const [id, setId] = useState('');
 
   const formData = {
@@ -45,13 +46,8 @@ export const PerfilComponent = () => {
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);
     setId(uid);
-
-    find( uid )
-    .then( (data) => {
-      dispatch( register( {...data.usuario} ) )
-      onSetFormState( {...formState, ...data.usuario}  )
-    })
-
+    
+    onSetFormState( {...formState, ...user}  )
   }
 
   const onDoSubmit= ( evt ) => {
@@ -71,7 +67,7 @@ export const PerfilComponent = () => {
 
   useEffect(() => {
     onFindUser()
-  }, [])
+  }, [user])
   
 
   return (

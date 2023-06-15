@@ -38,15 +38,15 @@ export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) 
         <div>
             <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
-                <div className={`rounded ${style.imgContent}`}>
-                    
-                    <Card.Img variant="top" className={`rounded ${style.picture}`} src={`http://img.youtube.com/vi/${videoId}/0.jpg`} alt='' />
+                <div className={`rounded ${style.imgContent}`}
+                    style={{ backgroundImage: `url(http://img.youtube.com/vi/${videoId}/0.jpg)`}}
+                >
                 </div>
 
                 <Card.Body>
                     <Card.Text className='d-flex flex-column'>
                         <small className='text-uppercase d-flex'> 
-                            <strong className='flex-grow-1'> { t('videoteca.conference') } {item.titulo} </strong>
+                            <strong className='flex-grow-1'> {item.titulo} </strong>
                         </small>
                         <small className=''> {t('videoteca.expositor')}: {item.user.name} </small>
                     </Card.Text>

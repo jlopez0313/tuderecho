@@ -24,17 +24,18 @@ export const Item = ({ item, uid, onRefresh, onEdit, onShare, onRemove }) => {
     }
     
     return (
-        <div>
+        <>
             <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
-                <div className={`rounded ${style.imgContent}`}>
-                    <Card.Img variant="top" className={`rounded ${style.picture}`} src={item.archivo} alt='' />
+                <div className={`rounded ${style.imgContent}`}
+                    style={{ backgroundImage: `url(${item.archivo})`}}
+                >
                 </div>
 
                 <Card.Body>
                     <Card.Text className='d-flex flex-column'>
                         <small className='text-uppercase d-flex'> 
-                            <strong className='flex-grow-1'>  { t('conferencias.conference') } {item.titulo} </strong>
+                            <strong className='flex-grow-1'> {item.titulo} </strong>
                         </small>
                         <small className=''> { t('conferencias.expositor') }: {item.user.name} </small>
                         <small className=''> { t('conferencias.date') }: { format(new Date(item.fecha), 'yyyy-MM-dd,  HH:mm') } </small>
@@ -92,6 +93,6 @@ export const Item = ({ item, uid, onRefresh, onEdit, onShare, onRemove }) => {
                 modalShow={paymentModal}
                 onHide={(refresh = false) => onDoRefresh( refresh )}
             />
-        </div>
+        </>
     )
 }

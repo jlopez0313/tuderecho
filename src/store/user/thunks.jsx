@@ -7,7 +7,10 @@ export const registerAuth = (rol, name, email, password, provider) => {
         const body = {rol, name, email, password, provider, estado: rol == 'Cliente' ? 'A': 'P'}
         const response = await backendApi.post('auth/register', body)
         if ( response ) {
+            
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.usuario) );
+            
             dispatch( register( {...response.data.usuario, token: response.data.token } ) )
             return Promise.resolve(response.data.usuario);
         } else {
@@ -21,7 +24,10 @@ export const loginAuth = (email, password) => {
         const body = {email, password}
         const response = await backendApi.post('auth/', body)
         if ( response ) {
+            
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.usuario) );
+
             dispatch( register( {...response.data.usuario, token: response.data.token } ) )
             return Promise.resolve(response.data.usuario);
         } else {

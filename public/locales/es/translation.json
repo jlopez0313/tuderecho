@@ -10,6 +10,11 @@
     "share": "Compartir",
     "subscribe": "Suscribirse",
     "empty": "Sin registros aún...",
+    "EOL": "Sin más registros...",
+
+    "bolsa": {
+        "title": "Mi Bolsa"
+    },
 
     "chat": {
         "form" : {

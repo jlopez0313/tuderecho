@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { myList, remove } from '@/services/Videoteca';
-import styles from './Videoteca.module.scss'
+import { myList, list, remove } from '@/services/Videoteca';
+import styles from '@/assets/styles/shared.module.scss';
+
 import { notify } from '@/helpers/helpers';
 import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
 import { Video } from './Video/Video';
 import Spinner from 'react-bootstrap/Spinner';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Loader } from '@/components/shared/Loader/Loader';
+
 import { useTranslation } from 'react-i18next';
 
 export const VideotecaComponent = () => {
 
+    const limit = 10;
     const { t } = useTranslation();
 
     const breadcrumb = [
@@ -29,6 +34,8 @@ export const VideotecaComponent = () => {
     const [search, setSearch] = useState('');
     const [lista, setLista] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     
     const onShowModal = ( item ) => {
@@ -38,8 +45,24 @@ export const VideotecaComponent = () => {
 
     const onGetList = async () => {
         setIsLoading( true )
-        setLista( await myList(search) )
+        setLista( await myList(search, page, limit) )
+        
+        if ( lista.length < limit ) {
+            setHasMore( false )
+        }
+
         setIsLoading( false )
+        setPage(prevPage => prevPage + 1);
+    }
+
+    const onGetMore = async () => {
+        const moreList = await myList( '', page, limit )
+
+        if ( moreList.length < limit ) {
+            setHasMore( false )
+        }
+
+        setLista( list => [...list, ...moreList] )
     }
 
     const onRefreshVideoteca = (callRefresh = false) => {
@@ -69,7 +92,7 @@ export const VideotecaComponent = () => {
 
     return (
         <>
-            <div className="container pb-5">
+            <div className={`container pb-5 h-90`}>
                 
                 <Breadcrumb className='mt-3' items={breadcrumb} />
 
@@ -79,21 +102,28 @@ export const VideotecaComponent = () => {
                     <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
-                <div className="d-flex flex-column">
+                <div id="divVideoteca" className={`overflow-auto h-90 d-flex flex-column p-2  ${styles.list}`}>
                     {
-                        isLoading
-                        ? 
-                            <div className="w-100 mt-5 text-center">
-                                <Spinner animation="grow" />
-                            </div>
+                        isLoading ? <Loader />
                         :
-                            <div className={`w-100 h-75 ps-3 pe-2 mt-2 ${styles.list}`}>
-                                {
-                                    lista?.map((item, key) => {
-                                        return <Video item={item} key={key} onRemove={onRemove} onEdit={onShowModal}  />
-                                    })
-                                }
-                            </div>
+                            <InfiniteScroll
+                                dataLength={ lista.length }
+                                next={onGetMore}
+                                hasMore={ hasMore }
+                                loader={ <Loader /> }
+                                endMessage={ <div className='mt-3'> </div> }
+                                scrollableTarget="divVideoteca"
+                            >
+                                <div className={`row mt-2 mx-0`}>
+                                    {
+                                        lista?.map((item, key) => {
+                                            return <div className='col-xl-4 col-sm-6 col-12' key={key}>
+                                                <Video item={item} key={key} onRemove={onRemove} onEdit={onShowModal}  />
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                            </InfiniteScroll>
                     }
                 </div>
 

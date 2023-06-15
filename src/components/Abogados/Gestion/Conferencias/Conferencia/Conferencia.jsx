@@ -21,8 +21,10 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
 
   return (
     <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
-        <div className={`rounded ${style.imgContent}`}>
-          <Card.Img variant="top" className={`rounded ${style.picture}`} src={item.archivo} alt='' />
+
+        <div className={`rounded ${style.imgContent}`}
+          style={{ backgroundImage: `url(${item.archivo})`}}
+        >
         </div>
 
         <Card.Body>

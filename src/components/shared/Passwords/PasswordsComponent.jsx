@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { decodeToken } from "react-jwt";
-import { find, passwords } from '@/services/Usuarios';
+import { passwords } from '@/services/Usuarios';
 import { Header } from "@/components/shared/Header/Header"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
-import { register } from '@/store/user/UserSlice';
 
 import bcrypt from 'bcryptjs'
 
@@ -17,7 +16,6 @@ export const PasswordsComponent = () => {
 
     // const [perfil, setPerfil] = useState({ tags: [] });
     const { user } = useSelector( (state) => state.user );
-    const dispatch = useDispatch();
 
     const formData = {
         email: '',
@@ -31,12 +29,7 @@ export const PasswordsComponent = () => {
     const onFind = () => {
         const token = localStorage.getItem('token') || '';
         const { uid } = decodeToken(token);
-        find( uid )
-        .then( (data) => {
-            dispatch( register( data.usuario ) )
-            // setPerfil( data.perfil );
-            onSetFormState( {...formState, email: data.usuario.email }  )
-        })
+        onSetFormState( {...formState, email: user.email }  )
     }
 
     const onDoSubmit= ( evt ) => {

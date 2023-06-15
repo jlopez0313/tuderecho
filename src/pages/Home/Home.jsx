@@ -5,6 +5,9 @@ import { Abogados } from '@/components/Home/Abogados/Abogados'
 import { Slider } from '@/components/Home/Slider/Slider'
 
 export const Home = () => {
+
+  localStorage.removeItem('token');
+
   return (
     <>
       <Header />

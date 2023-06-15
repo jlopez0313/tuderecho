@@ -2,8 +2,8 @@ import { backendApi } from "@/api/backendApi"
 
 const module = 'conferencias/'
 
-export const list = async ( search = '' ) => {
-    const response = await backendApi.get(module + search)
+export const list = async ( search = '', page, limit ) => {
+    const response = await backendApi.get(module + search + `?page=${page}&limit=${limit}`)
     if ( response ) {
         return Promise.resolve( response.data.conferencias );
     } else {
@@ -11,8 +11,8 @@ export const list = async ( search = '' ) => {
     }
 }
 
-export const myList = async ( search = '' ) => {
-    const response = await backendApi.post(module + 'my-list/' + search)
+export const myList = async ( search = '', page, limit ) => {
+    const response = await backendApi.post(module + 'my-list/' + search + `?page=${page}&limit=${limit}`)
     if ( response ) {
         return Promise.resolve( response.data.conferencias );
     } else {

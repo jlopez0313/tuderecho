@@ -12,10 +12,14 @@ import Button from 'react-bootstrap/esm/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRefresh } from '@/store/videoteca/VideotecaSlice';
 
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Loader } from '@/components/shared/Loader/Loader';
+
 import { useTranslation } from 'react-i18next';
 
 export const Videoteca = () => {
-
+    
+    const limit = 10;
     const { t } = useTranslation();
 
     const { refresh } = useSelector(state => state.videoteca);
@@ -25,12 +29,31 @@ export const Videoteca = () => {
     const [search, setSearch] = useState('');
     const [lista, setLista] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     const onGetList = async () => {
         setIsLoading( true )
-        setLista( await myList(search) )
+        setLista( await myList(search, page, limit) )
+        
+        if ( lista.length < limit ) {
+            setHasMore( false )
+        }
+
         setIsLoading( false )
         dispatch( setRefresh(false) );
+        setPage(prevPage => prevPage + 1);
+    }
+
+    const onGetMore = async () => {
+        const moreList = await myList( search, page, limit )
+
+        if ( moreList.length < limit ) {
+            setHasMore( false )
+        }
+
+        setLista( list => [...list, ...moreList] )
+        setPage(prevPage => prevPage + 1);
     }
     
     const onRefreshVideoteca = (doRefresh) => {
@@ -84,19 +107,26 @@ export const Videoteca = () => {
                     <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
-                <div className={`overflow-auto h-75 pe-2 ps-3 mt-2 ${styles.list}`}>
+                <div id="divVideoteca" className={`overflow-auto h-75 pe-2 ps-3 mt-2 ${styles.list}`}>
                     {
-                        isLoading
-                        ? 
-                            <div className="text-center">
-                                <Spinner animation="grow" />
-                            </div>
+                        isLoading ? <Loader />
                         :
                             lista?.length > 0
                             ?
-                                lista.map((item, key) => {
-                                    return <Video item={item} key={key} onRemove={onRemove} />
-                                })
+                                <InfiniteScroll
+                                    dataLength={ lista.length }
+                                    next={onGetMore}
+                                    hasMore={ hasMore }
+                                    loader={ <Loader /> }
+                                    endMessage={ <div className='mt-3'> </div> }
+                                    scrollableTarget="divVideoteca"
+                                >
+                                    {
+                                        lista.map((item, key) => {
+                                            return <Video item={item} key={key} onRemove={onRemove} />
+                                        })
+                                    }
+                                </InfiniteScroll>
                             : <div className='alert alert-danger'> { t('empty') } </div>
                     }
                 </div>

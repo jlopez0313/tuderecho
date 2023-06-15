@@ -5,6 +5,7 @@ import { decodeToken } from 'react-jwt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faCartShopping, faShare } from '@fortawesome/free-solid-svg-icons';
+import style from './Video.module.scss'
 import { getYoutubeId } from '@/helpers/helpers'
 
 import { useTranslation } from 'react-i18next';
@@ -28,9 +29,12 @@ export const Video = ({item, onRemove, onEdit}) => {
   }, [item])
 
   return (
-    <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${styles.listItem}`}>
-        
-        <Card.Img variant="top" className='rounded' src={`http://img.youtube.com/vi/${videoId}/0.jpg`} alt='' />
+    <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
+
+        <div className={`rounded ${style.imgContent}`}
+          style={{ backgroundImage: `url(http://img.youtube.com/vi/${videoId}/0.jpg)` }}
+        >
+        </div>
 
         <Card.Body>
           <Card.Text className='d-flex flex-column mb-2'>

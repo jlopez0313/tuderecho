@@ -9,7 +9,7 @@ export const Conferencias = () => {
     <>
         <Header />
         <div className={`${styles.abogado}`}>
-          <div className={`bg-light d-flex overflow-auto pt-2 ${styles.container}`}>
+          <div id="scrollableDiv" className={`bg-light d-flex overflow-auto pt-2 ${styles.container}`}>
             <div className={`left position-sticky p-2 ${styles.left}`}>
               <Left />
             </div>

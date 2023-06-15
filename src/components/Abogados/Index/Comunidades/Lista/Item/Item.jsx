@@ -26,15 +26,16 @@ export const Item = ({ item, uid, onRefresh, onEdit, onRemove }) => {
         <div>
             <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
-                <div className={`rounded ${style.imgContent}`}>
-                    <Card.Img variant="top" className={`rounded ${style.picture}`} src={item.archivo} alt='' />
+                <div className={`rounded ${style.imgContent}`}
+                    style={{ backgroundImage: `url(${item.archivo})`}}
+                >
                 </div>
                 
                 <Card.Body>
                     <div className="d-flex flex-column w-100 mb-2">
                         <strong> {item.titulo} </strong>
                         <div className="d-flex justify-content-between">
-                            <small className="w-100">{ t('people') }: 25</small>
+                            <small className="w-100">{ t('people') }: { item.usuarios?.length || 0} </small>
                         </div>
                         <div className="">
                             <small className="w-100">{item.objetivo}</small>

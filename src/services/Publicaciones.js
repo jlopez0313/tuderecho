@@ -2,8 +2,8 @@ import { backendApi } from "@/api/backendApi"
 
 const modulo = 'publicaciones/'
 
-export const list = async ( { comunidad } ) => {
-    const response = await backendApi.post(modulo + 'list', { comunidad })
+export const list = async ( { comunidad }, page, limit ) => {
+    const response = await backendApi.post(modulo + `list?page=${page}&limit=${limit}`, { comunidad })
 
     if ( response ) {
         return Promise.resolve(response.data.publicaciones);

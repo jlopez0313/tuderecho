@@ -7,10 +7,14 @@ import { useDispatch } from 'react-redux';
 import { setRefresh } from '@/store/comunidades/ComunidadesSlice';
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
 
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Loader } from '@/components/shared/Loader/Loader';
+
 import { useTranslation } from 'react-i18next';
 
 export const Lista = memo( ({ uid }) => {
-
+    
+    const limit = 10;
     const { t } = useTranslation();
 
     const [item, setItem] = useState({});
@@ -18,6 +22,8 @@ export const Lista = memo( ({ uid }) => {
 
     const [lista, setLista] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -30,12 +36,33 @@ export const Lista = memo( ({ uid }) => {
         setIsLoading( true )
         
         if (uid) {
-            setLista( await myList() )
+            setLista( await myList('', page, limit) )
         } else {
-            setLista( await list() )
-        }
-        setIsLoading( false )
+            setLista( await list('', page, limit) )
+        }  
 
+        if ( lista.length < limit ) {
+            setHasMore( false )
+        }
+
+        setIsLoading( false );
+        setPage(prevPage => prevPage + 1);
+    }
+
+    const onGetMore = async () => {
+        let moreList = [];
+        if (uid) {
+            moreList = await myList( '', page, limit )
+        } else {
+            moreList =  await list( '', page, limit )
+        }
+
+        if ( moreList.length < limit ) {
+            setHasMore( false )
+        }
+
+        setLista( list => [...list, ...moreList] )
+        setPage(prevPage => prevPage + 1);
     }
 
     const onRefresh = (doRefresh = false) => {
@@ -65,28 +92,35 @@ export const Lista = memo( ({ uid }) => {
     return (
         <>
             {
-                isLoading
-                ? 
-                    <div className="text-center mt-5">
-                        <Spinner animation="grow" />
-                    </div>
+                isLoading ? <Loader />
                 :
                     lista.length ? 
-                        <div className={`w-100 h-75 ps-3 pe-2 mt-5 ${styles.list}`}>
-                            {
-                                lista?.map( (item, key) => {
-                                    return <Item
-                                        key={key}
-                                        item={item}
-                                        uid={uid}
-                                        idx={key}
-                                        onEdit={onShowModal}
-                                        onRefresh={(doRefresh = false) => onRefresh( doRefresh )}
-                                        onRemove={(id) => onRemove(id)}
-                                    />
-                                })
-                            }
-                        </div>
+                        <InfiniteScroll
+                            dataLength={ lista.length }
+                            next={onGetMore}
+                            hasMore={ hasMore }
+                            loader={ <Loader /> }
+                            endMessage={ <div className='mt-3'> </div> }
+                            scrollableTarget="scrollableDiv"
+                        >
+                            <div className={`row h-75 mt-5 mx-0`}>
+                                {
+                                    lista?.map( (item, key) => {
+                                        return <div className="col-xxl-4 col-sm-6 col-12" key={key}>
+                                            <Item
+                                                key={key}
+                                                item={item}
+                                                uid={uid}
+                                                idx={key}
+                                                onEdit={onShowModal}
+                                                onRefresh={(doRefresh = false) => onRefresh( doRefresh )}
+                                                onRemove={(id) => onRemove(id)}
+                                            />
+                                        </div>
+                                    })
+                                }
+                            </div>
+                        </InfiniteScroll>
                     : 
                         <div className='alert alert-danger m-auto w-75'> { t('comunidades.empty') } </div>
             

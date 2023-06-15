@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { myList, remove } from '@/services/Comunidades';
-import styles from './Comunidades.module.scss'
+import { myList, list, remove } from '@/services/Comunidades';
+import styles from '@/assets/styles/shared.module.scss';
+
 import { notify } from '@/helpers/helpers';
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
 import { Comunidad } from './Comunidad/Comunidad';
 import Spinner from 'react-bootstrap/Spinner';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Loader } from '@/components/shared/Loader/Loader';
+
 import { useTranslation } from 'react-i18next';
 
 export const ComunidadesComponent = () => {
     
+    const limit = 10;
     const { t } = useTranslation();
 
     const breadcrumb = [
@@ -29,6 +34,8 @@ export const ComunidadesComponent = () => {
     const [search, setSearch] = useState('');
     const [lista, setLista] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
 
     const onShowModal = ( item ) => {
         setItem(item);
@@ -37,8 +44,25 @@ export const ComunidadesComponent = () => {
 
     const onGetList = async () => {
         setIsLoading( true )
-        setLista( await myList(search) )
+        setLista( await myList(search, page, limit) )
+
+        if ( lista.length < limit ) {
+            setHasMore( false )
+        }
+        
         setIsLoading( false )
+        setPage(prevPage => prevPage + 1);
+    }
+
+    const onGetMore = async () => {
+        const moreList = await myList( '', page, limit )
+
+        if ( moreList.length < limit ) {
+            setHasMore( false )
+        }
+
+        setLista( list => [...list, ...moreList] )
+        setPage(prevPage => prevPage + 1);
     }
 
     const onRefreshVideoteca = (callRefresh = false) => {
@@ -68,31 +92,38 @@ export const ComunidadesComponent = () => {
 
     return (
         <>
-            <div className="container pb-5">
+            <div className={`container pb-5 h-90`}>
                 
                 <Breadcrumb className='mt-3' items={breadcrumb} />
 
                 <h3 className="mt-4 text-danger"> { t('comunidades.my-list') } </h3>
 
-                <div className="px-3 mt-2">
-                    <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
+                <div className="px-3 my-2">
+                    <input className="m-auto form-control" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
-                <div className="d-flex flex-column">
+                <div id="divComunidades" className={`overflow-auto h-90 d-flex flex-column p-2  ${styles.list}`}>
                     {
-                        isLoading
-                        ? 
-                            <div className="w-100 mt-5 text-center">
-                                <Spinner animation="grow" />
-                            </div>
+                        isLoading ? <Loader />
                         :
-                            <div className={`w-100 h-75 ps-3 pe-2 mt-2 ${styles.list}`}>
-                                {
-                                    lista?.map((item, key) => {
-                                        return <Comunidad item={item} key={key} onRemove={onRemove} onEdit={onShowModal}  />
-                                    })
-                                }
-                            </div>
+                            <InfiniteScroll
+                                dataLength={ lista.length }
+                                next={onGetMore}
+                                hasMore={ hasMore }
+                                loader={ <Loader /> }
+                                endMessage={ <div className='mt-3'> </div> }
+                                scrollableTarget="divComunidades"
+                            >
+                                <div className={`row mt-2 mx-0`}>
+                                    {
+                                        lista?.map((item, key) => {
+                                            return <div className='col-xl-4 col-sm-6 col-12' key={key}>
+                                                <Comunidad item={item} onRemove={onRemove} onEdit={onShowModal}  />
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                            </InfiniteScroll>
                     }
                 </div>
 
