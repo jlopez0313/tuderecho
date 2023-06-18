@@ -16,6 +16,26 @@
         "title": "Mi Bolsa"
     },
 
+    "charts": {
+        "free": "Gratis",
+        "paid": "Pagas",
+        "sold": "Total Ventas",
+        "total": "Total de Usuarios",
+        "usuarios": "Usuarios",
+        "comunidades": {
+            "free": "Comunidades Gratuitas",
+            "sold": "Comunidades Vendidas"
+        },
+        "conferencias": {
+            "free": "Conferencias Gratuitas",
+            "sold": "Conferencias Vendidas"
+        },
+        "videoteca": {
+            "free": "Videoteca Gratuitas",
+            "sold": "Videoteca Vendidas"
+        }
+    },
+
     "chat": {
         "form" : {
             "message-placehoder": "Escribe tu mensaje"

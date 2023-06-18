@@ -11,6 +11,15 @@ export const list = async ( search = '', page, limit ) => {
     }
 }
 
+export const madeByMe = async ( ) => {
+    const response = await backendApi.get(module + 'madeByMe')
+    if ( response ) {
+        return Promise.resolve( response.data.comunidades );
+    } else {
+        return Promise.resolve( false );
+    }
+}
+
 export const myList = async ( search = '', page, limit ) => {
     const response = await backendApi.post(module + 'my-list/' + search + `?page=${page}&limit=${limit}`)
     if ( response ) {

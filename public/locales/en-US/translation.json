@@ -16,6 +16,26 @@
         "title": "My Bag"
     },
 
+    "charts": {
+        "free": "Free",
+        "paid": "Paid",
+        "sold": "Total Sold",
+        "total": "Total Users",
+        "usuarios": "Users",
+        "comunidades": {
+            "free": "Free Communities ",
+            "sold": "Sold Communities "
+        },
+        "conferencias": {
+            "free": "Free Conferences ",
+            "sold": "Sold Conferences "
+        },
+        "videoteca": {
+            "free": "Free Videoteca ",
+            "sold": "Sold Videoteca "
+        }
+    },
+
     "chat": {
         "form" : {
             "message-placehoder": "Write your message"
