@@ -34,7 +34,9 @@ export const Conferencias = () => {
 
     const onGetList = async () => {
         setIsLoading( true )
-        setLista( await myList(search, page, limit ) )
+        
+        const lista = await myList(search, page, limit)
+        setLista( lista )
         
         if ( lista.length < limit ) {
             setHasMore( false )

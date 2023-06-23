@@ -16,7 +16,7 @@ import { Loader } from '@/components/shared/Loader/Loader';
 
 export const Main = ({ comunidad = '' }) => {
 
-    const limit = 10;
+    const limit = 2;
     const { t } = useTranslation();
 
     const { user } = useSelector( state => state.user )
@@ -31,8 +31,11 @@ export const Main = ({ comunidad = '' }) => {
     
 
     const onGetList = async () => {
+        console.log('object');
         setIsLoading( true )
-        setLista( await list({ comunidad }, page, limit) )
+
+        const lista = await list({ comunidad }, page, limit)
+        setLista( lista )
         
         if ( lista.length < limit ) {
             setHasMore( false )

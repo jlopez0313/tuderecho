@@ -35,11 +35,15 @@ export const Lista = memo( ({ uid }) => {
     const onGetList = async () => {
         setIsLoading( true )
         
+        let lista = []
+        
         if (uid) {
-            setLista( await myList('', page, limit) )
+            lista = await myList( '', page, limit )
         } else {
-            setLista( await list('', page, limit) )
-        }  
+            lista = await list( '', page, limit )
+        }
+
+        setLista( lista )
 
         if ( lista.length < limit ) {
             setHasMore( false )
