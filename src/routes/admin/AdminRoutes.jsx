@@ -9,6 +9,7 @@ import { Routes, Route } from 'react-router-dom';
 import { NotFound } from '@/pages/Errors/NotFound';
 import { Detalle } from '@/pages/Admin/Usuarios/Detalle';
 import { Passwords } from '@/pages/Admin/Passwords/Passwords';
+import { Bolsa } from '@/pages/Admin/Bolsa/Bolsa';
 
 export const AdminRoutes = () => {
   return (
@@ -19,6 +20,9 @@ export const AdminRoutes = () => {
           <Route path='crear' element={ <FormUsuarios /> } />
           <Route path='detalle'>
             <Route path=':id' element={ <Detalle /> } />
+          </Route>
+          <Route path='bolsa'>
+            <Route path=':id' element={ <Bolsa /> } />
           </Route>
         </Route>
         <Route path='tags'>

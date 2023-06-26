@@ -105,6 +105,29 @@ small {
     }
 }
 
+.data-table {
+    border: 1px solid #dee2e6;
+
+
+    .rdt_TableHeadRow {
+        font-weight: bold;
+        font-size: .9rem !important;
+
+    }
+
+    .rdt_TableBody {
+        .rdt_TableRow {
+            
+            font-size: .9rem !important;
+
+            &:nth-of-type(odd) {
+                --bs-table-accent-bg: rgb(0 0 0 / 5%);
+                box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+            }
+        }
+    }
+}
+
 
 @media (max-width: 575px) {
     .main {

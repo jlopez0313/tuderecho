@@ -6,7 +6,8 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
-import { all as getAll, remove } from '@/services/Tags';
+import { paginate, remove } from '@/services/Tags';
+import DataTable from 'react-data-table-component';
 
 const breadcrumb = [
     {
@@ -22,6 +23,30 @@ const breadcrumb = [
 export const TagsComponent = () => {
 
     const [tags, setTags] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [totalRows, setTotalRows] = useState(0);
+    const [perPage, setPerPage] = useState(10);
+    const [page, setPage] = useState(1);
+
+    const columns = [
+        {
+            name: 'Palabra Clave',
+            selector: row => row.name,
+        },
+        {
+            name: 'Acciones',
+            cell: item => (                
+                <>
+                    <Link to={`editar/${item.id}`}>
+                        <FontAwesomeIcon icon={faPencil} className='me-4' />
+                    </Link>
+                    <button className="btn text-danger" onClick={() => onDeleteItem(item.id)}>
+                        <FontAwesomeIcon icon={faTrash} title="Eliminar" />
+                    </button>
+                </>
+            ),
+        },
+    ];
 
     const onDeleteItem = (id) => {
         const MySwal = withReactContent(Swal)
@@ -34,19 +59,41 @@ export const TagsComponent = () => {
             if ( isConfirmed ) {
                 remove(id)
                 .then( () => {
-                    onList();
+                    onList( page );
                     notify('Especialidad eliminada!', 'success')
                 })
             }
         })
     }
 
-    const onList = async () => {
-        setTags( await ( getAll()) || [] )
+    const onList = async (page) => {
+        setLoading(true);
+        setPage( page );
+
+        const data = await paginate(page, perPage);
+
+        setTags( data.tags )
+        setTotalRows(data.total);
+		setLoading(false);
     }
 
+    const handlePageChange = (page) => {
+    	onList(page);
+    };
+
+    const handlePerRowsChange = async (newPerPage, page) => {
+    	setLoading(true);
+        setPage( page );
+
+    	const data = await getAll(page, newPerPage);
+
+        setTags( data.tags )
+    	setPerPage(newPerPage);
+    	setLoading(false);
+    };
+
     useEffect(() => {
-        onList()
+        onList(page)
     }, [])
         
     return (
@@ -54,36 +101,19 @@ export const TagsComponent = () => {
             <h1 className="mb-4"> Palabras Clave </h1>
 
             <Breadcrumb items={breadcrumb} />
-            
-            <table className="table table-bordered table-striped table-hovered table-condensed">
-                <thead>
-                    <tr>
-                        <th> # </th>
-                        <th> Palabra Clave </th>
-                        <th> Acciones </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        tags?.map( (item, key) => {
-                            return (
-                                <tr key={key}>
-                                    <td> {key + 1} </td>
-                                    <td> {item.name} </td>
-                                    <td className='d-flex align-items-center justify-content-between'>
-                                        <Link to={`editar/${item.id}`}>
-                                            <FontAwesomeIcon icon={faPencil} className='me-4' />
-                                        </Link>
-                                        <button className="btn text-danger flex-fill" onClick={() => onDeleteItem(item.id)}>
-                                            <FontAwesomeIcon icon={faTrash} title="Eliminar" />
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
+
+            <DataTable
+                columns={columns}
+                data={tags}
+                progressPending={loading}
+                pagination
+                paginationServer
+                paginationTotalRows={totalRows}
+                onChangeRowsPerPage={handlePerRowsChange}
+                onChangePage={handlePageChange}
+                highlightOnHover
+                className='data-table'
+            />
 
             <Link to='crear'>
                 <div className="fab">

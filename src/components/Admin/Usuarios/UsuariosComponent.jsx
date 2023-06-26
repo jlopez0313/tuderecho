@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {  faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import {  faMagnifyingGlass, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 import { Link } from 'react-router-dom';
-import { all as getAll, update } from '@/services/Usuarios';
+import { paginate, update } from '@/services/Usuarios';
+
+import DataTable from 'react-data-table-component';
 
 const breadcrumb = [
     {
@@ -20,11 +22,81 @@ const breadcrumb = [
     }
 ]
 
-
 export const UsuariosComponent = () => {
-    
-    const [usuarios, setUsuarios] = useState([])
 
+    const [usuarios, setUsuarios] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [totalRows, setTotalRows] = useState(0);
+    const [perPage, setPerPage] = useState(10);
+    const [page, setPage] = useState(1);
+ 
+    const columns = [
+        {
+            name: 'Rol',
+            selector: row => row.rol,
+        },
+        {
+            name: 'Usuario',
+            selector: row => row.name,
+        },
+        {
+            name: 'Correo',
+            selector: row => row.name,
+        },
+        {
+            name: 'Estado',
+            selector: row =>
+                row.estado == 'A' 
+                    ? 'Aprobado' 
+                    : row.estado == 'P' 
+                        ? 'Pendiente' 
+                        : 'Rechazado'
+                 
+            ,
+        },
+        {
+            name: 'Bolsa',
+            cell: item => (
+                <Link className="btn me-1" to={`bolsa/${item.id}`}>
+                    <FontAwesomeIcon className='text-danger' icon={faSackDollar} />
+                </Link>
+            ),
+        },
+        {
+            name: 'Acciones',
+            cell: item => (                
+                <>
+                    <Link className="btn me-1" to={`detalle/${item.id}`}>
+                        <FontAwesomeIcon className='text-danger' icon={faMagnifyingGlass} />
+                    </Link>
+    
+                    {
+                        item.estado === 'P'
+                        ? 
+                        <>
+                            <button className="btn me-1" title="Aprobar" onClick={() => onApproveUser( item )}>
+                                <FontAwesomeIcon className='text-danger' icon={faCircleCheck}/>
+                            </button>
+                            <button className="btn me-1" title="Rechazar" onClick={() => onDenyUser( item )}>
+                                <FontAwesomeIcon className='text-danger' icon={faCircleXmark}/>
+                            </button>
+                        </>
+                        : item.estado == 'A' 
+                            ?
+                                <button className="btn me-1" title="Rechazar" onClick={() => onDenyUser( item )}>
+                                    <FontAwesomeIcon className='text-danger' icon={faCircleXmark}/>
+                                </button>
+                            :
+                                <button className="btn me-1" title="Aprobar" onClick={() => onApproveUser( item )}>
+                                    <FontAwesomeIcon className='text-danger' icon={faCircleCheck}/>
+                                </button> 
+                    }
+                </>
+            ),
+        },
+    ];
+    
+    
     const onApproveUser = ( user ) => {
         const MySwal = withReactContent(Swal)
         MySwal.fire({
@@ -62,12 +134,34 @@ export const UsuariosComponent = () => {
         })
     }
 
-    const onList = async () => {
-        setUsuarios( await ( getAll()) || [] )
+    const onList = async (page) => {
+        setLoading(true);
+        setPage( page );
+
+        const data = await paginate(page, perPage);
+
+        setUsuarios( data.usuarios )
+        setTotalRows(data.total);
+		setLoading(false);
     }
 
+    const handlePageChange = (page) => {
+    	onList(page);
+    };
+
+    const handlePerRowsChange = async (newPerPage, page) => {
+    	setLoading(true);
+        setPage( page );
+
+    	const data = await getAll(page, newPerPage);
+
+        setUsuarios( data.usuarios )
+    	setPerPage(newPerPage);
+    	setLoading(false);
+    };
+
     useEffect(() => {
-        onList()
+        onList(page)
     }, [])
 
     return (
@@ -77,67 +171,19 @@ export const UsuariosComponent = () => {
             
             <Breadcrumb items={breadcrumb} />
 
-            <table className="table table-bordered table-striped table-hovered table-condensed">
-                <thead>
-                    <tr>
-                        <th> # </th>
-                        <th> Rol </th>
-                        <th> Usuario </th>
-                        <th> Correo </th>
-                        <th> Estado </th>
-                        <th> Acciones </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        usuarios?.map( (item, key) => {
-                            return (
-                                <tr key={key}>
-                                    <td> {key + 1} </td>
-                                    <td> { item.rol } </td>
-                                    <td> { item.name } </td>
-                                    <td> { item.email } </td>
-                                    <td> 
-                                        { item.estado == 'A' 
-                                            ? 'Aprobado' 
-                                            : item.estado == 'P' 
-                                                ? 'Pendiente' 
-                                                : 'Rechazado'
-                                        } 
-                                    </td>
-                                    <td>
-                                        <Link className="btn me-1" to={`detalle/${item.id}`}>
-                                            <FontAwesomeIcon className='text-danger' icon={faMagnifyingGlass} />
-                                        </Link>
-                                        {
-                                            item.estado === 'P'
-                                            ? 
-                                            <>
-                                                <button className="btn me-1" title="Aprobar" onClick={() => onApproveUser( item )}>
-                                                    <FontAwesomeIcon className='text-danger' icon={faCircleCheck}/>
-                                                </button>
-                                                <button className="btn me-1" title="Rechazar" onClick={() => onDenyUser( item )}>
-                                                    <FontAwesomeIcon className='text-danger' icon={faCircleXmark}/>
-                                                </button>
-                                            </>
-                                            : item.estado == 'A' 
-                                                ?
-                                                    <button className="btn me-1" title="Rechazar" onClick={() => onDenyUser( item )}>
-                                                        <FontAwesomeIcon className='text-danger' icon={faCircleXmark}/>
-                                                    </button>
-                                                :
-                                                    <button className="btn me-1" title="Aprobar" onClick={() => onApproveUser( item )}>
-                                                        <FontAwesomeIcon className='text-danger' icon={faCircleCheck}/>
-                                                    </button> 
-                                        }
-                                    </td>
-                                </tr>
-                            )
-                        })
-                        
-                    }
-                </tbody>
-            </table>
+            <DataTable
+                columns={columns}
+                data={usuarios}
+                progressPending={loading}
+                pagination
+                paginationServer
+                paginationTotalRows={totalRows}
+                onChangeRowsPerPage={handlePerRowsChange}
+                onChangePage={handlePageChange}
+                highlightOnHover
+                className='data-table'
+            />
+
         </div>
     )
 }

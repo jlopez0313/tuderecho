@@ -2,11 +2,21 @@ import { backendApi } from "@/api/backendApi"
 
 const modulo = 'usuarios/'
 
+export const paginate = async (page, perPage) => {
+    const response = await backendApi.get(modulo + `paginate?page=${page}&limit=${perPage}`)
+
+    if ( response ) {
+        return response.data;
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 export const all = async () => {
     const response = await backendApi.get(modulo)
 
     if ( response ) {
-        return response.data.usuarios.sort( (a, b) => a.name > b.name ? 1: -1  );
+        return response.data.usuarios;
     } else {
         return Promise.resolve(false);
     }
