@@ -31,7 +31,9 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
             <div className='bg-danger py-1 px-3'>
                 <FontAwesomeIcon icon={faClose} className='position-absolute top-1 end-3 cursor-pointer text-white' onClick={() => onToggleClass()} />
                 <div className={`text-white w-100 text-center ${styles.top} d-flex align-items-center`}>
-                    <img src={user?.perfil?.photo || Avatar} alt="" className={`${styles.avatar} me-3`}/>
+                    <div>
+                        <img src={user?.perfil?.photo || Avatar} alt="" className={`${styles.avatar} me-3`}/>
+                    </div>
                     <span className='w-100'> { user?.name } </span>
                 </div>
             </div>

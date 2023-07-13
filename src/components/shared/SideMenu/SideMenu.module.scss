@@ -6,10 +6,18 @@
         /*background-repeat: no-repeat;*/
         height: 90px;
 
-        .avatar {
-            width: 68px;
-            height: 68px;
+        div {
             border-radius: 50%;
+            height: 68px;
+            width: 84px;
+            text-align: center;
+            /* background: green; */
+            overflow: hidden;
+            border: 1px solid;
+        
+            .avatar {
+                height: 100%;
+            }
         }
     }
 
