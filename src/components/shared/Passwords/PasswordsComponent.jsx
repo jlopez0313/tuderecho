@@ -5,16 +5,21 @@ import { Header } from "@/components/shared/Header/Header"
 import { useSelector } from 'react-redux';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import bcrypt from 'bcryptjs'
 
 import { useTranslation } from 'react-i18next';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 export const PasswordsComponent = () => {
 
     const { t } = useTranslation();
 
-    // const [perfil, setPerfil] = useState({ tags: [] });
+    const [hideP1, setHideP1] = useState( false );
+    const [hideP2, setHideP2] = useState( false );
+    const [hideP3, setHideP3] = useState( false );
+
     const { user } = useSelector( (state) => state.user );
 
     const formData = {
@@ -35,9 +40,7 @@ export const PasswordsComponent = () => {
     const onDoSubmit= ( evt ) => {
         evt.preventDefault();
         
-        const passwowrdValid = bcrypt.compareSync(formState.password, user.password)
-
-        if( !passwowrdValid || formState.password1 !== formState.password2 ) {
+        if( formState.password1 !== formState.password2 ) {
             notify( t('passwords.alerts.error-passwords'), 'error')
         } else {
             passwords( formState )
@@ -67,40 +70,55 @@ export const PasswordsComponent = () => {
                 <div className="card p-3 my-4">
                     <div className="row">
                         <div className="col-sm-12">
-                            <div className="form-floating mb-2">
-                                <input
-                                    type="password"
-                                    required
-                                    placeholder={ t('passwords.form.current-placeholder') }
-                                    className="form-control"
-                                    name='password'
-                                    onChange={onInputChange}
-                                />
-                                <label htmlFor="staticEmail"> { t('passwords.form.current') } *:</label>
+                            <div className="mb-3">
+                                <label htmlFor="staticEmail" className='form-label'> { t('passwords.form.current') } *:</label>
+                                <div className="input-group">
+                                    <input
+                                        type={ hideP1 ? "text" : "password"}
+                                        required
+                                        placeholder={ t('passwords.form.current-placeholder') }
+                                        className="form-control"
+                                        name='password'
+                                        onChange={onInputChange}
+                                    />
+                                    <div className="input-group-text"  onClick={() => { setHideP1( !hideP1 ) }} >
+                                        <FontAwesomeIcon icon={ hideP1 ? faEyeSlash : faEye }/>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="form-floating mb-2">
-                                <input
-                                    type="password"
-                                    placeholder={ t('passwords.form.new-placeholder') }
-                                    required
-                                    className="form-control"
-                                    name='password1'
-                                    onChange={onInputChange}
-                                    onCopy={(e) => e.preventDefault()}
-                                />
-                                <label htmlFor="staticEmail"> { t('passwords.form.new') } *:</label>
+                            <div className="mb-3">
+                                <label htmlFor="staticEmail" className='form-label'> { t('passwords.form.new') } *:</label>
+                                <div className="input-group">
+                                    <input
+                                        type={ hideP2 ? "text" : "password"}
+                                        placeholder={ t('passwords.form.new-placeholder') }
+                                        required
+                                        className="form-control"
+                                        name='password1'
+                                        onChange={onInputChange}
+                                        onCopy={(e) => e.preventDefault()}
+                                    />
+                                    <div className="input-group-text"  onClick={() => { setHideP2( !hideP2 ) }} >
+                                        <FontAwesomeIcon icon={ hideP2 ? faEyeSlash : faEye }/>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="form-floating mb-2">
-                                <input
-                                    type="password"
-                                    required
-                                    placeholder={ t('passwords.form.repeat-placeholder') }
-                                    className="form-control"
-                                    name='password2'
-                                    onChange={onInputChange}
-                                    onPaste={(e) => e.preventDefault()}
-                                />
-                                <label htmlFor="staticEmail">{ t('passwords.form.repeat') } *:</label>
+                            <div className="mb-3">
+                                <label htmlFor="staticEmail" className='form-label'> { t('passwords.form.repeat') } *:</label>
+                                <div className="input-group">
+                                    <input
+                                        type={ hideP3 ? "text" : "password"}
+                                        required
+                                        placeholder={ t('passwords.form.repeat-placeholder') }
+                                        className="form-control"
+                                        name='password2'
+                                        onChange={onInputChange}
+                                        onPaste={(e) => e.preventDefault()}
+                                    />
+                                    <div className="input-group-text"  onClick={() => { setHideP3( !hideP3 ) }} >
+                                        <FontAwesomeIcon icon={ hideP3 ? faEyeSlash : faEye }/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

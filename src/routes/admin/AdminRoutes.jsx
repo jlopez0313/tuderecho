@@ -10,6 +10,7 @@ import { NotFound } from '@/pages/Errors/NotFound';
 import { Detalle } from '@/pages/Admin/Usuarios/Detalle';
 import { Passwords } from '@/pages/Admin/Passwords/Passwords';
 import { Bolsa } from '@/pages/Admin/Bolsa/Bolsa';
+import { MiBolsa } from '@/pages/Admin/Bolsa/MiBolsa';
 
 export const AdminRoutes = () => {
   return (
@@ -39,6 +40,7 @@ export const AdminRoutes = () => {
             <Route path=':id' element={ <FormEspecialidades /> } />
           </Route>
         </Route>
+        <Route path='bolsa' element={ <MiBolsa /> } />
         <Route path='passwords' element={ <Passwords /> } />
         <Route path="*" element={ <NotFound />} />
     </Routes>

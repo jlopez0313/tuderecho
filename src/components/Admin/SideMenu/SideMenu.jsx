@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUsers, faTags, faSuitcase, faRightFromBracket, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTags, faSuitcase, faRightFromBracket, faKey, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -60,6 +60,11 @@ export const SideMenu = () => {
                                 <Link to='/admin/passwords'>
                                     <FontAwesomeIcon icon={faKey} />
                                     Contraseñas
+                                </Link>
+
+                                <Link to='/admin/bolsa'>
+                                    <FontAwesomeIcon icon={faSackDollar} />
+                                    Mi Bolsa
                                 </Link>
                                 
                                 <Nav.Item>

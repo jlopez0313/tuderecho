@@ -16,11 +16,12 @@ import { Loader } from '@/components/shared/Loader/Loader';
 
 export const Main = ({ comunidad = '' }) => {
 
-    const limit = 2;
+    const limit = 10;
     const { t } = useTranslation();
 
     const { user } = useSelector( state => state.user )
     
+    const [idx, setIdx] = useState(0);
     const [modalShow, setModalShow] = useState(false);
     const [showModalComments, setShowModalComments] = useState(false);
     const [showModalShare, setShowModalShare] = useState(false);
@@ -31,10 +32,9 @@ export const Main = ({ comunidad = '' }) => {
     
 
     const onGetList = async () => {
-        console.log('object');
         setIsLoading( true )
 
-        const lista = await list({ comunidad }, page, limit)
+        const lista = await list({ comunidad }, 1, limit)
         setLista( lista )
         
         if ( lista.length < limit ) {
@@ -56,6 +56,7 @@ export const Main = ({ comunidad = '' }) => {
     }
 
     const onComentar = async ( idx ) => {
+        setIdx( idx )
         setShowModalComments( true )
     }
 
@@ -69,8 +70,9 @@ export const Main = ({ comunidad = '' }) => {
         setLista( tmpList )
     }
 
-    const onRefreshPublis = (doRefresh) => {
+    const onRefreshPublis = async (doRefresh) => {
         if (doRefresh) {
+            await setPage(1)
             onGetList()
         }
 
@@ -84,20 +86,20 @@ export const Main = ({ comunidad = '' }) => {
     }
 
     const onHideShare = (doRefresh) => {
+
         onRefreshPublis(doRefresh)
         setShowModalComments(false)
         setShowModalShare(false)
     }
 
-/*
-
+    
     const onSetPubli = (publi) => {
-        const idx = lista.findIndex( item => item.id === publi.id );
         const posts = [...lista ]
         posts.splice(idx, 1, publi);
         setLista(posts)
     }
-
+    
+/*
     useEffect( () => {
         onSetPubli( post )
     }, [post])
@@ -139,7 +141,7 @@ export const Main = ({ comunidad = '' }) => {
                                         key={key}
                                         post={post}
                                         idx={key}
-                                        onComentar={() => onComentar()}
+                                        onComentar={() => onComentar(key)}
                                         onSharing={() => onSharing()}
                                         onRemovePubli={(idx) => onRemovePubli(idx)}
                                     />
@@ -156,9 +158,11 @@ export const Main = ({ comunidad = '' }) => {
                 />
 
                 <ComentariosModal
+                    idx={idx}
                     title={ t('comentarios.title') }
                     modalShow={showModalComments}
                     onHide={(refresh = false) => onHideModal( refresh )}
+                    onSetPubli={(publi) => onSetPubli( publi )}
                 />
  
                 <PostModal

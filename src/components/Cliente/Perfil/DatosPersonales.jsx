@@ -55,7 +55,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             required
                             className="form-select"
                             name='perfil'
-                            value={formState.perfil?.tipoDoc}
+                            value={formState.perfil?.tipoDoc || ''}
                             onChange={(evt) => onInputChange(evt, 'tipoDoc')}
                             id="floatingSelect"
                         >
@@ -75,7 +75,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             required
                             className="form-control"
                             name='perfil'
-                            defaultValue={formState.perfil?.identificacion}
+                            defaultValue={formState.perfil?.identificacion || ''}
                             onChange={(evt) => onInputChange(evt, 'identificacion')}
                         />
                         <label htmlFor="staticEmail"> { t('profile.form.id') } *</label>
@@ -97,7 +97,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             required
                             defaultOptionLabel={ t('profile.form.chose') }
                             classes="form-control"
-                            value={formState.perfil?.pais}
+                            value={formState.perfil?.pais || ''}
                             onChange={(val) => selectCountry(val)} />
                         <label htmlFor="staticEmail"> { t('profile.form.country') } *</label>
                     </div>
@@ -111,8 +111,8 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                                 required
                                 defaultOptionLabel={ t('profile.form.chose') }
                                 className="form-control"
-                                country={ formState.perfil?.pais }
-                                value={ formState.perfil?.region }
+                                country={ formState.perfil?.pais  || ''}
+                                value={ formState.perfil?.region  || ''}
                                 onChange={(val) => selectRegion(val)} />
                             <label htmlFor="staticEmail"> { t('profile.form.region') } *</label>
                     </div>
@@ -126,7 +126,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                             className="form-control"
                             placeholder={ t('profile.form.city-placeholder') }
                             name="perfil"
-                            defaultValue={formState.perfil?.ciudad}
+                            defaultValue={formState.perfil?.ciudad || ''}
                             onChange={(evt) => onInputChange(evt, 'ciudad')}
                         />
                         <label htmlFor="staticEmail">{ t('profile.form.city') } *</label>
@@ -148,7 +148,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                         required
                         className="form-control"
                         name="perfil"
-                        defaultValue={formState.perfil?.telefono}
+                        defaultValue={formState.perfil?.telefono || ''}
                         onChange={(evt) => onInputChange(evt, 'telefono')}
                     />
                     <label htmlFor="staticEmail"> { t('profile.form.phone') } *</label>
@@ -162,7 +162,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                     required
                     name='perfil'
                     onChange={(evt) => onInputChange(evt, 'biografia')}
-                    value={formState.perfil?.biografia}
+                    value={formState.perfil?.biografia || ''}
                 ></textarea>
                 <label htmlFor="staticEmail"> { t('profile.form.biography') } *</label>
             </div>
@@ -176,7 +176,7 @@ export const DatosPersonales = ({ formState, onInputChange, onRadioChange }) => 
                         name="perfil"
                         onChange={(evt) => onRadioChange(evt, 'cuenta')}
                         value='I'
-                        checked={ formState.perfil?.cuenta === 'I' }
+                        checked={ formState.perfil && formState.perfil.cuenta === 'I' }
                     />
                     <label className="form-check-label ms-2" htmlFor="flexSwitchCheckDefault">  { t('profile.form.inactive') }</label>
                 </div>

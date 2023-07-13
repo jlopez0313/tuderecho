@@ -17,6 +17,9 @@ import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 import { format, render, cancel, register } from 'timeago.js';
 import { localeFunc } from '@/helpers/timeAgo';
 
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+
 import { useTranslation } from 'react-i18next';
 
 export const Comentario = memo( ( { item, ...props } ) => {
@@ -57,14 +60,27 @@ export const Comentario = memo( ( { item, ...props } ) => {
     }
 
     const onRemoveComment = async (id) => {
-        const publi = await remove( id, formState );
-        if ( publi ) {
-            notify( t('comentarios.alerts.removed'), 'success');
-            setPublicacion( publi )
-            onComentar( false )
-        } else {
-            notify( t('comentarios.alerts.error'), 'error')
-        }
+
+        const MySwal = withReactContent(Swal)
+        MySwal.fire({
+            icon: 'question',
+            confirmButtonColor: 'red',
+            text: t('comentarios.alerts.sure'),
+            showCancelButton: true,
+        }).then( async ({isConfirmed}) => {
+            if ( isConfirmed ) {
+                const publi = await remove( id, formState );
+                if ( publi ) {
+                    notify( t('comentarios.alerts.removed'), 'success');
+                    setPublicacion( publi )
+                    onComentar( false )
+                } else {
+                    notify( t('comentarios.alerts.error'), 'error')
+                }
+            }
+        })
+
+        
     }
 
     const onSendcomment = async (evt) => {
@@ -141,7 +157,7 @@ export const Comentario = memo( ( { item, ...props } ) => {
                                 ? <FontAwesomeIcon icon={myLike} className='ms-1 me-2' /> 
                                 : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-2' />
                             }
-                            { t('psots.likes') }
+                            { t('posts.like') }
                         </small>
                         
                         <small 

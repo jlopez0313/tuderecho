@@ -19,12 +19,12 @@ export const List = forwardRef(
                 <Popover.Body className={styles.popperBody}>
                     
                 <div className={`overflow-auto h-95 pe-2 ps-3 mt-2 ${styles.list}`}>
-                    {
+                    {/*
                         [1,1,1,1,1,1].map( (item, key)=> {
 
                             return <Contacto key={key} item={item} />
                         })
-                    }
+                    */}
                 </div>
                     
                 </Popover.Body>

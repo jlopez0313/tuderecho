@@ -78,7 +78,7 @@ export const Contactos = () => {
 
       <div className={`border rounded shadow-sm bg-white overflow-hidden ${shared.container}`}>
         
-        <div className={`overflow-auto h-95 pe-2 ps-3 mt-2 ${shared.list}`}>
+        <div className={`overflow-auto pe-2 ps-3 mt-2 ${shared.list}`}>
           {
             onlineUsers.value.map( (usuario, key)=> {
                 return <Contacto key={key} usuario={usuario} onAddChat={onAddChat} />

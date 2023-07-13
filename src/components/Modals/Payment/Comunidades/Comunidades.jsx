@@ -121,7 +121,9 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit'> { t('comunidades.form.pay') } </Button>
+                        <Button className='w-100 m-0' type='submit'> { 
+                            item.gratis === 'S' ? t('comunidades.form.subscribe') : t('comunidades.form.pay')
+                        } </Button>
                     </Modal.Footer>
 
                 </form>

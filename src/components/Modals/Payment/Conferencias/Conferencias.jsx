@@ -123,7 +123,9 @@ export const ConferenciasModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit'> { t('conferencias.form.pay') } </Button>
+                        <Button className='w-100 m-0' type='submit'> { 
+                            item.gratis === 'S' ? t('conferencias.form.subscribe') : t('conferencias.form.pay')
+                        } </Button>
                     </Modal.Footer>
                 </form>
             </Modal>        

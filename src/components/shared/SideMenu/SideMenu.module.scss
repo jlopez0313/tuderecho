@@ -1,4 +1,4 @@
-.side-menu-abogado {
+.sideMenuAbogado {
     
     .top {
         // background: url('/assets/images/abogado/shared/side-menu/top-background.png');
@@ -12,16 +12,20 @@
             border-radius: 50%;
         }
     }
-    
-    ul {
-        list-style: none;
-        margin-bottom: 0;
+
+    .menu {
         overflow: auto;
-        
-        li {
-            a {
-                text-decoration: none;
+
+        ul {
+            list-style: none;
+            margin-bottom: 0;
+            
+            li {
+                a {
+                    text-decoration: none;
+                }
             }
         }
     }
+    
 }

@@ -15,6 +15,9 @@ import { setRefresh } from '@/store/videoteca/VideotecaSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Loader } from '@/components/shared/Loader/Loader';
 
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+
 import { useTranslation } from 'react-i18next';
 
 export const Videoteca = () => {
@@ -67,13 +70,23 @@ export const Videoteca = () => {
     }
 
     const onRemove = ( id ) => {
-        remove( id )
-        .then( () => {
-            onGetList();
-            notify( t('videoteca.alerts.removed'), 'success')
-        })
-        .catch( error => {
-            notify( t('videoteca.alerts.error'), 'error')
+        const MySwal = withReactContent(Swal)
+        MySwal.fire({
+            icon: 'question',
+            confirmButtonColor: 'red',
+            text: t('videoteca.alerts.sure'),
+            showCancelButton: true,
+        }).then( ({isConfirmed}) => {
+            if ( isConfirmed ) {
+                remove( id )
+                .then( () => {
+                    onGetList();
+                    notify( t('videoteca.alerts.removed'), 'success')
+                })
+                .catch( error => {
+                    notify( t('videoteca.alerts.error'), 'error')
+                })
+            }
         })
     }
 
@@ -109,7 +122,7 @@ export const Videoteca = () => {
                     <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
-                <div id="divVideoteca" className={`overflow-auto h-75 pe-2 ps-3 mt-2 ${styles.list}`}>
+                <div id="divVideoteca" className={`overflow-auto pe-2 ps-3 mt-2 ${styles.list}`}>
                     {
                         isLoading ? <Loader />
                         :

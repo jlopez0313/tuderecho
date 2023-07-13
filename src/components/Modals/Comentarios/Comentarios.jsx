@@ -68,6 +68,7 @@ export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
                 onSetFormState(initFormData)
                 // onAddChild( publicacion, saved )
                 setPublicacion( saved )
+                props.onSetPubli( saved );
             } else {
                 notify( t('comentarios.alerts.error'), 'error')
             }

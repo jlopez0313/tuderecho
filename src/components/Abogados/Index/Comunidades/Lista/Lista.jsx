@@ -38,9 +38,9 @@ export const Lista = memo( ({ uid }) => {
         let lista = []
         
         if (uid) {
-            lista = await myList( '', page, limit )
+            lista = await myList( '', 1, limit )
         } else {
-            lista = await list( '', page, limit )
+            lista = await list( '', 1, limit )
         }
 
         setLista( lista )

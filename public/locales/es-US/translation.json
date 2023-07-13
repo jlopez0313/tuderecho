@@ -51,7 +51,8 @@
         "alerts": {
             "error": "Comment onRemove: Internal Error",
             "removed": "Comentario removido",
-            "saved": "Comentario guardado"
+            "saved": "Comentario guardado",
+            "sure": "Estas seguro?"
         }
     },
 
@@ -66,6 +67,7 @@
         "form" : {
             "cover": "Pago",
             "pay": "Pagar",
+            "subscribe": "Subscribirme",
             "price": "Precio",
             "price-placeholder": "Ej: $50 USD",
             "title": "Título",
@@ -77,7 +79,8 @@
             "error": "Community onRemove: Internal Error",
             "paid": "Suscripción Registrada",
             "removed": "Comunidad removida",
-            "saved": "Comunidad guardada"
+            "saved": "Comunidad guardada",
+            "sure": "Estas seguro?"
         }
     },
 
@@ -100,6 +103,7 @@
             "expositor": "Expositor",
             "expositor-placeholder": "Ex: Juan Perez",
             "pay": "Pagar",
+            "subscribe": "Subscribirme",
             "price": "Precio",
             "price-placeholder": "Ex: $50 USD",
             "title": "Título",
@@ -111,7 +115,8 @@
             "error": "Conference onRemove: Internal Error",
             "paid": "Suscripción Registrada",
             "removed": "Conferencia removida",
-            "saved": "Conferencia guardada"
+            "saved": "Conferencia guardada",
+            "sure": "Estas seguro?"
         }
     },
 
@@ -173,7 +178,8 @@
         "alerts": {
             "error": "Passwords internal error",
             "error-passwords": "Tu contraseña es incorrecta",
-            "saved": "Contraseña modificada"
+            "saved": "Contraseña modificada",
+            "sure": "Estas seguro?"
         }
     },
 
@@ -191,7 +197,8 @@
         "alerts": {
             "error": "Post onRemove: Internal Error",
             "removed": "Post removido",
-            "saved": "Post guardado"
+            "saved": "Post guardado",
+            "sure": "Estas seguro?"
         }
     },
 
@@ -226,7 +233,8 @@
         "alerts": {
             "error": "Proflie onRemove: Internal Error",
             "error-image": "no se pudo cargar la imágen",
-            "updated": "Perfil actualizado"
+            "updated": "Perfil actualizado",
+            "sure": "Estas seguro?"
         }
     },
 
@@ -243,7 +251,7 @@
             "password": "Contraseña",
             "password-placeholder": "******",
             "remove": "Remover",
-            "save": "Gaurdar"
+            "save": "Guardar"
         }
     },
 
@@ -291,6 +299,7 @@
             "expositor-placeholder": "Ex: Juan Pérez",
             "free": "Gratis",
             "pay": "Pagar",
+            "subscribe": "Subscribirme",
             "price": "Precio",
             "price-placeholder": "Ej: $50 USD",
             "title": "Título",
@@ -303,7 +312,8 @@
             "error": "Videoteca onRemove: Internal Error",
             "paid": "Suscripción Registrada",
             "removed": "Videoteca removida",
-            "saved": "Videoteca guardada"
+            "saved": "Videoteca guardada",
+            "sure": "Estas seguro?"
         }
     }
 }

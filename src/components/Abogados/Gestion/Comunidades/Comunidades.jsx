@@ -11,6 +11,9 @@ import Breadcrumb from '@/components/shared/Breadcrumb';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Loader } from '@/components/shared/Loader/Loader';
 
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+
 import { useTranslation } from 'react-i18next';
 
 export const ComunidadesComponent = () => {
@@ -71,14 +74,24 @@ export const ComunidadesComponent = () => {
     }
 
     const onRemove = ( id ) => {
-        remove( id )
-        .then( () => {
-            onGetList();
-            notify( t('comunidades.alerts.removed'), 'success')
-        })
-        .catch( error => {
-            notify( t('comunidades.alerts.error'), 'error')
-        })
+        const MySwal = withReactContent(Swal)
+    MySwal.fire({
+        icon: 'question',
+        confirmButtonColor: 'red',
+        text: t('comunidades.alerts.sure'),
+        showCancelButton: true,
+    }).then( ({isConfirmed}) => {
+        if ( isConfirmed ) {
+            remove( id )
+            .then( () => {
+                onGetList();
+                notify( t('comunidades.alerts.removed'), 'success')
+            })
+            .catch( error => {
+                notify( t('comunidades.alerts.error'), 'error')
+            })
+        }
+    })
     }
 
     const doSetSearch = (evt) => {

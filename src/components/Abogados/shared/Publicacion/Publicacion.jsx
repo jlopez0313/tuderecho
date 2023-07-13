@@ -16,6 +16,9 @@ import { notify } from '@/helpers/helpers'
 import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
 import { Videoteca } from '@/components/Abogados/shared/Videoteca/Videoteca';
 
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+
 import { useTranslation } from 'react-i18next';
 
 export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onSharing, showActions = true, ...props} ) => {
@@ -36,13 +39,23 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
     }
 
     const doRemovePubli = async ( id ) => {
-        remove( id )
-        .then( () => {
-            onRemovePubli ( idx );
-            notify( t('posts.alerts.removed'), 'success')
-        })
-        .catch( error => {
-            notify( t('posts.alerts.error'), 'error')
+        const MySwal = withReactContent(Swal)
+        MySwal.fire({
+            icon: 'question',
+            confirmButtonColor: 'red',
+            text: t('posts.alerts.sure'),
+            showCancelButton: true,
+        }).then( ({isConfirmed}) => {
+            if ( isConfirmed ) {
+                remove( id )
+                .then( () => {
+                    onRemovePubli ( idx );
+                    notify( t('posts.alerts.removed'), 'success')
+                })
+                .catch( error => {
+                    notify( t('posts.alerts.error'), 'error')
+                })
+            }
         })
     }
 
@@ -127,8 +140,10 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                     </div>
                     : publi.hasOwnProperty('post')
                         ? 
-                            `<b>This content isn't available right now</b>
-                            When this happens, it's usually because the owner only shared it with a small group of people, changed who can see it or it's been deleted.`
+                        <div className='border p-3 rounded'>
+                            <b>This content isn't available right now</b> <br />
+                            When this happens, it's usually because the owner only shared it with a small group of people, changed who can see it or it's been deleted.
+                        </div>
                         : null
                 }
                 

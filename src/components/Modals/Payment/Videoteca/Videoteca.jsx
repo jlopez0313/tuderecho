@@ -123,7 +123,9 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit'> { t('videoteca.form.pay') } </Button>
+                        <Button className='w-100 m-0' type='submit'> { 
+                            item.gratis === 'S' ? t('videoteca.form.subscribe') : t('videoteca.form.pay')
+                        } </Button>
                     </Modal.Footer>
                 </form>
             </Modal>        

@@ -51,7 +51,8 @@
         "alerts": {
             "error": "Comment onRemove: Internal Error",
             "removed": "Comment removed",
-            "saved": "Comment saved"
+            "saved": "Comment saved",
+            "sure": "Are you sure?"
         }
     },
 
@@ -66,6 +67,7 @@
         "form" : {
             "cover": "Cover",
             "pay": "Pay",
+            "subscribe": "Subscribe",
             "price": "Suscription Price",
             "price-placeholder": "Ex: $50 USD",
             "title": "Title",
@@ -77,7 +79,8 @@
             "error": "Community onRemove: Internal Error",
             "paid": "Suscription Registered",
             "removed": "Community removed",
-            "saved": "Community saved"
+            "saved": "Community saved",
+            "sure": "Are you sure?"
         }
     },
 
@@ -100,6 +103,7 @@
             "expositor": "Expositor",
             "expositor-placeholder": "Ex: Jhon Doe",
             "pay": "Pay",
+            "subscribe": "Subscribe",
             "price": "Suscription Price",
             "price-placeholder": "Ex: $50 USD",
             "title": "Title",
@@ -111,7 +115,8 @@
             "error": "Conference onRemove: Internal Error",
             "paid": "Suscription Registered",
             "removed": "Conference removed",
-            "saved": "Conference saved"
+            "saved": "Conference saved",
+            "sure": "Are you sure?"
         }
     },
 
@@ -173,7 +178,8 @@
         "alerts": {
             "error": "Passwords internal error",
             "error-passwords": "Your password is incorrect",
-            "saved": "Password updated"
+            "saved": "Password updated",
+            "sure": "Are you sure?"
         }
     },
 
@@ -191,7 +197,8 @@
         "alerts": {
             "error": "Post onRemove: Internal Error",
             "removed": "Post removed",
-            "saved": "Post saved"
+            "saved": "Post saved",
+            "sure": "Are you sure?"
         }
     },
 
@@ -303,7 +310,8 @@
             "error": "Videoteca onRemove: Internal Error",
             "paid": "Suscription Registered",
             "removed": "Videoteca removed",
-            "saved": "Videoteca saved"
+            "saved": "Videoteca saved",
+            "sure": "Are you sure?"
         }
     }
 }
