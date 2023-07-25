@@ -199,6 +199,10 @@
             "removed": "Post removido",
             "saved": "Post guardado",
             "sure": "Estas seguro?"
+        },
+        "unavailable": {
+            "title": "Este contenido no se encuentra disponible",
+            "message": "Esto usualmente sucede porque el usuario comparte el contenido con un limitado grupo de personas o porque el contenido ha sido eliminado."
         }
     },
 

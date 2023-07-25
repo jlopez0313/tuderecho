@@ -141,8 +141,8 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                     : publi.hasOwnProperty('post')
                         ? 
                         <div className='border p-3 rounded'>
-                            <b>This content isn't available right now</b> <br />
-                            When this happens, it's usually because the owner only shared it with a small group of people, changed who can see it or it's been deleted.
+                            <b>{ t('posts.unavailable.title') }</b> <br />
+                            { t('posts.unavailable.message') }
                         </div>
                         : null
                 }
