@@ -13,6 +13,8 @@ import { getYoutubeId } from '@/helpers/helpers'
 import { useTranslation } from 'react-i18next';
 import { numberFormat } from '@/helpers/numbers';
 
+import Vimeo from '@u-wave/react-vimeo';
+
 export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) => {
     
     const { t } = useTranslation();
@@ -38,9 +40,10 @@ export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) 
         <div>
             <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
-                <div className={`rounded ${style.imgContent}`}
-                    style={{ backgroundImage: `url(http://img.youtube.com/vi/${videoId}/0.jpg)`}}
-                >
+                <div className={`rounded ${style.imgContent}`}>
+                    <Vimeo
+                        video={item.video}
+                    />
                 </div>
 
                 <Card.Body>

@@ -5,15 +5,20 @@ import '../MyModal.scss'
 import { decodeToken } from "react-jwt";
 import { notify, getYoutubeId } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
+import { useVimeo } from '@/hooks/useVimeo';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Videoteca.module.scss'
 import { create, update } from '@/services/Videoteca';
 
 import { useTranslation } from 'react-i18next';
 
+import Vimeo from '@u-wave/react-vimeo';
+
+
 export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const { t } = useTranslation();
+    const { upload } = useVimeo();
 
     const initFormData = {
         titulo: '',
@@ -45,41 +50,45 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     }
 
-    const onDoSubmit = (evt) => {
+    const onDoSubmit = async (evt) => {
         evt.preventDefault();
 
-        const token = localStorage.getItem('token') || '';
-        const { uid } = decodeToken(token);
-
-        const obj = {
-            ...formState,
-            user: uid,
-        }
-
-        let action = null;
-        if (item.id) {
-            action = update( item.id, obj )
-        } else {
-            action = create( obj )
-        }
-
-        action
-        .then( () => {
-            notify( t('posts.alerts.saved'), 'success');
-            onSetFormState(initFormData)
-            doHide( true );
-        })
-        .catch( error => {
+        upload(videoUrl, formState.titulo)
+        .then( carga => {
+            const token = localStorage.getItem('token') || '';
+            const { uid } = decodeToken(token);
+    
+            const obj = {
+                ...formState,
+                video: carga.id,
+                user: uid,
+            }
+    
+            let action = null;
+            if (item.id) {
+                action = update( item.id, obj )
+            } else {
+                action = create( obj )
+            }
+    
+            action
+            .then( () => {
+                notify( t('posts.alerts.saved'), 'success');
+                onSetFormState(initFormData)
+                doHide( true );
+            })
+            .catch( error => {
+                notify( t('posts.alerts.error'), 'error')
+            })
+        }).catch( error => {
             notify( t('posts.alerts.error'), 'error')
         })
     }
 
     const onGetYoutubeId = async (evt) => {
-        setVideoUrl(evt.target.value);
 
-        const ID = getYoutubeId( evt.target.value )
-        const event = {target: { name: 'video', value: ID } }
-        onInputChange( event )
+        console.log( evt.target.files );
+        setVideoUrl(evt.target.files[0]);
     }
 
     useEffect(() => {
@@ -132,15 +141,14 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                 <label htmlFor="especialidad">{ t('videoteca.form.expositor') } *</label>
                             </div>
 
-                            <div className="form-floating mb-3">
+                            <div className="mb-3">
                                 <input
+                                    type="file"
                                     required
                                     className='form-control'
                                     placeholder='Ej: https://www.youtube.com/watch?v=3082r1-0DXc'
                                     onChange={onGetYoutubeId}
-                                    value={videoUrl}
                                 />
-                                <label htmlFor="especialidad">{ t('videoteca.form.url') } *</label>
                             </div>
 
                             <div className="d-flex justify-content-evenly mb-3">
@@ -174,18 +182,19 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                             {
                                 formState.video 
                                 ?
-                                    <img src={`http://img.youtube.com/vi/${formState.video}/0.jpg`} alt='' className={style.archivo}/>
+                                    <Vimeo
+                                        video={formState.video}
+                                        className={style.archivo}
+                                    />
                                 :
-                                    <div className="alert alert-danger">
-                                        { t('videoteca.form.video-empty') }
-                                    </div>
+                                    null
                             }
 
 
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit' disabled={!formState.video}> { t('save') } </Button>
+                        <Button className='w-100 m-0' type='submit' disabled={!videoUrl}> { t('save') } </Button>
                     </Modal.Footer>
                 </form>
             </Modal>        
