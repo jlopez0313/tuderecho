@@ -104,6 +104,9 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
       setComment('');
       setGif('');
       setMedias([])
+      setPreviews([])
+      setPublicacion( null );
+
       notify( t('posts.alerts.saved'), 'success')
       doHide( true );
     } else {
