@@ -13,10 +13,10 @@ export const Slider = () => {
             <h2 className='w-sm-25 d-block text-white title'>
               { t('home.slider.title') }
             </h2>
-            <span className='d-block mb-5 subtitle'>
+            <span className='d-block mb-4 subtitle'>
               { t('home.slider.description') }
             </span>
-            <button className='btn btn-primary'> { t('home.slider.start') } </button>
+            <button className='w-25 btn btn-primary'> { t('home.slider.start') } </button>
         </div>
     </div>
   )

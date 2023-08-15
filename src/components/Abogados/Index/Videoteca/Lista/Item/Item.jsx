@@ -37,11 +37,14 @@ export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) 
     }, [item])
     
     return (
-        <div>
-            <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
+        <>
+            <Card className={`d-flex h-95 flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
                 <div className={`rounded ${style.imgContent}`}>
                     <Vimeo
+                        width='310'
+                        showByline={false}
+                        showTitle={false}
                         video={item.video}
                     />
                 </div>
@@ -106,6 +109,6 @@ export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) 
                 modalShow={paymentModal}
                 onHide={(refresh = false) => onDoRefresh( refresh )}
             />
-        </div>
+        </>
     )
 })

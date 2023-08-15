@@ -22,7 +22,8 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const [show, setShow] = useState( true );
     const [file, setFile] = useState( null );
-    
+    const [isLoading, setIsLoading] = useState( false );
+
     const initFormData = {
         titulo: '',
         fecha:'',
@@ -83,13 +84,16 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
             action = create( obj )
         }
 
+        setIsLoading( true );
         action
         .then( () => {
+            setIsLoading( false );
             notify( t('conferencias.alerts.saved'), 'success');
             onSetFormState(initFormData)
             doHide( true );
         })
         .catch( error => {
+            setIsLoading( false );
             notify( t('conferencias.alerts.error'), 'error')
         })
     }
@@ -222,9 +226,12 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                         <img src={formState.preview} alt='' className={style.archivo}/>
     
                     </Modal.Body>
-    
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit'> { t('save') } </Button>
+                        <Button className='w-100 m-0' type='submit' disabled={isLoading}> 
+                            {
+                                isLoading ? t('loading') : t('save')
+                            }
+                        </Button>
                     </Modal.Footer>
                 </form>
             </Modal>

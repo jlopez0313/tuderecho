@@ -4,10 +4,13 @@ import { ChatFooter } from './ChatFooter';
 import { ChatBody } from './ChatBody';
 import { ChatHeader } from './ChatHeader';
 import { allMessages } from '@/services/Messages';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRead } from '@/store/chat/ChatSlice';
 
 export const Chat = ({ socket, user, chat, onHideChat }) => {
     
     const lastMessageRef = useRef(null);
+    const dispatch = useDispatch();
 
     
     const [headerStyles, setHeaderStyles] = useState({ background: 'bg-danger', textColor: 'text-white' });
@@ -15,6 +18,9 @@ export const Chat = ({ socket, user, chat, onHideChat }) => {
     const [minimize, setMinimize] = useState(false);
     
     const [typingStatus, setTypingStatus] = useState('');
+
+    
+    const {focus} = useSelector( state => state.chat );
 
     const getMessages = async () => {
         const list = await allMessages( chat.room );
@@ -40,6 +46,18 @@ export const Chat = ({ socket, user, chat, onHideChat }) => {
             const { room } =  data ;
             if ( room === chat.room ) {
                 setMessages([...messages, data])
+
+                if ( focus ){
+                    console.log('has focus');
+                } else {
+                    console.log('Not has focus');
+                }
+            }
+        });
+        socket.on('read', (data) => {
+            const { room } =  data ;
+            if ( room === chat.room ) {
+                dispatch( setRead( true ) );
             }
         });
     }, [socket, messages]);

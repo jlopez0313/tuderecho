@@ -8,12 +8,13 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import { Main } from '../../Publicaciones/Main';
 
 import { useTranslation } from 'react-i18next';
+import { Item } from './Item';
 
 export const ConferenciaComponent = () => {
 
     const { t } = useTranslation();
 
-    const breadcrumb = [
+    const baseBreadCrumb = [
         {
             name: 'Home',
             href: '/abogados',
@@ -27,18 +28,21 @@ export const ConferenciaComponent = () => {
     const params = useParams();
     const [conferencia,  setConferencia] = useState({});
     const [isLoading, setIsLoading] = useState(false)
+    const [breadcrumb, setBreadcrumb] = useState(baseBreadCrumb)
 
     const getConferencia = async () => {
         setIsLoading(true);
         
         const { conferencia } = await find( params.id )
 
-        breadcrumb[2] = {
+        console.log( conferencia );
+
+        setBreadcrumb([...baseBreadCrumb, {
             name: conferencia.titulo,
             active: true
-        }
+        }])
 
-        setConferencia( conferencia );
+        setConferencia( conferencia )
         setIsLoading(false);
     }
 
@@ -55,7 +59,7 @@ export const ConferenciaComponent = () => {
                     <div className="text-center mt-5">
                         <Spinner animation="grow" />
                     </div>
-                : <Main />
+                : <Item item={conferencia} />
             }
         </div>
     )

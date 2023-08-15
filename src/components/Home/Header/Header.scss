@@ -14,7 +14,7 @@
     }
 
     .logo {
-        width: 436px;
+        width: 316px;
         max-width: 90%;
         margin: 0 auto;
     }
@@ -24,10 +24,14 @@
 
         .nav-link {
             font-weight: 600;
-            font-size: 20px;
+            font-size: 1.1rem;
             color: #000000;
             text-align: center;
             margin: auto;
+
+            button {
+                font-size: .9rem;
+            }
         }
     }
 }

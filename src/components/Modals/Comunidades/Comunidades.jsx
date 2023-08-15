@@ -27,6 +27,7 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const [show, setShow] = useState( true );
     const [file, setFile] = useState( null );
+    const [isLoading, setIsLoading] = useState( false )
 
     const doHide = ( hide = false ) => {
         setShow( false )
@@ -70,13 +71,16 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
             action = create( obj )
         }
 
+        setIsLoading( true );
         action
         .then( () => {
+            setIsLoading( false );
             notify( t('comunidades.alerts.saved'), 'success');
             onSetFormState(initFormData)
             doHide( true );
         })
         .catch( error => {
+            setIsLoading( false );
             console.log( error );
             notify( t('comunidades.alerts.error'), 'error')
         })
@@ -178,7 +182,11 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit'> { t('save') } </Button>
+                        <Button className='w-100 m-0' type='submit' disabled={isLoading}> 
+                            {
+                                isLoading ? t('loading') : t('save')
+                            }
+                        </Button>
                     </Modal.Footer>
                 </form>
             </Modal>        

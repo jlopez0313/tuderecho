@@ -32,6 +32,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const [show, setShow] = useState( true );
     const [videoUrl, setVideoUrl] = useState('');
+    const [isLoading, setIsLoading] = useState( false );
 
     const doHide = ( hide = false ) => {
         setShow( false )
@@ -53,6 +54,8 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     const onDoSubmit = async (evt) => {
         evt.preventDefault();
 
+        setIsLoading( true );
+
         upload(videoUrl, formState.titulo)
         .then( carga => {
             const token = localStorage.getItem('token') || '';
@@ -73,27 +76,29 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     
             action
             .then( () => {
+                setIsLoading( false );
                 notify( t('posts.alerts.saved'), 'success');
                 onSetFormState(initFormData)
                 doHide( true );
             })
             .catch( error => {
+                setIsLoading( false );
                 notify( t('posts.alerts.error'), 'error')
             })
+
         }).catch( error => {
+            setIsLoading( false );
             notify( t('posts.alerts.error'), 'error')
         })
     }
 
-    const onGetYoutubeId = async (evt) => {
-
-        console.log( evt.target.files );
+    const onGetVideoURI = async (evt) => {
         setVideoUrl(evt.target.files[0]);
     }
 
     useEffect(() => {
         if ( item.id ) {
-            setVideoUrl('http://www.youtube.com/watch?v=' + item.video);
+            // setVideoUrl('http://www.youtube.com/watch?v=' + item.video);
             onSetFormState({
                 ...item,
             })
@@ -147,7 +152,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                                     required
                                     className='form-control'
                                     placeholder='Ej: https://www.youtube.com/watch?v=3082r1-0DXc'
-                                    onChange={onGetYoutubeId}
+                                    onChange={onGetVideoURI}
                                 />
                             </div>
 
@@ -194,7 +199,11 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit' disabled={!videoUrl}> { t('save') } </Button>
+                        <Button className='w-100 m-0' type='submit' disabled={!videoUrl || isLoading}> 
+                            { 
+                                isLoading ? t('loading') : t('save')
+                            }
+                        </Button>
                     </Modal.Footer>
                 </form>
             </Modal>        

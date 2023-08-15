@@ -14,7 +14,7 @@ export const ComunidadComponent = () => {
 
     const { t } = useTranslation();
 
-    const [breadcrumb, setBreadcrumb] = useState([
+    const baseBreadCrumb = [
         {
             name: 'Home',
             href: '/abogados',
@@ -23,7 +23,10 @@ export const ComunidadComponent = () => {
             name: t('comunidades.title'),
             href: '/abogados/comunidades',
         }
-    ])
+    ]
+
+
+    const [breadcrumb, setBreadcrumb] = useState(baseBreadCrumb)
 
     const params = useParams();
     const [comunidad,  setComunidad] = useState({});
@@ -34,7 +37,7 @@ export const ComunidadComponent = () => {
         
         const { comunidad } = await find( params.id )
 
-        setBreadcrumb(list => [...list, {
+        setBreadcrumb([...baseBreadCrumb, {
             name: comunidad.titulo,
             active: true
         }])

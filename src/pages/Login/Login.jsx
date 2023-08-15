@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,9 @@ export const Login = () => {
     const { t } = useTranslation();
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const [isLoading, setIsLoading] = useState( false )
 
     const { email, password, onInputChange} = useForm({
         name: '',
@@ -27,19 +29,25 @@ export const Login = () => {
     });
 
     const onFacebookLogin = (data) => {
+        setIsLoading( true )
         FacebookLogin()
         .then( (data) => {
+            setIsLoading( false )
             onProcessLogin(data.email, data.uid)
         }).catch( (error) => {
+            setIsLoading( false )
             // console.log( error )
         })
     }
 
     const onGmailLogin = () => {
+        setIsLoading( true )
         GmailLogin()
         .then( (data) => {
+            setIsLoading( false )
             onProcessLogin( data.email, data.uid )
         }).catch( (error) => {
+            setIsLoading( false )
             // console.log( error )
         })
     }
@@ -50,8 +58,11 @@ export const Login = () => {
     }
 
     const onProcessLogin = (email, password) => {
+        setIsLoading( true )
+
         const data = dispatch( loginAuth( email, password ) )
         data.then( ( { rol } ) => {
+            setIsLoading( false )
             notify( t('login.alerts.welcome'), 'success');
             switch (rol) {
                 case 'Abogado':
@@ -65,6 +76,7 @@ export const Login = () => {
                 break;
             }
         }).catch( (error) => {
+            setIsLoading( false )
             notify(error?.response?.data?.msg || t('login.alerts.error'), 'warning');
             navigate('/pre-registro', { replace: true });
         })
@@ -92,7 +104,11 @@ export const Login = () => {
                         <label htmlFor="floatingInputPassword"> { t('login.form.password') } </label>
                     </div>
                     
-                    <button type='submit' className="btn btn-primary mx-auto d-block mt-4"> { t('login.form.login') } </button>
+                    <button type='submit' className="btn btn-primary mx-auto d-block mt-4 w-100" disabled={isLoading}>
+                        { 
+                            isLoading ? t('loading') : t('login.form.login')
+                        } 
+                    </button>
 
                     <Link to="/recover">
                         <span className='d-block mx-auto text-center mt-3'> { t('login.form.forgot') } </span>
@@ -110,22 +126,6 @@ export const Login = () => {
                                 <img className='cursor-pointer me-2' src={FacebookIcon} alt="" style={{maxWidth: '24px'}}/>
                                 Facebook
                             </button>
-                            {
-                                /*
-                            <FacebookLogin
-                                appId={import.meta.env.VITE_FACEBOOK_APP_ID}
-                                autoLoad={false}
-                                fields="name,email,picture"
-                                callback={responseFacebook}
-                                render={(renderProps) => (
-                                    <button type="button" className="btn btn-outline-primary login-btn  w-100"  onClick={renderProps.onClick}>
-                                        <img className='cursor-pointer me-2' src={FacebookIcon} alt="" style={{maxWidth: '24px'}}/>
-                                        Facebook
-                                    </button>
-                                )}
-                            />
-                                */
-                            }
                         </div>
                     </div>
 

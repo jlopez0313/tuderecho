@@ -10,7 +10,7 @@ import { usePublicacion } from '@/hooks/usePublicacion';
 import { sendLike, hasMyLike } from '@/services/Likes';
 import { setNumberformat } from '@/helpers/helpers';
 import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
-import { format, render, cancel, register } from 'timeago.js';
+import { format } from 'timeago.js';
 import { remove } from '@/services/Publicaciones';
 import { notify } from '@/helpers/helpers'
 import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
@@ -179,19 +179,19 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                                 }
                                 {
                                     hasMyLike( publi )
-                                    ? <FontAwesomeIcon icon={myLike} className='ms-1 me-2' /> 
-                                    : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-2' />
+                                    ? <FontAwesomeIcon icon={myLike} className='ms-1 me-1' /> 
+                                    : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-1' />
                                 }
                                 <span className=''> { t('posts.like') } </span>
                             </small>
                             
                             <small className='text-danger cursor-pointer' onClick={onSetPublicacion}>
-                                {post.total_comments == 0 ? '' : post.total_comments} <FontAwesomeIcon icon={faMessage} className='me-2' />
+                                {post.total_comments == 0 ? '' : post.total_comments} <FontAwesomeIcon icon={faMessage} className='me-1' />
                                 <span className=''> { t('posts.comment') } </span>
                             </small>
                             
                             <small className='text-danger cursor-pointer' onClick={doSharing}> 
-                                {totalShares == 0 ? '' : totalShares} <FontAwesomeIcon icon={faShare} className='me-2' />
+                                {totalShares == 0 ? '' : totalShares} <FontAwesomeIcon icon={faShare} className='me-1' />
                                 <span className=''> { t('posts.share') } </span>
                             </small>
                         </div>

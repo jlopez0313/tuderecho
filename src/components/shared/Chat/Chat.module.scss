@@ -39,20 +39,22 @@
             margin-left: auto;
         }
 
-        
-
         .senderName {
             text-align: right;
             margin-bottom: 0;
         }
-
-        
 
         .status {
             position: fixed;
             bottom: 60px;
             font-size: .75em;
             font-style: italic;
+        }
+
+        .read {
+            .readBy {
+                border-radius: 50%;
+            }
         }
     }
 

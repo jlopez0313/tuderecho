@@ -91,7 +91,6 @@ export const Main = ({ comunidad = '' }) => {
         setShowModalComments(false)
         setShowModalShare(false)
     }
-
     
     const onSetPubli = (publi) => {
         const posts = [...lista ]

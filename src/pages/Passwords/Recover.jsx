@@ -5,10 +5,12 @@ import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
 
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 export const Recover = () => {
 
     const { t } = useTranslation();
+    const [isLoading, setIsLoading] = useState( false )
 
     const navigate = useNavigate()
 
@@ -18,11 +20,16 @@ export const Recover = () => {
 
     const onDoLogin = ( evt ) => {
         evt.preventDefault();
+        
+        setIsLoading( true )
+
         recovery( email )
         .then( () => {
-            notify('Hemos enviado un mensaje a tu cuenta de correo!', 'success');
+            setIsLoading( false )
+            notify( t('passwords.messages.sent') , 'success');
             navigate('/login');
         }).catch( (error) => {
+            setIsLoading( false )
             notify(error?.response?.data?.msg || 'Internal Error onProcessLogin', 'warning');
         })
     }
@@ -45,7 +52,11 @@ export const Recover = () => {
                     </div>
                     
                     
-                    <button type='submit' className="btn btn-primary mx-auto d-block mt-4"> { t('passwords.form.send') } </button>
+                    <button type='submit' className="btn btn-primary mx-auto d-block mt-4 w-100" disabled={isLoading}> 
+                        { 
+                            isLoading ? t('loading') : t('passwords.form.send')
+                        }
+                    </button>
 
                     <div className="text-center mt-3">
                         <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.registered') }  &nbsp; </label>

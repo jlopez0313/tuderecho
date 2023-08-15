@@ -32,6 +32,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
   const [previews, setPreviews] = useState([]);
   const [gif, setGif] = useState('');
   const [show, setShow] = useState( true );
+  const [isLoading, setIsLoading] = useState( false )
 
   const doHide = ( refresh = false ) => {
       setShow( false )
@@ -72,7 +73,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
     setComment(comment => comment + text)
   }
 
-  const onDoRemove = ( key ) => {
+  const onRemoveMedia = ( key ) => {
     const files = [...medias]
     files.splice(key, 1)
     setMedias([...files])
@@ -98,7 +99,9 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
       fecha: new Date()
     }
 
+    setIsLoading( true )
     const saved = await save( obj );
+    setIsLoading( false )
     
     if( saved ) {
       setComment('');
@@ -151,7 +154,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
                     {
                       previews.map( (media, key) => {
                         return <div className='grid-item' key={key}>
-                          <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => onDoRemove( key )} title={ t('posts.form.remmove') } />
+                          <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => onRemoveMedia( key )} title={ t('posts.form.remove') } />
                           <img className='media' src={media} />
                         </div>
                       })
@@ -224,7 +227,11 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
           </Modal.Body>
 
           <Modal.Footer className='d-block text-center'>
-              <Button className='w-100 m-0' onClick={onDoSavePubli}> { t('posts.form.publish') } </Button>
+              <Button className='w-100 m-0' onClick={onDoSavePubli} disabled={isLoading}>
+                { 
+                  isLoading ? t('loading') : t('posts.form.publish')
+                } 
+              </Button>
           </Modal.Footer>
       </Modal>        
     )

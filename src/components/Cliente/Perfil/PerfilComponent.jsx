@@ -16,6 +16,7 @@ export const PerfilComponent = () => {
   const dispatch = useDispatch();
   const { user } = useSelector( state => state.user );
   const [id, setId] = useState('');
+  const [isLoading, setIsLoading] = useState( false )
 
   const formData = {
     cuenta: 'A',
@@ -46,19 +47,23 @@ export const PerfilComponent = () => {
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);
     setId(uid);
-    
     onSetFormState( {...formState, ...user}  )
   }
 
   const onDoSubmit= ( evt ) => {
     evt.preventDefault();
+    setIsLoading( true )
 
     update( id, formState )
     .then( (data) => {
+      setIsLoading( false )
+
       onSetFormState( {...formState, ...data.usuario}  )
       dispatch( register( {...data.usuario} ) )
       notify( t('profile.alerts.updated'), 'success');
     }).catch( error => {
+      setIsLoading( false )
+
       console.log( error );
       notify( t('profile.alerts.error'), 'error');
     })
@@ -80,7 +85,12 @@ export const PerfilComponent = () => {
 
           <DatosPersonales formState={formState} onInputChange={onInputChange} onRadioChange={onRadioChange} />
 
-          <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> { t('save') } </button>
+          <button type='submit' className="btn btn-primary mt-3 mx-auto d-block" disabled={isLoading}> 
+            {
+              isLoading ? t('loading') : t('save')
+            }
+          </button>
+
         </form>
       </div>
     </>

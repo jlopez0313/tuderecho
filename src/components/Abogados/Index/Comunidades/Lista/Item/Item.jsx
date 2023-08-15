@@ -23,8 +23,8 @@ export const Item = ({ item, uid, onRefresh, onEdit, onRemove }) => {
     }
     
     return (
-        <div>
-            <Card className={`d-flex flex-column border rounded-0 shadow-sm bg-light mb-3 ${style.listItem}`}>
+        <>
+            <Card className={`d-flex h-95 flex-column border rounded-0 shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
                 <div className={`rounded ${style.imgContent}`}
                     style={{ backgroundImage: `url(${item.archivo})`}}
@@ -93,6 +93,6 @@ export const Item = ({ item, uid, onRefresh, onEdit, onRemove }) => {
                 modalShow={paymentModal}
                 onHide={(refresh = false) => onDoRefresh( refresh )}
             />
-        </div>
+        </>
     )
 }

@@ -2,6 +2,7 @@
     "edit": "Editar",
     "explore": "Explorar...",
     "free": "Gratis",
+    "loading": "Cargando...",
     "people": "Personas",
     "remove": "Remover",
     "save": "Guardar",
@@ -43,9 +44,10 @@
     },
 
     "comentarios": {
-        "title": "Comentarioss",
+        "title": "Comentarios",
         "your-comment": "Tu comentario",
         "form" : {
+            "reply": "Responder",
             "comentario-placehoder": "Escribe tu comentario"
         },
         "alerts": {
@@ -180,12 +182,15 @@
             "error-passwords": "Tu contraseña es incorrecta",
             "saved": "Contraseña modificada",
             "sure": "Estas seguro?"
+        },
+        "messages": {
+            "sent": "Hemos enviado un mensaje a tu cuenta de correo!"
         }
     },
 
     "posts": {
         "create": "Crea un Post",
-        "comment": "Comentarios",
+        "comment": "Comentar",
         "like": "Me gusta",
         "share": "Compartir",
         "title": "Posts",

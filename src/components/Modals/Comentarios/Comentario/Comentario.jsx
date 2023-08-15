@@ -154,8 +154,8 @@ export const Comentario = memo( ( { item, ...props } ) => {
                             }
                             {
                                 hasMyLike( parent )
-                                ? <FontAwesomeIcon icon={myLike} className='ms-1 me-2' /> 
-                                : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-2' />
+                                ? <FontAwesomeIcon icon={myLike} className='ms-1 me-1' /> 
+                                : <FontAwesomeIcon icon={faThumbsUp} className='ms-1 me-1' />
                             }
                             { t('posts.like') }
                         </small>
@@ -164,8 +164,8 @@ export const Comentario = memo( ( { item, ...props } ) => {
                             className='text-danger cursor-pointer'
                             onClick={() => onComentar( true )}
                         >
-                            {totalComments == 0 ? '' : totalComments} <FontAwesomeIcon icon={faMessage} className='me-2' />
-                            { t('save') }
+                            {totalComments == 0 ? '' : totalComments} <FontAwesomeIcon icon={faMessage} className='me-1' />
+                            { t('comentarios.form.reply') }
                         </small>
                     </div>
                 </div>

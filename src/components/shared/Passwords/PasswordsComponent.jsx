@@ -19,6 +19,8 @@ export const PasswordsComponent = () => {
     const [hideP1, setHideP1] = useState( false );
     const [hideP2, setHideP2] = useState( false );
     const [hideP3, setHideP3] = useState( false );
+    const [isLoading, setIsLoading] = useState( false )
+
 
     const { user } = useSelector( (state) => state.user );
 
@@ -39,15 +41,19 @@ export const PasswordsComponent = () => {
 
     const onDoSubmit= ( evt ) => {
         evt.preventDefault();
-        
+
         if( formState.password1 !== formState.password2 ) {
             notify( t('passwords.alerts.error-passwords'), 'error')
         } else {
+            setIsLoading( true )
+
             passwords( formState )
             .then( () => {
                 onFind();
+                setIsLoading( false )
                 notify( t('passwords.alerts.saved'), 'success');
             }).catch( error => {
+                setIsLoading( false )
                 console.log( error );
                 notify( t('passwords.alerts.error'), 'error');
             })
@@ -124,7 +130,11 @@ export const PasswordsComponent = () => {
                     </div>
                 </div>
 
-                <button type='submit' className="btn btn-primary mt-3 mx-auto d-block"> { t('save') } </button>
+                <button type='submit' className="btn btn-primary mt-3 mx-auto d-block" disabled={isLoading}> 
+                    {
+                        isLoading ? t('loading') : t('save')
+                    }
+                </button>
             </form>
         </div>
         </>

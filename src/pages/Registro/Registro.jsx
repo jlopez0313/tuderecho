@@ -11,6 +11,7 @@ import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 export const Registro = () => {
     
@@ -19,6 +20,7 @@ export const Registro = () => {
     const { type }= useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState( false )
 
     const {name, email, password, onInputChange} = useForm({
         name: '',
@@ -27,20 +29,28 @@ export const Registro = () => {
     });
 
     const onFacebookLogin = (data) => {
+        setIsLoading( true )
+
         FacebookLogin()
         .then( (data) => {
+            setIsLoading( false )
             console.log( data )
             onProcessRegister( data.displayName, data.email, data.uid, data.photoURL, 'FACEBOOK' )
         }).catch( (error) => {
+            setIsLoading( false )
             console.log(error);
         })
     }
 
     const onGmailLogin = () => {
+        setIsLoading( true )
+
         GmailLogin()
         .then( (data) => {
+            setIsLoading( false )
             onProcessRegister( data.displayName, data.email, data.uid, data.photoURL, 'GMAIL' )
         }).catch( (error) => {
+            setIsLoading( false )
             console.log(error);
         })
     }
@@ -51,13 +61,17 @@ export const Registro = () => {
     }
 
     const onProcessRegister = ( name, email, password, photoUrl='', provider ) => {
+        setIsLoading( true )
+
         const data = dispatch( registerAuth( type, name, email, password, provider ) )
         data.then( ( user ) => {
 
             update( user.id, {...user, photo: photoUrl} )
             .then( (data) => {
+                setIsLoading( false )
                 dispatch( register( {...data.usuario} ) )
             }).catch( error => {
+                setIsLoading( false )
                 console.log( error );
                 notify('Error Interno.', 'error');
             })
@@ -76,6 +90,7 @@ export const Registro = () => {
                 break;
             }
         }).catch( (error) => {
+            setIsLoading( false )
             notify(error?.response?.data?.msg || 'Internal Error onProcessRegister', 'error');
         })
     }
@@ -107,7 +122,11 @@ export const Registro = () => {
                         <label htmlFor="floatingInputPassword"> { t('register.form.password') } </label>
                     </div>
                     
-                    <button className="btn btn-primary mx-auto d-block mt-4" type="submit"> { t('register.form.save') } </button>
+                    <button className="btn btn-primary mx-auto d-block mt-4 w-100" type="submit" disabled={isLoading}>
+                        {
+                            isLoading ? t('loading') : t('register.form.save')
+                        }
+                    </button>
 
                     <div className="row mt-4">
                         <div className="col">

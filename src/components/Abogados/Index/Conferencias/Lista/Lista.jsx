@@ -13,6 +13,9 @@ import { Loader } from '@/components/shared/Loader/Loader';
 
 import { useTranslation } from 'react-i18next';
 
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+
 export const Lista = memo( ({ uid }) => {
 
     const limit = 10;
@@ -85,14 +88,24 @@ export const Lista = memo( ({ uid }) => {
     }
 
     const onRemove = ( id ) => {
-        remove( id )
-        .then( () => {
-            onGetList();
-            notify( t('conferencias.alerts.removed') , 'success')
-            dispatch( setRefresh( true ) )
-        })
-        .catch( error => {
-            notify( t('conferencias.alerts.error'), 'error')
+        const MySwal = withReactContent(Swal)
+        MySwal.fire({
+            icon: 'question',
+            confirmButtonColor: 'red',
+            text: t('conferencias.alerts.sure'),
+            showCancelButton: true,
+        }).then( ({isConfirmed}) => {
+            if ( isConfirmed ) {
+                remove( id )
+                .then( () => {
+                    onGetList();
+                    notify( t('conferencias.alerts.removed') , 'success')
+                    dispatch( setRefresh( true ) )
+                })
+                .catch( error => {
+                    notify( t('conferencias.alerts.error'), 'error')
+                })
+            }
         })
       }
 

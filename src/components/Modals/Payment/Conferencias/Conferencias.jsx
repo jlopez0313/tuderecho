@@ -8,6 +8,7 @@ import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
 import { setRefresh } from '@/store/conferencias/ConferenciasSlice';
 import { useTranslation } from 'react-i18next';
+import { format } from 'date-fns'
 
 import { useEpayco } from '@/hooks/useEpayco';
 import { useConferencia } from '@/hooks/useConferencia';
@@ -102,7 +103,7 @@ export const ConferenciasModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     <Modal.Body className='py-0'>
                         
                             <div className="form-floating mb-3">
-                                <span className='form-control'> { item?.titulo } </span>
+                                <span className='form-control' style={{height: 'auto'}}> { item?.titulo } </span>
                                 <label htmlFor="especialidad"> { t('conferencias.form.title') }  </label>
                             </div>
 
@@ -117,7 +118,7 @@ export const ConferenciasModal = memo( ( {modalShow, item = {}, ...props} ) => {
                             </div>
 
                             <div className='alert alert-info'> 
-                                { t('conferencias.form.date-message') } { item.fecha } 
+                                { t('conferencias.form.date-message') } { format(new Date(item.fecha), 'yyyy-MM-dd, HH:mm a') }
                             </div>
 
                     </Modal.Body>
