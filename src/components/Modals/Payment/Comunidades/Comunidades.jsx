@@ -55,7 +55,7 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
                 .then( () => {
                     notify( t('comunidades.alerts.paid'), 'success')
                     dispatch( setRefresh( true ) )
-                    onRefresh( true )
+                    doHide( true )
                 })
             } catch(error) {
                 console.log( error );

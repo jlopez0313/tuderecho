@@ -5,6 +5,7 @@ import { decodeToken } from 'react-jwt';
 import { getYoutubeId } from '@/helpers/helpers'
 
 import { useTranslation } from 'react-i18next';
+import Vimeo from '@u-wave/react-vimeo';
 
 export const Video = memo( ({item, onRemove, onEdit}) => {
 
@@ -24,18 +25,29 @@ export const Video = memo( ({item, onRemove, onEdit}) => {
   }, [item])
 
   return (
-    <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${styles.listItem}`}>
-        
-        <Card.Img variant="top" className='rounded' src={`http://img.youtube.com/vi/${videoId}/0.jpg`} alt='' />
-
-        <Card.Body>
-          <Card.Text className='d-flex flex-column'>
-            <small className='text-uppercase'> 
-              <strong> { t('videoteca.conference') } {item.titulo} </strong>
-            </small>
-            <small className=''> { t('videoteca.expositor') }: {item.user.name} </small>
-          </Card.Text>        
-        </Card.Body>
+    <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 p-1 ${styles.listItem}`}>
+        <div className="row g-0">
+          <div className="col-md-4 ps-2 pt-3">
+            <Vimeo
+                className='rounded'
+                controls={false}
+                responsive={true}
+                showByline={false}
+                showTitle={false}
+                video={item.video}
+            />
+          </div>
+          <div className="col-md-8">
+            <Card.Body>
+              <Card.Text className='d-flex flex-column'>
+                <small className='text-uppercase'> 
+                  <strong> {item.titulo} </strong>
+                </small>
+                <small className=''> { t('videoteca.expositor') }: {item.user.name} </small>
+              </Card.Text>        
+            </Card.Body>
+          </div>
+        </div>
     </Card>
   )
 })

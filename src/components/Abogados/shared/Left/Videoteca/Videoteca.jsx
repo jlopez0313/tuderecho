@@ -122,7 +122,7 @@ export const Videoteca = () => {
                     <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
                 </div>
 
-                <div id="divVideoteca" className={`overflow-auto pe-2 ps-3 mt-2 ${styles.list}`}>
+                <div id="divVideoteca" className={`overflow-auto px-3 mt-2 ${styles.list}`}>
                     {
                         isLoading ? <Loader />
                         :

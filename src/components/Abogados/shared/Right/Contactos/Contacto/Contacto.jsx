@@ -8,7 +8,7 @@ export const Contacto = ({ usuario, onAddChat }) => {
     <>
       <div className='d-flex rounded align-items-center border mb-2 p-2 shadow-sm bg-light cursor-pointer' onClick={() => onAddChat( usuario )}>
           <div className='position-relative'>
-              <img src={usuario?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
+              <img src={usuario?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
               <div className={`${styles.logged}`}></div>              
           </div>
           <div className="d-flex flex-column w-100">

@@ -43,7 +43,7 @@ export const Header = () => {
     <div className='header'>
       <Navbar expand="md" className='menu'>
           <Navbar.Brand href="#home" className='text-center'>
-            <img className='logo' src={Logo} />
+            <img className='logo' src={Logo} alt=''/>
           </Navbar.Brand>
           
           <button
@@ -67,7 +67,7 @@ export const Header = () => {
             
             <Offcanvas.Header>
               <Offcanvas.Title id='offcanvasNavbarLabel'>
-                <img className='logo' src={Logo} />
+                <img className='logo' src={Logo} alt=''/>
               </Offcanvas.Title>
               <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={ () => setShow('hiding') }></button>
             </Offcanvas.Header>

@@ -114,7 +114,7 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                     {
                         publi.medias?.map( (media, key2) => {
                             return <div key={ key2 } className={`${styles.gridItem}`}>
-                                <img className={`${styles.media}`} src={media} />
+                                <img className={`${styles.media}`} src={media} alt=''/>
                             </div>
                         })
                     }
@@ -123,7 +123,7 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                     publi.gif
                     ? 
                         <div className={`${styles.gridItem}`}>
-                            <img className={`${styles.media}`} src={publi.gif} />
+                            <img className={`${styles.media}`} src={publi.gif} alt=''/>
                         </div>
                     : null
                 }

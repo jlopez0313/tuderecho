@@ -22,7 +22,7 @@ export const ChatBody = ({ user, typingStatus, messages, lastMessageRef }) => {
                         <div className={`message__chats d-flex align-items-center`}  key={idx}>
                             { /*
                             <div className='position-relative'>
-                                <img src={ user?.photo || Avatar} className={`me-1 ${styles.avatar}`} />
+                                <img src={ user?.photo || Avatar} className={`me-1 ${styles.avatar}`} alt=''/>
                             </div>
                             */}
                             <div className={`${styles.message} ${styles.recipient} w-100`}>

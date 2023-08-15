@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useEpayco } from '@/hooks/useEpayco';
 import { useVideoteca } from '@/hooks/useVideoteca';
+import Vimeo from '@u-wave/react-vimeo';
 
 export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     const { t } = useTranslation();
@@ -117,7 +118,13 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                             </div>
 
                             <div className="form-floating mb-3">
-                                <img className='rounded w-100' src={`http://img.youtube.com/vi/${item.video}/0.jpg`} alt='' />
+                                <Vimeo
+                                    width='465'
+                                    controls={false}
+                                    showByline={false}
+                                    showTitle={false}
+                                    video={item.video}
+                                />
                             </div>
 
                     </Modal.Body>

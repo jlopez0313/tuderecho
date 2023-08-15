@@ -74,10 +74,10 @@ export const GifsModal = memo( ( {onSetGif, showGifs, ...props} ) => {
     
                 <Modal.Body className='pb-2 pt-0'>
                     <form className="row" onSubmit={ onDoSearch }>
-                        <div class="col-11">
+                        <div className="col-11">
                             <input placeholder={ t('search') } className='form-control' value={ category } onChange={onSetCategory}/>
                         </div>
-                        <div class="col-auto">
+                        <div className="col-auto">
                             <button className='btn btn-primary'> <FontAwesomeIcon icon={faSearch} /> </button>
                         </div>
                     </form>
@@ -95,7 +95,7 @@ export const GifsModal = memo( ( {onSetGif, showGifs, ...props} ) => {
                         {
                             gifs.map( (gif, key) => {
                                 return <div className='grid-item' key={key}>
-                                    <img className='media cursor-pointer' src={gif.url} onClick={() => onDoSetGif( gif.url ) } />
+                                    <img className='media cursor-pointer' src={gif.url} onClick={() => onDoSetGif( gif.url ) } alt=''/>
                                 </div>
                             })
                         }

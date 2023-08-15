@@ -30,8 +30,8 @@ export const Header = () => {
         <div className='header border shadow-sm'>
             <div className='px-4 py-2 d-flex flex-wrap align-items-center justify-content-sm-between'>
                 <Link to="/abogados" className="order-1 m-auto">
-                    <img src={LogoSmall} className='logo-sm' />
-                    <img src={Logo} className='logo2' />
+                    <img src={LogoSmall} className='logo-sm' alt=''/>
+                    <img src={Logo} className='logo2' alt=''/>
                 </Link>
                 
                 <input className="m-auto order-sm-2 order-3 form-control w-sm-50 p-2 explorar" type="text" placeholder={ t('explore')} aria-label="default input example" />

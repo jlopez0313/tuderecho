@@ -7,7 +7,7 @@ export const NotFound = () => {
     <div className='container pt-7 text-center'>
         <div className="d-block text-center mb-5">
             <Link to="/">
-                <img src={Logo} />
+                <img src={Logo} alt=''/>
             </Link>
         </div>
         <div className="row container">

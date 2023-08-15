@@ -116,7 +116,7 @@ export const Comentario = memo( ( { item, ...props } ) => {
         
             <div className={`d-flex align-items-center border rounded mb-2 p-2 shadow-sm bg-light ${styles.comment}`}>
                 <div>
-                    <img src={parent.user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
+                    <img src={parent.user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
                 </div>
                 <div className="ms-2 d-flex flex-column w-100">
 
@@ -187,7 +187,7 @@ export const Comentario = memo( ( { item, ...props } ) => {
                 ? 
                     <div className='ms-5 d-flex align-items-center justify-content-between border rounded px-1 mb-2'>
                         <div>
-                            <img src={user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
+                            <img src={user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
                         </div>
                         <form onSubmit={onSendcomment} className='w-100'>
                             <div className="form-floating">

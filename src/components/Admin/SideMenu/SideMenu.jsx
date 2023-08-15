@@ -25,7 +25,7 @@ export const SideMenu = () => {
             <Navbar expand='sm' className="mb-3 flex-column p-0">
                     <div className='bg-white w-100 text-center p-3 border d-none d-sm-block'>
                         <Link to="/admin">
-                            <img className='logo' src={Logo} />
+                            <img className='logo' src={Logo} alt=''/>
                         </Link>
                     </div>
                     <Navbar.Toggle className='m-2 bg-white' aria-controls='offcanvasNavbar-expand-sm' />
@@ -36,7 +36,7 @@ export const SideMenu = () => {
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id='offcanvasNavbarLabel-expand-sm'>
-                                <img className='logo' src={Logo} />
+                                <img className='logo' src={Logo} alt=''/>
                             </Offcanvas.Title>
                         </Offcanvas.Header>
 

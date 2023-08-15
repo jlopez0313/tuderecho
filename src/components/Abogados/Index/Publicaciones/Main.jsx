@@ -112,7 +112,7 @@ export const Main = ({ comunidad = '' }) => {
             <div className={`main ${styles.main}`}>
                 <div className='bg-white rounded d-flex border shadow-sm px-3 py-2 align-items-center'>
                     <div>
-                        <img src={user?.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
+                        <img src={user?.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
                     </div>
                     <div 
                         className="text-center text-danger w-100 cursor-pointer"

@@ -14,7 +14,7 @@ export const PreRegistro = () => {
         <div className='container pt-7 text-center pb-5'>
             <div className="d-block text-center mb-3">
                 <Link to="/">
-                    <img src={Logo}  className='logo-preregistro'/>
+                    <img src={Logo}  className='logo-preregistro' alt=''/>
                 </Link>
             </div>
             <h2 className='mb-5 text-danger fw-bold'> { t('register.title') } </h2>
@@ -24,7 +24,7 @@ export const PreRegistro = () => {
                 <div className="col-sm-4 text-center mt-4">
                     <Link to="/registro/Cliente" replace={true} >
                         <button className='type btn btn-light border shadow'>
-                            <img src={Cliente} className="d-block mx-auto mb-4" />
+                            <img src={Cliente} className="d-block mx-auto mb-4" alt=''/>
                             <span> { t('register.client') } </span>
                         </button>
                     </Link>
@@ -32,7 +32,7 @@ export const PreRegistro = () => {
                 <div className="col-sm-4 text-center mt-4">
                     <Link to="/registro/Abogado" replace={true} >
                         <button className='type btn btn-light border shadow'>
-                            <img src={Abogado} className="d-block mx-auto mb-4" />
+                            <img src={Abogado} className="d-block mx-auto mb-4" alt=''/>
                             <span> { t('register.lawyer') } </span>
                         </button>
                     </Link>

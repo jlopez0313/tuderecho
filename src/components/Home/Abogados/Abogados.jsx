@@ -8,7 +8,7 @@ export const Abogados = () => {
             <h5 className="card-title">Perfil del Abogado</h5>
             <div className="row">
                 <div className="col-sm-4">
-                    <img src={Profile} />
+                    <img src={Profile} alt=''/>
                 </div>
                 <div className="col-sm-8">
                     <span> Alfredo Jiménez </span>

@@ -125,7 +125,7 @@ export const Comunidades = () => {
           <input className="m-auto form-control explorar" type="text" placeholder={t('search')} onChange={doSetSearch}/>
         </div>
 
-        <div id="divComunidades" className={`overflow-auto ps-3 pe-2 mt-2 ${styles.list}`}>
+        <div id="divComunidades" className={`overflow-auto px-3 mt-2 ${styles.list}`}>
           {
             isLoading ? <Loader />
             :

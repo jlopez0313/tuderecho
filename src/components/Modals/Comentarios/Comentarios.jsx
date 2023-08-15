@@ -131,7 +131,7 @@ export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
                     <Modal.Footer className='d-block'>
                         <div className='d-flex align-items-center justify-content-between border rounded px-1 mb-2'>
                             <div>
-                                <img src={user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
+                                <img src={user.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
                             </div>
                             <form className='w-100' onSubmit={onDoSubmit}>
                                 <div className="form-floating">

@@ -42,13 +42,14 @@ export const Main = () => {
                 className="mb-3"
                 justify
                 unmountOnExit={true}
+                activeKey={activeTab}
                 onSelect={(evt) => onSelect(evt) }
             >
                 <Tab eventKey="home" title={ t('videoteca.discover') } >
-                    <Lista uid={ null } />
+                    <Lista uid={ null } tab={activeTab} onChangeTab={ (tab)=> onSelect(tab)} />
                 </Tab>
                 <Tab eventKey="profile" title={ t('videoteca.my-list') }>
-                    <Lista uid={ uid }/>
+                    <Lista uid={ uid } tab={activeTab} onChangeTab={ (tab)=> onSelect(tab)} />
                 </Tab>
             </Tabs>
         </div>

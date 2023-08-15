@@ -30,14 +30,14 @@ export const Contacto = memo( ({ item }) => {
   return (
     <div className='d-flex align-items-center border mb-2 py-2 ps-2 pe-0 shadow-sm bg-light cursor-pointer'>
         <div>
-            <img src={ from.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} />
+            <img src={ from.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
         </div>
         <div className="d-flex flex-column w-100">
             <strong>{from.name}</strong>
             <small className='text-muted'> {from.from} {item.chats[0].text}.  { format(item.chats[0].updatedAt) } </small>
         </div>
         <div>
-            <img src={Avatar} className={`me-3 ${styles.avatarSmall}`} />
+            <img src={Avatar} className={`me-3 ${styles.avatarSmall}`} alt=''/>
         </div>
     </div>
   )

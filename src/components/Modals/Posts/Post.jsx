@@ -155,7 +155,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
                       previews.map( (media, key) => {
                         return <div className='grid-item' key={key}>
                           <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => onRemoveMedia( key )} title={ t('posts.form.remove') } />
-                          <img className='media' src={media} />
+                          <img className='media' src={media} alt=''/>
                         </div>
                       })
                     }
@@ -168,7 +168,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
                 ?
                   <div className='grid-item'>
                     <FontAwesomeIcon className='remove cursor-pointer' icon={faClose} onClick={() => setGif( null )} title={ t('posts.form.remove') } />
-                    <img className='media' src={gif} />
+                    <img className='media' src={gif} alt=''/>
                   </div>
                 : null
               }

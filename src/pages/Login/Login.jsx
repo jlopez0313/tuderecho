@@ -86,7 +86,7 @@ export const Login = () => {
         <div className='container w-sm-25 mt-5'>
             <div className="d-block text-center mb-5">
                 <Link to="/">
-                    <img src={Logo} className='logo-preregistro' />
+                    <img src={Logo} className='logo-preregistro' alt=''/>
                 </Link>
             </div>
             <h2 className='mb-4 text-danger fw-bold text-center'> { t('login.title') } </h2>

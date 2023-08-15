@@ -42,13 +42,14 @@ export const Main = () => {
                 className="mb-3"
                 justify
                 unmountOnExit={true}
+                activeKey={ activeTab }
                 onSelect={(evt) => onSelect(evt) }
             >
                 <Tab eventKey="home" title={ t('conferencias.discover') }>
-                    <Lista uid={ null } />
+                    <Lista uid={ null } onChangeTab={(tab) => onSelect(tab)} />
                 </Tab>
                 <Tab eventKey="profile" title={ t('conferencias.my-list') }>
-                    <Lista uid={ uid }/>
+                    <Lista uid={ uid } onChangeTab={(tab) => onSelect(tab)} />
                 </Tab>
             </Tabs>
         </div>

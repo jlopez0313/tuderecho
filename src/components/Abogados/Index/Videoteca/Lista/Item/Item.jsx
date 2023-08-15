@@ -15,7 +15,7 @@ import { numberFormat } from '@/helpers/numbers';
 
 import Vimeo from '@u-wave/react-vimeo';
 
-export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) => {
+export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemove }) => {
     
     const { t } = useTranslation();
 
@@ -31,18 +31,33 @@ export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) 
         const id = getYoutubeId( item.video )
         setVideoId( id );
     }
+
+    const asd = (evt) => {
+        console.log( evt );
+    }
     
     useEffect(()=> {
         onSetVideoId();
+
+        const handleContextmenu = e => {
+            e.preventDefault()
+        }
+        document.addEventListener('contextmenu', handleContextmenu)
+        return function cleanup() {
+            document.removeEventListener('contextmenu', handleContextmenu)
+        }
+
     }, [item])
     
     return (
         <>
             <Card className={`d-flex h-95 flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
-                <div className={`rounded ${style.imgContent}`}>
+                <div className={`rounded ${style.imgContent}`} 
+                        onClick={asd}>
                     <Vimeo
-                        width='310'
+                        responsive={true}
+                        controls={ tab === 'profile' }
                         showByline={false}
                         showTitle={false}
                         video={item.video}
@@ -60,9 +75,7 @@ export const Item = memo( ({ item, uid, onRefresh, onEdit, onShare, onRemove }) 
                     <div className='d-flex justify-content-between align-items-center'>
                         {
                             uid ?
-                                <a className={`${uid === item.user.id ? 'me-2' : ''} w-100`} href={`http://www.youtube.com/watch?v=${item.video}`} target="_blank">
-                                    <button type='button' className="btn btn-primary w-100" > {t('see')} </button>
-                                </a>
+                                null
                             : 
                                 <button type='button' className="btn btn-primary w-100" onClick={() => setPaymentModal(true)}>
                                     <FontAwesomeIcon icon={faCartShopping} className='me-2' />

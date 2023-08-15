@@ -17,7 +17,7 @@ export const Comunidad = ({item, onRemove}) => {
     <Link to={'/abogados/comunidades/' + item.id}>
       <div className='d-flex border rounded mb-3 p-3 shadow-sm bg-light'>
           <div>
-              <img src={item.archivo || Avatar} className={`me-3 ${styles.avatar}`} />
+              <img src={item.archivo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
           </div>
           <div className="d-flex flex-column w-100">
               <strong className='text-dark'> {item.titulo} </strong>

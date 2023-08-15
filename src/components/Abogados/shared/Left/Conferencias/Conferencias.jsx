@@ -122,7 +122,7 @@ export const Conferencias = () => {
                     <input className="m-auto form-control explorar" type="text" placeholder="Buscar..." onChange={doSetSearch}/>
                 </div>
 
-                <div id="divConferences" className={`overflow-auto ps-3 pe-2 mt-2 ${styles.list}`}>
+                <div id="divConferences" className={`overflow-auto px-3 mt-2 ${styles.list}`}>
                     {
                         isLoading ? <Loader />
                         :

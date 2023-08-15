@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
-export const Lista = memo( ({ uid }) => {
+export const Lista = memo( ({ uid, tab, onChangeTab }) => {
     
     const limit = 10;
     const { t } = useTranslation();
@@ -80,9 +80,10 @@ export const Lista = memo( ({ uid }) => {
         setPage(prevPage => prevPage + 1);
     }
 
-    const onRefresh = (doRefresh) => {
+    const onRefresh = async (doRefresh) => {
         if (doRefresh) {
-            onGetList()
+            await onGetList();
+            onChangeTab('profile');
         }
         setModalShow(false)
         setShowModalShare(false);
@@ -135,6 +136,7 @@ export const Lista = memo( ({ uid }) => {
                                     lista?.map( (item, key) => {
                                         return <div className="col-xxl-4 col-sm-6 col-12" key={key}>
                                             <Item
+                                                tab={tab}
                                                 item={item}
                                                 uid={uid}
                                                 idx={key}
