@@ -22,6 +22,5 @@ export const sendLike = async ( route, post ) => {
 export const hasMyLike = ( post ) => {
     const token = localStorage.getItem('token') || '';
     const { uid } = decodeToken(token);
-
     return post.likes?.find( like => like === uid )
 }

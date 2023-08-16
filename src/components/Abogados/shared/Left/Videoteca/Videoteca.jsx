@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Video } from './Video/Video';
-import { faPencil, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from '@/assets/styles/shared.module.scss';
 import { VideotecaModal } from '@/components/Modals/Videoteca/Videoteca';
@@ -47,7 +47,10 @@ export const Videoteca = () => {
 
         setIsLoading( false )
         dispatch( setRefresh(false) );
-        setPage(prevPage => prevPage + 1);
+        
+        if (search) {
+            setPage(prevPage => prevPage + 1);
+        }
     }
 
     const onGetMore = async () => {
@@ -101,7 +104,8 @@ export const Videoteca = () => {
 
     useEffect( () => {
         if ( refresh ) {
-          onGetList();
+            setPage(1);
+            onGetList();
         }
     }, [refresh])
 
@@ -156,7 +160,7 @@ export const Videoteca = () => {
 
                 <Link to="/abogados/videoteca" className="order-1 m-auto">
                     <Button className='position-absolute rounded-circle bottom-2 end-2'>
-                        <FontAwesomeIcon icon={faSearch} />
+                        <FontAwesomeIcon icon={faPlus} />
                     </Button>
                 </Link>
 

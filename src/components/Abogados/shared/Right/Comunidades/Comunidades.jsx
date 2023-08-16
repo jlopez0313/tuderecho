@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Comunidad } from './Comunidad/Comunidad'
-import { faPencil, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ComunidadesModal } from '@/components/Modals/Comunidades/Comunidades';
 import { myList, remove } from '@/services/Comunidades';
@@ -48,7 +48,10 @@ export const Comunidades = () => {
 
     setIsLoading( false )
     dispatch( setRefresh(false) );
-    setPage(prevPage => prevPage + 1);
+    
+    if (search) {
+      setPage(prevPage => prevPage + 1);
+    }
   }
 
   const onGetMore = async () => {
@@ -102,6 +105,7 @@ export const Comunidades = () => {
 
   useEffect( () => {
     if ( refresh ) {
+      setPage(1);
       onGetList();
     }
   }, [refresh])
@@ -159,7 +163,7 @@ export const Comunidades = () => {
 
         <Link to="/abogados/comunidades" className="order-1 m-auto">
           <Button className='position-absolute rounded-circle bottom-2 end-2'>
-            <FontAwesomeIcon icon={faSearch} />
+            <FontAwesomeIcon icon={faPlus} />
           </Button>
         </Link>
       </div>

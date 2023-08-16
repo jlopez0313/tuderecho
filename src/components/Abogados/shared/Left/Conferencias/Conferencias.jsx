@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Conferencia } from './Conferencia/Conferencia';
-import { faPencil, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from '@/assets/styles/shared.module.scss';
 import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';
@@ -47,7 +47,10 @@ export const Conferencias = () => {
 
         setIsLoading( false );
         dispatch( setRefresh(false) );
-        setPage(prevPage => prevPage + 1);
+        
+        if (search) {
+            setPage(prevPage => prevPage + 1);
+        }
     }
 
     const onGetMore = async () => {
@@ -101,7 +104,8 @@ export const Conferencias = () => {
 
     useEffect( () => {
         if ( refresh ) {
-          onGetList();
+            setPage(1);            
+            onGetList();
         }
     }, [refresh])
 
@@ -155,7 +159,7 @@ export const Conferencias = () => {
 
                 <Link to="/abogados/conferencias" className="order-1 m-auto">
                     <Button className='position-absolute rounded-circle bottom-2 end-2'>
-                        <FontAwesomeIcon icon={faSearch} />
+                        <FontAwesomeIcon icon={faPlus} />
                     </Button>
                 </Link>
 

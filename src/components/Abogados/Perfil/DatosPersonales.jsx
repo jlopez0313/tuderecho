@@ -15,7 +15,7 @@ const animatedComponents = makeAnimated();
 
 export const DatosPersonales = ( { formState, onInputChange } ) => {
 
-    console.log( formState );
+    // console.log( formState );
 
     const { t } = useTranslation();
 

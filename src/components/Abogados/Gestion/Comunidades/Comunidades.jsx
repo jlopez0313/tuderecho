@@ -54,7 +54,10 @@ export const ComunidadesComponent = () => {
         }
         
         setIsLoading( false )
-        setPage(prevPage => prevPage + 1);
+
+        if( search ) {
+            setPage(prevPage => prevPage + 1);
+        }
     }
 
     const onGetMore = async () => {

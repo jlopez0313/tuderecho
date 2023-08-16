@@ -36,7 +36,7 @@ export const Login = () => {
             onProcessLogin(data.email, data.uid)
         }).catch( (error) => {
             setIsLoading( false )
-            // console.log( error )
+            console.log( error )
         })
     }
 
@@ -48,7 +48,7 @@ export const Login = () => {
             onProcessLogin( data.email, data.uid )
         }).catch( (error) => {
             setIsLoading( false )
-            // console.log( error )
+            console.log( error )
         })
     }
 

@@ -10,7 +10,8 @@ import { ClientesRoutes } from './cliente/ClientesRoutes';
 import { PrivateRoutes } from './PrivateRoutes';
 import { Unauthorized } from '@/pages/Errors/Unauthorized';
 import { NotFound } from '@/pages/Errors/NotFound';
-import { Recover } from '../pages/Passwords/Recover';
+import { Recover } from '@/pages/Passwords/Recover';
+import { Passwords } from '@/pages/Passwords/Passwords';
 
 export const Routing = () => {
   return (
@@ -20,6 +21,7 @@ export const Routing = () => {
         <Route path='/registro/:type' element={ <Registro /> } />
         <Route path='/login' element={ <Login /> } />
         <Route path='/recover' element={ <Recover /> } />
+        <Route path='/passwords' element={ <Passwords /> } />
         <Route path='/admin/*' 
           element={ 
             <PrivateRoutes rol={ 'Admin' }>

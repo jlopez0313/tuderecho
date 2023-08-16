@@ -36,6 +36,7 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
     const toggleLike = async (id) => {
         const toggled = await sendLike('publicaciones', id);
         setPublicacion( toggled )
+        setPubli( { ...post, likes: toggled.likes } )
     }
 
     const doRemovePubli = async ( id ) => {

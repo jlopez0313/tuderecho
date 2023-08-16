@@ -62,6 +62,16 @@ export const passwords = async (user) => {
     }
 }
 
+export const passwordsWithToken = async (user) => {
+    const response = await backendApi.post(modulo + 'with-token', user)
+
+    if ( response ) {
+        return Promise.resolve( response );
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 export const recovery = async (email) => {
     const response = await backendApi.post(modulo + 'recovery', { email })
 

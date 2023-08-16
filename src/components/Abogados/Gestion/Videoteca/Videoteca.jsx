@@ -55,7 +55,10 @@ export const VideotecaComponent = () => {
         }
 
         setIsLoading( false )
-        setPage(prevPage => prevPage + 1);
+
+        if( search ) {
+            setPage(prevPage => prevPage + 1);
+        }
     }
 
     const onGetMore = async () => {
