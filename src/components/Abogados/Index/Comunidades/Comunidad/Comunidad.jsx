@@ -52,7 +52,7 @@ export const ComunidadComponent = () => {
 
     return (
         <div className={`main ${styles.main}`}>
-            <Breadcrumb className='' items={breadcrumb} />
+            <Breadcrumb className='mt-3' items={breadcrumb} />
             {
                 isLoading
                 ? 

@@ -38,7 +38,7 @@ export const DatosPersonales = ( { formState } ) => {
             <div className="row">
                 <div className="col-sm-3 mb-3 text-center">
                     <div className="avatar-container m-auto d-flex justify-content-center align-items-center cursor-pointer">
-                        <img src={formState.photo || Avatar} alt='' className='avatar'/>
+                        <img src={formState.perfil?.photo || Avatar} alt='' className='avatar'/>
                     </div>
                 </div>
                 <div className="col-sm-9">

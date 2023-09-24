@@ -15,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
+import { Filter } from '@/components/shared/Filter/Filter';
+import { useFilter } from '@/hooks/useFilter';
 
 export const Lista = memo( ({ uid, tab, onChangeTab }) => {
     
@@ -29,6 +31,8 @@ export const Lista = memo( ({ uid, tab, onChangeTab }) => {
     const [showModalShare, setShowModalShare] = useState(false);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+
+    const { filteredList, onFilter, setFilter, setFilteredList } = useFilter( uid, lista )
 
     const dispatch = useDispatch();
 
@@ -54,6 +58,7 @@ export const Lista = memo( ({ uid, tab, onChangeTab }) => {
         }
 
         setLista( lista )
+        setFilteredList( lista )
 
         if ( lista.length < limit ) {
             setHasMore( false )
@@ -76,7 +81,9 @@ export const Lista = memo( ({ uid, tab, onChangeTab }) => {
             setHasMore( false )
         }
 
-        setLista( list => [...list, ...moreList] )
+        const list = [...lista, ...moreList]
+        setLista(list)
+        onFilter(list)
         setPage(prevPage => prevPage + 1);
     }
 
@@ -122,36 +129,41 @@ export const Lista = memo( ({ uid, tab, onChangeTab }) => {
 
                 isLoading ? <Loader />
                 :
-                    lista.length ? 
-                        <InfiniteScroll
-                            dataLength={ lista.length }
-                            next={onGetMore}
-                            hasMore={ hasMore }
-                            loader={ <Loader /> }
-                            endMessage={ <div className='mt-3'> </div> }
-                            scrollableTarget="scrollableDiv"
-                        >
-                            <div className={`row h-75 mt-5 mx-0`}>
-                                {
-                                    lista?.map( (item, key) => {
-                                        return <div className="col-xxl-4 col-sm-6 col-12" key={key}>
-                                            <Item
-                                                tab={tab}
-                                                item={item}
-                                                uid={uid}
-                                                idx={key}
-                                                onShare={onSharing}
-                                                onEdit={onShowModal} 
-                                                onRefresh={(doRefresh = false) => onRefresh( doRefresh )}
-                                                onRemove={(id) => onRemove(id)}
-                                            />
-                                        </div>
-                                    })
-                                }
-                            </div>
-                        </InfiniteScroll>
-                    : 
-                        <div className='alert alert-danger m-auto w-75'> { t('videoteca.empty') } </div>
+                <>
+                     <Filter onFilter={(filter) => setFilter( filter )}/>
+                    {
+                        filteredList.length ? 
+                            <InfiniteScroll
+                                dataLength={ filteredList.length }
+                                next={onGetMore}
+                                hasMore={ hasMore }
+                                loader={ <Loader /> }
+                                endMessage={ <div className='mt-3'> </div> }
+                                scrollableTarget="scrollableDiv"
+                            >
+                                <div className={`row h-75 mt-4 mx-0`}>
+                                    {
+                                        filteredList?.map( (item, key) => {
+                                            return <div className="col-xxl-3 col-sm-6 col-12" key={key}>
+                                                <Item
+                                                    tab={tab}
+                                                    item={item}
+                                                    uid={uid}
+                                                    idx={key}
+                                                    onShare={onSharing}
+                                                    onEdit={onShowModal} 
+                                                    onRefresh={(doRefresh = false) => onRefresh( doRefresh )}
+                                                    onRemove={(id) => onRemove(id)}
+                                                />
+                                            </div>
+                                        })
+                                    }
+                                </div>
+                            </InfiniteScroll>
+                            : 
+                            <div className='alert alert-danger m-auto w-75'> { t('videoteca.empty') } </div>
+                    }
+                </>
             }
             
             <VideotecaModal

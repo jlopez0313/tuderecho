@@ -28,10 +28,10 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
 
     return (
         <div className={`offcanvas offcanvas-end show ${styles.sideMenuAbogado} animate__animated ${animateClass} animate__fast`}>
-            <div className='bg-danger py-1 px-3'>
+            <div className='bg-danger px-3'>
                 <FontAwesomeIcon icon={faClose} className='position-absolute top-1 end-3 cursor-pointer text-white' onClick={() => onToggleClass()} />
                 <div className={`text-white w-100 text-center ${styles.top} d-flex align-items-center`}>
-                    <div>
+                    <div className='text-center'>
                         <img src={user?.perfil?.photo || Avatar} alt="" className={`${styles.avatar} m-auto`}/>
                     </div>
                     <span className='w-100'> { user?.name } </span>
@@ -47,30 +47,18 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                             <strong className='text-dark'> { t("sidemenu.profile.basic-info") } </strong>
                         </Link>
                     </li>
+                    <li className='border shadow-sm p-2 m-2'> 
+                        <Link to={`/${ rol.toLowerCase() }s/passwords`}>
+                            <FontAwesomeIcon className='me-2' icon={faKey} />
+                            <strong className='text-dark'> { t("sidemenu.login.passwords") } </strong>
+                        </Link>
+                    </li>
                 </ul>
 
                 {
                     rol.toLowerCase() == 'abogado' && 
                         <ul className=''>
                             <strong className='text-danger d-block mt-5'> { t("sidemenu.gestion.title") } </strong>
-                            <li className='border shadow-sm p-2 m-2'> 
-                                <Link to={`/${ rol.toLowerCase() }s/gestion/comunidades`}>
-                                    <FontAwesomeIcon className='me-2' icon={faUsers} />
-                                    <strong className='text-dark'> { t("sidemenu.gestion.comunidades") } </strong>
-                                </Link>
-                            </li>
-                            <li className='border shadow-sm p-2 m-2'> 
-                                <Link to={`/${ rol.toLowerCase() }s/gestion/conferencias`}>
-                                    <FontAwesomeIcon className='me-2' icon={faPersonChalkboard} />
-                                    <strong className='text-dark'> { t("sidemenu.gestion.conferencias") } </strong>
-                                </Link>
-                            </li>
-                            <li className='border shadow-sm p-2 m-2'> 
-                                <Link to={`/${ rol.toLowerCase() }s/gestion/videoteca`}>
-                                    <FontAwesomeIcon className='me-2' icon={faVideo} />
-                                    <strong className='text-dark'> { t("sidemenu.gestion.videoteca") } </strong>
-                                </Link>
-                            </li>
                             <li className='border shadow-sm p-2 m-2'> 
                                 <Link to={`/${ rol.toLowerCase() }s/gestion/bolsa`}>
                                     <FontAwesomeIcon className='me-2' icon={faSackDollar} />
@@ -98,13 +86,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
 
                 <ul className=''>
                     <strong className='text-danger d-block mt-5'> { t("sidemenu.login.title") } </strong>
-                    <li className='border shadow-sm p-2 m-2'> 
-                        <Link to={`/${ rol.toLowerCase() }s/passwords`}>
-                            <FontAwesomeIcon className='me-2' icon={faKey} />
-                            <strong className='text-dark'> { t("sidemenu.login.passwords") } </strong>
-                        </Link>
-                    </li>
-                    <li className='border shadow-sm p-2 m-2'> 
+                    <li className='border shadow-sm m-2'> 
                         <button className='btn' onClick={() => onLogout()}>
                             <FontAwesomeIcon className='text-danger me-2' icon={faRightFromBracket} />
                             <strong className='text-dark'> { t("sidemenu.login.logout") } </strong>

@@ -3,6 +3,7 @@ import { madeByMe } from '@/services/Comunidades'
 import { useCharts } from '@/hooks/useCharts'
 import { numberFormat } from '@/helpers/numbers';
 import { Loader } from '@/components/shared/Loader/Loader';
+import BolsaCSS from '../Bolsa.module.scss'
 
 import { useTranslation } from 'react-i18next';
 
@@ -10,7 +11,7 @@ export const ComunidadesComponent = () => {
 
   const { t } = useTranslation();
 
-  const { drawBars } = useCharts();
+  const { drawBars, drawDonuts } = useCharts();
   const [chart1, setChart1] = useState(null)
   const [chart2, setChart2] = useState(null)
   const [chart3, setChart3] = useState(null)
@@ -36,7 +37,7 @@ export const ComunidadesComponent = () => {
       chart1.destroy();
     }
 
-    const chart = drawBars('bar1', t('charts.comunidades.sold'), t('charts.usuarios'), data1);
+    const chart = drawBars('bar1', 'x', t('charts.comunidades.sold'), t('charts.usuarios'), data1);
     setChart1( chart )    
   }
 
@@ -54,7 +55,7 @@ export const ComunidadesComponent = () => {
       chart2.destroy();
     }
 
-    const chart = drawBars('bar2', t('charts.comunidades.free'), t('charts.usuarios'), data1);
+    const chart = drawBars('bar2', 'x', t('charts.comunidades.free'), t('charts.usuarios'), data1);
     setChart2( chart )
   }
   
@@ -81,7 +82,7 @@ export const ComunidadesComponent = () => {
       chart3.destroy();
     }
 
-    const chart = drawBars('bar3', t('charts.total') + ': ' + Number(usersFree + usersPaid) , t('charts.usuarios'), data3);
+    const chart = drawDonuts('bar3',  t('charts.total'),  Number(usersFree + usersPaid), t('charts.usuarios'), data3);
     setChart3( chart )
   }
 
@@ -103,20 +104,35 @@ export const ComunidadesComponent = () => {
         isLoading ? <Loader />
         :
           <>
-            <div className="d-flex justify-content-center mt-3">
-              <strong className='me-3'> { t('charts.sold') }: </strong>
-              <span> ${ numberFormat(total) } </span>
-            </div>
-          
-            <div className='row'>
-              <div className="mt-3 col-12 col-xl-6">
-                <canvas id="bar1"></canvas>
+            <div className='row bg-light p-3'>
+              <div className="mt-3 col-12 col-xl-2">
+                <div className={`card ${BolsaCSS.card}`}>
+                  <div className="card-body d-flex flex-column align-items-center">
+                    <strong className='me-3 mt-auto'> { t('charts.sold') }: </strong>
+                    <span className='mb-auto'> ${ numberFormat(total) } </span>
+                  </div>
+                </div>
               </div>
-              <div className="mt-3 col-12 col-xl-6">
-                <canvas id="bar2"></canvas>
+              <div className="mt-3 col-12 col-xl-4">
+                <div className={`card ${BolsaCSS.card}`}>
+                  <div className="card-body">
+                    <canvas id="bar1"></canvas>
+                  </div>
+                </div>
               </div>
-              <div className="mt-3 col-12 col-xl-6">
-                <canvas id="bar3"></canvas>
+              <div className="mt-3 col-12 col-xl-4">
+                <div className={`card ${BolsaCSS.card}`}>
+                  <div className="card-body">
+                    <canvas id="bar2"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 col-12 col-xl-2">
+                <div className={`card ${BolsaCSS.card}`}>
+                  <div className="card-body">
+                    <canvas id="bar3"></canvas>
+                  </div>
+                </div>
               </div>
             </div>
           </>

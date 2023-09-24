@@ -19,4 +19,4 @@ export const tipoDocumentos = [
     key: 'ID',
     value:'ID'
   },
-]
+];

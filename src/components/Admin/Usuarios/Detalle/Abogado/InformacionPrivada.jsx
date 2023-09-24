@@ -92,7 +92,8 @@ export const InformacionPrivada = ({ formState }) => {
                             {
                                 formState.estado === 'R' 
                                 ? 'Rechazado'
-                                : 'Aprobado'
+                                : formState.estado === 'A' ? 
+                                    'Aprobado' : 'Pendiente'
                             }
                         </span>
                         <label htmlFor="staticEmail">Estado</label>
@@ -102,7 +103,10 @@ export const InformacionPrivada = ({ formState }) => {
                     {
                         formState.perfil?.cuenta === 'I' 
                         ? <div className="alert alert-danger"> Cuenta temporalmente desactivada </div>
-                        : <div className="alert alert-success"> Cuenta activa </div>
+                        : formState.perfil?.cuenta === 'A' ?
+                            <div className="alert alert-success"> Cuenta activa </div>
+                            : 
+                            <div className="alert alert-warning"> Cuenta pendiente </div>
                     }
                 </div>
             </div>

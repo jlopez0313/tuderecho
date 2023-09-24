@@ -20,20 +20,18 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
     <Link to={'/abogados/conferencias/' + item.id}>
 
       <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${shared.listItem} text-dark`}>
-        <div className="row g-0">
+        <div className="row g-0 p-1">
           <div className="col-md-4 ps-2 pt-3">
             <Card.Img variant="top" className=' rounded' src={item.archivo || noImage} alt='' />
           </div>
           <div className="col-md-8">
-            <Card.Body>
-              <Card.Text className='d-flex flex-column'>
+              <div className='d-flex flex-column px-2 pt-1'>
                 <small className='text-uppercase d-flex'> 
                   <strong className='flex-grow-1'> {item.titulo} </strong>
                 </small>
-                <small className=''> { t('conferencias.expositor') }: {item.user.name} </small>
+                <small className=''> { t('conferencias.expositor') }: {item.conferencista} </small>
                 <small className=''> { t('conferencias.date') }: { format(new Date(item.fecha), 'yyyy-MM-dd,  HH:mm') } </small>
-              </Card.Text>
-            </Card.Body>
+              </div>
           </div>
         </div>
       </Card>

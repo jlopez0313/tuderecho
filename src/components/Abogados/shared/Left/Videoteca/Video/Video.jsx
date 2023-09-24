@@ -26,8 +26,8 @@ export const Video = memo( ({item, onRemove, onEdit}) => {
 
   return (
     <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 p-1 ${styles.listItem}`}>
-        <div className="row g-0">
-          <div className="col-md-4 ps-2 pt-3">
+        <div className="row g-0 p-1">
+          <div className="col-md-4">
             <Vimeo
                 className='rounded'
                 controls={false}
@@ -38,14 +38,12 @@ export const Video = memo( ({item, onRemove, onEdit}) => {
             />
           </div>
           <div className="col-md-8">
-            <Card.Body>
-              <Card.Text className='d-flex flex-column'>
+              <div className='d-flex flex-column ps-2 pt-1'>
                 <small className='text-uppercase'> 
                   <strong> {item.titulo} </strong>
                 </small>
-                <small className=''> { t('videoteca.expositor') }: {item.user.name} </small>
-              </Card.Text>        
-            </Card.Body>
+                <small className=''> { t('videoteca.expositor') }: {item.conferencista} </small>
+              </div>
           </div>
         </div>
     </Card>

@@ -3,6 +3,7 @@ import styles from './Comunidad.module.scss'
 import { Left } from "@/components/Abogados/shared/Left/Left";
 import { Right } from "@/components/Abogados/shared/Right/Right";
 import { ComunidadComponent } from "@/components/Abogados/Index/Comunidades/Comunidad/Comunidad"
+import { Comunidades } from "@/components/Abogados/shared/Right/Comunidades/Comunidades";
 
 export const Comunidad = () => {
 
@@ -10,18 +11,16 @@ export const Comunidad = () => {
         <>
             <Header />
             <div className={`${styles.abogado}`}>
-            <div className={`bg-light d-flex overflow-auto pt-2 ${styles.container}`}>
+            <div id="scrollableDiv" className={`bg-light d-flex overflow-auto pt-2 ${styles.container}`}>
                 <div className={`left position-sticky p-2 ${styles.left}`}>
-                <Left />
+                    <div className='h-100'>
+                        <Comunidades />
+                    </div>
                 </div>
             
                 <div className={`d-flex justify-content-center flex-grow-1`}>
                     <ComunidadComponent />
-                </div>
-
-                <div className={`right position-sticky p-2 ${styles.right}`}>
-                <Right />
-                </div>          
+                </div>     
             </div>
             </div>
         </>

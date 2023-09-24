@@ -111,20 +111,21 @@ export const Videoteca = () => {
 
     return (
         <>
-            <h5 className='text-danger w-100 fw-bold'> { t('videoteca.title') } </h5>
+            <h6 className='text-danger w-100 fw-bold'> { t('videoteca.title') } </h6>
 
             <div className={`border rounded shadow-sm bg-white overflow-hidden position-relative ${styles.container}`}>
+                    <div className="w-100 rounded text-center border p-2 bg-danger text-white cursor-pointer"
+                        onClick={() => setModalShow(true)}
+                    > 
+                        <FontAwesomeIcon icon={faPencil} />
+                        <span className='ms-3'> { t('videoteca.create') } </span>
+                    </div>
 
-                <div className="w-100 rounded text-center border p-2 bg-danger text-white cursor-pointer"
-                    onClick={() => setModalShow(true)}
-                > 
-                    <FontAwesomeIcon icon={faPencil} />
-                    <span className='ms-3'> { t('videoteca.create') } </span>
-                </div>
-
-                <div className="px-3 mt-2">
-                    <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
-                </div>
+                {/*
+                    <div className="px-3 mt-2">
+                        <input className="m-auto form-control explorar" type="text" placeholder={ t('search') } onChange={doSetSearch}/>
+                    </div>
+                */}
 
                 <div id="divVideoteca" className={`overflow-auto px-3 mt-2 ${styles.list}`}>
                     {
@@ -160,7 +161,7 @@ export const Videoteca = () => {
 
                 <Link to="/abogados/videoteca" className="order-1 m-auto">
                     <Button className='position-absolute rounded-circle bottom-2 end-2'>
-                        <FontAwesomeIcon icon={faPlus} />
+                        <FontAwesomeIcon icon={faSearch} />
                     </Button>
                 </Link>
 

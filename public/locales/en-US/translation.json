@@ -87,21 +87,21 @@
     },
 
     "conferencias": {
-        "conference": "Conference",
-        "create": "Create your Conference",
+        "conference": "Meeting",
+        "create": "Create your meet",
         "date": "Date",
         "discover" : "Discover",
         "empty" : "No yet records...",
         "expositor": "Expositor",
-        "my-list" : "My Conferences",
+        "my-list" : "My Meetings",
         "remove": "Remove",
         "suscription": "Suscription",
-        "title": "Conferences",
-        "update": "Update your Conference",
+        "title": "Meetings",
+        "update": "Update your meet",
         "form" : {
             "cover": "Cover",
             "date": "Date",
-            "date-message": "Remember the conference will be on",
+            "date-message": "Remember the meet will be on",
             "expositor": "Expositor",
             "expositor-placeholder": "Ex: Jhon Doe",
             "pay": "Pay",
@@ -111,19 +111,28 @@
             "title": "Title",
             "title-placeholder": "Ex: The lawyer as a conflicts mediator",
             "target": "Target",
-            "target-placeholder": "Describe the target of the Conference"
+            "target-placeholder": "Describe the target of the meet"
         },
         "alerts": {
-            "error": "Conference onRemove: Internal Error",
+            "error": "Meeting onRemove: Internal Error",
             "paid": "Suscription Registered",
             "removed": "Conference removed",
-            "saved": "Conference saved",
+            "saved": "Meet saved",
             "sure": "Are you sure?"
         }
     },
 
     "contacts": {
         "title": "Contacts"
+    },
+
+    "filters": {
+        "filter": "Filter",
+        "labels": {
+            "all": "All",
+            "mine": "My Creations",
+            "others": "Others"
+        }
     },
 
     "home": {

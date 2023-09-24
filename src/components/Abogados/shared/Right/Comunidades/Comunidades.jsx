@@ -66,6 +66,10 @@ export const Comunidades = () => {
   }
 
   const onRefreshComunidades = (doRefresh) => {
+
+    console.log('hiding');
+
+
     if (doRefresh) {
       onGetList()
     }
@@ -114,7 +118,7 @@ export const Comunidades = () => {
   return (
     <>
 
-      <h5 className='text-danger w-100 fw-bold'> { t('comunidades.title') } </h5>
+      <h6 className='text-danger w-100 fw-bold'> { t('comunidades.title') } </h6>
 
       <div className={`border rounded shadow-sm bg-white overflow-hidden position-relative ${styles.container}`}>
 
@@ -124,11 +128,13 @@ export const Comunidades = () => {
           <FontAwesomeIcon icon={faPencil} />
           <span className='ms-3'> { t('comunidades.create') } </span>
         </div>
-
-        <div className="px-3 mt-2">
-          <input className="m-auto form-control explorar" type="text" placeholder={t('search')} onChange={doSetSearch}/>
-        </div>
-
+        
+        {/*
+          <div className="px-3 mt-2">
+            <input className="m-auto form-control explorar" type="text" placeholder={t('search')} onChange={doSetSearch}/>
+          </div>
+        */}
+        
         <div id="divComunidades" className={`overflow-auto px-3 mt-2 ${styles.list}`}>
           {
             isLoading ? <Loader />
@@ -163,7 +169,7 @@ export const Comunidades = () => {
 
         <Link to="/abogados/comunidades" className="order-1 m-auto">
           <Button className='position-absolute rounded-circle bottom-2 end-2'>
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faSearch} />
           </Button>
         </Link>
       </div>

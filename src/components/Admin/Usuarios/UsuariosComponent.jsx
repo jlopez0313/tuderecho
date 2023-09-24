@@ -41,7 +41,7 @@ export const UsuariosComponent = () => {
         },
         {
             name: 'Correo',
-            selector: row => row.name,
+            selector: row => row.email,
         },
         {
             name: 'Estado',

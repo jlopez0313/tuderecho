@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
-import { paginate, remove } from '@/services/Tags';
+import { paginate, remove } from '@/services/Especialidades';
 import DataTable from 'react-data-table-component';
 
 const breadcrumb = [
@@ -73,7 +73,7 @@ export const EspecialidadesComponent = () => {
 
         const data = await paginate(page, perPage);
 
-        setEspecialidades( data.tags )
+        setEspecialidades( data.especialidades )
         setTotalRows(data.total);
 		setLoading(false);
     }

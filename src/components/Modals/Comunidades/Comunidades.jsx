@@ -2,18 +2,22 @@ import React, { memo, useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
-import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
 import { notify } from '@/helpers/helpers'
 import { useForm } from '@/hooks/useForm';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Comunidades.module.scss'
 import { create, update } from '@/services/Comunidades';
+
+import { useDispatch } from 'react-redux';
+import { setRefresh } from '@/store/comunidades/ComunidadesSlice';
+
 import { useTranslation } from 'react-i18next';
 
 export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const { t } = useTranslation();
+    const dispatch = useDispatch();
 
     const initFormData = {
         titulo: '',
@@ -77,6 +81,7 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
             setIsLoading( false );
             notify( t('comunidades.alerts.saved'), 'success');
             onSetFormState(initFormData)
+            dispatch( setRefresh( true ) )
             doHide( true );
         })
         .catch( error => {

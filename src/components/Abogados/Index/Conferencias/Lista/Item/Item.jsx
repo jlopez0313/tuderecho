@@ -37,7 +37,7 @@ export const Item = ({ item, uid, onRefresh, onEdit, onShare, onRemove }) => {
                         <small className='text-uppercase d-flex'> 
                             <strong className='flex-grow-1'> {item.titulo} </strong>
                         </small>
-                        <small className=''> { t('conferencias.expositor') }: {item.user.name} </small>
+                        <small className=''> { t('conferencias.expositor') }: {item.conferencista} </small>
                         <small className=''> { t('conferencias.date') }: { format(new Date(item.fecha), 'yyyy-MM-dd,  HH:mm') } </small>
                     </Card.Text>
                 

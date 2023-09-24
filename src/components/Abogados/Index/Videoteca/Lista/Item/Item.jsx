@@ -56,6 +56,7 @@ export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemov
                 <div className={`rounded ${style.imgContent}`} 
                         onClick={asd}>
                     <Vimeo
+                        className='mt-5'
                         responsive={true}
                         controls={ tab === 'profile' }
                         showByline={false}
@@ -69,7 +70,7 @@ export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemov
                         <small className='text-uppercase d-flex'> 
                             <strong className='flex-grow-1'> {item.titulo} </strong>
                         </small>
-                        <small className=''> {t('videoteca.expositor')}: {item.user.name} </small>
+                        <small className=''> {t('videoteca.expositor')}: {item.conferencista} </small>
                     </Card.Text>
                 
                     <div className='d-flex justify-content-between align-items-center'>

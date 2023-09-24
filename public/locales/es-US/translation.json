@@ -87,21 +87,21 @@
     },
 
     "conferencias": {
-        "conference": "Conferencia",
-        "create": "Crea tu Conferencia",
+        "conference": "Encuentro",
+        "create": "Crea tu encuentro",
         "date": "Fecha",
         "discover" : "Descubrir",
         "empty" : "sin registros...",
         "expositor": "Expositor",
-        "my-list" : "Mis Conferencias",
+        "my-list" : "Mis encuentros",
         "remove": "Remover",
         "suscription": "Suscripción",
-        "title": "Conferencias",
-        "update": "Modifica tu Conferencia",
+        "title": "Encuentros",
+        "update": "Modifica tu encuentro",
         "form" : {
             "cover": "Pago",
             "date": "Fecha",
-            "date-message": "Recuerda que la conferencia será el",
+            "date-message": "Recuerda que el encuentro será el",
             "expositor": "Expositor",
             "expositor-placeholder": "Ex: Juan Perez",
             "pay": "Pagar",
@@ -111,19 +111,28 @@
             "title": "Título",
             "title-placeholder": "Ej: El abogado como mediador de conflictos",
             "target": "Target",
-            "target-placeholder": "Describe el objetivo de la Conferencia"
+            "target-placeholder": "Describe el objetivo del encuentro"
         },
         "alerts": {
-            "error": "Conference onRemove: Internal Error",
+            "error": "Encuentros onRemove: Internal Error",
             "paid": "Suscripción Registrada",
-            "removed": "Conferencia removida",
-            "saved": "Conferencia guardada",
+            "removed": "Encuentro removido",
+            "saved": "Encuentro guardado",
             "sure": "Estas seguro?"
         }
     },
 
     "contacts": {
         "title": "Contactos"
+    },
+
+    "filters": {
+        "filter": "Filtrar",
+        "labels": {
+            "all": "Todos",
+            "mine": "Mis Creaciones",
+            "others": "Otras Creaciones"
+        }
     },
 
     "home": {

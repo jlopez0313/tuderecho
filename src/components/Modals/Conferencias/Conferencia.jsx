@@ -12,6 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import style from './Conferencia.module.scss'
 import { create, update } from '@/services/Conferencias';
 import { signal } from '@preact/signals-react';
+import { useDispatch } from 'react-redux';
+import { setRefresh } from '@/store/conferencias/ConferenciasSlice';
 
 import { useTranslation } from 'react-i18next';
 
@@ -19,6 +21,7 @@ const shown = signal( false );
 export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const { t } = useTranslation();
+    const dispatch = useDispatch();
 
     const [show, setShow] = useState( true );
     const [file, setFile] = useState( null );
@@ -89,7 +92,8 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         .then( () => {
             setIsLoading( false );
             notify( t('conferencias.alerts.saved'), 'success');
-            onSetFormState(initFormData)
+            onSetFormState(initFormData);
+            dispatch( setRefresh( true ) )
             doHide( true );
         })
         .catch( error => {

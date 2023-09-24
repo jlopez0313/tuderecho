@@ -224,6 +224,10 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
                   */}
               </div>
 
+              <div className="options mt-2 d-flex justify-content-end align-items-center border rounded p-2 me-2">
+                <FontAwesomeIcon prefix={'fa'}  icon={['fab', 'square-facebook']} />
+              </div>
+
           </Modal.Body>
 
           <Modal.Footer className='d-block text-center'>

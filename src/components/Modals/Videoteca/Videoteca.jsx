@@ -10,6 +10,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import style from './Videoteca.module.scss'
 import { create, update } from '@/services/Videoteca';
 
+import { useDispatch } from 'react-redux';
+import { setRefresh } from '@/store/videoteca/VideotecaSlice';
+
 import { useTranslation } from 'react-i18next';
 
 import Vimeo from '@u-wave/react-vimeo';
@@ -19,6 +22,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const { t } = useTranslation();
     const { upload } = useVimeo();
+    const dispatch = useDispatch();
 
     const initFormData = {
         titulo: '',
@@ -56,29 +60,43 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
         setIsLoading( true );
 
-        upload(videoUrl, formState.titulo)
-        .then( carga => {
+        try {
+            let carga = {}
+
+            if (videoUrl) {
+                carga = await upload(videoUrl, formState.titulo);
+            }
+
             const token = localStorage.getItem('token') || '';
             const { uid } = decodeToken(token);
-    
-            const obj = {
-                ...formState,
-                video: carga.id,
-                user: uid,
+
+            let obj = {}
+            if ( carga.id ) {            
+                obj = {
+                    ...formState,
+                    video: carga.id,
+                    user: uid,
+                }
+            } else {
+                obj = {
+                    ...formState,
+                    user: uid,
+                }
             }
-    
+
             let action = null;
             if (item.id) {
                 action = update( item.id, obj )
             } else {
                 action = create( obj )
             }
-    
+
             action
             .then( () => {
                 setIsLoading( false );
                 notify( t('posts.alerts.saved'), 'success');
-                onSetFormState(initFormData)
+                onSetFormState(initFormData);
+                dispatch( setRefresh( true ) )
                 doHide( true );
             })
             .catch( error => {
@@ -86,10 +104,10 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                 notify( t('posts.alerts.error'), 'error')
             })
 
-        }).catch( error => {
+        } catch( error) {
             setIsLoading( false );
             notify( t('posts.alerts.error'), 'error')
-        })
+        }
     }
 
     const onGetVideoURI = async (evt) => {
@@ -98,7 +116,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     useEffect(() => {
         if ( item.id ) {
-            // setVideoUrl('http://www.youtube.com/watch?v=' + item.video);
+            // setVideoUrl(item.video);
             onSetFormState({
                 ...item,
             })
@@ -149,7 +167,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                             <div className="mb-3">
                                 <input
                                     type="file"
-                                    required
+                                    required={!item.id}
                                     className='form-control'
                                     placeholder='Ej: https://www.youtube.com/watch?v=3082r1-0DXc'
                                     onChange={onGetVideoURI}
@@ -199,7 +217,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit' disabled={!videoUrl || isLoading}> 
+                        <Button className='w-100 m-0' type='submit' disabled={!formState.video || isLoading}> 
                             { 
                                 isLoading ? t('loading') : t('save')
                             }

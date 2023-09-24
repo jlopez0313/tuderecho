@@ -22,11 +22,11 @@ export const Item = memo(({ item }) => {
             >
             </div>
             <Card.Body>
-                <Card.Text className='d-flex flex-column'>
+                <div className='d-flex flex-column'>
                     <small className='text-uppercase d-flex'>
                         <strong className='flex-grow-1'> {item?.titulo} </strong>
                     </small>
-                    <small className=''> {t('conferencias.expositor')}: {item?.user?.name} </small>
+                    <small className=''> {t('conferencias.expositor')}: {item?.conferencista} </small>
                     <small className=''> {t('conferencias.date')}: {format(new Date(item?.fecha || null), 'yyyy-MM-dd,  HH:mm a')} </small>
 
                     <div className="mt-2 accordion" id="accordionExample">
@@ -48,7 +48,7 @@ export const Item = memo(({ item }) => {
                             </div>
                         </div>
                     </div>
-                </Card.Text>
+                </div>
             </Card.Body>
         </Card>
     )

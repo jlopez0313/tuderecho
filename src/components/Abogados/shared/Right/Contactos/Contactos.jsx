@@ -74,7 +74,7 @@ export const Contactos = () => {
 
   return (
     <>    
-      <h5 className='text-danger w-100 fw-bold'> { t('contacts.title') } </h5>
+      <h6 className='text-danger w-100 fw-bold'> { t('contacts.title') } </h6>
 
       <div className={`border rounded shadow-sm bg-white overflow-hidden ${shared.container}`}>
         
