@@ -6,7 +6,7 @@ export const useCharts = () => {
     const dymanicColors = (data) => {
         const colors = [];
         const borders = [];
-        for( let i=0 ; i < data.length; i++ ) {
+        for( let i=0 ; i < data?.length; i++ ) {
             const color1 = Math.floor(Math.random() * 255);
             const color2 = Math.floor(Math.random() * 255);
             const color3 = Math.floor(Math.random() * 255);
