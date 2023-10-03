@@ -21,7 +21,7 @@ import Swal from 'sweetalert2'
 
 import { useTranslation } from 'react-i18next';
 
-export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onSharing, showActions = true, ...props} ) => {
+export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onSharing, showActions = true, showShared = true, ...props} ) => {
 
     const { t } = useTranslation();
 
@@ -137,9 +137,10 @@ export const Publicacion = memo( ( {idx, post, onComentar, onRemovePubli, onShar
                             className='mb-3'
                             post={publi.post}
                             showActions={false}
+                            showShared={false}
                         />
                     </div>
-                    : publi.hasOwnProperty('post')
+                    : publi.hasOwnProperty('post') && showShared
                         ? 
                         <div className='border p-3 rounded'>
                             <b>{ t('posts.unavailable.title') }</b> <br />

@@ -15,19 +15,6 @@
     padding-left: 45px !important;
 }
 
-@media (max-width: 385px) {
-    .header {
-        .plus-min {
-            display: block !important;
-        }
-
-        .left-min,
-        .right-min {
-            display: none !important;
-        }
-    }
-}
-
 @media (max-width: 520px) {
     .header {
         .logo-sm {

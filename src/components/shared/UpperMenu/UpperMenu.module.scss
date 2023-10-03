@@ -1,0 +1,39 @@
+.upperMenuAbogado {
+
+    .top {
+        // background: url('/assets/images/abogado/shared/side-menu/top-background.png');
+        // background-size: 100% auto;
+        /*background-repeat: no-repeat;*/
+        height: 90px;
+
+        div {
+            border-radius: 50%;
+            height: 68px;
+            width: 84px;
+            text-align: center;
+            /* background: green; */
+            overflow: hidden;
+            border: 1px solid;
+        
+            .avatar {
+                height: 100%;
+            }
+        }
+    }
+
+    .menu {
+        overflow: auto;
+
+        ul {
+            list-style: none;
+            margin-bottom: 0;
+            
+            li {
+                a {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+    
+}

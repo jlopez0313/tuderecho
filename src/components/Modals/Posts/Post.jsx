@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAt, faClose } from '@fortawesome/free-solid-svg-icons';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { Multimedia } from './Multimedia/Multimedia';
 import { GifsButton } from './Gifs/GifsButton';
 import { EmojiButton } from './Emojis/EmojiButton';
@@ -19,6 +19,7 @@ import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 import { useTranslation } from 'react-i18next';
 import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferencia';
 import { Videoteca } from '@/components/Abogados/shared/Videoteca/Videoteca';
+import { Sharing } from '@/components/Abogados/shared/Sharing/Sharing';
 
 export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = null, comunidad = '', post, ...props} ) => {
 
@@ -138,7 +139,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
               </Modal.Title>
           </Modal.Header>
         
-          <Modal.Body className='py-0 pe-1'>
+          <Modal.Body className='py-0'>
             <div className={`pe-1 ${styles.body} ${shared.list}`}>
               <textarea
                 className='form-control'
@@ -178,7 +179,6 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
                 ?
                   <div className='overflow-auto'>
                     <Publicacion
-                        className='mb-3'
                         post={publicacion}
                         showActions={false}
                     />
@@ -207,7 +207,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
             </div>
 
               
-              <div className="options mt-2 d-flex justify-content-end align-items-center border rounded p-2 me-2">
+              <div className="options mt-1 d-flex justify-content-end align-items-center border rounded p-2 me-2">
                 {
                   !post
                   ? 
@@ -224,8 +224,8 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
                   */}
               </div>
 
-              <div className="options mt-2 d-flex justify-content-end align-items-center border rounded p-2 me-2">
-                {/* <FontAwesomeIcon prefix={'fa'}  icon={['fab', 'square-facebook']} /> */}
+              <div className="options mt-2 d-flex justify-content-center align-items-center border rounded p-2 me-2">
+                <Sharing />
               </div>
 
           </Modal.Body>

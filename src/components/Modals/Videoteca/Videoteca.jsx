@@ -9,6 +9,7 @@ import { useVimeo } from '@/hooks/useVimeo';
 import "react-datepicker/dist/react-datepicker.css";
 import style from './Videoteca.module.scss'
 import { create, update } from '@/services/Videoteca';
+import { upload } from '@/services/Dacast';
 
 import { useDispatch } from 'react-redux';
 import { setRefresh } from '@/store/videoteca/VideotecaSlice';
@@ -21,7 +22,7 @@ import Vimeo from '@u-wave/react-vimeo';
 export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const { t } = useTranslation();
-    const { upload } = useVimeo();
+    // const { upload } = useVimeo();
     const dispatch = useDispatch();
 
     const initFormData = {
@@ -105,6 +106,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
             })
 
         } catch( error) {
+            console.log( error );
             setIsLoading( false );
             notify( t('posts.alerts.error'), 'error')
         }
@@ -217,7 +219,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                     </Modal.Body>
 
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit' disabled={!formState.video || isLoading}> 
+                        <Button className='w-100 m-0' type='submit' disabled={!videoUrl || isLoading}> 
                             { 
                                 isLoading ? t('loading') : t('save')
                             }

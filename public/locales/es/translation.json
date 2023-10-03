@@ -9,6 +9,7 @@
     "search": "Buscar...",
     "see": "Ver más",
     "share": "Compartir",
+    "shareOn": "Compartir en",
     "subscribe": "Suscribirse",
     "empty": "Sin registros aún...",
     "EOL": "Sin más registros...",
@@ -110,7 +111,7 @@
             "price-placeholder": "Ex: $50 USD",
             "title": "Título",
             "title-placeholder": "Ej: El abogado como mediador de conflictos",
-            "target": "Target",
+            "target": "Objetivo",
             "target-placeholder": "Describe el objetivo del encuentro"
         },
         "alerts": {

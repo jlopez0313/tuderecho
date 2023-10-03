@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
 import LogoSmall from '@/assets/images/logo-small.png'
 import { SideMenu } from "../SideMenu/SideMenu";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import './Header.scss';
 import { Notificaciones } from "@/components/Abogados/Notificaciones/Notificaciones";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -13,10 +13,13 @@ import { Button } from "./Buttons/Button";
 import { List } from "@/components/Abogados/Chat/List";
 
 import { useTranslation } from 'react-i18next';
+import { UpperMenu } from "@/components/shared/UpperMenu/UpperMenu";
 
 export const Header = () => {
 
     const { t } = useTranslation();
+
+    const childRef = useRef(null);
 
     const [showSubmenu, setShowSubmenu] = useState(false);
     const [animateClass, setAnimateClass] = useState('animate__slideInRight')
@@ -24,8 +27,13 @@ export const Header = () => {
     const onShowSubMenu = () => {
         setShowSubmenu( true )
         setAnimateClass( 'animate__slideInRight' )
+        onHideShow();
     }
-   
+
+    const onHideShow = ( ) => {
+        childRef.current.childFunction1()
+    }
+    
     return (
         <div className='header border shadow-sm'>
             <div className='px-4 py-2 d-flex flex-wrap align-items-center justify-content-sm-between'>
@@ -37,12 +45,10 @@ export const Header = () => {
                 <input className="m-auto order-sm-2 order-3 form-control w-sm-50 p-2 explorar" type="text" placeholder={ t('explore')} aria-label="default input example" />
                 
                 <div className="d-flex order-sm-3 order-2 ms-auto justify-content-between">
-                    <Button className='d-none left-min' component={<List />} icon={faChevronRight} />
-                    <Button className='d-none right-min' component={<List />} icon={faChevronLeft} />
-                    <Button className='d-none plus-min' component={<List />} icon={faPlus} />
-                    <Button component={<List />} icon={faComment} />
+                    <Button ref={childRef} onHideShow={onHideShow} className='plus-min d-none' component={<UpperMenu />} icon={faPlus} />
+                    <Button ref={childRef} onHideShow={onHideShow} component={<List />} icon={faComment} />
 
-                    <Button component={<Notificaciones />} icon={faBell} />
+                    <Button ref={childRef} onHideShow={onHideShow} component={<Notificaciones />} icon={faBell} />
 
                     <button className="btn me-3" onClick={onShowSubMenu}>
                         <FontAwesomeIcon icon={faBars} />
