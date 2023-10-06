@@ -2,11 +2,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import {FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share'
 
-export const Sharing = () => {
+export const Sharing = ({ id }) => {
     const { t } = useTranslation();
 
-    const shareUrl = 'http://github.com';
-    const title = 'GitHub';
+    const shareUrl = `${import.meta.env.VITE_FRONTEND}/abogados/posts/${id}`;
+    const title = 'Sabiux';
     return (
         <>
             <span> { t('shareOn')}: </span>

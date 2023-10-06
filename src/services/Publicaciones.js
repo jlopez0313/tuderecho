@@ -12,6 +12,16 @@ export const list = async ( { comunidad }, page, limit ) => {
     }
 }
 
+export const find = async (id) => {
+    const response = await backendApi.get(modulo + id)
+
+    if ( response ) {
+        return Promise.resolve(response.data.publicacion);
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 export const save = async ( body ) => {    
     
     if (!body.post) {

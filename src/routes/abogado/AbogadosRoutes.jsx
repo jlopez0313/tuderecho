@@ -8,6 +8,7 @@ import { GestionRoutes } from './GestionRoutes';
 import { ComunidadesRoutes } from './ComunidadesRoutes';
 import { ConferenciasRoutes } from './ConferenciasRoutes';
 import { VideotecaRoutes } from './VideotecaRoutes';
+import { Posts } from '@/pages/Posts/Posts';
 
 export const AbogadosRoutes = () => {
   return (
@@ -20,6 +21,7 @@ export const AbogadosRoutes = () => {
       <Route path='perfil' element={ <Perfil /> } />
       <Route path='gestion/*' element={ <GestionRoutes />} />
       <Route path='passwords' element={ <Passwords /> } />
+      <Route path='posts/:id' element={ <Posts /> } />
       <Route path="*" element={ <NotFound />} />
     </Routes>
   )

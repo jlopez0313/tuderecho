@@ -225,7 +225,7 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
               </div>
 
               <div className="options mt-2 d-flex justify-content-center align-items-center border rounded p-2 me-2">
-                <Sharing />
+                <Sharing id={ publicacion?.id } />
               </div>
 
           </Modal.Body>
