@@ -17,11 +17,13 @@ import { setRefresh } from '@/store/videoteca/VideotecaSlice';
 import { useTranslation } from 'react-i18next';
 
 import Vimeo from '@u-wave/react-vimeo';
+import { useUpload } from '@/hooks/useUpload';
 
 
 export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const { t } = useTranslation();
+    const {handleChange, handleUpload, file, fileUrl} = useUpload()
     // const { upload } = useVimeo();
     const dispatch = useDispatch();
 
@@ -62,23 +64,25 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         setIsLoading( true );
 
         try {
-            let carga = {}
-
-            if (videoUrl) {
-                carga = await upload(videoUrl, formState.titulo);
+            console.log('object', file);
+            if (file) {
+                // carga = await upload(videoUrl, formState.titulo);
+                await handleUpload();
             }
 
             const token = localStorage.getItem('token') || '';
             const { uid } = decodeToken(token);
 
             let obj = {}
-            if ( carga.id ) {            
+            if ( fileUrl ) {            
+                console.log( 'fileUrl', fileUrl );
                 obj = {
                     ...formState,
-                    video: carga.id,
+                    video: fileUrl,
                     user: uid,
                 }
             } else {
+                console.log( 'NotfileUrl' );
                 obj = {
                     ...formState,
                     user: uid,
@@ -113,6 +117,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     }
 
     const onGetVideoURI = async (evt) => {
+        handleChange(evt)
         setVideoUrl(evt.target.files[0]);
     }
 

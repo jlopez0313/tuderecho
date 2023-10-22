@@ -28,13 +28,11 @@ export const Video = memo( ({item, onRemove, onEdit}) => {
     <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 p-1 ${styles.listItem}`}>
         <div className="row g-0 p-1">
           <div className="col-md-4">
-            <Vimeo
-                className='rounded'
+            <video
+                className='rounded w-100'
                 controls={false}
                 responsive={true}
-                showByline={false}
-                showTitle={false}
-                video={item.video}
+                src={item.video}
             />
           </div>
           <div className="col-md-8">

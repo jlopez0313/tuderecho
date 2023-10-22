@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
 import LogoSmall from '@/assets/images/logo-small.png'
 import { SideMenu } from "../SideMenu/SideMenu";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import './Header.scss';
 import { Notificaciones } from "@/components/Abogados/Notificaciones/Notificaciones";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -14,12 +14,15 @@ import { List } from "@/components/Abogados/Chat/List";
 
 import { useTranslation } from 'react-i18next';
 import { UpperMenu } from "@/components/shared/UpperMenu/UpperMenu";
+import { ChatContext } from "@/context/Chat/ChatContext";
 
 export const Header = () => {
 
     const { t } = useTranslation();
 
     const childRef = useRef(null);
+    const {connectToChat, onAddChat, onRemoveChat, onlineUsers, chatList, socket, newMessage} = useContext( ChatContext );
+
 
     const [showSubmenu, setShowSubmenu] = useState(false);
     const [animateClass, setAnimateClass] = useState('animate__slideInRight')
@@ -33,7 +36,7 @@ export const Header = () => {
     const onHideShow = ( ) => {
         childRef.current.childFunction1()
     }
-    
+
     return (
         <div className='header border shadow-sm'>
             <div className='px-4 py-2 d-flex flex-wrap align-items-center justify-content-sm-between'>
@@ -45,10 +48,11 @@ export const Header = () => {
                 <input className="m-auto order-sm-2 order-3 form-control w-sm-50 p-2 explorar" type="text" placeholder={ t('explore')} aria-label="default input example" />
                 
                 <div className="d-flex order-sm-3 order-2 ms-auto justify-content-between">
-                    <Button ref={childRef} onHideShow={onHideShow} className='plus-min d-none' component={<UpperMenu />} icon={faPlus} />
-                    <Button ref={childRef} onHideShow={onHideShow} component={<List />} icon={faComment} />
+                    <Button ref={childRef} showDot={newMessage} onHideShow={onHideShow} className='plus-min d-none' component={<UpperMenu />} icon={faPlus} />
 
-                    <Button ref={childRef} onHideShow={onHideShow} component={<Notificaciones />} icon={faBell} />
+                    <Button ref={childRef} showDot={false} onHideShow={onHideShow} component={<List />} icon={faComment} />
+
+                    <Button ref={childRef} showDot={false} onHideShow={onHideShow} component={<Notificaciones />} icon={faBell} />
 
                     <button className="btn me-3" onClick={onShowSubMenu}>
                         <FontAwesomeIcon icon={faBars} />

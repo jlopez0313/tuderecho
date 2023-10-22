@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from './Button.module.scss';
 
 export const Button = forwardRef(
-  ({ className = '', component, icon, onHideShow}, ref) => {
+  ({ className = '', component, icon, showDot = false, onHideShow}, ref) => {
 
     useImperativeHandle( ref, () => 
       ({
@@ -24,8 +24,11 @@ export const Button = forwardRef(
 
     return (
       <>
-          <button className={`btn me-3 ${ className }`} onClick={() => doToggleShow() }>
-              <FontAwesomeIcon icon={icon} className='' />
+          <button className={`btn me-3 position-relative ${ className }`} onClick={() => doToggleShow() }>
+            {
+              showDot && <span className={`bg-danger text-white ${styles.badget}`}></span>
+            }
+            <FontAwesomeIcon icon={icon} className='' />
           </button>
 
           { show && 

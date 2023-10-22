@@ -55,13 +55,13 @@ export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemov
                 
                 <div className={`rounded ${style.imgContent}`} 
                         onClick={asd}>
-                    <Vimeo
-                        className='mt-5'
+                    <video
+                        className='mt-5 w-100'
                         responsive={true}
                         controls={ tab === 'profile' }
                         showByline={false}
                         showTitle={false}
-                        video={item.video}
+                        src={item.video}
                     />
                 </div>
 
