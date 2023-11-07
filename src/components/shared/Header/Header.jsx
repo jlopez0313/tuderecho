@@ -48,9 +48,9 @@ export const Header = () => {
                 <input className="m-auto order-sm-2 order-3 form-control w-sm-50 p-2 explorar" type="text" placeholder={ t('explore')} aria-label="default input example" />
                 
                 <div className="d-flex order-sm-3 order-2 ms-auto justify-content-between">
-                    <Button ref={childRef} showDot={newMessage} onHideShow={onHideShow} className='plus-min d-none' component={<UpperMenu />} icon={faPlus} />
+                    <Button ref={childRef} showDot={false} onHideShow={onHideShow} className='plus-min d-none' component={<UpperMenu />} icon={faPlus} />
 
-                    <Button ref={childRef} showDot={false} onHideShow={onHideShow} component={<List />} icon={faComment} />
+                    <Button ref={childRef} showDot={newMessage} onHideShow={onHideShow} component={<List />} icon={faComment} />
 
                     <Button ref={childRef} showDot={false} onHideShow={onHideShow} component={<Notificaciones />} icon={faBell} />
 

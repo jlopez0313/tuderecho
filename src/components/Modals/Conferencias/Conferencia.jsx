@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { setRefresh } from '@/store/conferencias/ConferenciasSlice';
 
 import { useTranslation } from 'react-i18next';
+import { auth } from '@/services/Zoom';
 
 const shown = signal( false );
 export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
@@ -69,15 +70,19 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         onInputChange( myEvent2 )
     }
 
-    const onDoSubmit = (evt) => {
+    const onDoSubmit = async (evt) => {
         evt.preventDefault();
+        
         const token = localStorage.getItem('token') || '';
         const { uid } = decodeToken(token);
-
+        
+        const {access_token} = await auth();
+        
         const obj = {
             ...formState,
             archivo: file,
             user: uid,
+            access_token
         }
 
         let action = null;
@@ -231,7 +236,7 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     
                     </Modal.Body>
                     <Modal.Footer className='d-block text-center'>
-                        <Button className='w-100 m-0' type='submit' disabled={isLoading}> 
+                        <Button className='w-100 m-0' type='submit' disabled={!formState.fecha || isLoading}> 
                             {
                                 isLoading ? t('loading') : t('save')
                             }

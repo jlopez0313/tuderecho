@@ -39,7 +39,8 @@ export const ChatProvider = ({ children }) => {
   
         if (to === user?.uid) {
           const from = onlineUsers.value.find((user) => user?.uid === sender);
-  
+
+          console.log( from );
           if (from) {
             onAddChat(from);
             setNewMessage( true )

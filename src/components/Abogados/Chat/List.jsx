@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { forwardRef } from 'react'
 import Popover from 'react-bootstrap/Popover';
 import { Contacto } from './Contacto/Contacto';
 import styles from '@/assets/styles/shared.module.scss';
 import { all } from '@/services/Chat';
 import { Loader } from '@/components/shared/Loader/Loader';
+import { ChatContext } from '@/context/Chat/ChatContext';
 
 export const List = forwardRef(
     () => {
+        
+        const {setNewMessage} = useContext( ChatContext );
 
         const [rooms, setRooms] = useState([]);
         const [isLoading, setIsLoading] = useState(false)
@@ -15,6 +18,18 @@ export const List = forwardRef(
         const getAll = async () => {
             setIsLoading( true )
             const rooms = await all();
+            
+            let hasUnread = false;
+            rooms.forEach( room => {
+                hasUnread = room.chats.find( chat => chat.read == false)
+
+                if( hasUnread ) {
+                    return;
+                }
+            });
+
+            hasUnread && setNewMessage( true )
+
             setRooms( rooms );
             setIsLoading( false )
         }

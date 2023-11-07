@@ -112,7 +112,9 @@
             "title": "Title",
             "title-placeholder": "Ex: The lawyer as a conflicts mediator",
             "target": "Target",
-            "target-placeholder": "Describe the target of the meet"
+            "target-placeholder": "Describe the target of the meet",
+            "url-placeholder": "Ex: 123456789",
+            "url": "Zoom ID"
         },
         "alerts": {
             "error": "Meeting onRemove: Internal Error",

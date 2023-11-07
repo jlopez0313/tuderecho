@@ -112,7 +112,9 @@
             "title": "Título",
             "title-placeholder": "Ej: El abogado como mediador de conflictos",
             "target": "Objetivo",
-            "target-placeholder": "Describe el objetivo del encuentro"
+            "target-placeholder": "Describe el objetivo del encuentro",
+            "url-placeholder": "Ex: 123456789",
+            "url": "Zoom ID"
         },
         "alerts": {
             "error": "Encuentros onRemove: Internal Error",

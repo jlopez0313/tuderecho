@@ -19,9 +19,27 @@ import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
 import { useTranslation } from 'react-i18next';
+import { useZoom } from '@/hooks/useZoom';
 
 export const Conferencias = () => {
 
+    let payload = {
+        meetingNumber: 84547687430,
+        passWord: '6Eff25',
+        role: 0,
+        sdkKey: 'f0nQDZe_S2yWNYZtDBxA5g',
+        sdkSecret: 'nzqcXX4bAuJwb1z1sqzpt0d5i7NjdAIK',
+        leaveUrl: 'https://localhost:3000',
+        userName: 'Testing',
+        userEmail: '',
+    }
+
+    const { startZoom } = useZoom(payload)
+
+    useEffect( () => {
+        startZoom()
+    })
+    
     const limit = 10;
     const { t } = useTranslation();
     
@@ -110,6 +128,7 @@ export const Conferencias = () => {
     }, [refresh])
 
     return (
+
         <>
             <h6 className='text-danger w-100 fw-bold'> { t('conferencias.title') } </h6>
 

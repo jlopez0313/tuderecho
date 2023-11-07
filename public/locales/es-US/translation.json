@@ -76,7 +76,9 @@
             "title": "Título",
             "title-placeholder": "Ej: El abogado como mediador de conflictos",
             "target": "Objetivo",
-            "target-placeholder": "Describe el objetivo de la comunidad"
+            "target-placeholder": "Describe el objetivo de la comunidad",
+            "url-placeholder": "Ex: 123456789",
+            "url": "Zoom ID"
         },
         "alerts": {
             "error": "Community onRemove: Internal Error",
