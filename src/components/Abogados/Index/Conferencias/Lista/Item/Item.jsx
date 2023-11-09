@@ -39,6 +39,10 @@ export const Item = ({ item, uid, onRefresh, onEdit, onShare, onRemove }) => {
                         </small>
                         <small className=''> { t('conferencias.expositor') }: {item.conferencista} </small>
                         <small className=''> { t('conferencias.date') }: { format(new Date(item.fecha), 'yyyy-MM-dd,  HH:mm') } </small>
+                        {
+                            item?.url && uid && <strong className=''> <a target='_blank' href={item.url}> Click para Acceder </a> </strong>
+                        }
+
                     </Card.Text>
                 
                     <div className='d-flex justify-content-between align-items-center'>

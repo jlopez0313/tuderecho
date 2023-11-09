@@ -28,6 +28,9 @@ export const Item = memo(({ item }) => {
                     </small>
                     <small className=''> {t('conferencias.expositor')}: {item?.conferencista} </small>
                     <small className=''> {t('conferencias.date')}: {format(new Date(item?.fecha || null), 'yyyy-MM-dd,  HH:mm a')} </small>
+                    {
+                        item?.url && uid && <strong className=''> <a target='_blank' href={item}> Click para Acceder </a> </strong>
+                    }
 
                     <div className="mt-2 accordion" id="accordionExample">
                         <div className="accordion-item" onClick={() => onToggleShowPeople()}>
