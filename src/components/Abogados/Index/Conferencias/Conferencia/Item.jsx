@@ -21,7 +21,7 @@ export const Item = memo(({ item }) => {
     }
 
     const onFindUser = () => {
-        const findUser = item.usuarios?.find( user => user.id == uid );
+        const findUser = item.user.id === uid || item.usuarios?.find( user => user.id == uid );
         setHasUser(findUser)
     }
 
