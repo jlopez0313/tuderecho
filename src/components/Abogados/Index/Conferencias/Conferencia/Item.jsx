@@ -21,13 +21,13 @@ export const Item = memo(({ item }) => {
     }
 
     const onFindUser = () => {
-        const findUser = item.usuarios.find( user => user.id == uid );
+        const findUser = item.usuarios?.find( user => user.id == uid );
         setHasUser(findUser)
     }
 
     useEffect(() => {
         onFindUser()
-    }, [])
+    }, [item])
 
     return (
         <Card className={`d-flex flex-column border rounded-2 shadow-sm bg-light mb-3 ${style.listItem}`}>
