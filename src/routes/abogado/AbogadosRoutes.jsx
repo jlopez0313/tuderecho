@@ -3,7 +3,7 @@ import { Index } from '@/pages/Abogado/Index/Index';
 import { Perfil } from '@/pages/Abogado/Perfil/Perfil';
 import { Payment } from '@/pages/Abogado/Confirmation/Payment';
 import { NotFound } from '@/pages/Errors/NotFound';
-import { Passwords } from '@/pages/Passwords/Passwords';
+import { Passwords } from '@/pages/Abogado/Passwords/Passwords';
 import { GestionRoutes } from './GestionRoutes';
 import { ComunidadesRoutes } from './ComunidadesRoutes';
 import { ConferenciasRoutes } from './ConferenciasRoutes';
