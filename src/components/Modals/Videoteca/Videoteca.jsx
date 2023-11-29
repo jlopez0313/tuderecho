@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../MyModal.scss'
@@ -68,47 +68,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
             if (file) {
                 // carga = await upload(videoUrl, formState.titulo);
                 await handleUpload();
-            }
-
-            const token = localStorage.getItem('token') || '';
-            const { uid } = decodeToken(token);
-
-            let obj = {}
-            if ( fileUrl ) {            
-                console.log( 'fileUrl', fileUrl );
-                obj = {
-                    ...formState,
-                    video: fileUrl,
-                    user: uid,
-                }
-            } else {
-                console.log( 'NotfileUrl' );
-                obj = {
-                    ...formState,
-                    user: uid,
-                }
-            }
-
-            let action = null;
-            if (item.id) {
-                action = update( item.id, obj )
-            } else {
-                action = create( obj )
-            }
-
-            action
-            .then( () => {
-                setIsLoading( false );
-                notify( t('posts.alerts.saved'), 'success');
-                onSetFormState(initFormData);
-                dispatch( setRefresh( true ) )
-                doHide( true );
-            })
-            .catch( error => {
-                setIsLoading( false );
-                notify( t('posts.alerts.error'), 'error')
-            })
-
+            }            
         } catch( error) {
             console.log( error );
             setIsLoading( false );
@@ -116,10 +76,55 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         }
     }
 
+    const doSave = () => {
+        const token = localStorage.getItem('token') || '';
+        const { uid } = decodeToken(token);
+
+        let obj = {}
+        if ( fileUrl ) {            
+            console.log( 'fileUrl', fileUrl );
+            obj = {
+                ...formState,
+                video: fileUrl,
+                user: uid,
+            }
+        } else {
+            console.log( 'NotfileUrl' );
+            obj = {
+                ...formState,
+                user: uid,
+            }
+        }
+
+        let action = null;
+        if (item.id) {
+            action = update( item.id, obj )
+        } else {
+            action = create( obj )
+        }
+
+        action
+        .then( () => {
+            setIsLoading( false );
+            notify( t('posts.alerts.saved'), 'success');
+            onSetFormState(initFormData);
+            dispatch( setRefresh( true ) )
+            doHide( true );
+        })
+        .catch( error => {
+            setIsLoading( false );
+            notify( t('posts.alerts.error'), 'error')
+        })
+    }
+
     const onGetVideoURI = async (evt) => {
         handleChange(evt)
         setVideoUrl(evt.target.files[0]);
     }
+
+    useEffect( ()=> {
+        doSave();
+    }, [fileUrl])
 
     useEffect(() => {
         if ( item.id ) {
