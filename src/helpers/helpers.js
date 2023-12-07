@@ -1,9 +1,25 @@
 import { toast } from 'react-toastify';
 
+export const getTenant = () => {
+  return localStorage.getItem('tenant') || 'test';
+}
+
+export const setTenant = ( tenant ) => {
+  return localStorage.setItem('tenant', tenant );
+}
+
+export const getSettings = () => {
+  return JSON.parse(localStorage.getItem('settings') || '{}' );
+}
+
+export const setSettings = ( data ) => {
+  localStorage.setItem('settings', JSON.stringify(data) );
+}
+
 export const logout = ( navigate ) => {
     notify('Tu sesión ha finalizado', 'success');
     localStorage.removeItem('token')
-    navigate("/", { replace: true })
+    navigate( '/' + getTenant()  + "/", { replace: true })
 }
 
 export const notify = ( message, type, newOptions = {} ) => {

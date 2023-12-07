@@ -7,39 +7,34 @@ import { find } from '@/services/Conferencias';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { Main } from '../../Publicaciones/Main';
 
-import { decodeToken } from 'react-jwt';
 import { useTranslation } from 'react-i18next';
 import { Item } from './Item';
+import { getTenant } from '@/helpers/helpers';
 
 export const ConferenciaComponent = () => {
 
     const { t } = useTranslation();
 
-    const token = localStorage.getItem('token') || '';
-    const { uid } = decodeToken(token);
-
     const baseBreadCrumb = [
         {
             name: 'Home',
-            href: '/abogados',
+            href: '/' + getTenant(),
             active: false
         },{
             name: t('conferencias.title'),
-            href: '/abogados/conferencias',
+            href: '/' + getTenant() + '/conferencias',
         }
     ]
 
     const params = useParams();
     const [conferencia,  setConferencia] = useState({});
     const [isLoading, setIsLoading] = useState(false)
-    const [hasUser, setHasUser] = useState(false)
     const [breadcrumb, setBreadcrumb] = useState(baseBreadCrumb)
 
     const getConferencia = async () => {
         setIsLoading(true);
         
         const { conferencia } = await find( params.id )
-
         console.log( conferencia );
 
         setBreadcrumb([...baseBreadCrumb, {

@@ -6,10 +6,14 @@ import { notify } from '@/helpers/helpers';
 
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { getTenant } from '@/helpers/helpers';
+import { useSelector } from 'react-redux';
 
 export const Recover = () => {
 
     const { t } = useTranslation();
+    const { settings } = useSelector(state => state.settings);
+    
     const [isLoading, setIsLoading] = useState( false )
 
     const navigate = useNavigate()
@@ -27,7 +31,7 @@ export const Recover = () => {
         .then( () => {
             setIsLoading( false )
             notify( t('passwords.messages.sent') , 'success');
-            navigate('/login');
+            navigate('/' + getTenant() + '/login');
         }).catch( (error) => {
             setIsLoading( false )
             notify(error?.response?.data?.msg || 'Internal Error onProcessLogin', 'warning');
@@ -37,8 +41,8 @@ export const Recover = () => {
     return (
         <div className='container w-sm-25 mt-5'>
             <div className="d-block text-center mb-5">
-                <Link to="/">
-                    <img src={Logo} className='logo-preregistro' alt=''/>
+                <Link to={'/' + getTenant() }>
+                    <img src={settings.logo} className='logo-preregistro' alt=''/>
                 </Link>
             </div>
             <h2 className='mb-4 text-danger fw-bold text-center'> { t('passwords.form.title') } </h2>
@@ -60,14 +64,14 @@ export const Recover = () => {
 
                     <div className="text-center mt-3">
                         <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.registered') }  &nbsp; </label>
-                        <Link to="/login" replace={true}>
+                        <Link to={'/' + getTenant() + "/login"} replace={true}>
                             { t('login.form.login') }
                         </Link>
                     </div>
 
                     <div className="text-center mt-3">
                         <label htmlFor="staticEmail" className="col-form-label">{ t('login.form.new') } &nbsp; </label>
-                        <Link to="/pre-registro" replace={true} >
+                        <Link to={'/' + getTenant() + "/pre-registro"} replace={true} >
                             { t('login.form.register') }
                         </Link>
                     </div>

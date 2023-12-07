@@ -12,7 +12,7 @@ export const InformacionPrivada = ({ formState }) => {
             confirmButtonColor: 'red',
             html: `<p>Si aún es estudiante
                 puedes acceder a nuestra red
-                de abogados pero no recibirá
+                de profesionales pero no recibirá
                 solicitudes de atención. A No ser
                 que seas decreto 176. </p>`,
         })

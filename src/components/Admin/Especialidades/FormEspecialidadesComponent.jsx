@@ -4,6 +4,8 @@ import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 import { create, find } from '@/services/Especialidades';
+import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 const breadcrumb = [
     {
@@ -21,8 +23,11 @@ const breadcrumb = [
 ]
 
 export const FormEspecialidadesComponent = () => {
+    const { t } = useTranslation();
+
     const params = useParams();
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState( false );
     
     const { id, name, onSetFormState, onInputChange} = useForm({
         id: '', name: ''
@@ -30,6 +35,7 @@ export const FormEspecialidadesComponent = () => {
 
     const onSave = ( evt ) => {
         evt.preventDefault();
+        setIsLoading( true );
 
         let data = null;
         let message = ''
@@ -44,10 +50,12 @@ export const FormEspecialidadesComponent = () => {
 
         data.then( () => {
             notify(message, 'success');
-            navigate('/admin/especialidades');
+            setIsLoading( false );
+            navigate('/' + getTenant() + '/admin/especialidades');
 
         }).catch( (error) => {
             notify(error?.response?.data?.msg || 'Internal Error onSave Especialidades', 'error');
+            setIsLoading( false );
         })
     }
 
@@ -105,7 +113,11 @@ export const FormEspecialidadesComponent = () => {
                     </div>
                 </div>
                 
-                <button className='btn btn-primary' type='submit'> Guardar </button>
+                <button className='btn btn-primary' type='submit' disabled={isLoading}>
+                    { 
+                        isLoading ? t('loading') : t('save')
+                    }
+                </button>
             </form>
         </div>
     )

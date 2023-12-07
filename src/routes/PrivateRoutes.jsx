@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { find } from '@/services/Usuarios';
 import { useDispatch } from 'react-redux';
 import { register } from '@/store/user/UserSlice';
+import { getTenant } from '@/helpers/helpers';
 
 export const PrivateRoutes = ({ children, rol }) => {
 
@@ -28,11 +29,11 @@ export const PrivateRoutes = ({ children, rol }) => {
         if(isMyTokenExpired){
             logout(navigate);
         } else if ( rol !== user.rol ) {
-            navigate('unauthorized')
+            navigate('/' + getTenant() + '/unauthorized')
         } else {
             getUser();
         }
-    }, []);
+    }, [children]);
 
     return !isMyTokenExpired ? children : null
 }

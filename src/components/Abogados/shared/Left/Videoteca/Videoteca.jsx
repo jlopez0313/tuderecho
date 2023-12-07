@@ -19,6 +19,7 @@ import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const Videoteca = () => {
     
@@ -37,7 +38,6 @@ export const Videoteca = () => {
 
     const onGetList = async () => {
         setIsLoading( true )
-
         const lista = await myList(search, page, limit)
         setLista( lista )
         
@@ -159,7 +159,7 @@ export const Videoteca = () => {
                 />
                 
 
-                <Link to="/abogados/videoteca" className="order-1 m-auto">
+                <Link to={'/' + getTenant() + "/videoteca"} className="order-1 m-auto">
                     <Button className='position-absolute rounded-circle bottom-2 end-2'>
                         <FontAwesomeIcon icon={faSearch} />
                     </Button>

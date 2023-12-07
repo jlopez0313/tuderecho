@@ -8,6 +8,8 @@ import { logout } from '@/helpers/helpers';
 import { decodeToken } from "react-jwt";
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
+import { useEffect, useState } from 'react';
 
 export const SideMenu = ({animateClass, setAnimateClass}) => {
 
@@ -15,6 +17,9 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
 
     const token = localStorage.getItem('token') || '';
     const { rol } = decodeToken(token);
+
+    const [link, setLink] = useState('');
+
     const { user } = useSelector( state => state.user )
     const navigate = useNavigate()
 
@@ -25,6 +30,18 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
     const onLogout = () => {
         logout( navigate );
     }
+
+    const onSetLink = () => {
+        if ( rol.toLowerCase() == 'profesional' ) {
+          setLink( '/' + getTenant() )
+        } else {
+          setLink( '/' + getTenant() + "/clientes" )
+        }
+    }
+
+    useEffect( () => {
+        onSetLink();
+    }, [])
 
     return (
         <div className={`offcanvas offcanvas-end show ${styles.sideMenuAbogado} animate__animated ${animateClass} animate__fast`}>
@@ -42,13 +59,13 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                 <ul className='mt-5'>
                     <strong className='text-danger d-block'> { t("sidemenu.profile.title") } </strong>
                     <li className='border shadow-sm p-2 m-2'> 
-                        <Link to={`/${ rol.toLowerCase() }s/perfil`}>
+                        <Link to={link + `/perfil`}>
                             <FontAwesomeIcon className='me-2' icon={faUser} />
                             <strong className='text-dark'> { t("sidemenu.profile.basic-info") } </strong>
                         </Link>
                     </li>
                     <li className='border shadow-sm p-2 m-2'> 
-                        <Link to={`/${ rol.toLowerCase() }s/passwords`}>
+                        <Link to={link + `/passwords`}>
                             <FontAwesomeIcon className='me-2' icon={faKey} />
                             <strong className='text-dark'> { t("sidemenu.login.passwords") } </strong>
                         </Link>
@@ -56,11 +73,11 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                 </ul>
 
                 {
-                    rol.toLowerCase() == 'abogado' && 
+                    rol.toLowerCase() == 'profesional' && 
                         <ul className=''>
                             <strong className='text-danger d-block mt-5'> { t("sidemenu.gestion.title") } </strong>
                             <li className='border shadow-sm p-2 m-2'> 
-                                <Link to={`/${ rol.toLowerCase() }s/gestion/bolsa`}>
+                                <Link to={'/' + getTenant() + `/gestion/bolsa`}>
                                     <FontAwesomeIcon className='me-2' icon={faSackDollar} />
                                     <strong className='text-dark'> { t("sidemenu.gestion.bag") } </strong>
                                 </Link>

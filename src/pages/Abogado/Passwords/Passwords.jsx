@@ -1,19 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PasswordsComponent } from '@/components/shared/Passwords/PasswordsComponent'
 import { Header } from "@/components/shared/Header/Header"
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { getTenant } from '@/helpers/helpers';
+import { decodeToken } from 'react-jwt';
 
-const breadcrumb = [
-    {
-        name: 'Home',
-        href: '/abogados',
-        active: false
-    },{
-        name: 'Passwords',
-        active: true
-    }
-]
 export const Passwords = () => {
+  
+  const token = localStorage.getItem('token') || '';
+  const { rol } = decodeToken(token);
+
+  const [breadcrumb, setBreadcrumb] = useState([
+      {
+          name: 'Home',
+          href: '/profesionales',
+          active: false
+      },{
+          name: 'Passwords',
+          active: true
+      }
+  ])
+
+  const [link, setLink] = useState('');
+
+  const onSetLink = () => {
+    if ( rol.toLowerCase() == 'profesional' ) {
+      setLink( '/' + getTenant() + "/" )
+    } else {
+      setLink( '/' + getTenant() + "/clientes" )
+
+      setBreadcrumb([
+        {
+            name: 'Home',
+            href: '/clientes',
+            active: false
+        },{
+            name: 'Passwords',
+            active: true
+        }
+      ])
+    
+    }
+
+  }
+
+  useEffect( () => {
+    onSetLink();
+  }, [])
+
   return (
     <>
       <Header />

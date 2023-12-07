@@ -74,7 +74,7 @@
             "price": "Suscription Price",
             "price-placeholder": "Ex: $50 USD",
             "title": "Title",
-            "title-placeholder": "Ex: The lawyer as a conflicts mediator",
+            "title-placeholder": "Ex: The professional as a conflicts mediator",
             "target": "Target",
             "target-placeholder": "Describe the target of the Community"
         },
@@ -110,7 +110,7 @@
             "price": "Suscription Price",
             "price-placeholder": "Ex: $50 USD",
             "title": "Title",
-            "title-placeholder": "Ex: The lawyer as a conflicts mediator",
+            "title-placeholder": "Ex: The professional as a conflicts mediator",
             "target": "Target",
             "target-placeholder": "Describe the target of the meet",
             "url-placeholder": "Ex: 123456789",
@@ -248,7 +248,7 @@
             "region": "Region",
             "specialization": "Specialization",
             "student": "Are you a student?",
-            "student-alert": "If you are still a student you can access our network of lawyers but you will not receive attention requests. Unless that you be decree 176.",
+            "student-alert": "If you are still a student you can access our network of professionals but you will not receive attention requests. Unless that you be decree 176.",
             "yes": "Yes"
         },
         "alerts": {
@@ -260,7 +260,7 @@
 
     "register": {
         "client": "I'm a Client",
-        "lawyer": "I'm a Lawyer",
+        "lawyer": "I'm a Professional",
         "title": "Register",
         
         "form": {
@@ -322,7 +322,7 @@
             "price": "Suscription Price",
             "price-placeholder": "Ex: $50 USD",
             "title": "Title",
-            "title-placeholder": "Ex: The lawyer as a conflicts mediator",
+            "title-placeholder": "Ex: The professional as a conflicts mediator",
             "target": "Target",
             "url": "Youtube URL",
             "video-empty": "No Video Found"

@@ -10,7 +10,7 @@ export const Form = () => {
             icon: 'success',
             confirmButtonColor: 'red',
             text: `Su solicitud ha sido enviada
-            a nuestra red de abogados. Por favor no 
+            a nuestra red de profesionales. Por favor no 
             cierre ésta página.`
         })
     }
@@ -23,8 +23,8 @@ export const Form = () => {
             html: `<p> Al diligenciar el formulario
             le informaremos a nuestra 
             comunidad acerca de tu solicitud;
-            tres abogados te atenderán
-            a través del chat de tuabogado, esto 
+            tres profesionales te atenderán
+            a través del chat de Sabiux, esto 
             puede tardar entre 2 a 5 minutos.
             Por favor no cierres ésta página </p>`
         })

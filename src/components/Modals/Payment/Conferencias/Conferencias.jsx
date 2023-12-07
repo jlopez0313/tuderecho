@@ -49,7 +49,7 @@ export const ConferenciasModal = memo( ( {modalShow, item = {}, ...props} ) => {
         evt.preventDefault();
 
         if( item.gratis === 'N' ) {
-            doEpayco( item, '/abogados/conferencias', 'CONFE' )
+            doEpayco( item, '/profesionales/conferencias', 'CONFE' )
         } else {
             try {
                 doSubscribe( item?.id )

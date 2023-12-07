@@ -8,6 +8,7 @@ import { decodeToken } from 'react-jwt';
 import { Lista } from './Lista/Lista';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const Main = () => {  
 
@@ -16,7 +17,7 @@ export const Main = () => {
     const breadcrumb = [
         {
             name: 'Home',
-            href: '/abogados',
+            href: '/profesionales',
             active: false
         },{
             name: t('conferencias.title'),

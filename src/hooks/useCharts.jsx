@@ -109,11 +109,11 @@ export const useCharts = () => {
             {
                 type: 'bar',
                 data: {
-                    labels: data.map(row => row.label),
+                    labels: data?.map(row => row.label) || [],
                     datasets: [
                         {
                             label,
-                            data: data.map(row => row.count),
+                            data: data?.map(row => row.count) || [],
                             backgroundColor: colors[0],
                             borderColor: colors[1],
                             borderWidth: 1,
@@ -144,11 +144,11 @@ export const useCharts = () => {
             {
                 type: 'doughnut',
                 data: {
-                    labels: data.map(row => row.label),
+                    labels: data?.map(row => row.label) || [],
                     datasets: [
                         {
                             label,
-                            data: data.map(row => row.count),
+                            data: data?.map(row => row.count) || [],
                             backgroundColor: colors[0],
                             borderColor: colors[1],
                             borderWidth: 1

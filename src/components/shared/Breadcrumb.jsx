@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getTenant } from '@/helpers/helpers';
 
 function Breadcrumb({ items, ...props }) {
     return (
@@ -10,10 +11,9 @@ function Breadcrumb({ items, ...props }) {
                             <li key={key} className={`breadcrumb-item ${ item.active ? 'active':'' }`}>
                                 {
                                     item.href
-                                    ? <Link to={item.href}> {item.name} </Link> 
+                                    ? <Link to={'/' + getTenant() + item.href}> {item.name} </Link> 
                                     : item.name
                                 }
-                                <a href="/admin">  </a>
                             </li>
                         )
                     })

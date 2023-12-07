@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerAuth } from '@/store/user/thunks';
 import { update } from '@/services/Usuarios';
 import { useForm } from '@/hooks/useForm';
@@ -12,6 +12,8 @@ import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
 
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { register } from '@/store/user/UserSlice';
+import { getTenant } from '@/helpers/helpers';
 
 export const Registro = () => {
     
@@ -21,6 +23,7 @@ export const Registro = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState( false )
+    const { settings } = useSelector(state => state.settings);
 
     const {name, email, password, onInputChange} = useForm({
         name: '',
@@ -79,14 +82,14 @@ export const Registro = () => {
 
             notify('Bienvenido!', 'success');
             switch (user.rol) {
-                case 'Abogado':
-                    navigate('/abogados/perfil');
+                case 'Profesional':
+                    navigate('/' + getTenant() + '/profesionales/perfil');
                 break;
                 case 'Cliente':
-                    navigate('/clientes/perfil');
+                    navigate('/' + getTenant() + '/clientes/perfil');
                 break;
                 case 'Admin':
-                    navigate('/admin');
+                    navigate('/' + getTenant() + '/admin');
                 break;
             }
         }).catch( (error) => {
@@ -98,8 +101,8 @@ export const Registro = () => {
     return (
         <div className='container w-sm-25 mt-5'>
             <div className="d-block text-center mb-5">
-                <Link to="/">
-                    <img src={Logo} className='logo-preregistro' alt=''/>
+                <Link to={'/' + getTenant() + "/"}>
+                    <img src={settings.logo} className='logo-preregistro' alt=''/>
                 </Link>
             </div>
             <h2 className='mb-4 text-danger fw-bold text-center'> { t('register.title') } </h2>
@@ -163,7 +166,7 @@ export const Registro = () => {
                 
                 <div className="text-center mt-3">
                     <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.registered') } &nbsp; </label>
-                    <Link to="/login" replace={true}>
+                    <Link to={'/' + getTenant() + "/login"} replace={true}>
                         { t('login.form.login') }
                     </Link>
                 </div>

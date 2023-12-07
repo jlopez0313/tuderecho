@@ -13,14 +13,16 @@ import { Posts } from '@/pages/Posts/Posts';
 export const AbogadosRoutes = () => {
   return (
     <Routes>
-      <Route path='' element={ <Index /> } />
+      <Route path='profesionales/' element={ <Index /> } />
       <Route path='confirmation/' element={ < Payment /> } />
       <Route path='comunidades/*' element={ < ComunidadesRoutes /> } />
       <Route path='conferencias/*' element={ < ConferenciasRoutes /> } />
       <Route path='videoteca/*' element={ < VideotecaRoutes /> } />
-      <Route path='perfil' element={ <Perfil /> } />
       <Route path='gestion/*' element={ <GestionRoutes />} />
+
+      <Route path='perfil' element={ <Perfil /> } />
       <Route path='passwords' element={ <Passwords /> } />
+      
       <Route path='posts/:id' element={ <Posts /> } />
       <Route path="*" element={ <NotFound />} />
     </Routes>

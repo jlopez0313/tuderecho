@@ -16,14 +16,26 @@ import { useTranslation } from 'react-i18next';
 import { UpperMenu } from "@/components/shared/UpperMenu/UpperMenu";
 import { ChatContext } from "@/context/Chat/ChatContext";
 
+import { useParams } from 'react-router-dom';
+import { getTenant, setTenant } from "@/helpers/helpers";
+import { useSelector } from "react-redux";
+import { decodeToken } from "react-jwt";
+
 export const Header = () => {
 
     const { t } = useTranslation();
+    const { settings } = useSelector(state => state.settings);
 
     const childRef = useRef(null);
     const {connectToChat, onAddChat, onRemoveChat, onlineUsers, chatList, socket, newMessage} = useContext( ChatContext );
 
+    const params = useParams();
+    setTenant(params.tenant);
 
+    const token = localStorage.getItem('token') || '';
+    const { rol } = decodeToken(token);
+
+    const [link, setLink] = useState('');
     const [showSubmenu, setShowSubmenu] = useState(false);
     const [animateClass, setAnimateClass] = useState('animate__slideInRight')
 
@@ -37,12 +49,24 @@ export const Header = () => {
         childRef.current.childFunction1()
     }
 
+    const onSetLink = () => {
+        if ( rol.toLowerCase() == 'profesional' ) {
+          setLink( '/' + getTenant() + "/profesionales" )
+        } else {
+          setLink( '/' + getTenant() + "/clientes" )
+        }
+    }
+
+    useEffect( () => {
+        onSetLink();
+    }, [])
+
     return (
         <div className='header border shadow-sm'>
             <div className='px-4 py-2 d-flex flex-wrap align-items-center justify-content-sm-between'>
-                <Link to="/abogados" className="order-1 m-auto">
+                <Link to={ link } className="order-1 m-auto">
                     <img src={LogoSmall} className='logo-sm' alt=''/>
-                    <img src={Logo} className='logo2' alt=''/>
+                    <img src={settings.logo} className='logo2' alt=''/>
                 </Link>
                 
                 <input className="m-auto order-sm-2 order-3 form-control w-sm-50 p-2 explorar" type="text" placeholder={ t('explore')} aria-label="default input example" />

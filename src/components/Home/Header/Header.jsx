@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Logo from '@/assets/images/logo.png'
@@ -6,9 +6,14 @@ import './Header.scss';
 import { logout } from '@/helpers/helpers';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { decodeToken } from 'react-jwt';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant, setTenant } from '@/helpers/helpers';
+import { find } from '@/services/Settings';
+import { setSettings } from '@/helpers/helpers';
+import { useDispatch, useSelector } from 'react-redux';
+import { set } from '@/store/settings/SettingsSlice';
 
 export const Header = () => {
 
@@ -18,19 +23,24 @@ export const Header = () => {
   const user = decodeToken(token);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const { settings } = useSelector(state => state.settings);
+
+  const params = useParams();
+  setTenant(params.tenant);
 
   const [show, setShow] = useState('')
 
   const onGoToProfile = () => {
     switch( user.rol ) {
-      case 'Abogado':
-          navigate('/abogados/perfil');
+      case 'Profesional':
+          navigate('/' + getTenant() + '/perfil');
       break;
       case 'Cliente':
-          navigate('/clientes/perfil');
+          navigate('/' + getTenant() + '/clientes/perfil');
       break;
       case 'Admin':
-          navigate('/admin');
+          navigate('/' + getTenant() +'/admin');
       break;
     }
   }
@@ -39,11 +49,21 @@ export const Header = () => {
     logout(navigate);
   }
 
+  const onLoadSettings = async() => {
+    const {settings} = await find();
+    setSettings( settings );
+    dispatch( set( settings ) )
+  }
+
+  useEffect( () => {
+    onLoadSettings()
+  }, [])
+
   return (
     <div className='header'>
       <Navbar expand="md" className='menu'>
           <Navbar.Brand href="#home" className='text-center'>
-            <img className='logo' src={Logo} alt=''/>
+            <img className='logo' src={settings.logo} alt=''/>
           </Navbar.Brand>
           
           <button
@@ -67,7 +87,7 @@ export const Header = () => {
             
             <Offcanvas.Header>
               <Offcanvas.Title id='offcanvasNavbarLabel'>
-                <img className='logo' src={Logo} alt=''/>
+                <img className='logo' src={settings.logo} alt=''/>
               </Offcanvas.Title>
               <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={ () => setShow('hiding') }></button>
             </Offcanvas.Header>
@@ -82,10 +102,10 @@ export const Header = () => {
                     !token 
                     ? 
                       <>
-                        <Link className="nav-link" to="/login" replace={true}>
+                        <Link className="nav-link" to={"/" + getTenant() + "/login"} replace={true}>
                           <button className='btn btn-primary'> { t('home.header.login') } </button>
                         </Link>
-                        <Link className="nav-link" to="/pre-registro" replace={true}>
+                        <Link className="nav-link" to={"/" + getTenant() + "/pre-registro"} replace={true}>
                           <button className='btn btn-primary'> { t('home.header.register') } </button>
                         </Link>
                       </> 

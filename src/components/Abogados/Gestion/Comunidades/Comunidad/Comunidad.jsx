@@ -9,6 +9,7 @@ import style from './Comunidad.module.scss'
 import { Link } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const Comunidad = ({item, onRemove, onEdit}) => {
   
@@ -40,7 +41,7 @@ export const Comunidad = ({item, onRemove, onEdit}) => {
               { t('share') }
             </small>
 
-            <Link to={'/abogados/comunidades/' + item.id} className={ uid == item.user.id ? 'me-4' : '' }>
+            <Link to={'/' + getTenant() + '/comunidades/' + item.id} className={ uid == item.user.id ? 'me-4' : '' }>
               <FontAwesomeIcon
                   icon={faSearch}
                   className='cursor-pointer text-danger'

@@ -74,7 +74,7 @@
             "price": "Precio",
             "price-placeholder": "Ej: $50 USD",
             "title": "Título",
-            "title-placeholder": "Ej: El abogado como mediador de conflictos",
+            "title-placeholder": "Ej: El profesional como mediador de conflictos",
             "target": "Objetivo",
             "target-placeholder": "Describe el objetivo de la comunidad",
             "url-placeholder": "Ex: 123456789",
@@ -112,7 +112,7 @@
             "price": "Precio",
             "price-placeholder": "Ex: $50 USD",
             "title": "Título",
-            "title-placeholder": "Ej: El abogado como mediador de conflictos",
+            "title-placeholder": "Ej: El profesional como mediador de conflictos",
             "target": "Objetivo",
             "target-placeholder": "Describe el objetivo del encuentro"
         },
@@ -248,7 +248,7 @@
             "region": "Región",
             "specialization": "Especialidad",
             "student": "Eres estudiante?",
-            "student-alert": "Si aún eres estudiante puedes acceder a nuestra red de abogados pero no recibirás  solicitudes de atención. A No ser que seas decreto 176.",
+            "student-alert": "Si aún eres estudiante puedes acceder a nuestra red de profesionales pero no recibirás  solicitudes de atención. A No ser que seas decreto 176.",
             "yes": "Sí"
         },
         "alerts": {
@@ -261,7 +261,7 @@
 
     "register": {
         "client": "Soy Cliente",
-        "lawyer": "Soy Abogado",
+        "lawyer": "Soy Profesional",
         "title": "Regístrate",
         
         "form": {
@@ -324,7 +324,7 @@
             "price": "Precio",
             "price-placeholder": "Ej: $50 USD",
             "title": "Título",
-            "title-placeholder": "Ej: El abogado como mediador de conflictos",
+            "title-placeholder": "Ej: El profesional como mediador de conflictos",
             "target": "Objetivo",
             "url": "Youtube URL",
             "video-empty": "Video no encontrado"

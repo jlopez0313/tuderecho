@@ -5,6 +5,7 @@ import { FormTags } from '@/pages/Admin/Tags/FormTags';
 import { Tags } from '@/pages/Admin/Tags/Tags';
 import { FormUsuarios } from '@/pages/Admin/Usuarios/FormUsuarios';
 import { Usuarios } from '@/pages/Admin/Usuarios/Usuarios';
+import { Settings } from '@/pages/Admin/Settings/Settings';
 import { Routes, Route } from 'react-router-dom';
 import { NotFound } from '@/pages/Errors/NotFound';
 import { Detalle } from '@/pages/Admin/Usuarios/Detalle';
@@ -16,6 +17,9 @@ export const AdminRoutes = () => {
   return (
     <Routes>
         <Route path='' element={ <Index /> } />
+        <Route path='settings'>
+          <Route path='' element={ <Settings /> } />
+        </Route>
         <Route path='usuarios'>
           <Route path='' element={ <Usuarios /> } />
           <Route path='crear' element={ <FormUsuarios /> } />

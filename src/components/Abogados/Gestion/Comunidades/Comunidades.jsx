@@ -15,6 +15,7 @@ import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const ComunidadesComponent = () => {
     
@@ -24,7 +25,7 @@ export const ComunidadesComponent = () => {
     const breadcrumb = [
         {
             name: 'Home',
-            href: '/abogados',
+            href: '/profesionales',
             active: false
         },{
             name: t('comunidades.title'),

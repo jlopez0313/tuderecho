@@ -123,7 +123,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     }
 
     useEffect( ()=> {
-        doSave();
+        if ( fileUrl ) doSave();
     }, [fileUrl])
 
     useEffect(() => {

@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { getTenant } from '@/helpers/helpers';
 
 const breadcrumb = [
     {
@@ -49,7 +50,7 @@ export const FormUsuariosComponent = () => {
                     </div>
                 </div>
             </div>
-            <Link to="/admin/usuarios" className='text-white btn btn-primary'>
+            <Link to={'/' + getTenant() + "/admin/usuarios"} className='text-white btn btn-primary'>
                 Guardar
             </Link>
         </div>

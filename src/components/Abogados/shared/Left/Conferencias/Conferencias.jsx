@@ -20,6 +20,7 @@ import Swal from 'sweetalert2'
 
 import { useTranslation } from 'react-i18next';
 import { useZoom } from '@/hooks/useZoom';
+import { getTenant } from '@/helpers/helpers';
 
 export const Conferencias = () => {
 
@@ -177,7 +178,7 @@ export const Conferencias = () => {
                     onHide={(doRefresh = false ) => onRefreshConferencias( doRefresh)}
                 />
 
-                <Link to="/abogados/conferencias" className="order-1 m-auto">
+                <Link to={'/' + getTenant() + "/conferencias"} className="order-1 m-auto">
                     <Button className='position-absolute rounded-circle bottom-2 end-2'>
                         <FontAwesomeIcon icon={faSearch} />
                     </Button>

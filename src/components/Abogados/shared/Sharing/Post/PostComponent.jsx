@@ -24,6 +24,7 @@ import { useParams } from 'react-router-dom';
 import { find } from '@/services/Publicaciones';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const PostComponent = ({idx, post, onComentar, onRemovePubli, onSharing, showActions = true, showShared = true, ...props}) => {
     
@@ -32,7 +33,7 @@ export const PostComponent = ({idx, post, onComentar, onRemovePubli, onSharing, 
     const baseBreadCrumb = [
         {
             name: 'Home',
-            href: '/abogados',
+            href: '/' + getTenant(),
             active: false
         },{
             name: t('posts.title'),

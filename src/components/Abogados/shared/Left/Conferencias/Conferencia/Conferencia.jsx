@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import noImage from '@/assets/images/no-image.png';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const Conferencia = ({item, onRemove, onEdit}) => {
 
@@ -17,7 +18,7 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
   const { uid } = decodeToken(token);
 
   return (
-    <Link to={'/abogados/conferencias/' + item.id}>
+    <Link to={'/' + getTenant() + '/conferencias/' + item.id}>
 
       <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${shared.listItem} text-dark`}>
         <div className="row g-0 p-1">

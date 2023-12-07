@@ -49,7 +49,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         evt.preventDefault();
 
         if( item.gratis === 'N' ) {
-            doEpayco( item, '/abogados/videoteca', 'VIDEO' )
+            doEpayco( item, '/profesionales/videoteca', 'VIDEO' )
         } else {
             try {
                 doSubscribe( item?.id )

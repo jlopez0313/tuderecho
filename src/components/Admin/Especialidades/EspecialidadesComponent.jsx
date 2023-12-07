@@ -8,6 +8,7 @@ import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 import { paginate, remove } from '@/services/Especialidades';
 import DataTable from 'react-data-table-component';
+import { getTenant } from '@/helpers/helpers';
 
 const breadcrumb = [
     {
@@ -37,7 +38,7 @@ export const EspecialidadesComponent = () => {
             name: 'Acciones',
             cell: item => (                
                 <>
-                    <Link to={`editar/${item.id}`}>
+                    <Link to={'/' + getTenant() + `/admin/editar/${item.id}`}>
                         <FontAwesomeIcon icon={faPencil} className='me-4' />
                     </Link>
                     <button className="btn text-danger" onClick={() => onDeleteItem(item.id)}>
@@ -117,7 +118,7 @@ export const EspecialidadesComponent = () => {
                 className='data-table'
             />
 
-            <Link to='crear'>
+            <Link to={'/' + getTenant() + '/admmin/crear'}>
                 <div className="fab">
                     +
                 </div>

@@ -5,6 +5,7 @@ import { decodeToken } from 'react-jwt';
 import { Link } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const Comunidad = ({item, onRemove}) => {
 
@@ -14,7 +15,7 @@ export const Comunidad = ({item, onRemove}) => {
   const { uid } = decodeToken(token);
 
   return (
-    <Link to={'/abogados/comunidades/' + item.id}>
+    <Link to={'/' + getTenant() + '/comunidades/' + item.id}>
       <div className='d-flex border rounded mb-3 p-2 shadow-sm bg-light'>
           <div>
               <img src={item.archivo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>

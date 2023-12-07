@@ -9,6 +9,7 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import { Main } from '../../Publicaciones/Main';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const ComunidadComponent = () => {
 
@@ -17,11 +18,11 @@ export const ComunidadComponent = () => {
     const baseBreadCrumb = [
         {
             name: 'Home',
-            href: '/abogados',
+            href: '/' + getTenant(),
             active: false
         },{
             name: t('comunidades.title'),
-            href: '/abogados/comunidades',
+            href: '/' + getTenant() + '/comunidades',
         }
     ]
 

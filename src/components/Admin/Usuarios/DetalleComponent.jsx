@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { notify } from '@/helpers/helpers';
 import { find, update } from '@/services/Usuarios';
+import { getTenant } from '@/helpers/helpers';
 
 const breadcrumb = [
     {
@@ -66,7 +67,7 @@ export const DetalleComponent = () => {
 
                 update(user.id, {...user, estado: 'A'})
                 .then( () => {
-                    navigate('/admin/usuarios')
+                    navigate('/' + getTenant() + '/admin/usuarios')
                     notify('Usuario Aprobado!', 'success')
                 })
             }
@@ -85,7 +86,7 @@ export const DetalleComponent = () => {
             if ( isConfirmed ) {
                 update(user.id, {...user, estado: 'R'})
                 .then( () => {
-                    navigate('/admin/usuarios')
+                    navigate('/' + getTenant() + '/admin/usuarios')
                     notify('Usuario Rechazado!', 'success')
                 })
             }
@@ -117,13 +118,13 @@ export const DetalleComponent = () => {
                         <hr />
 
                         {
-                            formState.rol === 'Abogado'
+                            formState.rol === 'Profesional'
                             ? <DatosAbogado formState={formState}/>
                             : <DatosCliente formState={formState}/>
                         }
                         
                         {
-                            formState.rol === 'Abogado'
+                            formState.rol === 'Profesional'
                             ?
                                 <>
                                     <h3 className="mt-3 text-danger"> Información Privada </h3>

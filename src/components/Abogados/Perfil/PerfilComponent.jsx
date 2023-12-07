@@ -9,6 +9,7 @@ import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const PerfilComponent = () => {
   
@@ -17,7 +18,7 @@ export const PerfilComponent = () => {
   const breadcrumb = [
     {
         name: 'Home',
-        href: '/abogados',
+        href: '/profesionales',
         active: false
     },{
         name: t('profile.title'),

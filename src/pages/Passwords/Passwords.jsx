@@ -12,9 +12,11 @@ import bcrypt from 'bcryptjs'
 
 import { useTranslation } from 'react-i18next';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { getTenant } from '@/helpers/helpers';
 
 export const Passwords = () => {
   const { t } = useTranslation();
+  const { settings } = useSelector(state => state.settings);
 
   const navigate = useNavigate()
   const [params, _] = useSearchParams();
@@ -43,7 +45,7 @@ export const Passwords = () => {
         .then(() => {
           setIsLoading(false)
           notify(t('passwords.alerts.saved'), 'success');
-          navigate('/login');
+          navigate('/' + getTenant() + '/login');
         }).catch(error => {
           setIsLoading(false)
           console.log(error);
@@ -55,8 +57,8 @@ export const Passwords = () => {
   return (
     <div className='container w-sm-25 mt-5'>
       <div className="d-block text-center mb-5">
-        <Link to="/">
-          <img src={Logo} className='logo-preregistro' alt='' />
+        <Link to={'/' + getTenant() + "/profesionales"}>
+          <img src={settings.logo} className='logo-preregistro' alt='' />
         </Link>
       </div>
       <h2 className='mb-4 text-danger fw-bold text-center'> {t('passwords.form.title')} </h2>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { getTenant } from '@/helpers/helpers';
 
 export const useEpayco = () => {
 
@@ -33,8 +34,8 @@ export const useEpayco = () => {
             extra1: item.id, // ID from Item
             extra2: route, // Redirect Page
             extra3: component,
-            confirmation: import.meta.env.VITE_FRONTEND +  "/abogados/confirmation",
-            response: import.meta.env.VITE_FRONTEND + "/abogados/confirmation",
+            confirmation: import.meta.env.VITE_FRONTEND +  "/"  + getTenant() + "/confirmation",
+            response: import.meta.env.VITE_FRONTEND + "/" + getTenant() + "/confirmation",
 
             //Atributos cliente
             name_billing: "",

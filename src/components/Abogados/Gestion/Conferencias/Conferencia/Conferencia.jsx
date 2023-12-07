@@ -11,6 +11,7 @@ import style from './Conferencia.module.scss'
 import { Link } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const Conferencia = ({item, onRemove, onEdit}) => {
 
@@ -44,7 +45,7 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
               { t('share') }
             </small>
 
-            <Link to={'/abogados/conferencias/' + item.id} className={ uid == item.user.id && 'me-4' }>
+            <Link to={'/' + getTenant() + '/conferencias/' + item.id} className={ uid == item.user.id && 'me-4' }>
               <FontAwesomeIcon
                   icon={faSearch}
                   className='cursor-pointer text-danger'

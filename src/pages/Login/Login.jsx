@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '@/assets/images/logo.png'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAuth } from '@/store/user/thunks';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
@@ -12,6 +12,7 @@ import FacebookIcon from '@/assets/images/pre-registro/facebook.png';
 import './Login.scss';
 
 import { useTranslation } from 'react-i18next';
+import { getTenant } from '@/helpers/helpers';
 
 export const Login = () => {
 
@@ -21,6 +22,7 @@ export const Login = () => {
     const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState( false )
+    const { settings } = useSelector(state => state.settings);
 
     const { email, password, onInputChange} = useForm({
         name: '',
@@ -65,28 +67,28 @@ export const Login = () => {
             setIsLoading( false )
             notify( t('login.alerts.welcome'), 'success');
             switch (rol) {
-                case 'Abogado':
-                    navigate('/abogados');
+                case 'Profesional':
+                    navigate('/' + getTenant() + '/profesionales');
                 break;
                 case 'Cliente':
-                    navigate('/clientes');
+                    navigate('/' + getTenant() + '/clientes');
                 break;
                 case 'Admin':
-                    navigate('/admin');
+                    navigate('/' + getTenant() + '/admin');
                 break;
             }
         }).catch( (error) => {
             setIsLoading( false )
             notify(error?.response?.data?.msg || t('login.alerts.error'), 'warning');
-            navigate('/pre-registro', { replace: true });
+            navigate('/' + getTenant() + '/pre-registro', { replace: true });
         })
     }
     
     return (
         <div className='container w-sm-25 mt-5'>
             <div className="d-block text-center mb-5">
-                <Link to="/">
-                    <img src={Logo} className='logo-preregistro' alt=''/>
+                <Link to={'/' + getTenant() + "/"}>
+                    <img src={settings.logo} className='logo-preregistro' alt=''/>
                 </Link>
             </div>
             <h2 className='mb-4 text-danger fw-bold text-center'> { t('login.title') } </h2>
@@ -110,7 +112,7 @@ export const Login = () => {
                         } 
                     </button>
 
-                    <Link to="/recover">
+                    <Link to={'/' + getTenant() + "/recover"}>
                         <span className='d-block mx-auto text-center mt-3'> { t('login.form.forgot') } </span>
                     </Link>
 
@@ -133,7 +135,7 @@ export const Login = () => {
                     
                 <div className="text-center mt-3">
                     <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.new') } &nbsp; </label>
-                    <Link to="/pre-registro" replace={true} >
+                    <Link to={'/' + getTenant() + "/pre-registro"} replace={true} >
                         { t('login.form.register') }
                     </Link>
                 </div>

@@ -6,12 +6,24 @@ import { find, update } from '@/services/Usuarios';
 import { register } from '@/store/user/UserSlice';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
+import Breadcrumb from '@/components/shared/Breadcrumb';
 
 import { useTranslation } from 'react-i18next';
 
 export const PerfilComponent = () => {
 
   const { t } = useTranslation();
+
+  const breadcrumb = [
+    {
+        name: 'Home',
+        href: '/clientes',
+        active: false
+    },{
+        name: t('profile.title'),
+        active: true
+    }
+  ]
 
   const dispatch = useDispatch();
   const { user } = useSelector( state => state.user );
@@ -80,7 +92,9 @@ export const PerfilComponent = () => {
       <div className="container pb-5">
         <form onSubmit={onDoSubmit}>
           
-          <h3 className="mt-5 text-danger"> { t('profile.form.personal') } </h3>
+          <Breadcrumb className='mt-3' items={breadcrumb} />
+
+          <h3 className="mt-4 text-danger"> { t('profile.form.personal') } </h3>
           <hr />
 
           <DatosPersonales formState={formState} onInputChange={onInputChange} onRadioChange={onRadioChange} />

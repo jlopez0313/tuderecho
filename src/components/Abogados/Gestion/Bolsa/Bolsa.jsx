@@ -9,6 +9,7 @@ import Tab from 'react-bootstrap/Tab';
 import { ComunidadesComponent } from './Comunidades/Comunidades';
 import { ConferenciasComponent } from './Conferencias/Conferencias';
 import { VideotecaComponent } from './Videoteca/Videoteca';
+import { getTenant } from '@/helpers/helpers';
 
 export const BolsaComponent = () => {
     
@@ -17,7 +18,7 @@ export const BolsaComponent = () => {
     const breadcrumb = [
         {
             name: 'Home',
-            href: '/abogados',
+            href: '/profesionales',
             active: false
         },{
             name: t('bolsa.title'),

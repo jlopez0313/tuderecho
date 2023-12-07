@@ -48,7 +48,7 @@ export const ComunidadesModal = memo( ( {modalShow, item = {}, ...props} ) => {
         evt.preventDefault();
 
         if( item.gratis === 'N' ) {
-            doEpayco( item, '/abogados/comunidades', 'COMUN' )
+            doEpayco( item, '/profesionales/comunidades', 'COMUN' )
         } else {
             try {
                 doSubscribe( item?.id )

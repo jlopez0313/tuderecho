@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUsers, faTags, faSuitcase, faRightFromBracket, faKey, faSackDollar } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTags, faSuitcase, faRightFromBracket, faKey, faSackDollar, faCog } from '@fortawesome/free-solid-svg-icons';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -11,8 +11,12 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import Logo from '@/assets/images/logo.png'
 import './SideMenu.scss'
 import { logout } from '@/helpers/helpers';
+import { getTenant } from '../../../helpers/helpers';
+import { useSelector } from 'react-redux';
 
 export const SideMenu = () => {
+
+    const { settings } = useSelector(state => state.settings);
 
     const navigate = useNavigate();
 
@@ -25,7 +29,7 @@ export const SideMenu = () => {
             <Navbar expand='sm' className="mb-3 flex-column p-0">
                     <div className='bg-white w-100 text-center p-3 border d-none d-sm-block'>
                         <Link to="/admin">
-                            <img className='logo' src={Logo} alt=''/>
+                            <img className='logo' src={settings.logo} alt=''/>
                         </Link>
                     </div>
                     <Navbar.Toggle className='m-2 bg-white' aria-controls='offcanvasNavbar-expand-sm' />
@@ -36,33 +40,38 @@ export const SideMenu = () => {
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title id='offcanvasNavbarLabel-expand-sm'>
-                                <img className='logo' src={Logo} alt=''/>
+                                <img className='logo' src={settings.logo} alt=''/>
                             </Offcanvas.Title>
                         </Offcanvas.Header>
 
                         <Offcanvas.Body className='bg-dark'>
                             <Nav className="flex-column mt-4">
-                                <Link to='/admin/usuarios'>
+                                <Link to={'/' + getTenant() + '/admin/settings'}>
+                                    <FontAwesomeIcon icon={faCog} />
+                                    Settings
+                                </Link>
+                                
+                                <Link to={'/' + getTenant() + '/admin/usuarios'}>
                                     <FontAwesomeIcon icon={faUsers} />
                                     Usuarios
                                 </Link>
 
-                                <Link to='/admin/tags'>
+                                <Link to={'/' + getTenant() + '/admin/tags'}>
                                     <FontAwesomeIcon icon={faTags} />
                                     Palabras Clave
                                 </Link>
 
-                                <Link to='/admin/especialidades'>
+                                <Link to={'/' + getTenant() + '/admin/especialidades'}>
                                     <FontAwesomeIcon icon={faSuitcase} />
                                     Especialidades
                                 </Link>
 
-                                <Link to='/admin/passwords'>
+                                <Link to={'/' + getTenant() + '/admin/passwords'}>
                                     <FontAwesomeIcon icon={faKey} />
                                     Contraseñas
                                 </Link>
 
-                                <Link to='/admin/bolsa'>
+                                <Link to={'/' + getTenant() + '/admin/bolsa'}>
                                     <FontAwesomeIcon icon={faSackDollar} />
                                     Mi Bolsa
                                 </Link>

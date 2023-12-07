@@ -5,7 +5,7 @@ export const Abogados = () => {
   return (
     <div className="card">
         <div className="card-body">
-            <h5 className="card-title">Perfil del Abogado</h5>
+            <h5 className="card-title">Perfil del Profesional</h5>
             <div className="row">
                 <div className="col-sm-4">
                     <img src={Profile} alt=''/>
