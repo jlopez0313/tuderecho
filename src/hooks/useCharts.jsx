@@ -77,7 +77,7 @@ export const useCharts = () => {
             const lines = [];
     
             // Break words up into multiple lines if necessary
-            for (const n = 0; n < words.length; n++) {
+            for (let n = 0; n < words.length; n++) {
                 const testLine = line + words[n] + ' ';
                 const metrics = ctx.measureText(testLine);
                 const testWidth = metrics.width;
@@ -92,7 +92,7 @@ export const useCharts = () => {
             // Move the center up depending on line height and number of lines
             centerY -= (lines.length / 2) * lineHeight;
     
-            for (const n = 0; n < lines.length; n++) {
+            for (let n = 0; n < lines.length; n++) {
                 ctx.fillText(lines[n], centerX, centerY);
                 centerY += lineHeight;
             }
