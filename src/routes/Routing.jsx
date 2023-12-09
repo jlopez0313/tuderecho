@@ -2,6 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { NotFound } from '@/pages/Errors/NotFound';
 import { TenantRoutes } from './tenant/routes';
+import { SuperadminRoutes } from './superadmin/SuperadminRoutes';
 
 export const Routing = () => {
   return (
