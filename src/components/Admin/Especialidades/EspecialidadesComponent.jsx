@@ -38,7 +38,7 @@ export const EspecialidadesComponent = () => {
             name: 'Acciones',
             cell: item => (                
                 <>
-                    <Link to={'/' + getTenant() + `/admin/editar/${item.id}`}>
+                    <Link to={`editar/${item.id}`}>
                         <FontAwesomeIcon icon={faPencil} className='me-4' />
                     </Link>
                     <button className="btn text-danger" onClick={() => onDeleteItem(item.id)}>
@@ -118,7 +118,7 @@ export const EspecialidadesComponent = () => {
                 className='data-table'
             />
 
-            <Link to={'/' + getTenant() + '/admmin/crear'}>
+            <Link to={'crear'}>
                 <div className="fab">
                     +
                 </div>

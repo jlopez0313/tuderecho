@@ -38,7 +38,7 @@ export const TagsComponent = () => {
             name: 'Acciones',
             cell: item => (                
                 <>
-                    <Link to={'/' + getTenant() + `editar/${item.id}`}>
+                    <Link to={`editar/${item.id}`}>
                         <FontAwesomeIcon icon={faPencil} className='me-4' />
                     </Link>
                     <button className="btn text-danger" onClick={() => onDeleteItem(item.id)}>
@@ -116,7 +116,7 @@ export const TagsComponent = () => {
                 className='data-table'
             />
 
-            <Link to={'/' + getTenant() + '/admmin/crear'}>
+            <Link to={'crear'}>
                 <div className="fab">
                     +
                 </div>

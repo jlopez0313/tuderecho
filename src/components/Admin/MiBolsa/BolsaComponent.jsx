@@ -6,6 +6,7 @@ import Breadcrumb from '@/components/shared/Breadcrumb';
 import { ComunidadesComponent } from './Comunidades/Comunidades';
 import { ConferenciasComponent } from './Conferencias/Conferencias';
 import { VideotecaComponent } from './Videoteca/Videoteca';
+import { decodeToken } from 'react-jwt';
 
 const breadcrumb = [
     {
@@ -20,7 +21,9 @@ const breadcrumb = [
 
 export const BolsaComponent = () => {
 
-    const [activeTab, setActiveTab] = useState('comunidades')
+    const [activeTab, setActiveTab] = useState('comunidades');
+    const token = localStorage.getItem('token') || '';
+    const {uid} = decodeToken(token);
 
     const onSelect = ( evt ) => {
         setActiveTab( evt );
@@ -39,13 +42,13 @@ export const BolsaComponent = () => {
                 onSelect={(evt) => onSelect(evt) }
             >
                 <Tab eventKey="comunidades" title="Comunidades">
-                    <ComunidadesComponent />
+                    <ComunidadesComponent id={uid} />
                 </Tab>
                 <Tab eventKey="conferencias" title="Conferencias">
-                    <ConferenciasComponent />
+                    <ConferenciasComponent id={uid} />
                 </Tab>
                 <Tab eventKey="videoteca" title="Videoteca">
-                    <VideotecaComponent />
+                    <VideotecaComponent id={uid} />
                 </Tab>
             </Tabs>
 

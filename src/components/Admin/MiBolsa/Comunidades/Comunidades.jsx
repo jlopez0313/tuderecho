@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import { useTranslation } from 'react-i18next';
 
-export const ComunidadesComponent = () => {
+export const ComunidadesComponent = ({ id }) => {
 
   const { t } = useTranslation();
   const params = useParams();
@@ -22,7 +22,7 @@ export const ComunidadesComponent = () => {
 
   const onGetList = async () => {
     setIsLoading( true )
-    setLista( await madeByUser( params.id ) )
+    setLista( await madeByUser( id ) )
     setIsLoading( false )
   }
 

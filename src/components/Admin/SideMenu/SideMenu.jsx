@@ -28,7 +28,7 @@ export const SideMenu = () => {
         <div className='side-menu bg-dark'>
             <Navbar expand='sm' className="mb-3 flex-column p-0">
                     <div className='bg-white w-100 text-center p-3 border d-none d-sm-block'>
-                        <Link to="/admin">
+                        <Link to={'/' + getTenant() + '/admin'}>
                             <img className='logo' src={settings.logo} alt=''/>
                         </Link>
                     </div>
