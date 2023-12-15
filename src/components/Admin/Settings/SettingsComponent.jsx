@@ -103,9 +103,16 @@ export const SettingsComponent = () => {
                             </div>
 
                             <div className="mb-3 row">
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Imagen de Fondo:</label>
+                                <div className="col-sm-10">
+                                    <input type='file' accept='image/png, image/jpeg' className='form-control' onChange={(evt) => onUploadImage(evt, 'fondo')} />
+                                </div>
+                            </div>
+
+                            <div className="mb-3 row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10">
-                                    <img src={ settings.heroe } style={{ maxWidth: '80px'}} />
+                                    <img src={ settings.fondo } style={{ maxWidth: '180px'}} />
                                 </div>
                             </div>
                         </div>
