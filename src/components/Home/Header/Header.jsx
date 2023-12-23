@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Logo from '@/assets/images/logo.png'
@@ -6,14 +6,11 @@ import './Header.scss';
 import { logout } from '@/helpers/helpers';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { decodeToken } from 'react-jwt';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
-import { getTenant, setTenant } from '@/helpers/helpers';
-import { find } from '@/services/Settings';
-import { setSettings } from '@/helpers/helpers';
-import { useDispatch, useSelector } from 'react-redux';
-import { set } from '@/store/settings/SettingsSlice';
+import { getTenant } from '@/helpers/helpers';
+import { useSelector } from 'react-redux';
 
 export const Header = () => {
 
@@ -23,11 +20,7 @@ export const Header = () => {
   const user = decodeToken(token);
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
   const { settings } = useSelector(state => state.settings);
-
-  const params = useParams();
-  setTenant(params.tenant);
 
   const [show, setShow] = useState('')
 
@@ -48,16 +41,6 @@ export const Header = () => {
   const onLogout = () => {
     logout(navigate);
   }
-
-  const onLoadSettings = async() => {
-    const {settings} = await find();
-    setSettings( settings );
-    dispatch( set( settings ) )
-  }
-
-  useEffect( () => {
-    onLoadSettings()
-  }, [])
 
   return (
     <div className='header'>
