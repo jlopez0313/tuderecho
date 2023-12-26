@@ -84,7 +84,12 @@ export const SettingsComponent = () => {
                             <div className="mb-3 row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Logo:</label>
                                 <div className="col-sm-10">
-                                    <input type='file' accept='image/png, image/jpeg' className='form-control' onChange={(evt) => onUploadImage(evt, 'logo')} />
+                                    <input 
+                                        required 
+                                        type='file'
+                                        accept='image/png, image/jpeg'
+                                        className='form-control'
+                                        onChange={(evt) => onUploadImage(evt, 'logo')} />
                                 </div>
                             </div>
 
@@ -98,14 +103,31 @@ export const SettingsComponent = () => {
                             <div className="mb-3 row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Heroe:</label>
                                 <div className="col-sm-10">
-                                    <input type='file' accept='image/png, image/jpeg' className='form-control' onChange={(evt) => onUploadImage(evt, 'heroe')} />
+                                    <input 
+                                        required 
+                                        type='file'
+                                        accept='image/png, image/jpeg'
+                                        className='form-control'
+                                        onChange={(evt) => onUploadImage(evt, 'heroe')} />
                                 </div>
                             </div>
-
+                            
+                            <div className="mb-3 row">
+                                <div className="col-sm-2"></div>
+                                <div className="col-sm-10">
+                                    <img src={ settings.heroe } style={{ maxWidth: '180px'}} />
+                                </div>
+                            </div>
+                            
                             <div className="mb-3 row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Imagen de Fondo:</label>
                                 <div className="col-sm-10">
-                                    <input type='file' accept='image/png, image/jpeg' className='form-control' onChange={(evt) => onUploadImage(evt, 'fondo')} />
+                                    <input 
+                                        required 
+                                        type='file'
+                                        accept='image/png, image/jpeg'
+                                        className='form-control'
+                                        onChange={(evt) => onUploadImage(evt, 'fondo')} />
                                 </div>
                             </div>
 
