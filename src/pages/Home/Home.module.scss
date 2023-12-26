@@ -1,0 +1,43 @@
+.paginator {
+    list-style-type: none;
+    li {        
+        a {
+            border-radius: 5px;
+            padding: 0.1rem 1rem;
+            border: gray 1px solid;
+            cursor: pointer;
+        }
+        
+        &.previous a,
+        &.next a,
+        &.break a {
+            border-color: transparent;
+        }
+        
+        &.active {
+            a {
+                background-color: #0366d6;
+                border-color: transparent;
+                color: white;
+                min-width: 32px;
+            }
+        }
+        
+        &.disabled {
+            a {
+               color: grey;
+            }
+        }
+
+        &.disable {
+            cursor: default;
+        }        
+        &.disabled {
+          
+            a {
+                cursor: default;
+            }
+        }            
+    } 
+
+}

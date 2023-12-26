@@ -12,6 +12,16 @@ export const paginate = async (page, perPage) => {
     }
 }
 
+export const byRol = async (rol, page, perPage) => {
+    const response = await backendApi.get(modulo + `by-rol?rol=${rol}&page=${page}&limit=${perPage}`)
+
+    if ( response ) {
+        return response.data;
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 export const all = async () => {
     const response = await backendApi.get(modulo)
 

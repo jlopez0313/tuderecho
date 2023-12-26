@@ -138,6 +138,28 @@
         }
     },
 
+    "form": {
+        "title": "¿Quieres que lo hagamos por tí?",
+        "form" : {
+            "case": "Explícanos tu Caso",
+            "chose": "Escoge uno...",
+            "chose-some": "Escoge algunos...",
+            "country": "País",            
+            "email": "Tu Correo",
+            "email-placeholder": "Ej: nombre@correo.com",
+            "keywords": "Palabras clave",
+            "keywords-placeholder": "Seleccione",
+            "name": "Tu nombre",
+            "name-placeholder": "Ej: Juan Perez",
+            "terms": "Acepto Términos y Condiciones",
+            "send": "Enviar"
+        },        
+        "alerts": {
+            "question": "Al diligenciar el formulario le informaremos a nuestra comunidad acerca de tu solicitud; tres profesionales te atenderán a través del chat de Sabiux, esto  puede tardar entre 2 a 5 minutos. Por favor no cierres ésta página",
+            "success": "Su solicitud ha sido enviada a nuestra red de profesionales. Por favor no cierre ésta página."
+        }
+    },
+
     "home": {
         "header": {
             "home": "Inicio",

@@ -1,43 +1,26 @@
-import Profile from '@/assets/images/home/abogados/profile.png';
-import Heart from '@/assets/images/home/abogados/heart.png';
+import Profile from '@/assets/images/abogado/perfil/avatar.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import styles from './Abogados.module.scss'
 
-export const Abogados = () => {
+export const Abogados = ({ item }) => {
   return (
-    <div className="card">
+    <div className="card shadow-sm">
         <div className="card-body">
             <h5 className="card-title">Perfil del Profesional</h5>
             <div className="row">
                 <div className="col-sm-4">
-                    <img src={Profile} alt=''/>
+                    <img className={styles.avatar} src={ item.perfil?.photo || Profile} alt=''/>
                 </div>
                 <div className="col-sm-8">
-                    <span> Alfredo Jiménez </span>
-                    {
-                        [1, 2, 3, 4, 5].map( item => {
-                            return <img  src={Heart} alt="" className="heart" key={item}/>
-                        })
-                    }
-                    <p>
-                        <span> Biografía </span>
-                        <span> xxxxxxxxxx xxxxxxxxxxx xxxxxxxxx xxx </span>
-                    </p>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <span> { item.name } </span>
+                        <span className="badge m-0 p-1 alert alert-warning">                        
+                            <FontAwesomeIcon icon={ faHeart } className={styles.heart } /> { item.pts }
+                        </span>
+                    </div>
+                    <span className="col-12"> { item.perfil?.especialidad?.name }</span>
                 </div>
-            </div>
-            <div className="row">
-                <span className="col-sm-6">Especialidad</span>
-                <span className="col-sm-6">Derecho Penal</span>
-            </div>
-            <div className="row">
-                <span className="col-sm-6">Contacto</span>
-                <span className="col-sm-6">3171234567</span>
-            </div>
-            <div className="row">
-                <span className="col-sm-6">Dirección</span>
-                <span className="col-sm-6">Calle 12 # 5-67 Cali</span>
-            </div>
-            <div className="row">
-                <span className="col-sm-6">Correo</span>
-                <span className="col-sm-6">info@gmail.com</span>
             </div>
         </div>
     </div>
