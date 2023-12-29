@@ -7,7 +7,13 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
-  server: { https: true },
+  server: {
+    https: true,
+    hmr: {
+      host: "localhost",
+      protocol: "ws",
+    },
+  },
   plugins: [react({
     jsxRuntime: 'classic'
   }), mkcert()]
