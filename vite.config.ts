@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     https: true,
     hmr: {
-      host: "localhost",
+      host: "tuodontologo.sabiux.com",
       protocol: "ws",
     },
   },
