@@ -11,7 +11,7 @@ export default defineConfig({
     https: true,
     hmr: {
       host: "tuodontologo.sabiux.com",
-      protocol: "ws",
+      protocol: "wss",
     },
   },
   plugins: [react({
