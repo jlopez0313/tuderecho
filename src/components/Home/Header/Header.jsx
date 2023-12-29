@@ -27,13 +27,13 @@ export const Header = () => {
   const onGoToProfile = () => {
     switch( user.rol ) {
       case 'Profesional':
-          navigate('/' + getTenant() + '/perfil');
+          navigate('/perfil');
       break;
       case 'Cliente':
-          navigate('/' + getTenant() + '/clientes/perfil');
+          navigate('/clientes/perfil');
       break;
       case 'Admin':
-          navigate('/' + getTenant() +'/admin');
+          navigate('/');
       break;
     }
   }
@@ -85,10 +85,10 @@ export const Header = () => {
                     !token 
                     ? 
                       <>
-                        <Link className="nav-link" to={"/" + getTenant() + "/login"} replace={true}>
+                        <Link className="nav-link" to={"/login"} replace={true}>
                           <button className='btn btn-primary'> { t('home.header.login') } </button>
                         </Link>
-                        <Link className="nav-link" to={"/" + getTenant() + "/pre-registro"} replace={true}>
+                        <Link className="nav-link" to={"/pre-registro"} replace={true}>
                           <button className='btn btn-primary'> { t('home.header.register') } </button>
                         </Link>
                       </> 

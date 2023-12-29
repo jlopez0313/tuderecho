@@ -168,7 +168,7 @@ export const Comunidades = () => {
             onHide={(doRefresh = false) => onRefreshComunidades(doRefresh)}
         />
 
-        <Link to={'/' + getTenant() + "/comunidades"} className="order-1 m-auto">
+        <Link to={'/comunidades'} className="order-1 m-auto">
           <Button className='position-absolute rounded-circle bottom-2 end-2'>
             <FontAwesomeIcon icon={faSearch} />
           </Button>

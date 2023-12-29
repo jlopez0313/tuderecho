@@ -31,7 +31,7 @@ export const Recover = () => {
         .then( () => {
             setIsLoading( false )
             notify( t('passwords.messages.sent') , 'success');
-            navigate('/' + getTenant() + '/login');
+            navigate('/login');
         }).catch( (error) => {
             setIsLoading( false )
             notify(error?.response?.data?.msg || 'Internal Error onProcessLogin', 'warning');
@@ -41,7 +41,7 @@ export const Recover = () => {
     return (
         <div className='container w-sm-25 mt-5'>
             <div className="d-block text-center mb-5">
-                <Link to={'/' + getTenant() }>
+                <Link to={'/' }>
                     <img src={settings.logo} className='logo-preregistro' alt=''/>
                 </Link>
             </div>
@@ -64,14 +64,14 @@ export const Recover = () => {
 
                     <div className="text-center mt-3">
                         <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.registered') }  &nbsp; </label>
-                        <Link to={'/' + getTenant() + "/login"} replace={true}>
+                        <Link to={'/login'} replace={true}>
                             { t('login.form.login') }
                         </Link>
                     </div>
 
                     <div className="text-center mt-3">
                         <label htmlFor="staticEmail" className="col-form-label">{ t('login.form.new') } &nbsp; </label>
-                        <Link to={'/' + getTenant() + "/pre-registro"} replace={true} >
+                        <Link to={'/pre-registro'} replace={true} >
                             { t('login.form.register') }
                         </Link>
                     </div>

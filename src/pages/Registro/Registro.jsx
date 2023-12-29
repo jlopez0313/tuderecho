@@ -83,13 +83,13 @@ export const Registro = () => {
             notify('Bienvenido!', 'success');
             switch (user.rol) {
                 case 'Profesional':
-                    navigate('/' + getTenant() + '/profesionales/perfil');
+                    navigate('/profesionales/perfil');
                 break;
                 case 'Cliente':
-                    navigate('/' + getTenant() + '/clientes/perfil');
+                    navigate('/clientes/perfil');
                 break;
                 case 'Admin':
-                    navigate('/' + getTenant() + '/admin');
+                    navigate('/admin');
                 break;
             }
         }).catch( (error) => {
@@ -101,7 +101,7 @@ export const Registro = () => {
     return (
         <div className='container w-sm-25 mt-5'>
             <div className="d-block text-center mb-5">
-                <Link to={'/' + getTenant() + "/"}>
+                <Link to={'/'}>
                     <img src={settings.logo} className='logo-preregistro' alt=''/>
                 </Link>
             </div>
@@ -166,7 +166,7 @@ export const Registro = () => {
                 
                 <div className="text-center mt-3">
                     <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.registered') } &nbsp; </label>
-                    <Link to={'/' + getTenant() + "/login"} replace={true}>
+                    <Link to={'/login'} replace={true}>
                         { t('login.form.login') }
                     </Link>
                 </div>

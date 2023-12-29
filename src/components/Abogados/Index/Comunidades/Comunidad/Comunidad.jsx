@@ -18,11 +18,11 @@ export const ComunidadComponent = () => {
     const baseBreadCrumb = [
         {
             name: 'Home',
-            href: '/' + getTenant(),
+            href: '/',
             active: false
         },{
             name: t('comunidades.title'),
-            href: '/' + getTenant() + '/comunidades',
+            href: '/comunidades',
         }
     ]
 

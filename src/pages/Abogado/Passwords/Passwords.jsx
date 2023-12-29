@@ -25,9 +25,9 @@ export const Passwords = () => {
 
   const onSetLink = () => {
     if ( rol.toLowerCase() == 'profesional' ) {
-      setLink( '/' + getTenant() + "/" )
+      setLink( '/' )
     } else {
-      setLink( '/' + getTenant() + "/clientes" )
+      setLink( '/clientes' )
 
       setBreadcrumb([
         {

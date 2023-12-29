@@ -52,7 +52,7 @@ export const FormTagsComponent = () => {
         data.then( () => {
             notify(message, 'success');
             setIsLoading( false );
-            navigate('/' + getTenant() + '/admin/tags');
+            navigate('/admin/tags');
 
         }).catch( (error) => {
             notify(error?.response?.data?.msg || 'Internal Error onSave Tags', 'error');

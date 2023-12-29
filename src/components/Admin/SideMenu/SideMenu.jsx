@@ -28,7 +28,7 @@ export const SideMenu = () => {
         <div className='side-menu bg-dark'>
             <Navbar expand='sm' className="mb-3 flex-column p-0">
                     <div className='bg-white w-100 text-center p-3 border d-none d-sm-block'>
-                        <Link to={'/' + getTenant() + '/admin'}>
+                        <Link to={'/admin'}>
                             <img className='logo' src={settings.logo} alt=''/>
                         </Link>
                     </div>
@@ -46,32 +46,32 @@ export const SideMenu = () => {
 
                         <Offcanvas.Body className='bg-dark'>
                             <Nav className="flex-column mt-4">
-                                <Link to={'/' + getTenant() + '/admin/settings'}>
+                                <Link to={'/admin/settings'}>
                                     <FontAwesomeIcon icon={faCog} />
                                     Settings
                                 </Link>
                                 
-                                <Link to={'/' + getTenant() + '/admin/usuarios'}>
+                                <Link to={'/admin/usuarios'}>
                                     <FontAwesomeIcon icon={faUsers} />
                                     Usuarios
                                 </Link>
 
-                                <Link to={'/' + getTenant() + '/admin/tags'}>
+                                <Link to={'/admin/tags'}>
                                     <FontAwesomeIcon icon={faTags} />
                                     Palabras Clave
                                 </Link>
 
-                                <Link to={'/' + getTenant() + '/admin/especialidades'}>
+                                <Link to={'/admin/especialidades'}>
                                     <FontAwesomeIcon icon={faSuitcase} />
                                     Especialidades
                                 </Link>
 
-                                <Link to={'/' + getTenant() + '/admin/passwords'}>
+                                <Link to={'/admin/passwords'}>
                                     <FontAwesomeIcon icon={faKey} />
                                     Contraseñas
                                 </Link>
 
-                                <Link to={'/' + getTenant() + '/admin/bolsa'}>
+                                <Link to={'/admin/bolsa'}>
                                     <FontAwesomeIcon icon={faSackDollar} />
                                     Mi Bolsa
                                 </Link>

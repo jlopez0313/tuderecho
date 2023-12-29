@@ -33,7 +33,7 @@ export const PostComponent = ({idx, post, onComentar, onRemovePubli, onSharing, 
     const baseBreadCrumb = [
         {
             name: 'Home',
-            href: '/' + getTenant(),
+            href: '/',
             active: false
         },{
             name: t('posts.title'),

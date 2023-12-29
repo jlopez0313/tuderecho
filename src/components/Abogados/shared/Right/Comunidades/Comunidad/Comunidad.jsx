@@ -15,7 +15,7 @@ export const Comunidad = ({item, onRemove}) => {
   const { uid } = decodeToken(token);
 
   return (
-    <Link to={'/' + getTenant() + '/comunidades/' + item.id}>
+    <Link to={'/comunidades/' + item.id}>
       <div className='d-flex border rounded mb-3 p-2 shadow-sm bg-light'>
           <div>
               <img src={item.archivo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>

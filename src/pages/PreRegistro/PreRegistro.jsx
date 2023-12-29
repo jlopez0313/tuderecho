@@ -16,7 +16,7 @@ export const PreRegistro = () => {
     return (
         <div className='container pt-7 text-center pb-5'>
             <div className="d-block text-center mb-3">
-                <Link to={'/' + getTenant() + "/"}>
+                <Link to={'/'}>
                     <img src={settings.logo}  className='logo-preregistro' alt=''/>
                 </Link>
             </div>
@@ -25,7 +25,7 @@ export const PreRegistro = () => {
             <div className="row container m-0">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-4 text-center mt-4">
-                    <Link to={'/' + getTenant() + "/registro/Cliente"} replace={true} >
+                    <Link to={'/registro/Cliente'} replace={true} >
                         <button className='type btn btn-light border shadow'>
                             <img src={Cliente} className="d-block mx-auto mb-4" alt=''/>
                             <span> { t('register.client') } </span>
@@ -33,7 +33,7 @@ export const PreRegistro = () => {
                     </Link>
                 </div>
                 <div className="col-sm-4 text-center mt-4">
-                    <Link to={'/' + getTenant() + "/registro/Profesional"} replace={true} >
+                    <Link to={'/registro/Profesional'} replace={true} >
                         <button className='type btn btn-light border shadow'>
                             <img src={settings.heroe} className="d-block mx-auto mb-4" alt=''/>
                             <span> { t('register.lawyer') } </span>
@@ -45,7 +45,7 @@ export const PreRegistro = () => {
 
             <div className="text-center mt-5">
                 <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.registered') } &nbsp; </label>
-                <Link to={'/' + getTenant() + "/login"} replace >
+                <Link to={'/login'} replace >
                     { t('login.form.login') }
                 </Link>
             </div>

@@ -45,7 +45,7 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
               { t('share') }
             </small>
 
-            <Link to={'/' + getTenant() + '/conferencias/' + item.id} className={ uid == item.user.id && 'me-4' }>
+            <Link to={'//conferencias/' + item.id} className={ uid == item.user.id && 'me-4' }>
               <FontAwesomeIcon
                   icon={faSearch}
                   className='cursor-pointer text-danger'

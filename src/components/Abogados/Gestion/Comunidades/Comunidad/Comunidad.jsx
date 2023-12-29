@@ -41,7 +41,7 @@ export const Comunidad = ({item, onRemove, onEdit}) => {
               { t('share') }
             </small>
 
-            <Link to={'/' + getTenant() + '/comunidades/' + item.id} className={ uid == item.user.id ? 'me-4' : '' }>
+            <Link to={'/comunidades/' + item.id} className={ uid == item.user.id ? 'me-4' : '' }>
               <FontAwesomeIcon
                   icon={faSearch}
                   className='cursor-pointer text-danger'

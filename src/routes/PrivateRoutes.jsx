@@ -29,7 +29,7 @@ export const PrivateRoutes = ({ children, rol }) => {
         if(isMyTokenExpired){
             logout(navigate);
         } else if ( rol !== user.rol ) {
-            navigate('/' + getTenant() + '/unauthorized')
+            navigate('/unauthorized')
         } else {
             getUser();
         }

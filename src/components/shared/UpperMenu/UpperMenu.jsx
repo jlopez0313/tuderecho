@@ -41,7 +41,7 @@ export const UpperMenu = () => {
                 <ul className='mt-3'>
                     <strong className='text-danger d-block'> { t("conferencias.title") } </strong>
                     <li className='border shadow-sm p-2 m-2'> 
-                        <Link to={'/' + getTenant() + "/conferencias"} className="">
+                        <Link to={'/conferencias'} className="">
                             <FontAwesomeIcon className='me-2' icon={faSearch} />
                             <strong className='text-dark'> { t("conferencias.discover") } </strong>
                         </Link>
@@ -49,7 +49,7 @@ export const UpperMenu = () => {
 
                     <strong className='text-danger d-block'> { t("videoteca.title") } </strong>
                     <li className='border shadow-sm p-2 m-2'> 
-                        <Link to={'/' + getTenant() + "/videoteca"} className="">
+                        <Link to={'/videoteca'} className="">
                             <FontAwesomeIcon className='me-2' icon={faSearch} />
                             <strong className='text-dark'> { t("videoteca.discover") } </strong>
                         </Link>
@@ -57,7 +57,7 @@ export const UpperMenu = () => {
 
                     <strong className='text-danger d-block'> { t("comunidades.title") } </strong>
                     <li className='border shadow-sm p-2 m-2'> 
-                        <Link to={'/' + getTenant() + "/comunidades"} className="">
+                        <Link to={'/comunidades'} className="">
                             <FontAwesomeIcon className='me-2' icon={faSearch} />
                             <strong className='text-dark'> { t("comunidades.discover") } </strong>
                         </Link>

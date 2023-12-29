@@ -68,26 +68,26 @@ export const Login = () => {
             notify( t('login.alerts.welcome'), 'success');
             switch (rol) {
                 case 'Profesional':
-                    navigate('/' + getTenant() + '/profesionales');
+                    navigate('/profesionales');
                 break;
                 case 'Cliente':
-                    navigate('/' + getTenant() + '/clientes');
+                    navigate('/clientes');
                 break;
                 case 'Admin':
-                    navigate('/' + getTenant() + '/admin');
+                    navigate('/admin');
                 break;
             }
         }).catch( (error) => {
             setIsLoading( false )
             notify(error?.response?.data?.msg || t('login.alerts.error'), 'warning');
-            navigate('/' + getTenant() + '/pre-registro', { replace: true });
+            navigate('/pre-registro', { replace: true });
         })
     }
     
     return (
         <div className='container w-sm-25 mt-5'>
             <div className="d-block text-center mb-5">
-                <Link to={'/' + getTenant() + "/"}>
+                <Link to={'/'}>
                     <img src={settings.logo} className='logo-preregistro' alt=''/>
                 </Link>
             </div>
@@ -112,7 +112,7 @@ export const Login = () => {
                         } 
                     </button>
 
-                    <Link to={'/' + getTenant() + "/recover"}>
+                    <Link to={'/recover'}>
                         <span className='d-block mx-auto text-center mt-3'> { t('login.form.forgot') } </span>
                     </Link>
 
@@ -135,7 +135,7 @@ export const Login = () => {
                     
                 <div className="text-center mt-3">
                     <label htmlFor="staticEmail" className="col-form-label"> { t('login.form.new') } &nbsp; </label>
-                    <Link to={'/' + getTenant() + "/pre-registro"} replace={true} >
+                    <Link to={'/pre-registro'} replace={true} >
                         { t('login.form.register') }
                     </Link>
                 </div>

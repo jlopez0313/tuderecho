@@ -33,9 +33,9 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
 
     const onSetLink = () => {
         if ( rol.toLowerCase() == 'profesional' ) {
-          setLink( '/' + getTenant() )
+          setLink( '/' )
         } else {
-          setLink( '/' + getTenant() + "/clientes" )
+          setLink( '/clientes' )
         }
     }
 
@@ -77,7 +77,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                         <ul className=''>
                             <strong className='text-danger d-block mt-5'> { t("sidemenu.gestion.title") } </strong>
                             <li className='border shadow-sm p-2 m-2'> 
-                                <Link to={'/' + getTenant() + `/gestion/bolsa`}>
+                                <Link to={'/gestion/bolsa'}>
                                     <FontAwesomeIcon className='me-2' icon={faSackDollar} />
                                     <strong className='text-dark'> { t("sidemenu.gestion.bag") } </strong>
                                 </Link>

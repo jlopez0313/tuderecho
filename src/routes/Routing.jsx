@@ -9,9 +9,6 @@ export const Routing = () => {
     <Routes>        
         <Route path="/superadmin/*" element={ <SuperadminRoutes /> } />
         <Route path="/*" element={ <TenantRoutes />} />
-        {/* 
-          <Route path='/:tenant/*' element={ <TenantRoutes /> } />        
-        */}
         <Route path="/notFound" element={ <NotFound />} />
         <Route path="*" element={ <NotFound />} />
     </Routes>

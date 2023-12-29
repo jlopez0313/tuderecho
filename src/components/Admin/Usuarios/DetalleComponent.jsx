@@ -67,7 +67,7 @@ export const DetalleComponent = () => {
 
                 update(user.id, {...user, estado: 'A'})
                 .then( () => {
-                    navigate('/' + getTenant() + '/admin/usuarios')
+                    navigate('/admin/usuarios')
                     notify('Usuario Aprobado!', 'success')
                 })
             }
@@ -86,7 +86,7 @@ export const DetalleComponent = () => {
             if ( isConfirmed ) {
                 update(user.id, {...user, estado: 'R'})
                 .then( () => {
-                    navigate('/' + getTenant() + '/admin/usuarios')
+                    navigate('/admin/usuarios')
                     notify('Usuario Rechazado!', 'success')
                 })
             }

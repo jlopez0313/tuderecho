@@ -19,7 +19,7 @@ export const setSettings = ( data ) => {
 export const logout = ( navigate ) => {
     notify('Tu sesión ha finalizado', 'success');
     localStorage.removeItem('token')
-    navigate( '/' + getTenant()  + "/", { replace: true })
+    navigate( '/', { replace: true })
 }
 
 export const notify = ( message, type, newOptions = {} ) => {

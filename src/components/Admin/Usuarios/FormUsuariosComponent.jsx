@@ -50,7 +50,7 @@ export const FormUsuariosComponent = () => {
                     </div>
                 </div>
             </div>
-            <Link to={'/' + getTenant() + "/admin/usuarios"} className='text-white btn btn-primary'>
+            <Link to={'/admin/usuarios'} className='text-white btn btn-primary'>
                 Guardar
             </Link>
         </div>

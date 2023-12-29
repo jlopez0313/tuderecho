@@ -45,7 +45,7 @@ export const Passwords = () => {
         .then(() => {
           setIsLoading(false)
           notify(t('passwords.alerts.saved'), 'success');
-          navigate('/' + getTenant() + '/login');
+          navigate('/login');
         }).catch(error => {
           setIsLoading(false)
           console.log(error);
@@ -57,7 +57,7 @@ export const Passwords = () => {
   return (
     <div className='container w-sm-25 mt-5'>
       <div className="d-block text-center mb-5">
-        <Link to={'/' + getTenant() + "/profesionales"}>
+        <Link to={'/profesionales'}>
           <img src={settings.logo} className='logo-preregistro' alt='' />
         </Link>
       </div>

@@ -34,8 +34,8 @@ export const useEpayco = () => {
             extra1: item.id, // ID from Item
             extra2: route, // Redirect Page
             extra3: component,
-            confirmation: import.meta.env.VITE_FRONTEND +  "/"  + getTenant() + "/confirmation",
-            response: import.meta.env.VITE_FRONTEND + "/" + getTenant() + "/confirmation",
+            confirmation: import.meta.env.VITE_FRONTEND +  "/confirmation",
+            response: import.meta.env.VITE_FRONTEND + "/confirmation",
 
             //Atributos cliente
             name_billing: "",

@@ -51,9 +51,9 @@ export const Header = () => {
 
     const onSetLink = () => {
         if ( rol.toLowerCase() == 'profesional' ) {
-          setLink( '/' + getTenant() + "/profesionales" )
+          setLink( '/profesionales' )
         } else {
-          setLink( '/' + getTenant() + "/clientes" )
+          setLink( '/clientes' )
         }
     }
 

@@ -51,7 +51,7 @@ export const FormEspecialidadesComponent = () => {
         data.then( () => {
             notify(message, 'success');
             setIsLoading( false );
-            navigate('/' + getTenant() + '/admin/especialidades');
+            navigate('/admin/especialidades');
 
         }).catch( (error) => {
             notify(error?.response?.data?.msg || 'Internal Error onSave Especialidades', 'error');

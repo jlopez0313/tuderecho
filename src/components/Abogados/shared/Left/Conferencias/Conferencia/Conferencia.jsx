@@ -18,7 +18,7 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
   const { uid } = decodeToken(token);
 
   return (
-    <Link to={'/' + getTenant() + '/conferencias/' + item.id}>
+    <Link to={'/conferencias/' + item.id}>
 
       <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 ${shared.listItem} text-dark`}>
         <div className="row g-0 p-1">

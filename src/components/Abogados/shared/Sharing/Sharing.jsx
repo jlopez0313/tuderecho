@@ -6,7 +6,7 @@ import { getTenant } from '@/helpers/helpers';
 export const Sharing = ({ id }) => {
     const { t } = useTranslation();
 
-    const shareUrl = `${import.meta.env.VITE_FRONTEND}/${getTenant()}/posts/${id}`;
+    const shareUrl = `${import.meta.env.VITE_FRONTEND}/posts/${id}`;
     const title = 'Sabiux';
     return (
         <>
