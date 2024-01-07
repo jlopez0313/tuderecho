@@ -74,33 +74,33 @@ export const Home = () => {
 
   return (
     <>
+      <Header />
       {
         settings?.logo ? 
         <>
-          <Header />
           <Slider />
 
-        <div className="row my-3 mx-0 p-0">
-          {
-            list.map( ( item , index) => {
-              return (
-                <div className="col-sm-6 col-md-4 col-lg-3 col-12 mb-3" key={ index }>
-                  <Abogados item={item}/>
-                </div>
-              )
-            })
-          }
-        </div>
-        <ReactPaginate
-          className={`d-flex justify-content-between my-2 pb-4 ${styles.paginator}`}
-          breakLabel="..."
-          nextLabel=">"
-          onPageChange={ handlePageChange }
-          pageRangeDisplayed={ perPage }
-          pageCount={ totalRows }
-          previousLabel="<"
-          renderOnZeroPageCount={ null }
-        />
+          <div className="row my-3 mx-0 p-0">
+            {
+              list.map( ( item , index) => {
+                return (
+                  <div className="col-sm-6 col-md-4 col-lg-3 col-12 mb-3" key={ index }>
+                    <Abogados item={item}/>
+                  </div>
+                )
+              })
+            }
+          </div>
+          <ReactPaginate
+            className={`d-flex justify-content-between my-2 pb-4 ${styles.paginator}`}
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={ handlePageChange }
+            pageRangeDisplayed={ perPage }
+            pageCount={ totalRows }
+            previousLabel="<"
+            renderOnZeroPageCount={ null }
+          />
 
       </> 
         : <Loader />
