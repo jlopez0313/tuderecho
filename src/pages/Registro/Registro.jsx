@@ -83,7 +83,7 @@ export const Registro = () => {
             notify('Bienvenido!', 'success');
             switch (user.rol) {
                 case 'Profesional':
-                    navigate('/profesionales/perfil');
+                    navigate('/perfil');
                 break;
                 case 'Cliente':
                     navigate('/clientes/perfil');
