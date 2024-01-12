@@ -85,7 +85,6 @@ export const SettingsComponent = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Logo:</label>
                                 <div className="col-sm-10">
                                     <input 
-                                        required 
                                         type='file'
                                         accept='image/png, image/jpeg'
                                         className='form-control'
@@ -104,7 +103,6 @@ export const SettingsComponent = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Heroe:</label>
                                 <div className="col-sm-10">
                                     <input 
-                                        required 
                                         type='file'
                                         accept='image/png, image/jpeg'
                                         className='form-control'
@@ -123,7 +121,6 @@ export const SettingsComponent = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Imagen de Fondo:</label>
                                 <div className="col-sm-10">
                                     <input 
-                                        required 
                                         type='file'
                                         accept='image/png, image/jpeg'
                                         className='form-control'
