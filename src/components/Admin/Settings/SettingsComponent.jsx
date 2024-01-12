@@ -29,8 +29,10 @@ export const SettingsComponent = () => {
     const { settings } = useSelector(state => state.settings);
 
     const formData = {
+      title: '',
       heroe: '',
       logo: '',
+      fondo: '',
     }
 
     const { onInputChange, onSetFormState, formState } = useForm(formData)
@@ -82,9 +84,22 @@ export const SettingsComponent = () => {
                     <div className="card-body">
                         <div className="form">
                             <div className="mb-3 row">
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Título:</label>
+                                <div className="col-sm-10">
+                                    <input
+                                        placeholder='Titulo del Sitio'
+                                        value={formState.title}
+                                        name='title'
+                                        type='text'
+                                        className='form-control'
+                                        onChange={onInputChange} />
+                                </div>
+                            </div>
+                            
+                            <div className="mb-3 row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Logo:</label>
                                 <div className="col-sm-10">
-                                    <input 
+                                    <input
                                         type='file'
                                         accept='image/png, image/jpeg'
                                         className='form-control'
