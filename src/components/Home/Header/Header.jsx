@@ -85,10 +85,10 @@ export const Header = () => {
                     !token 
                     ? 
                       <>
-                        <Link className="nav-link" to={"/login"} replace={true}>
+                        <Link className="nav-link" to={"/login"}>
                           <button className='btn btn-primary'> { t('home.header.login') } </button>
                         </Link>
-                        <Link className="nav-link" to={"/pre-registro"} replace={true}>
+                        <Link className="nav-link" to={"/pre-registro"}>
                           <button className='btn btn-primary'> { t('home.header.register') } </button>
                         </Link>
                       </> 
