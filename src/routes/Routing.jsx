@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 export const Routing = () => {
 
   const { settings } = useSelector(state => state.settings);
-  document.title = settings?.title || 'Sabiux';
+  document.title = settings?.title + '-Sabiux' || 'Sabiux';
 
 
   return (
