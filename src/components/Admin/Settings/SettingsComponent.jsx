@@ -61,11 +61,68 @@ export const SettingsComponent = () => {
 
     const onUploadImage = ( evt, key ) => {
 
+        const logoSize = {
+            width: 427,
+            height: 117,
+        }
+
+        const heroeSize = {
+            width: 104,
+            height: 161,
+        }
+
+        let finalSize = {
+            width: 0,
+            height: 0,
+        }
+
+
         const reader = new FileReader();
         reader.readAsDataURL(evt.target.files[0]);
         reader.onload = function(event) {
-            const myEvent = { target: { name: key, value: event.target.result }}
-            onInputChange( myEvent )
+
+            var image=new Image();
+            image.src=event.target.result;
+            image.onload = function () {
+                let hasSize = true;
+                switch(key) {
+                    case 'logo':
+                        finalSize = logoSize;
+                        if( image.width > logoSize.width) {
+                            if ( Math.ceil(image.width/logoSize.width) != Math.ceil(image.height/logoSize.height)) {
+                                hasSize = false;
+                            }
+                        } else {
+                            if ( Math.ceil(logoSize.width/image.width) != Math.ceil(logoSize.height/image.height)) {
+                                hasSize = false;
+                            }
+                        }
+                        break;
+                    case 'heroe':
+                        finalSize = heroeSize;
+
+                        if( image.width > heroeSize.width) {
+                            if ( Math.ceil(image.width/heroeSize.width) != Math.ceil(image.height/heroeSize.height)) {
+                                hasSize = false;
+                            }
+                        } else {
+                            if ( Math.ceil(heroeSize.width/image.width) != Math.ceil(heroeSize.height/image.height)) {
+                                hasSize = false;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                if ( hasSize ) {
+                    const myEvent = { target: { name: key, value: event.target.result }}
+                    onInputChange( myEvent )
+                } else {
+                    notify( `El tamaño de la imagen debe coincidir con ${finalSize.width}x${finalSize.height} o su ratio equivalente`, "error");
+                }
+            };
+
         };
             reader.onerror = function() {
             notify( t('profile.alerts.error-image'), "error");
