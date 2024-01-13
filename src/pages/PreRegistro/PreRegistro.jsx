@@ -35,7 +35,7 @@ export const PreRegistro = () => {
                 <div className="col-sm-4 text-center mt-4">
                     <Link to={'/registro/Profesional'} >
                         <button className='type btn btn-light border shadow'>
-                            <img src={settings.heroe} className="logo-profesional w-100 d-block mx-auto mb-4" alt=''/>
+                            <img src={settings.heroe} className="logo-profesional d-block mx-auto mb-4" alt=''/>
                             <span> { t('register.lawyer') } </span>
                         </button>
                     </Link>
