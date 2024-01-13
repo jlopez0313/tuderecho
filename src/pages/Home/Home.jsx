@@ -71,7 +71,7 @@ export const Home = () => {
   useEffect( () => {
     console.log( params );
     onGetTenant()
-  }, [params])
+  }, [])
 
   return (
     <>
