@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from '@/hooks/useForm';
 import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
-import { create, find } from '@/services/Tags';
+import { create, find, update } from '@/services/Tags';
 import { useTranslation } from 'react-i18next';
 import { getTenant } from '@/helpers/helpers';
 
