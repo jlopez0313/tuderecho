@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Header } from '@/components/Home/Header/Header'
 import { Abogados } from '@/components/Home/Abogados/Abogados'
 import { Slider } from '@/components/Home/Slider/Slider'
@@ -68,7 +68,7 @@ export const Home = () => {
     onList(page);
   };
   
-  useEffect( () => {
+  const getParams = useCallback( () => {
     onGetTenant()
   }, [params])
 
