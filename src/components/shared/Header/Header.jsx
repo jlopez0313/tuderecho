@@ -29,8 +29,8 @@ export const Header = () => {
     const childRef = useRef(null);
     const {connectToChat, onAddChat, onRemoveChat, onlineUsers, chatList, socket, newMessage} = useContext( ChatContext );
 
-    const params = useParams();
-    setTenant(params.tenant);
+    // const params = useParams();
+    // setTenant(params.tenant);
 
     const token = localStorage.getItem('token') || '';
     const { rol } = decodeToken(token);
