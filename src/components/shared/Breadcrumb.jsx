@@ -11,7 +11,7 @@ function Breadcrumb({ items, ...props }) {
                             <li key={key} className={`breadcrumb-item ${ item.active ? 'active':'' }`}>
                                 {
                                     item.href
-                                    ? <Link to={'/' + item.href}> {item.name} </Link> 
+                                    ? <Link to={item.href}> {item.name} </Link> 
                                     : item.name
                                 }
                             </li>
