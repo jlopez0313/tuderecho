@@ -33,7 +33,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
 
     const onSetLink = () => {
         if ( rol.toLowerCase() == 'profesional' ) {
-          setLink( '/' )
+          setLink( '/profesionales' )
         } else {
           setLink( '/clientes' )
         }
