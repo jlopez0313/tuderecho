@@ -11,7 +11,7 @@ import { ChatProvider } from './context/Chat/ChatProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename={window.location.host}>
       <ChatProvider>
         <ToastContainer />
         <Routing />
