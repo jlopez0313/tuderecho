@@ -12,6 +12,7 @@ import { setSettings } from '@/helpers/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
+import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
 const breadcrumb = [
@@ -178,7 +179,7 @@ export const SettingsComponent = () => {
                                         onChange={(evt) => onUploadImage(evt, 'logo')} />
                                 </div>
                                 <div className="col-sm-1">
-                                    <button className='btn btn-outline-danger' onClick={() => showHelp(logoSize)}>
+                                    <button type='button' className='btn btn-outline-danger' onClick={() => showHelp(logoSize)}>
                                         <FontAwesomeIcon icon={faQuestion} />
                                     </button>
                                 </div>
@@ -201,7 +202,7 @@ export const SettingsComponent = () => {
                                         onChange={(evt) => onUploadImage(evt, 'heroe')} />
                                 </div>
                                 <div className="col-sm-1">
-                                    <button className='btn btn-outline-danger' onClick={() => showHelp(heroeSize)}>
+                                    <button type='button' className='btn btn-outline-danger' onClick={() => showHelp(heroeSize)}>
                                         <FontAwesomeIcon icon={faQuestion} />
                                     </button>
                                 </div>
