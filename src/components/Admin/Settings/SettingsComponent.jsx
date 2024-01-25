@@ -12,6 +12,8 @@ import { setSettings } from '@/helpers/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
+import Swal from 'sweetalert2'
+
 const breadcrumb = [
     {
         name: 'Home',
@@ -37,7 +39,31 @@ export const SettingsComponent = () => {
       fondo: '',
     }
 
+    const logoSize = {
+        width: 427,
+        height: 117,
+    }
+
+    const heroeSize = {
+        width: 104,
+        height: 161,
+    }
+
+    let finalSize = {
+        width: 0,
+        height: 0,
+    }
+
     const { onInputChange, onSetFormState, formState } = useForm(formData)
+
+    const showHelp = ( size ) => {
+        const MySwal = withReactContent(Swal)
+        MySwal.fire({
+            icon: 'question',
+            confirmButtonColor: 'red',
+            text: `El tamaño de la imagen debe coincidir con ${size.width}x${size.height} o su ratio equivalente`,
+        })
+    }
 
     const onSave= ( evt ) => {
         evt.preventDefault();
@@ -63,20 +89,7 @@ export const SettingsComponent = () => {
 
     const onUploadImage = ( evt, key ) => {
 
-        const logoSize = {
-            width: 427,
-            height: 117,
-        }
-
-        const heroeSize = {
-            width: 104,
-            height: 161,
-        }
-
-        let finalSize = {
-            width: 0,
-            height: 0,
-        }
+        
 
 
         const reader = new FileReader();
@@ -165,7 +178,7 @@ export const SettingsComponent = () => {
                                         onChange={(evt) => onUploadImage(evt, 'logo')} />
                                 </div>
                                 <div className="col-sm-1">
-                                    <button className='btn'>
+                                    <button className='btn btn-outline-danger' onClick={() => showHelp(logoSize)}>
                                         <FontAwesomeIcon icon={faQuestion} />
                                     </button>
                                 </div>
@@ -188,7 +201,9 @@ export const SettingsComponent = () => {
                                         onChange={(evt) => onUploadImage(evt, 'heroe')} />
                                 </div>
                                 <div className="col-sm-1">
-                                    <FontAwesomeIcon icon={faQuestion} />
+                                    <button className='btn btn-outline-danger' onClick={() => showHelp(heroeSize)}>
+                                        <FontAwesomeIcon icon={faQuestion} />
+                                    </button>
                                 </div>
                             </div>
                             
