@@ -9,6 +9,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { set } from '@/store/settings/SettingsSlice';
 import { setSettings } from '@/helpers/helpers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 const breadcrumb = [
     {
@@ -155,12 +157,17 @@ export const SettingsComponent = () => {
                             
                             <div className="mb-3 row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Logo:</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-9">
                                     <input
                                         type='file'
                                         accept='image/png, image/jpeg'
                                         className='form-control'
                                         onChange={(evt) => onUploadImage(evt, 'logo')} />
+                                </div>
+                                <div className="col-sm-1">
+                                    <button className='btn'>
+                                        <FontAwesomeIcon icon={faQuestion} />
+                                    </button>
                                 </div>
                             </div>
 
@@ -173,12 +180,15 @@ export const SettingsComponent = () => {
                             
                             <div className="mb-3 row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Heroe:</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-9">
                                     <input 
                                         type='file'
                                         accept='image/png, image/jpeg'
                                         className='form-control'
                                         onChange={(evt) => onUploadImage(evt, 'heroe')} />
+                                </div>
+                                <div className="col-sm-1">
+                                    <FontAwesomeIcon icon={faQuestion} />
                                 </div>
                             </div>
                             
