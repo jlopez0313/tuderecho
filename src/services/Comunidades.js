@@ -45,8 +45,12 @@ export const create = async (body) => {
     Object.keys( body ).forEach( key => {
         formData.append( key, body[key] )
     })
+
+    const headers = {
+        'Content-Type': 'multipart/form-data',
+    }
     
-    const response = await backendApi.post(module, formData)
+    const response = await backendApi.post(module, formData, { headers })
 
     if ( response ) {
         return Promise.resolve(true);
@@ -74,7 +78,11 @@ export const update = async(id, body) => {
         formData.append( key, body[key] )
     })
 
-    const response = await backendApi.put(module + id, formData)
+    const headers = {
+        'Content-Type': 'multipart/form-data',
+    }
+
+    const response = await backendApi.put(module + id, formData, { headers })
 
     if ( response ) {
         return Promise.resolve(true);

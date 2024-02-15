@@ -39,7 +39,11 @@ export const save = async ( body ) => {
         }
     })
 
-    const response = await backendApi.post(modulo, formData)
+    const headers = {
+        'Content-Type': 'multipart/form-data',
+    }
+
+    const response = await backendApi.post(modulo, formData, { headers })
     console.log(response);
 
     if ( response ) {
