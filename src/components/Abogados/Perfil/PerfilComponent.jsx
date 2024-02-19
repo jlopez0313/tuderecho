@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DatosPersonales } from "./DatosPersonales"
 import { InformacionPrivada } from "./InformacionPrivada"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { decodeToken } from "react-jwt";
 import { update } from '@/services/Usuarios';
 import { useForm } from '@/hooks/useForm';
@@ -9,7 +9,7 @@ import { notify } from '@/helpers/helpers';
 import Breadcrumb from '@/components/shared/Breadcrumb';
 
 import { useTranslation } from 'react-i18next';
-import { getTenant } from '@/helpers/helpers';
+import { register } from '@/store/user/UserSlice';
 
 export const PerfilComponent = () => {
   
@@ -25,7 +25,8 @@ export const PerfilComponent = () => {
         active: true
     }
   ]
-
+  
+  const dispatch = useDispatch();
   const { user } = useSelector( state => state.user );
   const [id, setId] = useState('');
   const [isLoading, setIsLoading] = useState( false )
@@ -71,6 +72,8 @@ export const PerfilComponent = () => {
       setIsLoading( false )
 
       onSetFormState( {...formState, ...data.usuario}  )
+
+      dispatch( register( {...data.usuario} ) );
       notify( t('profile.alerts.updated'), 'success');
     }).catch( error => {
       setIsLoading( false )
