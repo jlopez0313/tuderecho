@@ -61,6 +61,7 @@ export const Main = ({ comunidad = '' }) => {
     }
 
     const onSharing = async ( idx ) => {
+        setShowModalComments( false )
         setShowModalShare( true )
     }
 
@@ -162,6 +163,7 @@ export const Main = ({ comunidad = '' }) => {
                     modalShow={showModalComments}
                     onHide={(refresh = false) => onHideModal( refresh )}
                     onSetPubli={(publi) => onSetPubli( publi )}
+                    onSharing={() => onSharing()}
                 />
  
                 <PostModal

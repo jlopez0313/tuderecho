@@ -18,13 +18,14 @@ import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
 
 import { useTranslation } from 'react-i18next';
 
-export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
+export const ComentariosModal = memo( ( {modalShow, onSharing, ...props} ) => {
 
     const { t } = useTranslation();
 
     const { publicacion, setPublicacion } = useContext( PublicacionContext );
 
     const [show, setShow] = useState( true );
+    const [showModalShare, setShowModalShare] = useState(false);
     
     const initFormData = {
         comentario: '',
@@ -114,6 +115,7 @@ export const ComentariosModal = memo( ( {modalShow, ...props} ) => {
                                 className='mb-3'
                                 post={publicacion}
                                 onComentar={onComentar}
+                                onSharing={onSharing}
                             />
 
                             {

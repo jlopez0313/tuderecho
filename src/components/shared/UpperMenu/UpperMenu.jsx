@@ -40,11 +40,11 @@ export const UpperMenu = () => {
     }
 
     const onRefreshVideoteca = (doRefresh) => {
-        setModalShow(false)
+        setModalVideotecaShow(false)
     }
 
     const onRefreshComunidades = (doRefresh) => {
-        setModalShow(false)
+        setModalComunidadShow(false)
     }
 
     return (
@@ -105,7 +105,7 @@ export const UpperMenu = () => {
 
                         <li className='border shadow-sm m-2'> 
                             <div className="w-100 rounded p-2 bg-outlet-danger cursor-pointer"
-                                onClick={() => setModalVideotecaShow(true)}
+                                onClick={() => setModalComunidadShow(true)}
                             > 
                                 <FontAwesomeIcon icon={faPencil} />
                                 <strong> { t('comunidades.create') } </strong>
@@ -116,19 +116,19 @@ export const UpperMenu = () => {
 
             <ConferenciaModal
                 title={ t('conferencias.create') }
-                modalShow={modalShow}
+                modalShow={modalConferenciaShow}
                 onHide={(doRefresh = false ) => onRefreshConferencias(doRefresh)}
             />
 
             <VideotecaModal
                 title={ t('videoteca.create') }
-                modalShow={modalShow}
+                modalShow={modalVideotecaShow}
                 onHide={(doRefresh = false) => onRefreshVideoteca(doRefresh)}
             />
 
             <ComunidadesModal
                 title={ t('comunidades.create') }
-                modalShow={modalShow}
+                modalShow={modalComunidadShow}
                 onHide={(doRefresh = false) => onRefreshComunidades(doRefresh)}
             />
 
