@@ -254,7 +254,7 @@
             "city": "Ciudad",
             "city-placeholder": "Ej: Cali",
             "chose": "Escoge uno...",
-            "chose-some": "Escoge algunos...",
+            "chose-some": "Escoge algunos (hasta 15)...",
             "country": "País",
             "document": "Tipo de Documento",
             "email": "Email",

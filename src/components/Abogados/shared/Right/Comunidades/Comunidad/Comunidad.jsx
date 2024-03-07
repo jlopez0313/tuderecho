@@ -22,8 +22,9 @@ export const Comunidad = ({item, onRemove}) => {
           </div>
           <div className="d-flex flex-column w-100">
               <strong className='text-dark'> {item.titulo} </strong>
+              <small className="text-dark"> {item.objetivo} </small>
               <div className="d-flex justify-content-between">
-                  <small className='text-dark'> { t('people') }: 25 </small>
+                  <small className='text-dark'> { t('people') }: { item.usuarios?.length || 0} </small>
               </div>
           </div>
       </div>

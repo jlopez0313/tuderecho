@@ -31,7 +31,7 @@ export const Video = memo( ({item, onRemove, onEdit}) => {
             <video
                 className='rounded w-100'
                 controls={false}
-                responsive={true}
+                responsive='true'
                 src={item.video}
             />
           </div>

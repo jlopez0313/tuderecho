@@ -32,6 +32,7 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
                 </small>
                 <small className=''> { t('conferencias.expositor') }: {item.conferencista} </small>
                 <small className=''> { t('conferencias.date') }: { format(new Date(item.fecha), 'yyyy-MM-dd,  HH:mm') } </small>
+                <small className="w-100"> { t('conferencias.form.target') }: {item.objetivo} </small>
               </div>
           </div>
         </div>

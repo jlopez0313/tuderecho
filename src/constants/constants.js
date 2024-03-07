@@ -20,3 +20,6 @@ export const tipoDocumentos = [
     value:'ID'
   },
 ];
+
+export const TITLE = 'Sabiux'
+export const MAX_TAGS = 3

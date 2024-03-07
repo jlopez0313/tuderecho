@@ -232,7 +232,7 @@
             "city": "City",
             "city-placeholder": "Ex: New York",
             "chose": "Chose one...",
-            "chose-some": "Chose some...",
+            "chose-some": "Chose some (up to 15)...",
             "country": "Country",
             "document": "Document type",
             "email": "Email",

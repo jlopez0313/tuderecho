@@ -34,11 +34,11 @@ export const Item = ({ item, uid, onRefresh, onEdit, onRemove }) => {
                 <Card.Body>
                     <div className="d-flex flex-column w-100 mb-2">
                         <strong> {item.titulo} </strong>
-                        <div className="d-flex justify-content-between">
-                            <small className="w-100">{ t('people') }: { item.usuarios?.length || 0} </small>
-                        </div>
                         <div className="">
                             <small className="w-100">{item.objetivo}</small>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <small className="w-100">{ t('people') }: { item.usuarios?.length || 0} </small>
                         </div>
                     </div>
                 

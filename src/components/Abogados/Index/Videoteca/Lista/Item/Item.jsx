@@ -57,10 +57,8 @@ export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemov
                         onClick={asd}>
                     <video
                         className='mt-5 w-100'
-                        responsive={true}
+                        responsive='true'
                         controls={ tab === 'profile' }
-                        showByline={false}
-                        showTitle={false}
                         src={item.video}
                     />
                 </div>

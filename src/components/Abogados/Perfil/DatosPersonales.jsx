@@ -10,6 +10,7 @@ import { all as getAll } from '@/services/Especialidades';
 import { all as getTags } from '@/services/Tags';
 
 import { useTranslation } from 'react-i18next';
+import { MAX_TAGS } from '@/constants/constants';
 
 const animatedComponents = makeAnimated();
 
@@ -23,6 +24,8 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
     const [tags, setTags] = useState([])
     const [mappedTags, setMappedTags] = useState( [] )
     const [myTags, setMyTags] = useState([]);
+    const [has15, setHas15] = useState(false);
+
     const image = useRef(null)
 
     const selectCountry = (val) => {
@@ -55,6 +58,8 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                 }
             })
         )
+
+        setHas15( myTags.length == MAX_TAGS)
     }
 
     const onPrepareTags = (
@@ -65,6 +70,8 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
         const evt = { target: { name: 'perfil', value: newTagsId } }
 
         setMyTags( newTags.map( (tag) => { return {value: tag.value, label: tag.label} } ) )
+        setHas15( newTags.length == MAX_TAGS)
+
         onInputChange( evt, 'tags' )
     }
 
@@ -198,7 +205,9 @@ export const DatosPersonales = ( { formState, onInputChange } ) => {
                 <div className="col-sm-6">
                     <div className="form-floating col-sm-12">
                         <Select
-                            required
+                            required                            
+                            openMenuOnClick={ !has15 }
+                            menuIsOpen={has15 ? false : undefined}
                             name='tags'
                             onChange={onPrepareTags}
                             placeholder={ t('profile.form.chose-some') }
