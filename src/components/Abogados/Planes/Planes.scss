@@ -1,0 +1,15 @@
+.avatar-container {
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    border: 2px solid #666;
+    overflow: hidden;
+    .avatar {
+        height: 100%;
+    }
+}
+
+.css-13cymwt-control,
+.css-t3ipsp-control {
+    min-height: 58px !important;
+}

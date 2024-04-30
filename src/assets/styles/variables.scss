@@ -6,12 +6,18 @@
 @import "bootstrap/scss/utilities";
 
 :root {
-    --bg-red: #E4132F;
-    --bg-red-hover: #991023;
+    --bg-red: #64c27b;
+    --bg-red-hover: #46995b;
 
-    --bs-link-color: #E4132F;
+    --bs-link-color: #64c27b;
 
     --bs-breadcrumb-font-size: .85rem;
+}
+
+.alert-danger {
+  --bs-alert-color: #1c742f;
+  --bs-alert-bg: #d0fad9;
+  --bs-alert-border-color: #64c27b;
 }
 
 $new-position-values: (

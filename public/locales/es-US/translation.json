@@ -6,6 +6,7 @@
     "people": "Personas",
     "remove": "Remover",
     "save": "Guardar",
+    "choose": "Seleccionar",
     "search": "Buscar...",
     "see": "Ver más",
     "share": "Compartir",
@@ -279,7 +280,8 @@
     "sidemenu": {
         "profile": {
             "basic-info": "Información Básica",
-            "title":"Mi Perfil"
+            "title":"Mi Perfil",
+            "plan":"Planes"
         },
 
         "gestion": {

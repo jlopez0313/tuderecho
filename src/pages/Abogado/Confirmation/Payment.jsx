@@ -3,6 +3,7 @@ import styles from './Payment.module.scss'
 import { Left } from "@/components/Abogados/shared/Left/Left";
 import { Right } from "@/components/Abogados/shared/Right/Right";
 import { notify } from '@/helpers/helpers'
+import { update } from '@/services/Usuarios';
 
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -25,6 +26,9 @@ export const Payment = () => {
         const data = await checkTransaction( params.get('ref_payco') );
         if ( data.x_cod_respuesta == 1 ) {
             switch ( data.x_extra3 ) {
+                case 'PLAN':
+                    subscribePlan( data );
+                    break;
                 case 'COMUN':
                     subscribeComunidad( data );
                     break;
@@ -77,6 +81,24 @@ export const Payment = () => {
                 notify( t('videoteca.alerts.paid'), 'success')
                 navigate(data.x_extra2);
             })
+        } catch(error) {
+            console.log( error );
+            notify( t('videoteca.alerts.error'), 'error')
+        }
+    }
+
+    const subscribePlan = ( data ) => {
+        try {
+            update( data.x_extra1, {plan: data.x_extra4} )
+            .then( (data) => {
+                notify( t('videoteca.alerts.paid'), 'success')
+                navigate(data.x_extra2);
+            }).catch( error => {
+                console.log( error );
+                notify( t('profile.alerts.error'), 'error');
+            })
+
+
         } catch(error) {
             console.log( error );
             notify( t('videoteca.alerts.error'), 'error')

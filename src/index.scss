@@ -129,6 +129,14 @@ small {
     }
 }
 
+.bg-danger {
+    background-color: var(--bg-red) !important;
+}
+
+.text-danger {
+    color: var(--bg-red) !important;
+}
+
 
 @media (max-width: 575px) {
     .main {

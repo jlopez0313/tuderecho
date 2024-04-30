@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUsers, faRightFromBracket, faKey, faClose, faUser, faVideo, faPersonChalkboard, faSackDollar } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faRightFromBracket, faKey, faClose, faUser, faVideo, faPersonChalkboard, faSackDollar, faCog } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import 'animate.css';
 import styles from './SideMenu.module.scss';
@@ -68,6 +68,12 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                         <Link to={link + `/passwords`}>
                             <FontAwesomeIcon className='me-2' icon={faKey} />
                             <strong className='text-dark'> { t("sidemenu.login.passwords") } </strong>
+                        </Link>
+                    </li>
+                    <li className='border shadow-sm p-2 m-2'> 
+                        <Link to={link + `/planes`}>
+                            <FontAwesomeIcon className='me-2' icon={faCog} />
+                            <strong className='text-dark'> { t("sidemenu.profile.plan") } </strong>
                         </Link>
                     </li>
                 </ul>

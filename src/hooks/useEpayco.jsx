@@ -8,7 +8,7 @@ export const useEpayco = () => {
         return currentDate.getTime();
     }
     
-    const doEpayco = ( item, route, component ) => {
+    const doEpayco = ( item, route, component, extra ) => {
         
         const handler = ePayco.checkout.configure({
             key: '84fe68597f45c7f44444c991a46a23af',
@@ -34,6 +34,7 @@ export const useEpayco = () => {
             extra1: item.id, // ID from Item
             extra2: route, // Redirect Page
             extra3: component,
+            extra4: item.extra,
             confirmation: import.meta.env.VITE_FRONTEND +  "/confirmation",
             response: import.meta.env.VITE_FRONTEND + "/confirmation",
 
