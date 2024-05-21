@@ -66,15 +66,24 @@ export const Login = () => {
         data.then( ( { rol } ) => {
             setIsLoading( false )
             notify( t('login.alerts.welcome'), 'success');
+
+            const lastPath = localStorage.getItem('lastPath')
+
             switch (rol) {
                 case 'Profesional':
-                    navigate('/profesionales');
+                    navigate(lastPath || '/profesionales', {
+                        replace: true
+                    });
                 break;
                 case 'Cliente':
-                    navigate('/clientes');
+                    navigate(lastPath || '/clientes', {
+                        replace: true
+                    });
                 break;
                 case 'Admin':
-                    navigate('/admin');
+                    navigate(lastPath || '/admin', {
+                        replace: true
+                    });
                 break;
             }
         }).catch( (error) => {

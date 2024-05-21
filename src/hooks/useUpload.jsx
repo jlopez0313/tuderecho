@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { getAll, upload } from '@/firebase/files';
-import { getDownloadURL } from 'firebase/storage';
+import { getAll, upload, remove } from '@/firebase/files';
+import { getDownloadURL, deleteObject } from 'firebase/storage';
 
 export const useUpload = () => {
   const [files, setFiles] = useState([]);
@@ -17,14 +17,16 @@ export const useUpload = () => {
     task.on(
         "state_changed",
         (snapshot) => {
-            const percent = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-            setPercent(percent)
+          const percent = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setPercent(percent)
         },
         (err) => console.log( err ),
         async () => {
-            const url = await getDownloadURL( task.snapshot.ref );
+            let url = await getDownloadURL( task.snapshot.ref );
+            // url = url.replace(/%2F/g,"/");
+            // url = url.replace(/%20/g," ");
 
             console.log( 'url', url );
 
@@ -42,6 +44,10 @@ export const useUpload = () => {
     });
   }
 
-  return { files, file, percent, fileUrl, handleUpload, handleChange, handleGetAll }
+  const handleRemove = async ( file ) => {
+    await remove( file )
+  }
+
+  return { files, file, percent, fileUrl, handleUpload, handleChange, handleRemove, handleGetAll }
 
 }

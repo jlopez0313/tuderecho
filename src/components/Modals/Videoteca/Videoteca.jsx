@@ -23,7 +23,7 @@ import { useUpload } from '@/hooks/useUpload';
 export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
     const { t } = useTranslation();
-    const {handleChange, handleUpload, file, fileUrl} = useUpload()
+    const {handleChange, handleUpload, handleRemove, file, fileUrl} = useUpload()
     // const { upload } = useVimeo();
     const dispatch = useDispatch();
 
@@ -64,13 +64,11 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
         setIsLoading( true );
 
         try {
-            console.log('object', file);
             if (file) {
                 // carga = await upload(videoUrl, formState.titulo);
                 await handleUpload();
             }            
         } catch( error) {
-            console.log( error );
             setIsLoading( false );
             notify( t('posts.alerts.error'), 'error')
         }
@@ -82,14 +80,13 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
         let obj = {}
         if ( fileUrl ) {            
-            console.log( 'fileUrl', fileUrl );
             obj = {
                 ...formState,
+                total_bytes: file.size,
                 video: fileUrl,
                 user: uid,
             }
         } else {
-            console.log( 'NotfileUrl' );
             obj = {
                 ...formState,
                 user: uid,
@@ -111,7 +108,12 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
             dispatch( setRefresh( true ) )
             doHide( true );
         })
-        .catch( error => {
+        .catch( async(error) => {
+            
+            if ( fileUrl ) {
+                await handleRemove( fileUrl );
+            }
+
             setIsLoading( false );
             notify( t('posts.alerts.error'), 'error')
         })
@@ -178,6 +180,7 @@ export const VideotecaModal = memo( ( {modalShow, item = {}, ...props} ) => {
 
                             <div className="mb-3">
                                 <input
+                                    accept='video/*'
                                     type="file"
                                     required={!item.id}
                                     className='form-control'

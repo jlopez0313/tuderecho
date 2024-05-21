@@ -29,6 +29,9 @@ export const Payment = () => {
                 case 'PLAN':
                     subscribePlan( data );
                     break;
+                case 'PAYPLAN':
+                    doPayment( data );
+                    break;
                 case 'COMUN':
                     subscribeComunidad( data );
                     break;
@@ -102,6 +105,22 @@ export const Payment = () => {
         } catch(error) {
             console.log( error );
             notify( t('videoteca.alerts.error'), 'error')
+        }
+    }
+
+    const doPayment = ( data ) => {
+        try {
+            update( data.x_extra1, {total_storage: data.x_extra4} )
+            .then( (data) => {
+                notify( t('plans.alerts.paid'), 'success')
+                navigate(data.x_extra2);
+            }).catch( error => {
+                console.log( error );
+                notify( t('plans.alerts.error'), 'error');
+            })
+        } catch(error) {
+            console.log( error );
+            notify( t('plans.alerts.error'), 'error')
         }
     }
 

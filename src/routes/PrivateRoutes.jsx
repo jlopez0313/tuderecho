@@ -1,7 +1,7 @@
 import { logout } from '@/helpers/helpers';
 import { useEffect } from 'react';
 import { decodeToken, isExpired } from "react-jwt";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { find } from '@/services/Usuarios';
 import { useDispatch } from 'react-redux';
 import { register } from '@/store/user/UserSlice';
@@ -15,6 +15,8 @@ export const PrivateRoutes = ({ children, rol }) => {
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {pathname, search} = useLocation();
+    localStorage.setItem('lastPath', `${pathname}${search}`)
 
     const getUser = async () => {
         try {

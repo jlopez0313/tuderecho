@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUsers, faRightFromBracket, faKey, faClose, faUser, faVideo, faPersonChalkboard, faSackDollar, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faRightFromBracket, faKey, faClose, faUser, faVideo, faPersonChalkboard, faSackDollar, faCog, faHardDrive } from '@fortawesome/free-solid-svg-icons';
 import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import 'animate.css';
 import styles from './SideMenu.module.scss';
@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getTenant } from '@/helpers/helpers';
 import { useEffect, useState } from 'react';
+import { DAYS_LEFT } from '@/constants/constants';
 
 export const SideMenu = ({animateClass, setAnimateClass}) => {
 
@@ -19,6 +20,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
     const { rol } = decodeToken(token);
 
     const [link, setLink] = useState('');
+    const [daysLeft, setDaysLeft] = useState(DAYS_LEFT);
 
     const { user } = useSelector( state => state.user )
     const navigate = useNavigate()
@@ -39,9 +41,22 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
         }
     }
 
+    const getDaysLeft = ( ) => {
+        const date1 = new Date();
+        const date2 = new Date(user.days_left);
+        
+        const Difference_In_Time = date2.getTime() - date1.getTime();
+        const Days_Left = Math.round ( Difference_In_Time / (1000 * 3600 * 24) ) 
+        setDaysLeft( Days_Left >= 0 ? Days_Left : 0);
+    }
+
     useEffect( () => {
         onSetLink();
     }, [])
+    
+    useEffect(() => {
+        getDaysLeft();
+    }, [user])
 
     return (
         <div className={`offcanvas offcanvas-end show ${styles.sideMenuAbogado} animate__animated ${animateClass} animate__fast`}>
@@ -56,7 +71,17 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
             </div>
 
             <div className={styles.menu}>
-                <ul className='mt-5'>
+                <ul className='mt-4'>
+                    <strong className='text-danger d-block'> 
+                        { user.suscription == 'F' ? t("sidemenu.days_left.free") : t("sidemenu.days_left.paid")  }
+                    </strong>
+                    <li className='border shadow-sm p-2 m-2'>
+                        <FontAwesomeIcon className='me-2' icon={faUser} />
+                        <strong className='text-dark'> { daysLeft } { t("sidemenu.days_left.days") } </strong>
+                    </li>
+                </ul>
+
+                <ul className='mt-4'>
                     <strong className='text-danger d-block'> { t("sidemenu.profile.title") } </strong>
                     <li className='border shadow-sm p-2 m-2'> 
                         <Link to={link + `/perfil`}>
@@ -72,7 +97,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                     </li>
                     <li className='border shadow-sm p-2 m-2'> 
                         <Link to={link + `/planes`}>
-                            <FontAwesomeIcon className='me-2' icon={faCog} />
+                            <FontAwesomeIcon className='me-2' icon={faHardDrive} />
                             <strong className='text-dark'> { t("sidemenu.profile.plan") } </strong>
                         </Link>
                     </li>
@@ -80,8 +105,8 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
 
                 {
                     rol.toLowerCase() == 'profesional' && 
-                        <ul className=''>
-                            <strong className='text-danger d-block mt-5'> { t("sidemenu.gestion.title") } </strong>
+                        <ul className='mt-4'>
+                            <strong className='text-danger d-block'> { t("sidemenu.gestion.title") } </strong>
                             <li className='border shadow-sm p-2 m-2'> 
                                 <Link to={'/gestion/bolsa'}>
                                     <FontAwesomeIcon className='me-2' icon={faSackDollar} />
@@ -91,8 +116,8 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                         </ul>
                 }
 
-                <ul className=''>
-                    <strong className='text-danger d-block mt-5'> { t("sidemenu.language.title") } </strong>
+                <ul className='mt-4'>
+                    <strong className='text-danger d-block'> { t("sidemenu.language.title") } </strong>
                     <li className='mt-3'>
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="lang" defaultChecked={i18n.language == 'es-US'} onClick={() => i18n.changeLanguage('es-US')} />
@@ -107,8 +132,8 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
                     </li>
                 </ul>
 
-                <ul className=''>
-                    <strong className='text-danger d-block mt-5'> { t("sidemenu.login.title") } </strong>
+                <ul className='mt-4'>
+                    <strong className='text-danger d-block'> { t("sidemenu.login.title") } </strong>
                     <li className='border shadow-sm m-2'> 
                         <button className='btn' onClick={() => onLogout()}>
                             <FontAwesomeIcon className='text-danger me-2' icon={faRightFromBracket} />

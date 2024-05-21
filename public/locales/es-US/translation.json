@@ -36,6 +36,11 @@
         "videoteca": {
             "free": "Videoteca Gratuitas",
             "sold": "Videoteca Vendidas"
+        },
+        "storage": {
+            "storage": "Almacenamiento",
+            "avaible": "Disponible",
+            "used": "Usado"
         }
     },
 
@@ -201,6 +206,20 @@
         }
     },
 
+    "plans": {
+        "gigas": "Gb",
+        "title": "Agregar Almacenamiento",
+        "total": "Total",
+        "form": {
+            "gb-placeholder": "Ej: 10",
+            "pay": "Pagar"
+        },
+        "alerts": {
+            "error": "Storage onRemove: Internal Error",
+            "paid": "Almacenamiento Registrado"
+        }
+    },
+
     "posts": {
         "create": "Crea un Post",
         "comment": "Comentar",
@@ -278,10 +297,16 @@
     },
 
     "sidemenu": {
+        "days_left": {
+            "free": "Suscripción Gratuita",
+            "paid": "Suscripción Anual",
+            "days": "Días restantes"
+        },
+
         "profile": {
             "basic-info": "Información Básica",
             "title":"Mi Perfil",
-            "plan":"Planes"
+            "plan":"Almacenamiento"
         },
 
         "gestion": {

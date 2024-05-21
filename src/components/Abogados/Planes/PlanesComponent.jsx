@@ -3,16 +3,24 @@ import { useDispatch } from 'react-redux';
 import { decodeToken } from "react-jwt";
 import { useForm } from '@/hooks/useForm';
 import Breadcrumb from '@/components/shared/Breadcrumb';
+import { Add } from "./Add"
 import { Plan } from "./Plan"
 import { find } from '@/services/Usuarios';
 import { register } from '@/store/user/UserSlice';
+import styles from './Planes.module.scss';
 
 import { useTranslation } from 'react-i18next';
+import { useCharts } from '@/hooks/useCharts';
+import { GIGAS } from "@/constants/constants";
+import { PLANS } from '@/constants/constants';
 
 export const PlanesComponent = () => {
   
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const [chart3, setChart3] = useState(null)
+  const { drawDonuts } = useCharts();
 
   const breadcrumb = [
     {
@@ -26,6 +34,7 @@ export const PlanesComponent = () => {
   ]
   
   const [id, setId] = useState('');
+  const [totalStorage, setTotalStorage] = useState(0);
 
   const formData = {
     cuenta: 'A',
@@ -34,7 +43,7 @@ export const PlanesComponent = () => {
     plan: '',
   }
 
-  const { onInputChange, onRadioChange, onSetFormState, formState } = useForm(formData)
+  const { onSetFormState, formState } = useForm(formData)
 
   const onFindUser = async () => {
     const token = localStorage.getItem('token') || '';
@@ -45,6 +54,27 @@ export const PlanesComponent = () => {
 
     await dispatch( register( {...usuario} ) );
     onSetFormState( {...formState, ...usuario}  )
+
+    onDrawStorage( usuario.total_storage['$numberDecimal'] || GIGAS, usuario.storage['$numberDecimal'] || 0 );
+  }
+
+  const onDrawStorage = ( total_storage, storage ) => {
+    const available = (total_storage - storage) / GIGAS
+    setTotalStorage( total_storage );
+
+    const used = storage/GIGAS;
+    
+    const data3 = [
+      { label: t('charts.storage.used'), count: used },
+      { label: t('charts.storage.avaible'), count: available },
+    ]
+
+    if ( chart3 ) {
+      chart3.destroy();
+    }
+
+    const chart = drawDonuts('bar3',  t('charts.storage.storage'),  total_storage/GIGAS + t('plans.gigas') , t('plans.gigas'), data3);
+    setChart3( chart )
   }
 
   useEffect(() => {
@@ -61,52 +91,37 @@ export const PlanesComponent = () => {
           <h3 className="mt-4 text-danger"> { t('sidemenu.profile.plan') } </h3>
           <hr />
 
-          <div className="d-flex justify-content-around">
-            <Plan
-              selected={ formState.plan == 1}
-              plan={1}
-              title = "Plan 1"
-              description = "
-                <ul>
-                  <li> 1Gb de Almacenamiento para archivos multimedia. </li>
-                </ul>
-              "
-              price={0}
-              formState={formState}
-              onSetFormState={onSetFormState}
-            />
-            
-            <Plan
-              selected={ formState.plan == 2}
-              plan={2}
-              title = "Plan 2"
-              description = "
-                <ul>
-                  <li> 3Gb de Almacenamiento para archivos multimedia. </li>
-                </ul>
-              "
-              price={20000}
-              formState={formState}
-              onSetFormState={onSetFormState}
-            />
-            
-            <Plan
-              selected={ formState.plan == 3}
-              plan={3}
-              title = "Plan 3"
-              description = "
-                <ul>
-                  <li> 5Gb de Almacenamiento para archivos multimedia. </li>
-                </ul>
-              "
-              price={30000}
-              formState={formState}
-              onSetFormState={onSetFormState}
-            />
-
+          <div className={`d-flex justify-content-around ${styles.canva}`}>
+            <canvas id="bar3"></canvas>
           </div>
 
-          
+          <div className="row">
+            {
+              PLANS.map( (plan, idx) => {
+                return <div key={idx} className="col-12 col-md-4 justify-content-around">
+                  <Plan
+                    selected={ formState.plan == plan.plan }
+                    plan={ plan.plan }
+                    title = {plan.title}
+                    description = {plan.description}
+                    price={plan.price}
+                    formState={formState}
+                    onSetFormState={onSetFormState}
+                  />
+                </div>
+              })
+            }
+            <div className="col-12 col-md-4 justify-content-around">
+              <div className={`card p-1 my-4`}>
+                <div className="card-body">
+                  <h4 className="card-title">{ t('plans.title') }</h4>
+                  <div className="card-text">
+                    <Add id={id} totalStorage={totalStorage} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>          
         </form>
       </div>
     </>

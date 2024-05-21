@@ -6,8 +6,6 @@ import { notify } from '@/helpers/helpers';
 import { register } from '@/store/user/UserSlice';
 import { useEpayco } from '@/hooks/useEpayco';
 
-import './Planes.scss'
-
 import { useTranslation } from 'react-i18next';
 
 export const Plan = ( { selected, title, plan, description, price, formState, onSetFormState } ) => {

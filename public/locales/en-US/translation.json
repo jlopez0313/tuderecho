@@ -36,6 +36,11 @@
         "videoteca": {
             "free": "Free Videoteca ",
             "sold": "Sold Videoteca "
+        },
+        "storage": {
+            "storage": "Storage",
+            "avaible": "Available",
+            "used": "Used"
         }
     },
 
@@ -201,6 +206,20 @@
         }
     },
 
+    "plans": {
+        "gigas": "Gb",
+        "title": "Add Storage",
+        "total": "Total",
+        "form": {
+            "gb-placeholder": "Ej: 10",
+            "pay": "Pay"
+        },
+        "alerts": {
+            "error": "Storage onRemove: Internal Error",
+            "paid": "Storage Registered"
+        }
+    },
+
     "posts": {
         "create": "Create a Post",
         "comment": "Comments",
@@ -277,10 +296,16 @@
     },
 
     "sidemenu": {
+        "days_left": {
+            "free": "Free Suscription",
+            "paid": "Annual Suscription",
+            "days": "Days left"
+        },
+
         "profile": {
             "basic-info": "Basic Information",
             "title":"My profile",
-            "plan":"Plans"
+            "plan":"Storage"
         },
 
         "gestion": {
