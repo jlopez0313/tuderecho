@@ -21,6 +21,7 @@ export const SideMenu = () => {
     const navigate = useNavigate();
 
     const onDoLogout = () => {
+        localStorage.removeItem('lastPath');
         logout(navigate)
     }
 
