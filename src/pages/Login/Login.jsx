@@ -64,6 +64,7 @@ export const Login = () => {
 
         const data = dispatch( loginAuth( email, password ) )
         data.then( ( { rol } ) => {
+
             setIsLoading( false )
             notify( t('login.alerts.welcome'), 'success');
 
@@ -81,7 +82,7 @@ export const Login = () => {
                     });
                 break;
                 case 'Admin':
-                    navigate(lastPath || '/admin', {
+                    navigate('/admin', {
                         replace: true
                     });
                 break;
