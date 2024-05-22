@@ -30,6 +30,7 @@ export const SideMenu = ({animateClass, setAnimateClass}) => {
     }
 
     const onLogout = () => {
+        localStorage.removeItem('lastPath');
         logout( navigate );
     }
 
