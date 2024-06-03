@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
     /*
@@ -16,10 +17,13 @@ const firebaseConfig = {
     projectId: "intense-talent-401205",
     storageBucket: "intense-talent-401205.appspot.com",
     messagingSenderId: "358042132649",
-    appId: "1:358042132649:web:ab38be58b5ef2dd03ac9b8"
+    appId: "1:358042132649:web:ab38be58b5ef2dd03ac9b8",
+    databaseURL: "https://intense-talent-401205-default-rtdb.firebaseio.com",
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const storage = getStorage(app);
-export { firebaseConfig, app, auth, storage }
+const realTimeDb = getDatabase(app);
+
+export { firebaseConfig, app, auth, storage, realTimeDb }

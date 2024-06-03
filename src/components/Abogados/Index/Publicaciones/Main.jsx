@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { PostModal } from '@/components/Modals/Posts/Post';
 import { useSelector } from 'react-redux';
 import { list } from '@/services/Publicaciones';
@@ -8,7 +8,8 @@ import Avatar from '@/assets/images/abogado/perfil/avatar.png';
 import styles from './Main.module.scss';
 import { Publicacion } from '@/components/Abogados/shared/Publicacion/Publicacion';
 import { ComentariosModal } from '@/components/Modals/Comentarios/Comentarios';
-import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
+import { PublicacionContext } from '@/context/publicacion/PublicacionContext';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useTranslation } from 'react-i18next';
@@ -19,6 +20,7 @@ export const Main = ({ comunidad = '' }) => {
     const limit = 10;
     const { t } = useTranslation();
 
+    const {setPublicacion, setIndex } = useContext( PublicacionContext );
     const { user } = useSelector( state => state.user )
     
     const [idx, setIdx] = useState(0);
@@ -98,6 +100,11 @@ export const Main = ({ comunidad = '' }) => {
         posts.splice(idx, 1, publi);
         setLista(posts)
     }
+
+    const onNewPost = () => {
+        setPublicacion( null );
+        setModalShow(true)
+    }
     
 /*
     useEffect( () => {
@@ -109,72 +116,70 @@ export const Main = ({ comunidad = '' }) => {
     }, [])
     
     return (
-        <PublicacionProvider>
-            <div className={`main ${styles.main}`}>
-                <div className='bg-white rounded d-flex border shadow-sm px-3 py-2 align-items-center'>
-                    <div>
-                        <img src={user?.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
-                    </div>
-                    <div 
-                        className="text-center text-danger w-100 cursor-pointer"
-                        onClick={() => setModalShow(true)}
-                    >
-                        <FontAwesomeIcon icon={faPencil} />
-                        <span className='ms-3'> { t('posts.create') } </span>
-                    </div>
+        <div className={`main ${styles.main}`}>
+            <div className='bg-white rounded d-flex border shadow-sm px-3 py-2 align-items-center'>
+                <div>
+                    <img src={user?.perfil?.photo || Avatar} className={`me-3 ${styles.avatar}`} alt=''/>
                 </div>
-
-                {
-                    isLoading ? <Loader />
-                    :
-                        <InfiniteScroll
-                            dataLength={ lista.length }
-                            next={onGetMore}
-                            hasMore={ hasMore }
-                            loader={ <Loader /> }
-                            endMessage={ <div className='mt-3'> </div> }
-                            scrollableTarget="scrollableDiv"
-                        >
-                            {
-                                lista?.map( (post, key) => {
-                                    return <Publicacion
-                                        key={key}
-                                        post={post}
-                                        idx={key}
-                                        onComentar={() => onComentar(key)}
-                                        onSharing={() => onSharing()}
-                                        onRemovePubli={(idx) => onRemovePubli(idx)}
-                                    />
-                                })
-                            }
-                        </InfiniteScroll>
-                }
-                
-                <PostModal
-                    title={ t('posts.create') }
-                    comunidad={comunidad}
-                    modalShow={modalShow}
-                    onHide={(refresh = false) => onRefreshPublis( refresh )}
-                />
-
-                <ComentariosModal
-                    idx={idx}
-                    title={ t('comentarios.title') }
-                    modalShow={showModalComments}
-                    onHide={(refresh = false) => onHideModal( refresh )}
-                    onSetPubli={(publi) => onSetPubli( publi )}
-                    onSharing={() => onSharing()}
-                />
- 
-                <PostModal
-                    title={ t('share') }
-                    comunidad={comunidad}
-                    modalShow={showModalShare}
-                    onHide={(doRefresh = false) => onHideShare( doRefresh )}
-                />
-
+                <div 
+                    className="text-center text-danger w-100 cursor-pointer"
+                    onClick={ onNewPost }
+                >
+                    <FontAwesomeIcon icon={faPencil} />
+                    <span className='ms-3'> { t('posts.create') } </span>
+                </div>
             </div>
-        </PublicacionProvider>
 
+            {
+                isLoading ? <Loader />
+                :
+                    <InfiniteScroll
+                        dataLength={ lista.length }
+                        next={onGetMore}
+                        hasMore={ hasMore }
+                        loader={ <Loader /> }
+                        endMessage={ <div className='mt-3'> </div> }
+                        scrollableTarget="scrollableDiv"
+                    >
+                        {
+                            lista?.map( (post, key) => {
+                                return <Publicacion
+                                    key={key}
+                                    post={post}
+                                    idx={key}
+                                    onComentar={() => onComentar(key)}
+                                    onSharing={() => onSharing()}
+                                    onRemovePubli={(idx) => onRemovePubli(idx)}
+                                />
+                            })
+                        }
+                    </InfiniteScroll>
+            }
+            
+            <PostModal
+                title={ t('posts.create') }
+                comunidad={comunidad}
+                modalShow={modalShow}
+                sharing={false}
+                onHide={(refresh = false) => onRefreshPublis( refresh )}
+            />
+
+            <ComentariosModal
+                idx={idx}
+                title={ t('comentarios.title') }
+                modalShow={showModalComments}
+                onHide={(refresh = false) => onHideModal( refresh )}
+                onSetPubli={(publi) => onSetPubli( publi )}
+                onSharing={() => onSharing()}
+            />
+
+            <PostModal
+                title={ t('share') }
+                comunidad={comunidad}
+                modalShow={showModalShare}
+                onHide={(doRefresh = false) => onHideShare( doRefresh )}
+            />
+
+        </div>
     )
 }

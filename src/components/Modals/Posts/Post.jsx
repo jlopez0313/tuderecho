@@ -21,7 +21,7 @@ import { Conferencia } from '@/components/Abogados/shared/Conferencia/Conferenci
 import { Videoteca } from '@/components/Abogados/shared/Videoteca/Videoteca';
 import { Sharing } from '@/components/Abogados/shared/Sharing/Sharing';
 
-export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = null, comunidad = '', post, ...props} ) => {
+export const PostModal = memo( ( {sharing = true, modalShow, conferencia = null, videoteca = null, comunidad = '', post, ...props} ) => {
 
   const { t } = useTranslation();
 
@@ -119,8 +119,11 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
   }
 
   useEffect(() => {
-    if (publicacion) 
+    if (publicacion) {
       setPostID(publicacion.id)
+    } else {
+      setPostID('')
+    }
   }, [publicacion])
   
   if (modalShow) {
@@ -224,9 +227,12 @@ export const PostModal = memo( ( {modalShow, conferencia = null, videoteca = nul
                   */}
               </div>
 
-              <div className="options mt-2 d-flex justify-content-center align-items-center border rounded p-2 me-2">
-                <Sharing id={ publicacion?.id } />
-              </div>
+              {
+                sharing && 
+                  <div className="options mt-2 d-flex justify-content-center align-items-center border rounded p-2 me-2">
+                    <Sharing post={publicacion || conferencia || videoteca } id={ publicacion?.id } />
+                  </div>
+              }
 
           </Modal.Body>
 

@@ -3,6 +3,7 @@ import styles from './Index.module.scss'
 import { Left } from "@/components/Abogados/shared/Left/Left";
 import { Right } from "@/components/Abogados/shared/Right/Right";
 import { Main } from "@/components/Abogados/Index/Publicaciones/Main"
+import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
 
 export const Index = () => {
   return (
@@ -15,7 +16,9 @@ export const Index = () => {
             </div>
             
             <div className={`d-flex justify-content-center flex-grow-1 p-2`}>
-              <Main />
+              <PublicacionProvider>
+                <Main />
+              </PublicacionProvider>
             </div>
             
             <div className={`right position-sticky p-2 ${styles.right}`}>

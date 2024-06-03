@@ -72,14 +72,26 @@ export const Login = () => {
 
             switch (rol) {
                 case 'Profesional':
-                    navigate(lastPath || '/profesionales', {
-                        replace: true
-                    });
+                    if ( lastPath.toLowerCase().includes( rol.toLowerCase() ) ) {
+                        navigate(lastPath || '/profesionales', {
+                            replace: true
+                        });
+                    } else {
+                        navigate('/profesionales', {
+                            replace: true
+                        });
+                    }
                 break;
                 case 'Cliente':
-                    navigate(lastPath || '/clientes', {
-                        replace: true
-                    });
+                    if ( lastPath.toLowerCase().includes( rol.toLowerCase() ) ) {
+                        navigate(lastPath || '/clientes', {
+                            replace: true
+                        });
+                    } else {
+                        navigate('/clientes', {
+                            replace: true
+                        });
+                    }
                 break;
                 case 'Admin':
                     navigate('/admin', {
