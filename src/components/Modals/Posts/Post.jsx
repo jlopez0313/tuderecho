@@ -136,6 +136,7 @@ export const PostModal = memo( ( {sharing = true, modalShow, conferencia = null,
         centered
         className={styles.modal}
       >
+
           <Modal.Header closeButton className='text-center' onHide={doHide}>
               <Modal.Title className='m-auto' id="contained-modal-title-vcenter">
                 {props.title}
@@ -150,7 +151,7 @@ export const PostModal = memo( ( {sharing = true, modalShow, conferencia = null,
                 placeholder={ t('posts.form.post') }
                 onChange={(evt) => setComment( evt.target.value )}
                 value={ comment }
-              ></textarea>
+                ></textarea>
               {
                 previews.length
                 ?
@@ -222,18 +223,16 @@ export const PostModal = memo( ( {sharing = true, modalShow, conferencia = null,
                 }
 
                 <EmojiButton onSetComment={ onSetComment } />
-                  {/*
-                    <FontAwesomeIcon className='icon cursor-pointer mx-2' icon={faAt} />
-                  */}
+  
               </div>
 
-              {
-                sharing && 
-                  <div className="options mt-2 d-flex justify-content-center align-items-center border rounded p-2 me-2">
-                    <Sharing post={publicacion || conferencia || videoteca } id={ publicacion?.id } />
-                  </div>
-              }
-
+              
+            {
+              sharing && 
+                <div className="options mt-2 d-flex justify-content-center align-items-center border rounded p-2 me-2">
+                  <Sharing post={publicacion || conferencia || videoteca } id={ publicacion?.id } />
+                </div>
+            }
           </Modal.Body>
 
           <Modal.Footer className='d-block text-center'>
