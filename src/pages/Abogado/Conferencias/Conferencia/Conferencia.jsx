@@ -4,6 +4,7 @@ import { Left } from "@/components/Abogados/shared/Left/Left";
 import { Right } from "@/components/Abogados/shared/Right/Right";
 import { ConferenciaComponent } from "@/components/Abogados/Index/Conferencias/Conferencia/Conferencia"
 import { Conferencias } from "@/components/Abogados/shared/Left/Conferencias/Conferencias";
+import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
 
 export const Conferencia = () => {
 
@@ -19,7 +20,9 @@ export const Conferencia = () => {
                 </div>
             
                 <div className={`d-flex justify-content-center flex-grow-1 p-2`}>
-                    <ConferenciaComponent />
+                    <PublicacionProvider>
+                        <ConferenciaComponent />
+                    </PublicacionProvider>
                 </div>      
             </div>
             </div>

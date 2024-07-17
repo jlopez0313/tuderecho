@@ -2,6 +2,7 @@ import { Header } from "@/components/shared/Header/Header"
 import styles from './Comunidades.module.scss'
 import { Main } from "@/components/Abogados/Index/Comunidades/Main"
 import { Comunidades as ComunidadesComponent } from "@/components/Abogados/shared/Right/Comunidades/Comunidades";
+import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
 
 export const Comunidades = () => {
   return (
@@ -17,7 +18,9 @@ export const Comunidades = () => {
             </div>      
 
             <div className={`d-flex justify-content-center flex-grow-1 p-2`}>
-              <Main />
+              <PublicacionProvider>
+                <Main />
+              </PublicacionProvider>
             </div>    
 
           </div>

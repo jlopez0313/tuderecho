@@ -4,6 +4,7 @@ import { Left } from "@/components/Abogados/shared/Left/Left";
 import { Right } from "@/components/Abogados/shared/Right/Right";
 import { ComunidadComponent } from "@/components/Abogados/Index/Comunidades/Comunidad/Comunidad"
 import { Comunidades } from "@/components/Abogados/shared/Right/Comunidades/Comunidades";
+import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
 
 export const Comunidad = () => {
 
@@ -19,7 +20,9 @@ export const Comunidad = () => {
                     </div>
                 
                     <div className={`d-flex justify-content-center flex-grow-1`}>
-                        <ComunidadComponent />
+                        <PublicacionProvider>
+                            <ComunidadComponent />
+                        </PublicacionProvider>
                     </div>     
                 </div>
             </div>

@@ -2,6 +2,7 @@ import { Header } from "@/components/shared/Header/Header"
 import styles from './Conferencias.module.scss'
 import { Main } from "@/components/Abogados/Index/Conferencias/Main"
 import { Conferencias as ConferenciasComponent } from "@/components/Abogados/shared/Left/Conferencias/Conferencias";
+import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
 
 export const Conferencias = () => {
   return (
@@ -16,7 +17,9 @@ export const Conferencias = () => {
             </div>
         
             <div className={`d-flex justify-content-center flex-grow-1 p-2`}>
-              <Main />
+              <PublicacionProvider>
+                <Main />
+              </PublicacionProvider>
             </div>
 
           </div>

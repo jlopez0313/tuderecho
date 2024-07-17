@@ -2,6 +2,7 @@ import { Header } from "@/components/shared/Header/Header"
 import styles from './Videoteca.module.scss'
 import { Main } from "@/components/Abogados/Index/Videoteca/Main"
 import { Videoteca as VideotecaComponent } from "@/components/Abogados/shared/Left/Videoteca/Videoteca";
+import { PublicacionProvider } from '@/context/publicacion/PublicacionProvider';
 
 export const Videoteca = () => {
   return (
@@ -16,7 +17,9 @@ export const Videoteca = () => {
             </div>
         
             <div className={`d-flex justify-content-center flex-grow-1 p-2`}>
-              <Main />
+              <PublicacionProvider>
+                <Main />
+              </PublicacionProvider>
             </div>
 
           </div>

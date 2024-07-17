@@ -60,12 +60,12 @@ export const Home = () => {
     const data = await byRol('Profesional', page, perPage);
 
     setList( data.usuarios )
-    setTotalRows(data.total);
+    setTotalRows( Math.ceil(data.total / perPage) );
     setLoading(false);
   }
 
   const handlePageChange = (page) => {
-    onList(page);
+    onList( page.selected + 1 );
   };
   
   useEffect( () => {
@@ -92,7 +92,7 @@ export const Home = () => {
             }
           </div>
           <ReactPaginate
-            className={`d-flex justify-content-between my-2 pb-4 ${styles.paginator}`}
+            className={`d-flex justify-content-around my-2 pb-4 ${styles.paginator}`}
             breakLabel="..."
             nextLabel=">"
             onPageChange={ handlePageChange }
