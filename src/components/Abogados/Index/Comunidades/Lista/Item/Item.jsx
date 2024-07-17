@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import styles from '@/assets/styles/shared.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { faCartShopping, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faCopy, faShare } from '@fortawesome/free-solid-svg-icons';
 import style from './Item.module.scss';
 import { Link } from 'react-router-dom';
 import { ComunidadesModal } from '@/components/Modals/Payment/Comunidades/Comunidades';
@@ -16,10 +16,20 @@ export const Item = ({ item, uid, onRefresh, onEdit, onRemove }) => {
     const { t } = useTranslation();
 
     const [paymentModal, setPaymentModal] = useState(false);
+    const [copySuccess, setCopySuccess] = useState(null);
 
     const onDoRefresh = ( refresh ) => {
         setPaymentModal(false)
         onRefresh( refresh )
+    }
+
+    const onCopyLink = async ( id ) => {
+        try {
+            const copyUrl = `${window.location.protocol}//${window.location.host}/comunidades/${id}`;
+            await navigator.clipboard.writeText( copyUrl )
+        } catch ( error ) {
+            console.log( error );
+        }
     }
     
     return (
@@ -60,9 +70,10 @@ export const Item = ({ item, uid, onRefresh, onEdit, onRemove }) => {
                             uid === item.user.id ? 
                                 <>
                                     <FontAwesomeIcon 
-                                        icon={faShare} 
-                                        className='me-3'
-                                        title={ t('share') }
+                                        icon={faCopy}
+                                        className='me-3 cursor-pointer text-danger'
+                                        onClick={() => onCopyLink(item.id) }
+                                        title={ copySuccess || t('copy') }
                                     />
                                     <FontAwesomeIcon
                                         icon={faEdit}
