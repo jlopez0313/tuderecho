@@ -13,7 +13,7 @@ import { set } from '@/store/settings/SettingsSlice';
 import { findByDomain } from '@/services/Tenants';
 import { byRol } from '@/services/Usuarios'
 
-import styles from './Home.module.scss';
+import './Home.scss';
 import ReactPaginate from 'react-paginate';
 
 
@@ -92,7 +92,7 @@ export const Home = () => {
             }
           </div>
           <ReactPaginate
-            className={`d-flex justify-content-around my-2 pb-4 ${styles.paginator}`}
+            className={`d-flex justify-content-center my-2 pb-4 paginator`}
             breakLabel="..."
             nextLabel=">"
             onPageChange={ handlePageChange }

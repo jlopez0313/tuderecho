@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { getCountries, getStates, getCities } from "@/services/geolocation";
+
 
 export const DatosPersonales = ({
   formState,

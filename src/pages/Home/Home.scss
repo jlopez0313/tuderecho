@@ -1,11 +1,10 @@
 .paginator {
     list-style-type: none;
-    li {        
-        a {
-            border-radius: 5px;
-            padding: 0.1rem 1rem;
-            border: gray 1px solid;
-            cursor: pointer;
+    
+    li {
+        &.previous,
+        &.next {
+            margin: 0 5px;
         }
         
         &.previous a,
@@ -26,18 +25,20 @@
         &.disabled {
             a {
                color: grey;
+               cursor: default;
             }
         }
 
         &.disable {
             cursor: default;
         }        
-        &.disabled {
-          
-            a {
-                cursor: default;
-            }
-        }            
+
+        a {
+            border-radius: 5px;
+            padding: 0.1rem 1rem;
+            border: gray 1px solid;
+            cursor: pointer;
+        }
     } 
 
 }
