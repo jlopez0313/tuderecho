@@ -72,7 +72,7 @@ export const Login = () => {
 
             switch (rol) {
                 case 'Profesional':
-                    if ( lastPath.toLowerCase().includes( rol.toLowerCase() ) ) {
+                    if ( lastPath && lastPath.toLowerCase().includes( rol.toLowerCase() ) ) {
                         navigate(lastPath || '/profesionales', {
                             replace: true
                         });
@@ -83,7 +83,7 @@ export const Login = () => {
                     }
                 break;
                 case 'Cliente':
-                    if ( lastPath.toLowerCase().includes( rol.toLowerCase() ) ) {
+                    if ( lastPath && lastPath.toLowerCase().includes( rol.toLowerCase() ) ) {
                         navigate(lastPath || '/clientes', {
                             replace: true
                         });
@@ -100,6 +100,7 @@ export const Login = () => {
                 break;
             }
         }).catch( (error) => {
+
             setIsLoading( false )
             notify(error?.response?.data?.msg || t('login.alerts.error'), 'warning');
             navigate('/pre-registro', { replace: true });
