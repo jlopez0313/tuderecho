@@ -134,7 +134,7 @@ export const UsuariosComponent = () => {
         })
     }
 
-    const onList = async (page) => {
+    const onList = async (page = 1) => {
         setLoading(true);
         setPage( page );
 

@@ -18,7 +18,7 @@ export const ComunidadComponent = () => {
     const baseBreadCrumb = [
         {
             name: 'Home',
-            href: '/',
+            href: '/profesionales',
             active: false
         },{
             name: t('comunidades.title'),

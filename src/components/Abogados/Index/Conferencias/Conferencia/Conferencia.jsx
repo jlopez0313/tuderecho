@@ -18,7 +18,7 @@ export const ConferenciaComponent = () => {
     const baseBreadCrumb = [
         {
             name: 'Home',
-            href: '/',
+            href: '/profesionales',
             active: false
         },{
             name: t('conferencias.title'),

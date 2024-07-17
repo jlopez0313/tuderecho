@@ -18,9 +18,6 @@ export const Sharing = ({ id }) => {
     useEffect(() => {
         
         if( publicacion ) {
-
-            console.log( publicacion );
-
             let img =  ''
             if ( publicacion.medias.length > 0 ) {
                 img = publicacion.medias[0]
