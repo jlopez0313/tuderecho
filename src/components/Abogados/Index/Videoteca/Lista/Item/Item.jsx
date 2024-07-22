@@ -21,6 +21,7 @@ export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemov
 
     const [paymentModal, setPaymentModal] = useState(false);
     const [videoId, setVideoId] = useState('')
+    const [videoClass, setVideoClass] = useState('')
 
     const onDoRefresh = ( refresh ) => {
         setPaymentModal(false)
@@ -34,6 +35,14 @@ export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemov
 
     const asd = (evt) => {
         console.log( evt );
+    }
+
+    const onGetMetadata = ( evt ) => {
+        if( evt.target.videoHeight > evt.target.videoWidth ) {
+            setVideoClass( 'h-100' )
+        } else {
+            setVideoClass( 'w-100' )
+        }
     }
     
     useEffect(()=> {
@@ -53,13 +62,14 @@ export const Item = memo( ({ item, uid, tab, onRefresh, onEdit, onShare, onRemov
         <>
             <Card className={`d-flex h-95 flex-column border rounded shadow-sm bg-light mb-3 ${style.listItem}`}>
                 
-                <div className={`rounded ${style.imgContent}`} 
+                <div className={`rounded d-flex align-items-center justify-content-center ${style.imgContent}`} 
                         onClick={asd}>
                     <video
-                        className='mt-5 w-100'
+                        className={ videoClass }
                         responsive='true'
                         controls={ tab === 'profile' }
                         src={item.video}
+                        onLoadedMetadata={ onGetMetadata }
                     />
                 </div>
 
