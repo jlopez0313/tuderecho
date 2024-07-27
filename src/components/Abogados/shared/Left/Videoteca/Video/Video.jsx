@@ -6,6 +6,7 @@ import { getYoutubeId } from '@/helpers/helpers'
 
 import { useTranslation } from 'react-i18next';
 import Vimeo from '@u-wave/react-vimeo';
+import { Link } from 'react-router-dom';
 
 export const Video = memo( ({item, onRemove, onEdit}) => {
 
@@ -28,12 +29,14 @@ export const Video = memo( ({item, onRemove, onEdit}) => {
     <Card className={`d-flex flex-column border rounded shadow-sm bg-light mb-3 p-1 ${styles.listItem}`}>
         <div className="row g-0 p-1">
           <div className="col-md-4">
-            <video
-                className='rounded w-100'
-                controls={false}
-                responsive='true'
-                src={item.video}
-            />
+            <Link to={'/videoteca'} className="order-1 m-auto">
+              <video
+                  className='rounded w-100'
+                  controls={false}
+                  responsive='true'
+                  src={item.video}
+              />
+            </Link>
           </div>
           <div className="col-md-8">
               <div className='d-flex flex-column ps-2 pt-1'>
