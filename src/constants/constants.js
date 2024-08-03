@@ -19,6 +19,10 @@ export const tipoDocumentos = [
     key: 'ID',
     value:'ID'
   },
+  {
+    key: 'DNI',
+    value:'DNI'
+  },
 ];
 
 export const TITLE = 'Sabiux'

@@ -151,7 +151,7 @@ export const DatosPersonales = ({ formState, onInputChange }) => {
           </div>
           <div className="form-floating mb-2">
             <input
-              type="number"
+              type="text"
               placeholder={t("profile.form.id-placeholder")}
               required
               className="form-control"

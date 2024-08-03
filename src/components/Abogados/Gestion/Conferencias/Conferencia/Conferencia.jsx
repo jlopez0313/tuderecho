@@ -62,13 +62,17 @@ export const Conferencia = ({item, onRemove, onEdit}) => {
                         onClick={() => onEdit( item ) }
                         title={ t('edit') }
                     />
-                    
-                    <FontAwesomeIcon
-                        icon={faTrashCan}
-                        className='cursor-pointer text-danger'
-                        onClick={() => onRemove( item.id ) }
-                        title={ t('remove') }
-                    />
+
+                    {
+
+                      new Date() <= new Date( item.fecha ) ?
+                        <FontAwesomeIcon
+                            icon={faTrashCan}
+                            className='cursor-pointer text-danger'
+                            onClick={() => onRemove( item.id ) }
+                            title={ t('remove') }
+                        /> : null
+                    }
                 </>
                 : null
             }

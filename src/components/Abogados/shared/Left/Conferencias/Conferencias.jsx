@@ -4,7 +4,7 @@ import { faPencil, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styles from '@/assets/styles/shared.module.scss';
 import { ConferenciaModal } from '@/components/Modals/Conferencias/Conferencia';
-import { myList, remove } from '@/services/Conferencias';
+import { list, remove } from '@/services/Conferencias';
 import { notify } from '@/helpers/helpers';
 import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-router-dom';
@@ -57,7 +57,7 @@ export const Conferencias = () => {
     const onGetList = async () => {
         setIsLoading( true )
         
-        const lista = await myList(search, page, limit)
+        const lista = await list(search, page, limit)
         setLista( lista )
         
         if ( lista.length < limit ) {
@@ -73,7 +73,7 @@ export const Conferencias = () => {
     }
 
     const onGetMore = async () => {
-        const moreList = await myList( search, page, limit )
+        const moreList = await list( search, page, limit )
 
         if ( moreList.length < limit ) {
             setHasMore( false )
