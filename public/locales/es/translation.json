@@ -121,8 +121,8 @@
             "title-placeholder": "Ej: El profesional como mediador de conflictos",
             "target": "Objetivo",
             "target-placeholder": "Describe el objetivo del encuentro",
-            "url-placeholder": "Ex: 123456789",
-            "url": "Zoom ID"
+            "url-placeholder": "Ej: https://meet.google.com/waw-nbjx-ixb",
+            "url": "URL de Conferencia"
         },
         "alerts": {
             "error": "Encuentros onRemove: Internal Error",
