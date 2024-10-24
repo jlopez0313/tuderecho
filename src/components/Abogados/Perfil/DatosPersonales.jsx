@@ -68,14 +68,12 @@ export const DatosPersonales = ({ formState, onInputChange }) => {
     });
     const evt = { target: { name: "perfil", value: newTagsId } };
 
-    setMyTags(
+    setMyScreens(
       newTags.map((tag) => {
         return { value: tag.value, label: tag.label };
       })
     );
-    setHas15(newTags.length == MAX_TAGS);
-
-    onInputChange(evt, "tags");
+    onInputChange(evt, "pantallas");
   };
 
   const onClickImage = () => {

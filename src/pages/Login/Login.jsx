@@ -103,7 +103,8 @@ export const Login = () => {
 
             setIsLoading( false )
             notify(error?.response?.data?.msg || t('login.alerts.error'), 'warning');
-            navigate('/pre-registro', { replace: true });
+
+            error.response?.status == 400 && navigate('/pre-registro', { replace: true });
         })
     }
     
