@@ -29,6 +29,7 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
     const [isLoading, setIsLoading] = useState( false );
 
     const initFormData = {
+        url: '',
         titulo: '',
         fecha:'',
         objetivo: '',
@@ -139,6 +140,19 @@ export const ConferenciaModal = memo( ( {modalShow, item = {}, ...props} ) => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className='py-0'>
+                        <div className="form-floating mb-3">
+                            <input
+                                required
+                                type='url'
+                                name="url"
+                                className='form-control'
+                                placeholder={ t('conferencias.form.url-placeholder') }
+                                onChange={onInputChange}
+                                defaultValue={ formState.url }
+                            />
+                            <label htmlFor="url"> { t('conferencias.form.url') } *</label>
+                        </div>
+
                         <div className="form-floating mb-3">
                             <input
                                 required
