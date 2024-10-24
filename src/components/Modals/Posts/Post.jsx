@@ -228,7 +228,7 @@ export const PostModal = memo( ( {sharing = true, modalShow, conferencia = null,
 
               
             {
-              sharing && 
+              sharing && publicacion?.id && 
                 <div className="options mt-2 d-flex justify-content-center align-items-center border rounded p-2 me-2">
                   <Sharing post={publicacion || conferencia || videoteca } id={ publicacion?.id } />
                 </div>
