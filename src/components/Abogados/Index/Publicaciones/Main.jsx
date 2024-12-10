@@ -20,11 +20,12 @@ export const Main = ({ comunidad = '' }) => {
     const limit = 10;
     const { t } = useTranslation();
 
-    const {setPublicacion, setIndex } = useContext( PublicacionContext );
+    const {setPublicacion, setIndex, publicacion } = useContext( PublicacionContext );
     const { user } = useSelector( state => state.user )
     
     const [idx, setIdx] = useState(0);
     const [modalShow, setModalShow] = useState(false);
+    const [modalEdit, setModalEdit] = useState(false);
     const [showModalComments, setShowModalComments] = useState(false);
     const [showModalShare, setShowModalShare] = useState(false);
     const [lista, setLista] = useState([])
@@ -62,6 +63,11 @@ export const Main = ({ comunidad = '' }) => {
         setShowModalComments( true )
     }
 
+    const onEdit = async() => {
+        setShowModalComments( false )
+        setModalEdit(true)
+    }
+
     const onSharing = async ( idx ) => {
         setShowModalComments( false )
         setShowModalShare( true )
@@ -80,6 +86,7 @@ export const Main = ({ comunidad = '' }) => {
         }
 
         setModalShow(false)
+        setModalEdit(false)
     }
 
     const onHideModal = (doRefresh) => {
@@ -108,8 +115,8 @@ export const Main = ({ comunidad = '' }) => {
     
 /*
     useEffect( () => {
-        onSetPubli( post )
-    }, [post])
+        console.log( publicacion )
+    }, [publicacion])
 */
     useEffect( () => {
         onGetList()
@@ -147,6 +154,7 @@ export const Main = ({ comunidad = '' }) => {
                                     key={key}
                                     post={post}
                                     idx={key}
+                                    onEdit={() => onEdit() }
                                     onComentar={() => onComentar(key)}
                                     onSharing={() => onSharing()}
                                     onRemovePubli={(idx) => onRemovePubli(idx)}
@@ -157,10 +165,20 @@ export const Main = ({ comunidad = '' }) => {
             }
             
             <PostModal
+                title={ t('posts.edit') }
+                comunidad={comunidad}
+                modalShow={modalEdit}
+                sharing={false}
+                isEdit={true}
+                onHide={(refresh = false) => onRefreshPublis( refresh )}
+            />
+            
+            <PostModal
                 title={ t('posts.create') }
                 comunidad={comunidad}
                 modalShow={modalShow}
                 sharing={false}
+                isEdit={false}
                 onHide={(refresh = false) => onRefreshPublis( refresh )}
             />
 
@@ -176,6 +194,7 @@ export const Main = ({ comunidad = '' }) => {
             <PostModal
                 title={ t('share') }
                 comunidad={comunidad}
+                isEdit={false}
                 modalShow={showModalShare}
                 onHide={(doRefresh = false) => onHideShare( doRefresh )}
             />

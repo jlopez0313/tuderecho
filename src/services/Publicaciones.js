@@ -53,6 +53,41 @@ export const save = async ( body ) => {
     }
 }
 
+export const update = async ( id, body ) => {    
+    
+    if (!body.post) {
+        delete body.post;
+    }
+
+    const formData = new FormData();
+    Object.keys( body ).forEach( key => {
+        if ( key === 'medias' ) {
+            for (const file of body[key]) {
+                if ( typeof file == 'string' ) {
+                    formData.append('old_files', file)
+                } else {
+                    formData.append('files', file) // appending every file to formdata
+                }
+            }
+        } else {
+            formData.append( key, body[key] )
+        }
+    })
+
+    const headers = {
+        'Content-Type': 'multipart/form-data',
+    }
+
+    const response = await backendApi.put(modulo + '/' + id, formData, { headers })
+    console.log(response);
+
+    if ( response ) {
+        return Promise.resolve(response.data.saved);
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 export const remove = async (id) => {
     const response = await backendApi.delete(modulo + id)
 

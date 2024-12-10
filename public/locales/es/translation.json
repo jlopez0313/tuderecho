@@ -247,6 +247,7 @@
     "posts": {
         "create": "Crea un Post",
         "comment": "Comentar",
+        "edit": "Edita un Post",
         "like": "Me gusta",
         "share": "Compartir",
         "title": "Posts",

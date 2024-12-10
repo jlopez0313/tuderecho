@@ -225,6 +225,7 @@
     "posts": {
         "create": "Create a Post",
         "comment": "Comments",
+        "edit": "Edit a Post",
         "like": "Likes",
         "share": "Shares",
         "title": "Posts",
